@@ -1,1 +1,1 @@
-# team16
+## Our React App: The Good Samaritan Hub
