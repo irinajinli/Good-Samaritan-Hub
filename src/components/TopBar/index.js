@@ -34,7 +34,6 @@ export default function TopBar() {
           <Typography variant="h6" className={classes.title}>
             Good Samaritan Hub
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>
