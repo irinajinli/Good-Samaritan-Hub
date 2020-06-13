@@ -10,12 +10,12 @@ class Landing extends Component {
         return (  
             <div>
                 <div>
-                    <Link className='link' to={'.././login'}>
+                    <Link className='link' to={'/login'}>
                         <Button variant='outlined' color='primary'>Login</Button>
                     </Link>
                 </div>
                 <div>
-                    <Link className='link' to={'.././registration'}>
+                    <Link className='link' to={'/registration'}>
                         <Button variant='outlined' color='primary'>Register</Button>
                     </Link>
                 </div>
