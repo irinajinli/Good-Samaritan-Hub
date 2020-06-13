@@ -7,8 +7,9 @@ import TopBar from './components/TopBar';
 import Landing from './components/Landing';
 import Login from './components/Login';
 import Registration from './components/Registration';
-import AdminLogin from './components/AdminLogin';
 import Home from './components/Home';
+import AdminLogin from './components/AdminLogin';
+import AdminHome from './components/AdminHome';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route exact path='/login' render={() => (<Login />)}/>
           <Route exact path='/registration' render={() => (<Registration />)}/>
           <Route exact path='/home' render={() => (<Home />)}/>
-          <Route exact path='/adminLogin' render={() => (<AdminLogin />)}/>
+          <Route exact path='/admin' render={() => (<AdminLogin />)}/>
+          <Route exact path='/admin/home' render={() => (<AdminHome />)}/>
         </Switch>
       </BrowserRouter>
     </React.Fragment>
