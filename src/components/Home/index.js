@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import UserTopBar from '../UserTopBar';
 import PostList from '../PostList';
+import './styles.css';
 
 class Home extends Component {
     // For now, we have one user
@@ -61,8 +62,8 @@ class Home extends Component {
     }
 
     handleExpandPost = post => {
-        console.log('expand post')
-        console.log(post)
+        // console.log('expand post')
+        // console.log(post)
         this.setState({
             showExpandedPost: true,
             expandedPost: post
@@ -70,8 +71,8 @@ class Home extends Component {
     }
 
     handleMinimizePost = post => {
-        console.log('minimize post')
-        console.log(post)
+        // console.log('minimize post')
+        // console.log(post)
         this.setState({
             showExpandedPost: false,
             expandedPost: {}
@@ -84,7 +85,8 @@ class Home extends Component {
         return (  
             <div>
                 <UserTopBar user={user} />
-                <div className='home__posts-container'>
+                <div className='home__middle-block'>
+                    <p>Hello</p>
                     <PostList 
                         posts={posts} 
                         handleExpandPost={this.handleExpandPost} 
