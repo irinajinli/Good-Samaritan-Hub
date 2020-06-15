@@ -35,16 +35,22 @@ function App() {
   return (
     <React.Fragment>
       <ThemeProvider theme={theme}>
-        <TopBar />
         <BrowserRouter>
           <Switch> 
             { /* Shows a different component depending on the exact path in the URL */ }
-            <Route exact path='/' render={() => (<Landing />)}/>
-            <Route exact path='/login' render={() => (<Login />)}/>
-            <Route exact path='/registration' render={() => (<Registration />)}/>
+
             <Route exact path='/home' render={() => (<Home />)}/>
-            <Route exact path='/admin' render={() => (<AdminLogin />)}/>
             <Route exact path='/admin/home' render={() => (<AdminHome />)}/>
+
+            { /* The pages in this fragment share the same top bar */ }
+            <React.Fragment>
+              <TopBar />
+              <Route exact path='/' render={() => (<Landing />)}/>
+              <Route exact path='/login' render={() => (<Login />)}/>
+              <Route exact path='/registration' render={() => (<Registration />)}/>
+              <Route exact path='/admin' render={() => (<AdminLogin />)}/>
+            </React.Fragment>
+
           </Switch>
         </BrowserRouter>
       </ThemeProvider>
