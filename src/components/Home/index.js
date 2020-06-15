@@ -1,13 +1,46 @@
 import React, { Component } from 'react';
 
 import UserTopBar from '../UserTopBar';
+import PostList from '../PostList';
 
 class Home extends Component {
-    state = {  }
+    state = {  
+        posts: [
+            {
+                title: 'Grocery Pickup',
+                body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                    tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+                    commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+                    eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+                    nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+                    adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+                poster: 'Bobsy Bob',
+                type: 'Request',
+                date: new Date(2020, 6, 12),
+                status: 'active'
+            },
+            {
+                title: 'Any pickup in Etobicoke Area',
+                body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                    tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+                    commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+                    eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+                    nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+                    adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+                poster: 'Dani Doe',
+                type: 'Offer',
+                date: new Date(2020, 6, 5),
+                status: 'active'
+            }
+        ]
+    }
     render() { 
+        const {posts} = this.state;
+
         return (  
             <div>
                 <UserTopBar />
+                <PostList posts={posts}/>
             </div>
         );
     }

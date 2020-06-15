@@ -37,18 +37,15 @@ export default function UserTopBar() {
             Good Samaritan Hub
           </Typography>
 
-          <Button color="inherit">
-            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
               <MailIcon />
-            </IconButton>
-          </Button>
-
-          <Button color="inherit">
-            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
-              <AccountBoxIcon />
-            </IconButton>
-            John Smith
-          </Button>
+          </IconButton>
+          
+          <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
+            <AccountBoxIcon />
+          </IconButton>
+            
+          <Typography>John Smith</Typography>
 
         </Toolbar>
       </AppBar>
