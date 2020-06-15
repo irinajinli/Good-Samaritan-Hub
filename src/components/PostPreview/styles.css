@@ -1,5 +1,12 @@
-.post-preview {
-    margin: 10px 25%
+.post-preview__card {
+    margin: 10px 0px;
+    display: inline-block;
+}
+
+.post-preview__content {
+    width: 99%;
+    padding: 10px;
+    display: inline-block;
 }
 
 .post-preview__left-block {
@@ -22,5 +29,9 @@
 }
 
 .post-preview__type {
-    margin: 15px 5px 15px 5px
+    /* margin: 15px 5px 15px 5px */
+}
+
+.MuiChip-root {
+    margin: 0px 5px;
 }

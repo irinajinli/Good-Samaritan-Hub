@@ -11,15 +11,14 @@ class PostPreview extends Component {
     state = {  
     }
     
-
     render() { 
         const {post} = this.props;
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
         return (  
-            <Card className='post-preview'>
-                <CardContent>
+            <Card className='post-preview__card'>
+                <div className='post-preview__content'>
                     <div className='post-preview__left-block'>
                         <div className='post-preview__poster'>
                             {post.poster}<span> — </span>{`${month} ${day}, ${year }`}
@@ -28,11 +27,12 @@ class PostPreview extends Component {
                     </div>
                     <div className='post-preview__right-block'>
                         <Chip className='post-preview__type' label={post.type} />
+                        <Chip className='post-preview__distance' label={`${16} km`} /> {/* TODO: calc distance */}
                         <IconButton>
                             <ZoomOutMapIcon />
                         </IconButton>
                     </div>
-                </CardContent>
+                </div>
             </Card>
         );
     }

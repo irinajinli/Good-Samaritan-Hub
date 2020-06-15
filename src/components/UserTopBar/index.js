@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserTopBar() {
+export default function UserTopBar(props) {
   const classes = useStyles();
+  
+  const {user} = props;
 
   return (
     <div className={classes.root}>
@@ -45,7 +47,7 @@ export default function UserTopBar() {
             <AccountBoxIcon />
           </IconButton>
             
-          <Typography>John Smith</Typography>
+          <Typography>{`${user.firstName} ${user.lastName}`}</Typography>
 
         </Toolbar>
       </AppBar>
