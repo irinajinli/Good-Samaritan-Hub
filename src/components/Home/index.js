@@ -55,16 +55,44 @@ class Home extends Component {
 
     state = {  
         user: this.users[0], // Change this based on which user is logged in
-        posts: this.posts
+        posts: this.posts,
+        showExpandedPost: false,
+        expandedPost: {}
+    }
+
+    handleExpandPost = post => {
+        console.log('expand post')
+        console.log(post)
+        this.setState({
+            showExpandedPost: true,
+            expandedPost: post
+        })
+    }
+
+    handleMinimizePost = post => {
+        console.log('minimize post')
+        console.log(post)
+        this.setState({
+            showExpandedPost: false,
+            expandedPost: {}
+        })
     }
     
     render() { 
-        const {user, posts} = this.state;
+        const {user, posts, showExpandedPost, expandedPost} = this.state;
 
         return (  
             <div>
                 <UserTopBar user={user} />
-                <PostList posts={user, posts}/>
+                <div className='home__posts-container'>
+                    <PostList 
+                        posts={posts} 
+                        handleExpandPost={this.handleExpandPost} 
+                        showExpandedPost={showExpandedPost} 
+                        expandedPost={expandedPost}
+                        handleMinimizePost={this.handleMinimizePost} 
+                    />
+                </div>
             </div>
         );
     }

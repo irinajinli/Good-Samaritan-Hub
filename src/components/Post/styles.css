@@ -1,36 +1,40 @@
-.post-preview__card {
+.post__card {
     margin: 10px 0px;
     display: inline-block;
 }
 
-.post-preview__content {
-    width: 99%;
+.post__block {
+    width: 97%;
     padding: 10px;
     display: inline-block;
 }
 
-.post-preview__left-block {
+.post__body {
+    margin: 5px;
+}
+
+.post__left-block {
     float: left;
 }
 
-.post-preview__right-block {
+.post__right-block {
     float: right;
 }
 
-.post-preview__poster {
+.post__poster {
     color: grey;
     font-size: 12px;
     margin: 5px;
 }
 
-.post-preview__title {
+.post__title {
     font-weight: bold;
     margin: 5px;
 }
 
-.post-preview__type {
-    /* margin: 15px 5px 15px 5px */
-}
+/* .post__type {
+    margin: 15px 5px 15px 5px
+} */
 
 .MuiChip-root {
     margin: 0px 5px;

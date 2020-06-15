@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { uid } from "react-uid";
 
-import PostPreview from '../PostPreview'
+import Post from '../Post'
 import './styles.css'
 
 class PostList extends Component {
@@ -9,15 +9,26 @@ class PostList extends Component {
     }
 
     render() { 
-        const {user, posts} = this.props;
+        const {posts, handleExpandPost, showExpandedPost, expandedPost, handleMinimizePost} = this.props;
         return (  
-            <div className='student-list__container'>
-                {posts.map(post => (
-                    <PostPreview 
+            <div className='post-list__container'>
+                {!showExpandedPost && posts.map(post => (
+                    <Post 
                         key={uid(post)}
                         post={post}
+                        isExpanded={showExpandedPost}
+                        handleExpandPost={handleExpandPost}
+                        handleMinimizePost={handleMinimizePost}
                     />
                 ))}
+                {showExpandedPost && 
+                    <Post 
+                        post={expandedPost}
+                        isExpanded={showExpandedPost}
+                        handleExpandPost={handleExpandPost}
+                        handleMinimizePost={handleMinimizePost}
+                    />
+                }
             </div>
         );
     }
