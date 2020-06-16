@@ -68,7 +68,7 @@ class Home extends Component {
                 commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
                 eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
                 nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-                adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+                adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
             poster: this.users[1],
             type: 'Request',
             date: new Date(2020, 6, 12),
@@ -98,6 +98,12 @@ class Home extends Component {
         creatingNewPost: false
     }
 
+    componentDidMount() {
+        // Temporary solution to add hard-coded posts to the hard-coded users
+        this.users[1].posts.push(this.posts[0]);
+        this.users[2].posts.push(this.posts[1]);
+    }
+
     componentDidUpdate() {
         // Reset home page when browswer back button is pressed
         window.onpopstate = () => {
@@ -112,8 +118,6 @@ class Home extends Component {
     }
 
     handleExpandPost = post => {
-        // console.log('expand post')
-        // console.log(post)
         this.handleBrowserBackButton();
         this.setState({
             showExpandedPost: true,
@@ -122,7 +126,6 @@ class Home extends Component {
     }
 
     handleOpenPostCreator = () => {
-        // console.log('open new post form')
         this.handleBrowserBackButton();
         this.setState({
             creatingNewPost: true
@@ -130,7 +133,6 @@ class Home extends Component {
     }
 
     handleBackToHome = () => {
-        // console.log('back to home')
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -139,10 +141,19 @@ class Home extends Component {
     }
 
     handleCreateNewPost = (newPost) => {
-        const newPosts = this.state.posts;
-        newPosts.push(newPost)
+        // Add new post to the global post list
+        const newPosts = this.state.posts.concat(newPost);
+
+        // Add new post to the user's post list
+        const user = {...this.state.user};
+        const userPosts = user.posts.concat(newPost);
+        user.posts = userPosts;
+
+        // State should not be modified before we call setState
+        console.log(this.state.user)
         this.setState({
-            posts: newPosts
+            posts: newPosts,
+            user: user
         });
         this.handleBackToHome();
     }
