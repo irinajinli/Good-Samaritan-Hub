@@ -9,7 +9,6 @@ import NewPostForm from '../NewPostForm';
 import './styles.css';
 
 class Home extends Component {
-    // Currently we have one user
     users = [
         {
             username: 'user',
@@ -26,7 +25,39 @@ class Home extends Component {
             reportedMessages: [],
             reportedPosts: [],
             banReason: ''
-        }
+        },
+        {
+            username: 'user2',
+            password: 'user2',
+            firstName: 'Bobsy',
+            lastName: 'Bob',
+            location: '', // TODO
+            bio: 'Hello world, I am Bobsy Bob!',
+            posts: [],
+            messagesSent: [],
+            messagesRecieved: [],
+            isReported: false,
+            isBanned: false,
+            reportedMessages: [],
+            reportedPosts: [],
+            banReason: ''
+        },
+        {
+            username: 'user3',
+            password: 'user3',
+            firstName: 'Diane',
+            lastName: 'Doe',
+            location: '', // TODO
+            bio: 'Hello world, I am Diane Doe!',
+            posts: [],
+            messagesSent: [],
+            messagesRecieved: [],
+            isReported: false,
+            isBanned: false,
+            reportedMessages: [],
+            reportedPosts: [],
+            banReason: ''
+        },
     ];
 
     posts = [
@@ -38,7 +69,7 @@ class Home extends Component {
                 eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
                 nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
                 adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-            poster: 'Bobsy Bob',
+            poster: this.users[1],
             type: 'Request',
             date: new Date(2020, 6, 12),
             status: 'active'
@@ -51,7 +82,7 @@ class Home extends Component {
                 eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
                 nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
                 adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-            poster: 'Dani Doe',
+            poster: this.users[2],
             type: 'Offer',
             date: new Date(2020, 6, 5),
             status: 'active'
@@ -60,6 +91,7 @@ class Home extends Component {
 
     state = {  
         user: this.users[0], // Change this based on which user is logged in
+        users: this.users,
         posts: this.posts,
         showExpandedPost: false,
         expandedPost: {},
@@ -69,11 +101,7 @@ class Home extends Component {
     componentDidUpdate() {
         // Reset home page when browswer back button is pressed
         window.onpopstate = () => {
-            this.setState({
-                showExpandedPost: false,
-                expandedPost: {},
-                creatingNewPost: false
-            });
+            this.handleBackToHome();
         }
     }
 
@@ -109,7 +137,15 @@ class Home extends Component {
             creatingNewPost: false
         })
     }
-    
+
+    handleCreateNewPost = (newPost) => {
+        const newPosts = this.state.posts;
+        newPosts.push(newPost)
+        this.setState({
+            posts: newPosts
+        });
+        this.handleBackToHome();
+    }
     
     render() { 
         const {user, posts, showExpandedPost, expandedPost, creatingNewPost} = this.state;
@@ -137,7 +173,9 @@ class Home extends Component {
 
                     {creatingNewPost && 
                     <NewPostForm
+                        user={user}
                         handleBackToHome={this.handleBackToHome}
+                        handleCreateNewPost={this.handleCreateNewPost}
                     />}
                 </div>
 

@@ -21,7 +21,7 @@ class Post extends Component {
                 <div className='post__block'>
                     <div className='post__left-block'>
                         <div className='post__poster'>
-                            {post.poster}<span> — </span>{`${month} ${day}, ${year }`}
+                            {`${post.poster.firstName} ${post.poster.lastName}`}<span> — </span>{`${month} ${day}, ${year }`}
                         </div>
                         <div className='post__title'>{post.title}</div>
                     </div>

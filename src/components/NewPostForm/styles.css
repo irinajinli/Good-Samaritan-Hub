@@ -1,3 +1,11 @@
 .new-post__input {
     margin: 20px 5px;
 }
+
+.new-post__type {
+    padding-top: 15px;
+}
+
+.home__create-post-btn {
+    padding-top: 40px;
+}
