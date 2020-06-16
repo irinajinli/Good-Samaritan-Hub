@@ -21,12 +21,16 @@
     display: inline-block;
 }
 
+.MuiButton-root.post__send-msg-btn {
+    margin-left: 10px;
+}
+
 .post__report-btn {
     float: right;
 }
 
 .MuiIconButton-sizeSmall.post__report-btn {
-    padding-right: 10px;
+    margin-right: 5px;
 }
 
 .post__left-block {
