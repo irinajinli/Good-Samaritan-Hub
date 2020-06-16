@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import CreateIcon from '@material-ui/icons/Create';
+import Button from "@material-ui/core/Button";
 
 import UserTopBar from '../UserTopBar';
 import PostList from '../PostList';
+import NewPostForm from '../NewPostForm';
 import './styles.css';
 
 class Home extends Component {
-    // For now, we have one user
+    // Currently we have one user
     users = [
         {
             username: 'user',
@@ -58,7 +62,8 @@ class Home extends Component {
         user: this.users[0], // Change this based on which user is logged in
         posts: this.posts,
         showExpandedPost: false,
-        expandedPost: {}
+        expandedPost: {},
+        creatingNewPost: false,
     }
 
     handleExpandPost = post => {
@@ -70,31 +75,52 @@ class Home extends Component {
         })
     }
 
-    handleMinimizePost = post => {
-        // console.log('minimize post')
-        // console.log(post)
+    handleOpenPostCreator = () => {
+        // console.log('open new post form')
+        this.setState({
+            creatingNewPost: true
+        })
+    }
+
+    handleBackToHome = () => {
+        // console.log('back to home')
         this.setState({
             showExpandedPost: false,
-            expandedPost: {}
+            expandedPost: {},
+            creatingNewPost: false
         })
     }
     
     render() { 
-        const {user, posts, showExpandedPost, expandedPost} = this.state;
+        const {user, posts, showExpandedPost, expandedPost, creatingNewPost} = this.state;
 
         return (  
             <div>
                 <UserTopBar user={user} />
+
                 <div className='home__middle-block'>
-                    <p>Hello</p>
+                    {!showExpandedPost && !creatingNewPost &&
+                    <Button id='home__create-post-btn'
+                            onClick={this.handleOpenPostCreator}
+                    >
+                        Make your own post{'\u00A0'}<CreateIcon />
+                    </Button>}
+
+                    {!creatingNewPost &&
                     <PostList 
                         posts={posts} 
                         handleExpandPost={this.handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
-                        handleMinimizePost={this.handleMinimizePost} 
-                    />
+                        handleBackToHome={this.handleBackToHome} 
+                    />}
+
+                    {creatingNewPost && 
+                    <NewPostForm
+                        handleBackToHome={this.handleBackToHome}
+                    />}
                 </div>
+
             </div>
         );
     }

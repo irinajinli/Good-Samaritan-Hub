@@ -12,7 +12,7 @@ class Post extends Component {
     }
     
     render() { 
-        const {post, isExpanded, handleExpandPost , handleMinimizePost} = this.props;
+        const {post, isExpanded, handleExpandPost , handleBackToHome} = this.props;
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
@@ -33,7 +33,7 @@ class Post extends Component {
                             <ArrowForwardIcon />
                         </IconButton>}
                         {isExpanded && 
-                        <IconButton onClick={() => handleMinimizePost(post)}>
+                        <IconButton onClick={() => handleBackToHome(post)}>
                             <ArrowBackIcon />
                         </IconButton>}
                     </div>

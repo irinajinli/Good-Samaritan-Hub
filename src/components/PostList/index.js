@@ -9,7 +9,7 @@ class PostList extends Component {
     }
 
     render() { 
-        const {posts, handleExpandPost, showExpandedPost, expandedPost, handleMinimizePost} = this.props;
+        const {posts, handleExpandPost, showExpandedPost, expandedPost, handleBackToHome} = this.props;
         return (  
             <div className='post-list__container'>
                 {!showExpandedPost && posts.map(post => (
@@ -18,7 +18,7 @@ class PostList extends Component {
                         post={post}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
-                        handleMinimizePost={handleMinimizePost}
+                        handleBackToHome={handleBackToHome}
                     />
                 ))}
                 {showExpandedPost && 
@@ -26,7 +26,7 @@ class PostList extends Component {
                         post={expandedPost}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
-                        handleMinimizePost={handleMinimizePost}
+                        handleBackToHome={handleBackToHome}
                     />
                 }
             </div>

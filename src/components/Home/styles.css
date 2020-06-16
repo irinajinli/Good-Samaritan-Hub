@@ -3,3 +3,7 @@
     width: 50%;
     display: inline-block;
 }
+
+#home__create-post-btn {
+    margin: 10px 0px;
+}
