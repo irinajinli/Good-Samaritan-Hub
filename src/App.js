@@ -14,8 +14,7 @@ import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
 class App extends Component {
-
-  // GLobal theme
+  // Global theme
   theme = createMuiTheme({
     typography: {
       fontFamily: [
@@ -152,11 +151,7 @@ class App extends Component {
                 <TopBar />
                 <Route exact path="/" render={() => <Landing />} />
                 <Route exact path="/login" render={() => <Login />} />
-                <Route
-                  exact
-                  path="/registration"
-                  render={() => <Registration />}
-                />
+                <Route exact path="/registration" render={() => <Registration />} />
                 <Route exact path="/admin" render={() => <AdminLogin />} />
               </React.Fragment>
 
@@ -169,13 +164,3 @@ class App extends Component {
 }
  
 export default App;
-
-// function App() {
-//   const 
-
-//   return (
-
-//   );
-// }
-
-// export default App;
