@@ -11,9 +11,6 @@ import './styles.css';
 class Home extends Component {
     
     state = {  
-        // user: this.users[0], // TODO: Change this based on which user is logged in
-        // users: this.users,
-        // posts: this.posts,
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false
@@ -80,7 +77,7 @@ class Home extends Component {
     }
     
     render() { 
-        const { user, posts } = this.props;
+        const { user, users, posts } = this.props;
         const { showExpandedPost, expandedPost, creatingNewPost} = this.state;
 
         return (  

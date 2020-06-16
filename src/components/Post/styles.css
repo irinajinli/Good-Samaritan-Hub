@@ -13,6 +13,14 @@
     margin: 5px;
 }
 
+.post__send-msg-btn-wrapper {
+    text-align: center;
+}
+
+.post__send-msg-btn {
+    display: inline-block;
+}
+
 .post__left-block {
     float: left;
 }

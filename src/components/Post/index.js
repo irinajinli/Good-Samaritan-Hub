@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -26,7 +27,7 @@ class Post extends Component {
                         <div className='post__title'>{post.title}</div>
                     </div>
                     <div className='post__right-block'>
-                        <Chip className='post__type' label={post.type} />
+                        <Button className='post__type' label={post.type} />
                         <Chip className='post__distance' label={`${16} km`} /> {/* TODO: calc distance */}
                         {!isExpanded && 
                         <IconButton onClick={() => handleExpandPost(post)}>
@@ -39,9 +40,16 @@ class Post extends Component {
                     </div>
                 </div>
                 {isExpanded && 
-                <div className='post__block'>
-                    <div className='post__body'>{post.body}</div>
-                </div>}
+                <React.Fragment>
+                    <div className='post__block'>
+                        <div className='post__body'>{post.body}</div>
+                    </div>
+                    <div className='post__block post__send-msg-btn-wrapper'>
+                        <Button className='post__send-msg-btn'>
+                            Send a message
+                        </Button>
+                    </div>
+                </React.Fragment>}
             </Card>
         );
     }
