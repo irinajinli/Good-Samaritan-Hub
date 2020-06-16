@@ -13,12 +13,20 @@
     margin: 5px;
 }
 
-.post__send-msg-btn-wrapper {
+.post__footer {
     text-align: center;
 }
 
 .post__send-msg-btn {
     display: inline-block;
+}
+
+.post__report-btn {
+    float: right;
+}
+
+.MuiIconButton-sizeSmall.post__report-btn {
+    padding-right: 10px;
 }
 
 .post__left-block {

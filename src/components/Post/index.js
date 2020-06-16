@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ReportIcon from '@material-ui/icons/Report';
 
 import './styles.css'
 
@@ -44,10 +45,13 @@ class Post extends Component {
                     <div className='post__block'>
                         <div className='post__body'>{post.body}</div>
                     </div>
-                    <div className='post__block post__send-msg-btn-wrapper'>
+                    <div className='post__block post__footer'>
                         <Button className='post__send-msg-btn'>
                             Send a message
                         </Button>
+                        <IconButton size='small' className='post__report-btn'>
+                            <ReportIcon fontSize='small' color='disabled'/>
+                        </IconButton>
                     </div>
                 </React.Fragment>}
             </Card>
