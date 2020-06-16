@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import CreateIcon from '@material-ui/icons/Create';
 import Button from "@material-ui/core/Button";
+import { withRouter } from 'react-router'
 
 import UserTopBar from '../UserTopBar';
 import PostList from '../PostList';
@@ -63,12 +63,30 @@ class Home extends Component {
         posts: this.posts,
         showExpandedPost: false,
         expandedPost: {},
-        creatingNewPost: false,
+        creatingNewPost: false
+    }
+
+    componentDidUpdate() {
+        // Reset home page when browswer back button is pressed
+        window.onpopstate = () => {
+            this.setState({
+                showExpandedPost: false,
+                expandedPost: {},
+                creatingNewPost: false
+            });
+        }
+    }
+
+    // Add /home the browser history so the browser back button doesn't take the 
+    // user back to the login page after expanding a post or creating a new post
+    handleBrowserBackButton = () => {
+        this.props.history.push('/home');
     }
 
     handleExpandPost = post => {
         // console.log('expand post')
         // console.log(post)
+        this.handleBrowserBackButton();
         this.setState({
             showExpandedPost: true,
             expandedPost: post
@@ -77,6 +95,7 @@ class Home extends Component {
 
     handleOpenPostCreator = () => {
         // console.log('open new post form')
+        this.handleBrowserBackButton();
         this.setState({
             creatingNewPost: true
         })
@@ -91,6 +110,7 @@ class Home extends Component {
         })
     }
     
+    
     render() { 
         const {user, posts, showExpandedPost, expandedPost, creatingNewPost} = this.state;
 
@@ -101,7 +121,7 @@ class Home extends Component {
                 <div className='home__middle-block'>
                     {!showExpandedPost && !creatingNewPost &&
                     <Button id='home__create-post-btn'
-                            onClick={this.handleOpenPostCreator}
+                            onClick={this.handleOpenPostCreator}                           
                     >
                         Make your own post{'\u00A0'}<CreateIcon />
                     </Button>}
@@ -126,4 +146,4 @@ class Home extends Component {
     }
 }
  
-export default Home;
+export default withRouter(Home);
