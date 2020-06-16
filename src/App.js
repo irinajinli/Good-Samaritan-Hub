@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -13,8 +13,10 @@ import Home from "./components/Home";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
-function App() {
-  const theme = createMuiTheme({
+class App extends Component {
+
+  // GLobal theme
+  theme = createMuiTheme({
     typography: {
       fontFamily: [
         "-apple-system",
@@ -32,33 +34,148 @@ function App() {
     },
   });
 
-  return (
-    <React.Fragment>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Switch>
-            {/* Shows a different component depending on the exact path in the URL */}
+  // Hard-coded users
+  users = [
+    {
+      username: 'user',
+      password: 'user',
+      firstName: 'John',
+      lastName: 'Smith',
+      location: '', // TODO
+      bio: 'Hello world, I am John Smith!',
+      posts: [],
+      messagesSent: [],
+      messagesRecieved: [],
+      isReported: false,
+      isBanned: false,
+      reportedMessages: [],
+      reportedPosts: [],
+      banReason: ''
+    },
+    {
+      username: 'user2',
+      password: 'user2',
+      firstName: 'Bobsy',
+      lastName: 'Bob',
+      location: '', // TODO
+      bio: 'Hello world, I am Bobsy Bob!',
+      posts: [],
+      messagesSent: [],
+      messagesRecieved: [],
+      isReported: false,
+      isBanned: false,
+      reportedMessages: [],
+      reportedPosts: [],
+      banReason: ''
+    },
+    {
+      username: 'user3',
+      password: 'user3',
+      firstName: 'Diane',
+      lastName: 'Doe',
+      location: '', // TODO
+      bio: 'Hello world, I am Diane Doe!',
+      posts: [],
+      messagesSent: [],
+      messagesRecieved: [],
+      isReported: false,
+      isBanned: false,
+      reportedMessages: [],
+      reportedPosts: [],
+      banReason: ''
+    },
+  ] ;
 
-            <Route exact path="/home" render={() => <Home />} />
-            <Route exact path="/admin/home" render={() => <AdminHome />} />
+  // Hard-coded posts
+  posts = [
+    {
+      title: 'Grocery Pickup',
+      body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+        tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+        commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+        eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+        nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+        adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
+      poster: this.users[1],
+      type: 'Request',
+      date: new Date(2020, 6, 12),
+      status: 'active'
+    },
+    {
+      title: 'Any pickup in Etobicoke Area',
+      body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+        tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+        commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+        eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+        nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+        adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+      poster: this.users[2],
+      type: 'Offer',
+      date: new Date(2020, 6, 5),
+      status: 'active'
+    }
+  ];
 
-            {/* The pages in this fragment share the same top bar */}
-            <React.Fragment>
-              <TopBar />
-              <Route exact path="/" render={() => <Landing />} />
-              <Route exact path="/login" render={() => <Login />} />
-              <Route
-                exact
-                path="/registration"
-                render={() => <Registration />}
-              />
-              <Route exact path="/admin" render={() => <AdminLogin />} />
-            </React.Fragment>
-          </Switch>
-        </BrowserRouter>
-      </ThemeProvider>
-    </React.Fragment>
-  );
+  // Initial global state
+  state = {  
+    user: this.users[0], // Current user that is logged in. TODO: Init to {}/undefined and change this based on which user is logged in
+    users: this.users,
+    posts: this.posts,
+  }
+  
+  componentDidMount() {
+    // Temporary solution to add hard-coded posts to the hard-coded users's post lists
+    this.users[1].posts.push(this.posts[0]);
+    this.users[2].posts.push(this.posts[1]);
+  }
+
+  render() { 
+    const { user, users, posts } = this.state;
+
+    return (  
+      <React.Fragment>
+        <ThemeProvider theme={this.theme}>
+          <BrowserRouter>
+            <Switch>
+              {/* Shows a different component depending on the exact path in the URL */}
+
+              <Route exact path="/home" render={() => <Home
+                                                        appComponent={this}
+                                                        user={user}
+                                                        users={users}
+                                                        posts={posts}
+                                                      />} />
+              <Route exact path="/admin/home" render={() => <AdminHome />} />
+
+              {/* The pages in this fragment share the same top bar */}
+              <React.Fragment>
+                <TopBar />
+                <Route exact path="/" render={() => <Landing />} />
+                <Route exact path="/login" render={() => <Login />} />
+                <Route
+                  exact
+                  path="/registration"
+                  render={() => <Registration />}
+                />
+                <Route exact path="/admin" render={() => <AdminLogin />} />
+              </React.Fragment>
+
+            </Switch>
+          </BrowserRouter>
+        </ThemeProvider>
+      </React.Fragment>
+    );
+  }
 }
-
+ 
 export default App;
+
+// function App() {
+//   const 
+
+//   return (
+
+//   );
+// }
+
+// export default App;
