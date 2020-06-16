@@ -9,6 +9,7 @@ import NewPostForm from '../NewPostForm';
 import './styles.css';
 
 class Home extends Component {
+    // Hard-coded users
     users = [
         {
             username: 'user',
@@ -60,6 +61,7 @@ class Home extends Component {
         },
     ];
 
+    // Hard-coded posts
     posts = [
         {
             title: 'Grocery Pickup',
@@ -90,7 +92,7 @@ class Home extends Component {
     ];
 
     state = {  
-        user: this.users[0], // Change this based on which user is logged in
+        user: this.users[0], // TODO: Change this based on which user is logged in
         users: this.users,
         posts: this.posts,
         showExpandedPost: false,
@@ -99,19 +101,19 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        // Temporary solution to add hard-coded posts to the hard-coded users
+        // Temporary solution to add hard-coded posts to the hard-coded users's post lists
         this.users[1].posts.push(this.posts[0]);
         this.users[2].posts.push(this.posts[1]);
     }
 
     componentDidUpdate() {
-        // Reset home page when browswer back button is pressed
+        // Reset home page when browser's back button is pressed
         window.onpopstate = () => {
             this.handleBackToHome();
         }
     }
 
-    // Add /home the browser history so the browser back button doesn't take the 
+    // Add /home the browser history so the browser's back button doesn't take the 
     // user back to the login page after expanding a post or creating a new post
     handleBrowserBackButton = () => {
         this.props.history.push('/home');
@@ -141,10 +143,10 @@ class Home extends Component {
     }
 
     handleCreateNewPost = (newPost) => {
-        // Add new post to the global post list
+        // Add new post to a copy of the global post list
         const newPosts = this.state.posts.concat(newPost);
 
-        // Add new post to the user's post list
+        // Add new post to a copy of the cloned user's post list
         const user = {...this.state.user};
         const userPosts = user.posts.concat(newPost);
         user.posts = userPosts;
@@ -165,6 +167,7 @@ class Home extends Component {
             <div>
                 <UserTopBar user={user} />
 
+                {/* The middle section of the page */}
                 <div className='home__middle-block'>
                     {!showExpandedPost && !creatingNewPost &&
                     <Button id='home__create-post-btn'
