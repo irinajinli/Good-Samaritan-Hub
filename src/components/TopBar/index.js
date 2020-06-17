@@ -30,14 +30,16 @@ export default function TopBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <EmojiNatureIcon />
-          </IconButton>
+          <Link className="link" to={"/"}>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <EmojiNatureIcon />
+            </IconButton>
+          </Link>
           <Typography variant="h6" className={classes.title}>
             Good Samaritan Hub
           </Typography>
