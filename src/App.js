@@ -83,6 +83,38 @@ class App extends Component {
       reportedPosts: [],
       banReason: ''
     },
+    {
+      username: 'user4',
+      password: 'user4',
+      firstName: 'Jack',
+      lastName: 'Scott',
+      location: '', // TODO
+      bio: 'I am!',
+      posts: [],
+      messagesSent: [],
+      messagesRecieved: [],
+      isReported: false,
+      isBanned: false,
+      reportedMessages: [],
+      reportedPosts: [],
+      banReason: ''
+    },
+    {
+      username: 'user5',
+      password: 'user5',
+      firstName: 'Sally',
+      lastName: 'Sue',
+      location: '', // TODO
+      bio: 'Hello world, I am a scammer!',
+      posts: [],
+      messagesSent: [],
+      messagesRecieved: [],
+      isReported: false,
+      isBanned: false,
+      reportedMessages: [],
+      reportedPosts: [],
+      banReason: ''
+    },
   ] ;
 
   // Hard-coded posts
