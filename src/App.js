@@ -144,7 +144,7 @@ class App extends Component {
                                                         users={users}
                                                         posts={posts}
                                                       />} />
-              <Route exact path="/admin/home" render={() => <AdminHome />} />
+              <Route exact path="/admin/home" render={() => <AdminHome users={users}/>} />
 
               {/* The pages in this fragment share the same top bar */}
               <React.Fragment>
