@@ -9,6 +9,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import EmojiNatureIcon from "@material-ui/icons/EmojiNature";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +41,12 @@ export default function TopBar() {
           <Typography variant="h6" className={classes.title}>
             Good Samaritan Hub
           </Typography>
+          <Link className="link" to={"/login"}>
+            <Button variant="contained">Login</Button>
+          </Link>
+          <Link className="link" to={"/registration"}>
+            <Button variant="contained">Register</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </div>
