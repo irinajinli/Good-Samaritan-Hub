@@ -93,7 +93,7 @@ class App extends Component {
       posts: [],
       messagesSent: [],
       messagesRecieved: [],
-      isReported: false,
+      isReported: true,
       isBanned: false,
       reportedMessages: [],
       reportedPosts: [],
@@ -110,7 +110,7 @@ class App extends Component {
       messagesSent: [],
       messagesRecieved: [],
       isReported: false,
-      isBanned: false,
+      isBanned: true,
       reportedMessages: [],
       reportedPosts: [],
       banReason: ''
