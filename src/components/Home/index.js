@@ -8,18 +8,38 @@ import PostList from '../PostList';
 import NewPostForm from '../NewPostForm';
 import './styles.css';
 
+import { sortByDistance } from '../../actions/distance'
+
 class Home extends Component {
-    
     state = {  
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false
     }
 
-    componentDidUpdate() {
+    sortPosts() {
+        const { user, posts, appComponent } = this.props;
+        const postsCopy = sortByDistance(user, posts);
+
+        // Posts should not be modified before calling setState
+        console.log(posts);
+        appComponent.setState({
+            posts: postsCopy
+        });
+    }
+
+    componentDidMount() {
+        this.sortPosts();
+    }
+
+    componentDidUpdate(prevProps) {
         // Reset home page when browser's back button is pressed
         window.onpopstate = () => {
             this.handleBackToHome();
+        }
+
+        if (prevProps.posts.length > this.props.posts.length) {
+            this.sortPosts();
         }
     }
 
@@ -53,23 +73,25 @@ class Home extends Component {
     }
 
     handleCreateNewPost = newPost => {
-        const {appComponent} = this.props;
+        const { user, posts, appComponent } = this.props;
 
         // Add new post to a copy of the global post list
-        const newPosts = appComponent.state.posts.concat(newPost);
+        let newPosts = posts.concat(newPost);
+        newPosts = sortByDistance(user, newPosts);
 
         // Add new post to a copy of the cloned user's post list
-        const user = {...appComponent.state.user};
-        const userPosts = user.posts.concat(newPost);
-        user.posts = userPosts;
+        const userCopy = { ...user };
+        const userPosts = userCopy.posts.concat(newPost);
+        userCopy.posts = userPosts;
 
         // State should not be modified before we call setState
-        console.log(appComponent.state.user)
+        // console.log(posts)
+        // console.log(user)
 
         // Update appComponent's state
         appComponent.setState({
             posts: newPosts,
-            user: user
+            user: userCopy
         });
 
         // Reset home page
@@ -77,7 +99,7 @@ class Home extends Component {
     }
     
     render() { 
-        const { user, users, posts } = this.props;
+        const { user, posts } = this.props;
         const { showExpandedPost, expandedPost, creatingNewPost} = this.state;
 
         return (  
@@ -95,6 +117,7 @@ class Home extends Component {
 
                     {!creatingNewPost &&
                     <PostList 
+                        user={user}
                         posts={posts} 
                         handleExpandPost={this.handleExpandPost} 
                         showExpandedPost={showExpandedPost} 

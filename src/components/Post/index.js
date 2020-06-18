@@ -7,16 +7,22 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ReportIcon from '@material-ui/icons/Report';
 
-import './styles.css'
+import './styles.css';
+
+import { getDistance } from '../../actions/distance';
 
 class Post extends Component {
     state = {  
     }
     
     render() { 
-        const {post, isExpanded, handleExpandPost , handleBackToHome} = this.props;
+        const {user, post, isExpanded, handleExpandPost, handleBackToHome} = this.props;
+
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
+
+        let dist = getDistance(user, post.poster);
+        dist = Math.round(dist * 10) / 10;
 
         return (  
             <Card className='post__card'>
@@ -28,8 +34,8 @@ class Post extends Component {
                         <div className='post__title'>{post.title}</div>
                     </div>
                     <div className='post__right-block'>
-                        <Button className='post__type' label={post.type} />
-                        <Chip className='post__distance' label={`${16} km`} /> {/* TODO: calc distance */}
+                        <Chip className='post__type' label={post.type} />
+                        <Chip className='post__distance' label={`${dist} km`} />
                         {!isExpanded && 
                         <IconButton onClick={() => handleExpandPost(post)}>
                             <ArrowForwardIcon />

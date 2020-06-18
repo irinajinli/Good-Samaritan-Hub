@@ -5,16 +5,18 @@ import Post from '../Post'
 import './styles.css'
 
 class PostList extends Component {
-    state = {  
+    state = {
     }
 
     render() { 
-        const {posts, handleExpandPost, showExpandedPost, expandedPost, handleBackToHome} = this.props;
+        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, handleBackToHome} = this.props;
+        
         return (  
             <div className='post-list__container'>
                 {!showExpandedPost && posts.map(post => (
                     <Post 
                         key={uid(post)}
+                        user={user}
                         post={post}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
@@ -23,6 +25,7 @@ class PostList extends Component {
                 ))}
                 {showExpandedPost && 
                     <Post 
+                        user={user}
                         post={expandedPost}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
