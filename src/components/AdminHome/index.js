@@ -100,6 +100,15 @@ class AdminHome extends Component {
                     </Card>
                     <Card className="adminHome__reported-panel">
                         <h1>Report Details</h1>
+                        {selectedUser && selectedUser.isReported &&
+                            <label className="adminHome__center">Not done yet LOL</label>
+                        }
+                        {selectedUser && !selectedUser.isReported &&
+                            <label className="adminHome__center">{selectedUser.username} has not been reported</label>
+                        }
+                        {!selectedUser &&
+                            <label className="adminHome__center">No User Selected</label>
+                        }
                     </Card>
                 </div>
             </div>

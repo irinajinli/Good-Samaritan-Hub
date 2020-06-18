@@ -14,7 +14,8 @@
 }
 
 .adminHome__table {
-    max-width: 250px;
+    max-width: 300px;
+    min-width: 250px;
     margin: 10px;
     flex-grow: 1;
 }
@@ -22,20 +23,19 @@
 .adminHome__data {
     height: 100%;
     max-width: 500px;
+    min-width: 300px;
     flex-grow: 2;
     display: flex;
     flex-direction: column;
 }
 .adminHome__user-detail {
     position: relative;
-    max-width: 500px;
     margin: 10px;
     flex-grow: 1;
 }
 
 .adminHome__reported-panel {
     position: relative;
-    max-width: 500px;
     margin: 10px;
     flex-grow: 1;
 }
