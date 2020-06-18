@@ -4,6 +4,9 @@ const postalCodes = {
     M4V: {lat: 43.686989, lon: -79.402572},
     M4P: {lat: 43.697225, lon: -79.412968},
 
+    // Downtown Toronto
+    M5S: {lat: 43.663334, lon: -79.399336},
+
     // Downsview East / North York
     M3K: {lat: 43.738192, lon: -79.470333},
 
@@ -66,7 +69,7 @@ const users = [
     password: 'user4',
     firstName: 'Jack',
     lastName: 'Scott',
-    location: 'M3K',
+    location: 'M5S',
     bio: 'I am!',
     posts: [],
     messagesSent: [],
@@ -82,7 +85,7 @@ const users = [
     password: 'user5',
     firstName: 'Sally',
     lastName: 'Sue',
-    location: 'M4P',
+    location: 'M3K',
     bio: 'Hello world, I am a scammer!',
     posts: [],
     messagesSent: [],
@@ -122,12 +125,24 @@ const posts = [
     type: 'Offer',
     date: new Date(2020, 6, 5),
     status: 'active'
+  },
+  {
+    title: 'Dog Walking Assistance',
+    body: `Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+    poster: users[3],
+    type: 'Request',
+    date: new Date(2020, 6, 15),
+    status: 'active'
   }
 ];
 
 // Add hard-coded posts to the hard-coded users's post lists
 users[1].posts.push(posts[0]);
 users[2].posts.push(posts[1]);
+users[3].posts.push(posts[2]);
 
 export const getPostalCodes = () => postalCodes;
 
