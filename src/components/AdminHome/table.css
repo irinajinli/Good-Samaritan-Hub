@@ -1,0 +1,30 @@
+.table {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.table__header {
+    display: table-row;
+    font-size: large;
+    font-weight: bold;
+}
+
+.table__row {
+    display: table-row;
+    /*transition: background-color 200ms ease-in-out;*/
+    cursor: pointer;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.table__row:hover {
+    background-color: whitesmoke;
+}
+
+.table__cell {
+    display: table-cell;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: lightgrey;
+    padding: 7px 20px 7px 20px;
+}
