@@ -2,39 +2,57 @@
     text-decoration: none;
 }
 .adminHome {
-    background-color: whitesmoke;
-}
-.adminHome__content {
-    margin: 0px 10% 0px 10%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    background-color: whitesmoke;
 }
 
 .adminHome__table {
-    height: calc(100vh - 40px);
-    margin: 20px;
+    height: calc(100% - 20px);
+    max-width: 300px;
+    min-width: 250px;
+    margin: 10px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .adminHome__data {
-    position: relative;
-    height: calc(100vh - 40px);
-    margin: 20px;
+    height: 100%;
+    max-width: 500px;
+    min-width: 300px;
     flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+}
+.adminHome__user-detail {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 40%;
+    margin: 10px;
+    flex-grow: 1;
 }
 
-.adminHome__control {
+.adminHome__reported-panel {
+    display: flex;
+    flex-direction: column;
     position: relative;
-    height: calc(100vh - 40px);
-    margin: 20px;
-    flex-grow: 2;
+    min-height: 40%;
+    margin: 10px;
+    flex-grow: 1;
 }
 
 .adminHome__chip-active, .adminHome__chip-banned, .adminHome__chip-reported {
     border: none;
     cursor: default;
-    cursor: pointer;
+    pointer-events: none;
     height: 32px;
     display: inline-flex;
     outline: 0;
@@ -64,24 +82,29 @@
     background-color: bisque;
 }
 
+.adminHome__icon {
+    position: absolute;
+    border-style: solid;
+    margin: 10px 20px 10px 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
 h1 {
     margin: 10px 20px 10px 20px;
     font-size: large;
     font-weight: bold;
 }
 
-#adminHome__save-user-detail{
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    margin: 10px;
+.adminHome__label {
+    font-size: medium;
+    margin-right: 10px;
+    font-weight: bold;
 }
 
-#adminHome__discard-user-detail {
-    position: absolute;
-    right: 120px;
-    bottom: 10px;
-    margin: 10px;
+.adminHome__text {
+    margin: 5px 20px 5px 20px;
+    display: block;
 }
 
 #adminHome__submit {
@@ -94,37 +117,18 @@ h1 {
 }
 
 .adminHome__scroll {
-    max-height: 100%;
-    overflow: auto;
+    flex-grow: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-
-.table {
-    display: table;
-    width: 100%;
-    height: 100%;
+.adminHome__user-detail-text {
+    margin-left: 130px;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
 }
-
-.header {
-    display: table-row;
-    font-size: large;
-    font-weight: bold;
-}
-
-.row {
-    display: table-row;
-    /*transition: background-color 200ms ease-in-out;*/
-    cursor: pointer;
-    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-}
-
-.row:hover {
-    background-color: whitesmoke;
-}
-
-.cell {
-    display: table-cell;
-    border-style: none none solid none;
-    border-width: 1px;
-    border-color: gray;
-    padding: 10px 20px 10px 20px;
+.adminHome__center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
