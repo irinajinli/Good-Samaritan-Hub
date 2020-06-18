@@ -9,15 +9,17 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: stretch;
     background-color: whitesmoke;
 }
 
 .adminHome__table {
+    height: calc(100% - 20px);
     max-width: 300px;
     min-width: 250px;
     margin: 10px;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .adminHome__data {
@@ -29,13 +31,20 @@
     flex-direction: column;
 }
 .adminHome__user-detail {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    min-height: 40%;
     margin: 10px;
     flex-grow: 1;
 }
 
 .adminHome__reported-panel {
+    display: flex;
+    flex-direction: column;
     position: relative;
+    min-height: 40%;
     margin: 10px;
     flex-grow: 1;
 }
@@ -108,11 +117,11 @@ h1 {
 }
 
 .adminHome__scroll {
-    max-height: 100%;
+    flex-grow: 0;
     overflow-y: auto;
     overflow-x: hidden;
 }
-.ok {
+.adminHome__user-detail-text {
     margin-left: 130px;
     margin-bottom: 10px;
     margin-bottom: 10px;

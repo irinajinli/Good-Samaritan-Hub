@@ -9,7 +9,7 @@ import Table from './table.js';
 import { render } from '@testing-library/react';
 
 const columns = [
-    { id: 'name', label: 'Username', showHeader: true},
+    { id: 'name', label: 'Username', showHeader: false},
     { id: 'status', label: 'Status', showHeader: false}
 ];
 
@@ -68,6 +68,7 @@ class AdminHome extends Component {
         return (  
             <div className="adminHome">
                 <Card className="adminHome__table">
+                    <h1>Username</h1>
                     <div className="adminHome__scroll">
                         <Table columns={columns}
                             rows={this.usersToRows(users)}
@@ -82,15 +83,15 @@ class AdminHome extends Component {
                         {selectedUser && 
                             <div className="adminHome__scroll">
                                 <img className="adminHome__icon" src={Icon}></img>
-                                <div className="ok">
-                                <Label primary={"Username"} secondary={selectedUser.username}/>
-                                <Label primary={"Status"} secondary={generateChip(selectedUser)}/>
-                                <Label primary={"First Name"} secondary={selectedUser.firstName}/>
-                                <Label primary={"Last Name"} secondary={selectedUser.lastName}/>
-                                <Label primary={"Biography"} secondary={<p className="adminHome__text">{selectedUser.bio}</p>}/>
-                                <Label primary={"Posts"} secondary={selectedUser.posts.length}/>
-                                <Label primary={"Messages Sent"} secondary={selectedUser.messagesSent.length}/>
-                                <Label primary={"Messages Recieved"} secondary={selectedUser.messagesRecieved.length}/>
+                                <div className="adminHome__user-detail-text">
+                                    <Label primary={"Username"} secondary={selectedUser.username}/>
+                                    <Label primary={"Status"} secondary={generateChip(selectedUser)}/>
+                                    <Label primary={"First Name"} secondary={selectedUser.firstName}/>
+                                    <Label primary={"Last Name"} secondary={selectedUser.lastName}/>
+                                    <Label primary={"Biography"} secondary={<p className="adminHome__text">{selectedUser.bio}</p>}/>
+                                    <Label primary={"Posts"} secondary={selectedUser.posts.length}/>
+                                    <Label primary={"Messages Sent"} secondary={selectedUser.messagesSent.length}/>
+                                    <Label primary={"Messages Recieved"} secondary={selectedUser.messagesRecieved.length}/>
                                 </div>
                             </div>
                         }
