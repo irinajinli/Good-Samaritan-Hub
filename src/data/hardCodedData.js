@@ -110,7 +110,7 @@ const posts = [
       adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
     poster: users[1],
     type: 'Request',
-    date: new Date(2020, 6, 12),
+    date: new Date(2020, 5, 12),
     status: 'active'
   },
   {
@@ -123,7 +123,7 @@ const posts = [
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
     poster: users[2],
     type: 'Offer',
-    date: new Date(2020, 6, 5),
+    date: new Date(2020, 5, 5),
     status: 'active'
   },
   {
@@ -134,7 +134,7 @@ const posts = [
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
     poster: users[3],
     type: 'Request',
-    date: new Date(2020, 6, 15),
+    date: new Date(2020, 5, 15),
     status: 'active'
   }
 ];
