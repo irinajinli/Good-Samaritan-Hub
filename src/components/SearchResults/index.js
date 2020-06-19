@@ -42,7 +42,8 @@ class SearchResults extends Component {
                 <div className='search-results__section-title'>
                     Users
                 </div>}
-                {matchingUsers.map(user => (
+                {!homeComponent.state.showExpandedPost && 
+                matchingUsers.map(user => (
                     <UserSearchResult 
                         key={uid(user)}
                         user={user}
