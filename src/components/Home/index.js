@@ -6,6 +6,7 @@ import { withRouter } from 'react-router'
 import UserTopBar from '../UserTopBar';
 import PostList from '../PostList';
 import NewPostForm from '../NewPostForm';
+import SearchResults from '../SearchResults';
 import './styles.css';
 
 import { sortByDistance } from '../../actions/distance'
@@ -14,7 +15,9 @@ class Home extends Component {
     state = {  
         showExpandedPost: false,
         expandedPost: {},
-        creatingNewPost: false
+        creatingNewPost: false,
+        showSearchResults: false,
+        searchTerm: ''
     }
 
     sortPosts() {
@@ -68,7 +71,8 @@ class Home extends Component {
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
-            creatingNewPost: false
+            creatingNewPost: false,
+            showSearchResults: false
         })
     }
 
@@ -97,25 +101,40 @@ class Home extends Component {
         // Reset home page
         this.handleBackToHome();
     }
+
+    handleSearch = searchTerm => {
+        this.setState({
+            showExpandedPost: false,
+            expandedPost: {},
+            creatingNewPost: false,
+            showSearchResults: true,
+            searchTerm: searchTerm
+        })
+    }
     
     render() { 
         const { user, posts } = this.props;
-        const { showExpandedPost, expandedPost, creatingNewPost} = this.state;
+        const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm } = this.state;
 
         return (  
             <div>
-                <UserTopBar user={user} />
+                <UserTopBar 
+                    user={user}
+                    homeComponent={this}
+                    handleBackToHome={this.handleBackToHome}
+                    handleSearch={this.handleSearch}
+                />
 
                 {/* The middle section of the page */}
                 <div className='home__middle-block'>
-                    {!showExpandedPost && !creatingNewPost &&
+                    {!showExpandedPost && !creatingNewPost && !showSearchResults &&
                     <Button id='home__create-post-btn'
                             onClick={this.handleOpenPostCreator}                           
                     >
                         Create a post{'\u00A0'}<CreateIcon />
                     </Button>}
 
-                    {!creatingNewPost &&
+                    {!creatingNewPost && !showSearchResults &&
                     <PostList 
                         user={user}
                         posts={posts} 
@@ -130,6 +149,12 @@ class Home extends Component {
                         user={user}
                         handleBackToHome={this.handleBackToHome}
                         handleCreateNewPost={this.handleCreateNewPost}
+                    />}
+
+                    {showSearchResults &&
+                    <SearchResults 
+                        searchTerm={searchTerm}
+                        homeComponent={this}
                     />}
                 </div>
 

@@ -72,9 +72,9 @@ class UserTopBar extends Component {
 
   handlePressEnter = event => {
     if (event.key == 'Enter') {
-      console.log('Pressed enter');
-      console.log('current search term: ', this.state.searchTerm);
-      
+      // console.log('Pressed enter');
+      // console.log('current search term: ', this.props.homeComponent.state.searchTerm);
+      this.props.handleSearch(this.state.searchTerm);
     }
   }
   
@@ -82,8 +82,8 @@ class UserTopBar extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    console.log(name);
-    console.log(value);
+    // console.log(name);
+    // console.log(value);
   
     this.setState({
         [name]: value // [name] sets the object property name to the value of the `name` variable.
@@ -91,13 +91,15 @@ class UserTopBar extends Component {
   };
 
   render() {
-    const {user, classes} = this.props;
+    const {user, handleBackToHome, classes} = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
 
-            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
+              onClick={handleBackToHome}
+            >
               <EmojiNatureIcon />
             </IconButton>
 
