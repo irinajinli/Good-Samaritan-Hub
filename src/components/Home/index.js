@@ -112,7 +112,7 @@ class Home extends Component {
                     <Button id='home__create-post-btn'
                             onClick={this.handleOpenPostCreator}                           
                     >
-                        Make your own post{'\u00A0'}<CreateIcon />
+                        Create a post{'\u00A0'}<CreateIcon />
                     </Button>}
 
                     {!creatingNewPost &&

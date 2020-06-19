@@ -1,0 +1,5 @@
+.user-top-bar__search-container {
+    position: absolute;
+    display: flex;
+    left: 25%
+}
