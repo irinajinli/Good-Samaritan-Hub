@@ -113,7 +113,7 @@ class Home extends Component {
     }
     
     render() { 
-        const { user, posts } = this.props;
+        const { user, posts, appComponent } = this.props;
         const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm } = this.state;
 
         return (  
@@ -155,6 +155,7 @@ class Home extends Component {
                     <SearchResults 
                         searchTerm={searchTerm}
                         homeComponent={this}
+                        appComponent={appComponent}
                     />}
                 </div>
 
