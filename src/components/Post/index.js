@@ -14,6 +14,17 @@ import { getDistance } from '../../actions/distance';
 class Post extends Component {
     state = {  
     }
+
+    generateTypeChip() {
+        const {post} = this.props;
+        let className = ''
+        if (post.type == 'Request') {
+            className = 'post__type-request'
+        } else {
+            className = 'post__type-offer'
+        }
+        return <Chip className={className} label={post.type} />
+    }
     
     render() { 
         const {user, post, isExpanded, handleExpandPost, handleBackToHome} = this.props;
@@ -34,7 +45,7 @@ class Post extends Component {
                         <div className='post__title'>{post.title}</div>
                     </div>
                     <div className='post__right-block'>
-                        <Chip className='post__type' label={post.type} />
+                        {this.generateTypeChip()}
                         <Chip className='post__distance' label={`${dist} km`} />
                         {!isExpanded && 
                         <IconButton onClick={() => handleExpandPost(post)}>
