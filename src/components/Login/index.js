@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
   marginBottom: {
     marginBottom: "20px",
   },
+  loginButton: {
+    marginTop: "20px",
+  },
 }));
 
 export default function Login() {
@@ -36,14 +40,17 @@ export default function Login() {
           />
         </div>
         <div>
-          <TextField
-            className={classes.marginBottom}
-            label="Password"
-            variant="outlined"
-          />
+          <TextField label="Password" variant="outlined" />
+          <Link className="link" to={"/registration"}>
+            Need to register?
+          </Link>
         </div>
         <div>
-          <Button variant="contained" color="primary">
+          <Button
+            className={classes.loginButton}
+            variant="contained"
+            color="primary"
+          >
             LOG IN
           </Button>
         </div>

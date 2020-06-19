@@ -44,10 +44,7 @@ export default function TopBar() {
             Good Samaritan Hub
           </Typography>
           <Link className="link" to={"/login"}>
-            <Button variant="contained">Login</Button>
-          </Link>
-          <Link className="link" to={"/registration"}>
-            <Button variant="contained">Register</Button>
+            <Button variant="contained">Login/Register</Button>
           </Link>
         </Toolbar>
       </AppBar>
