@@ -59,7 +59,7 @@ const styles = theme => ({
     [theme.breakpoints.up('sm')]: {
       width: '21ch',
       '&:focus': {
-        width: '25ch',
+        width: '21ch',
       },
     },
   },
@@ -72,9 +72,15 @@ class UserTopBar extends Component {
 
   handlePressEnter = event => {
     if (event.key == 'Enter') {
-      // console.log('Pressed enter');
-      // console.log('current search term: ', this.props.homeComponent.state.searchTerm);
       this.props.handleSearch(this.state.searchTerm);
+
+      // Clear input
+      const target = event.target;
+      const name = target.name;
+      target.value = '';
+      this.setState({
+          [name]: ''
+      });
     }
   }
   
@@ -82,11 +88,9 @@ class UserTopBar extends Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-    // console.log(name);
-    // console.log(value);
   
     this.setState({
-        [name]: value // [name] sets the object property name to the value of the `name` variable.
+        [name]: value
     });
   };
 

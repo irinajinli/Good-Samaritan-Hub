@@ -21,8 +21,8 @@ class NewPostForm extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        console.log(name);
-        console.log(value);
+        // console.log(name);
+        // console.log(value);
 
         this.setState({
             [name]: value // [name] sets the object property name to the value of the `name` variable.

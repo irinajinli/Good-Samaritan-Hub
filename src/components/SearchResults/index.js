@@ -34,10 +34,10 @@ class SearchResults extends Component {
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
         const { homeComponent } = this.props;
-        console.log(matchingUsers);
 
         return (  
             <div>
+                {/* User search results */}
                 {!homeComponent.state.showExpandedPost &&
                 <div className='search-results__section-title'>
                     Users
@@ -50,6 +50,7 @@ class SearchResults extends Component {
                     />
                 ))}
 
+                {/* Post search results */}
                 {!homeComponent.state.showExpandedPost &&
                 <div className='search-results__section-title'>
                     Posts
@@ -60,7 +61,7 @@ class SearchResults extends Component {
                     handleExpandPost={homeComponent.handleExpandPost} 
                     showExpandedPost={homeComponent.state.showExpandedPost} 
                     expandedPost={homeComponent.state.expandedPost}
-                    handleBackToHome={homeComponent.handleBackToHome} 
+                    handleBack={homeComponent.handleBackToSearchResults}
                 />
             </div>
         );

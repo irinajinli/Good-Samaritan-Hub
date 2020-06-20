@@ -27,11 +27,13 @@ class Post extends Component {
     }
     
     render() { 
-        const {user, post, isExpanded, handleExpandPost, handleBackToHome} = this.props;
+        const {user, post, isExpanded, handleExpandPost, handleBack} = this.props;
 
+        // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
+        // Calculate distance between this post's poster and the current user
         let dist = getDistance(user, post.poster);
         dist = Math.round(dist * 10) / 10;
 
@@ -52,7 +54,7 @@ class Post extends Component {
                             <ArrowForwardIcon />
                         </IconButton>}
                         {isExpanded && 
-                        <IconButton onClick={() => handleBackToHome(post)}>
+                        <IconButton onClick={() => handleBack()}>
                             <ArrowBackIcon />
                         </IconButton>}
                     </div>

@@ -9,7 +9,8 @@ class PostList extends Component {
     }
 
     render() { 
-        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, handleBackToHome} = this.props;
+        const {user, posts, handleExpandPost, showExpandedPost, 
+            expandedPost, handleBack} = this.props;
         
         return (  
             <div className='post-list__container'>
@@ -20,7 +21,7 @@ class PostList extends Component {
                         post={post}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
-                        handleBackToHome={handleBackToHome}
+                        handleBack={handleBack}
                     />
                 ))}
                 {showExpandedPost && 
@@ -29,7 +30,7 @@ class PostList extends Component {
                         post={expandedPost}
                         isExpanded={showExpandedPost}
                         handleExpandPost={handleExpandPost}
-                        handleBackToHome={handleBackToHome}
+                        handleBack={handleBack}
                     />
                 }
             </div>

@@ -25,7 +25,7 @@ class Home extends Component {
         const postsCopy = sortByDistance(user, posts);
 
         // Posts should not be modified before calling setState
-        console.log(posts);
+        // console.log(posts);
         appComponent.setState({
             posts: postsCopy
         });
@@ -48,12 +48,12 @@ class Home extends Component {
 
     // Add /home the browser history so the browser's back button doesn't take the 
     // user back to the login page after expanding a post or creating a new post
-    handleBrowserBackButton = () => {
+    addHomeToBrowserHistory = () => {
         this.props.history.push('/home');
     }
 
     handleExpandPost = post => {
-        this.handleBrowserBackButton();
+        this.addHomeToBrowserHistory();
         this.setState({
             showExpandedPost: true,
             expandedPost: post
@@ -61,7 +61,7 @@ class Home extends Component {
     }
 
     handleOpenPostCreator = () => {
-        this.handleBrowserBackButton();
+        this.addHomeToBrowserHistory();
         this.setState({
             creatingNewPost: true
         })
@@ -73,6 +73,15 @@ class Home extends Component {
             expandedPost: {},
             creatingNewPost: false,
             showSearchResults: false
+        })
+    }
+
+    handleBackToSearchResults = () => {
+        this.setState({
+            showExpandedPost: false,
+            expandedPost: {},
+            creatingNewPost: false,
+            showSearchResults: true
         })
     }
 
@@ -103,6 +112,7 @@ class Home extends Component {
     }
 
     handleSearch = searchTerm => {
+        this.addHomeToBrowserHistory();
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -141,7 +151,7 @@ class Home extends Component {
                         handleExpandPost={this.handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
-                        handleBackToHome={this.handleBackToHome} 
+                        handleBack={this.handleBackToHome} 
                     />}
 
                     {creatingNewPost && 
