@@ -95,13 +95,15 @@ class Post extends Component {
                 </Card>
 
                 <Modal open={dialogOpen}>
-                    <DialogContent>
+                    {/* <DialogContent> */} 
+                    {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
+                    but also creates a weird bar at the top of the screen} */}
                         <ReportDialog 
                             thing={'post'}
                             handleClose={this.handleCloseDialog}
                             handleReport={this.handleReport}
                         />
-                    </DialogContent>
+                    {/* </DialogContent> */}
                 </Modal>
             </React.Fragment>
         );
