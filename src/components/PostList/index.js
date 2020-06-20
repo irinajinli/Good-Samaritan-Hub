@@ -27,30 +27,36 @@ class PostList extends Component {
         return 'post-list__filter-btn';
     }
 
-    showAll() {
+    showAll = () => {
         console.log('show all');
         this.setState({
             filterCondition: this.isAnyType
         });
     }
 
-    showOnlyOffers() {
+    showOnlyOffers = () => {
         console.log('show only offers');
         this.setState({
             filterCondition: this.isAnOffer
         });
     }
 
-    showOnlyRequests() {
+    showOnlyRequests = () => {
         console.log('show only requests');
         this.setState({
             filterCondition: this.isARequest
         });
     }
 
+    onReportPost = post => {
+        const { handleReportPost, handleBack } = this.props;
+        handleReportPost(post);
+        handleBack()
+    }
+
     render() { 
         const {filterCondition} = this.state;
-        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, handleBack} = this.props;
+        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, handleBack, handleReportPost} = this.props;
         
         return (  
             <div >
@@ -63,11 +69,11 @@ class PostList extends Component {
                         variant="text"
                     >
                         <Button size="small" name='all' className={this.getBtnClass('all')} 
-                            onClick={() => this.showAll()}>All</Button>
+                            onClick={this.showAll}>All</Button>
                         <Button size="small" name='offers' className={this.getBtnClass('offers')}
-                            onClick={() => this.showOnlyOffers()}>Offers</Button>
+                            onClick={this.showOnlyOffers}>Offers</Button>
                         <Button size="small"  name='requests' className={this.getBtnClass('requests')}
-                            onClick={() => this.showOnlyRequests()}>Requests</Button>
+                            onClick={this.showOnlyRequests}>Requests</Button>
                     </ButtonGroup>
                 </div>}
 
@@ -82,6 +88,7 @@ class PostList extends Component {
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
+                            handleReportPost={this.onReportPost}
                         />
                     ))}
                     {showExpandedPost && 
@@ -91,6 +98,7 @@ class PostList extends Component {
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
+                            handleReportPost={this.onReportPost}
                         />
                     }
                 </div>

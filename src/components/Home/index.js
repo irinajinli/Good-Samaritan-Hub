@@ -121,6 +121,11 @@ class Home extends Component {
             searchTerm: searchTerm
         })
     }
+
+    handleReportPost = post => {
+        const { reportPost, appComponent } = this.props;
+        reportPost(post, appComponent);
+    }
     
     render() { 
         const { user, posts, appComponent } = this.props;
@@ -152,6 +157,7 @@ class Home extends Component {
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
                         handleBack={this.handleBackToHome} 
+                        handleReportPost={this.handleReportPost}
                     />}
 
                     {creatingNewPost && 
@@ -166,6 +172,7 @@ class Home extends Component {
                         searchTerm={searchTerm}
                         homeComponent={this}
                         appComponent={appComponent}
+                        handleReportPost={this.handleReportPost}
                     />}
                 </div>
 

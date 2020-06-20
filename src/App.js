@@ -14,6 +14,7 @@ import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
 import { getUsers, getPosts } from './data/hardCodedData';
+import { reportPost } from './actions/user';
 
 
 class App extends Component {
@@ -57,6 +58,7 @@ class App extends Component {
                                                         appComponent={this}
                                                         user={user}
                                                         posts={posts}
+                                                        reportPost={reportPost}
                                                       />} />
               <Route exact path="/admin/home" render={() => <AdminHome users={users}/>} />
 
