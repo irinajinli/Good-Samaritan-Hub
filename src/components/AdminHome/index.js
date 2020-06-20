@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
+import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import SendIcon from '@material-ui/icons/Send';
+import BanIcon from '@material-ui/icons/Gavel';
 
 import './styles.css';
-import Icon from './../../userIcon.png';
+import Icon from './../../data/userIcon.png';
+import Label from './label.js';
 import Table from './table.js';
+import Report from './report.js';
+import BanDialog from './banDialog.js';
 import { render } from '@testing-library/react';
 
 const columns = [
@@ -15,24 +19,25 @@ const columns = [
 
 function generateChip(user) {
     return user.isBanned ?
-        <div className="adminHome__chip-banned">Banned</div> :
+        <Chip className="adminHome__chip-banned" label="Banned"/> :
         user.isReported ?
-            <div className="adminHome__chip-reported">Reported</div> :
-            <div className="adminHome__chip-active">Active</div>;
+            <Chip className="adminHome__chip-reported" label="Reported"/> :
+            <Chip className="adminHome__chip-active" label="Active"/>;
 }
 
 function reportedFirstComparator(a, b) {
-    if ((a.status.props.children === "Reported") === (b.status.props.children === "Reported")) {
+    if ((a.status.props.label === "Reported") === (b.status.props.label === "Reported")) {
         return a.name.localeCompare(b.name);
     }
-    return a.status.props.children === "Reported" ? -1 : 1;
+    return a.status.props.label === "Reported" ? -1 : 1;
 }
 
 class AdminHome extends Component {
     state = {
-        selectedUser: null
+        selectedUser: null,
+        dialogOpen: false
     }
-
+    
     usersToRows = (users) => {
         if (!Array.isArray(users)) {
             return;
@@ -59,12 +64,35 @@ class AdminHome extends Component {
         } else {
             this.setState({selectedUser: user});
         }
-        
+    }
+
+    handleBan = (reason) => {
+        const user = this.state.selectedUser;
+        user.isBanned = !user.isBanned;
+        if (!user.isBanned)
+            user.banReason = '';
+        else {
+            console.log(reason)
+            user.banReason = reason;}
+        for (let i = 0; i < this.props.users.length; i++) {
+            if (user.username === this.props.users[i].username)
+                this.props.users[i] = user;
+        }
+        console.log(user)
+        this.setState({selectedUser: user, dialogOpen: false});
+    }
+
+    handleOpenDialog = () => {
+        this.setState({dialogOpen: true});
+    }
+
+    handleCloseDialog = () => {
+        this.setState({dialogOpen: false});
     }
 
     render() {
         const {users} = this.props;
-        const {selectedUser} = this.state;
+        const {selectedUser, dialogOpen} = this.state;
         return (  
             <div className="adminHome">
                 <Card className="adminHome__table">
@@ -82,13 +110,14 @@ class AdminHome extends Component {
                         <h1>User Details</h1>
                         {selectedUser && 
                             <div className="adminHome__scroll">
-                                <img className="adminHome__icon" src={Icon}></img>
+                                <img className="adminHome__icon" src={Icon} alt="User Icon"></img>
                                 <div className="adminHome__user-detail-text">
                                     <Label primary={"Username"} secondary={selectedUser.username}/>
                                     <Label primary={"Status"} secondary={generateChip(selectedUser)}/>
                                     <Label primary={"First Name"} secondary={selectedUser.firstName}/>
                                     <Label primary={"Last Name"} secondary={selectedUser.lastName}/>
-                                    <Label primary={"Biography"} secondary={<p className="adminHome__text">{selectedUser.bio}</p>}/>
+                                    <Label primary={"Location"} secondary={selectedUser.location}/>
+                                    <Label primary={"Biography"} secondary={selectedUser.bio} blockText/>
                                     <Label primary={"Posts"} secondary={selectedUser.posts.length}/>
                                     <Label primary={"Messages Sent"} secondary={selectedUser.messagesSent.length}/>
                                     <Label primary={"Messages Recieved"} secondary={selectedUser.messagesRecieved.length}/>
@@ -102,29 +131,50 @@ class AdminHome extends Component {
                     <Card className="adminHome__reported-panel">
                         <h1>Report Details</h1>
                         {selectedUser && selectedUser.isReported &&
-                            <label className="adminHome__center">Not done yet LOL</label>
+                            <div className="adminHome__scroll">
+                                {selectedUser.reportedMessages.map((report) => {
+                                    return (
+                                        <Report type="Message" content={report}/>
+                                    );
+                                })}
+                                {selectedUser.reportedPosts.map((report) => {
+                                    return (
+                                        <Report type="Post" content={report}/>
+                                    );
+                                })}
+                            </div>
                         }
                         {selectedUser && !selectedUser.isReported &&
                             <label className="adminHome__center">{selectedUser.username} has not been reported</label>
                         }
+                        {selectedUser && !selectedUser.isBanned &&
+                            <Button className="adminHome__ban-button"
+                                    startIcon={<BanIcon/>}
+                                    onClick={this.handleOpenDialog}>
+                                Ban {selectedUser.username}
+                            </Button>
+                        }
+                        {selectedUser && selectedUser.isBanned &&
+                            <Button className="adminHome__unban-button"
+                                    startIcon={<BanIcon/>}
+                                    onClick={this.handleOpenDialog}>
+                                UnBan {selectedUser.username}
+                            </Button>
+                        }
                         {!selectedUser &&
-                            <label className="adminHome__center">No User Selected</label>
+                            <div>
+                                <label className="adminHome__center">No User Selected</label>
+                                <Button className="adminHome__unban-button"
+                                        startIcon={<BanIcon/>}
+                                        disabled>
+                                    Ban
+                                </Button>
+                            </div>
                         }
                     </Card>
                 </div>
+                {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
-        );
-    }
-}
-
-class Label extends Component {
-    render() {
-        const {primary, secondary} = this.props;
-        return (
-            <label className="adminHome__text">
-                <label className="adminHome__label">{primary}:</label>
-                    {secondary}
-            </label>
         );
     }
 }

@@ -1,0 +1,48 @@
+.banDialog {
+    transition: all 0.5s ease-in-out;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.200);
+}
+
+.banDialog__dialog {
+    position: fixed;
+    width: 500px;
+    height: fit-content;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+p {
+    margin: 20px;
+}
+
+.MuiPaper-root .banDialog__text-area {
+    width: calc(100% - 40px);
+    margin: 0px 20px 0px 20px;
+}
+
+.MuiPaper-root .banDialog__button, .MuiPaper-root .banDialog__ban-button, .MuiPaper-root .banDialog__unban-button {
+    float: right;
+    margin: 15px 20px 15px 0px;
+}
+
+.MuiPaper-root .banDialog__ban-button {
+    color: crimson;
+    border: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+.MuiPaper-root .banDialog__ban-button:hover {
+    border: 1px solid red;
+}
+
+.MuiPaper-root .banDialog__unban-button {
+    color: darkblue;
+    border: 1px solid rgba(0, 0, 255, 0.5);
+}
+
+.MuiPaper-root .banDialog__unban-button:hover {
+    border: 1px solid blue;
+}
