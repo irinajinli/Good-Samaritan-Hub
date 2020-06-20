@@ -56,7 +56,8 @@ class PostList extends Component {
 
     render() { 
         const {filterCondition} = this.state;
-        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, handleBack, handleReportPost} = this.props;
+        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, 
+            handleBack, recentlyReportedPosts} = this.props;
         
         return (  
             <div >
@@ -80,6 +81,8 @@ class PostList extends Component {
                 <div className='post-list__container'>
                     {!showExpandedPost && posts.filter(post => {
                         return filterCondition(post);
+                    }).filter(post => {
+                        return !recentlyReportedPosts.includes(post);
                     }).map(post => (
                         <Post 
                             key={uid(post)}

@@ -33,7 +33,7 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { homeComponent, handleReportPost } = this.props;
+        const { homeComponent, handleReportPost, recentlyReportedPosts } = this.props;
 
         return (  
             <div>
@@ -62,7 +62,8 @@ class SearchResults extends Component {
                     showExpandedPost={homeComponent.state.showExpandedPost} 
                     expandedPost={homeComponent.state.expandedPost}
                     handleBack={homeComponent.handleBackToSearchResults}
-                    handleReportPost={handleReportPost}
+                    handleReportPost={homeComponent.handleReportPost}
+                    recentlyReportedPosts={homeComponent.state.recentlyReportedPosts}
                 />
             </div>
         );

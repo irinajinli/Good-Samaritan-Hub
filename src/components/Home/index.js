@@ -17,7 +17,8 @@ class Home extends Component {
         expandedPost: {},
         creatingNewPost: false,
         showSearchResults: false,
-        searchTerm: ''
+        searchTerm: '',
+        recentlyReportedPosts: [] // Posts reported by the user become hidden to the user for the rest of their session
     }
 
     sortPosts() {
@@ -123,13 +124,20 @@ class Home extends Component {
     }
 
     handleReportPost = post => {
+        // Add the post to the list of recently reported posts
+        this.setState({
+            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(post)
+        });
+
+        // Report the poster in the global state
         const { reportPost, appComponent } = this.props;
         reportPost(post, appComponent);
     }
     
     render() { 
         const { user, posts, appComponent } = this.props;
-        const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm } = this.state;
+        const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm,
+            recentlyReportedPosts } = this.state;
 
         return (  
             <div>
@@ -158,6 +166,7 @@ class Home extends Component {
                         expandedPost={expandedPost}
                         handleBack={this.handleBackToHome} 
                         handleReportPost={this.handleReportPost}
+                        recentlyReportedPosts={recentlyReportedPosts}
                     />}
 
                     {creatingNewPost && 
@@ -172,7 +181,6 @@ class Home extends Component {
                         searchTerm={searchTerm}
                         homeComponent={this}
                         appComponent={appComponent}
-                        handleReportPost={this.handleReportPost}
                     />}
                 </div>
 
