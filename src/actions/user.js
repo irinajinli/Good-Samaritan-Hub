@@ -3,21 +3,21 @@ export const reportPost = (post, appComponent) => {
     const originalPoster = post.poster;
     const posterCopy = { ...post.poster }; // clone poster
     
-    // Set the poster's status to reported
+    // Set the cloned poster's isReported status to true
     posterCopy.isReported = true;
 
-    // Add this post to this cloned poster's list of reported posts
+    // Add the reported post to the cloned poster's list of reported posts
     posterCopy.reportedPosts = originalPoster.reportedPosts.concat(post);
 
-    // Update this user in the app component's state
+    // Update this user in the global state
     updateUser(originalPoster, posterCopy, appComponent);
 }
 
+
 const updateUser = (originalUser, updatedUser, appComponent) => {
     console.log('update user');
-    const usersCopy = [ ...appComponent.state.users ]; // clone array
+    const usersCopy = [ ...appComponent.state.users ]; // clone users array
     const index = appComponent.state.users.indexOf(originalUser);
-    usersCopy[index] = { ...originalUser }; // set usersCopy[index] to a clone of the original user at that index
     usersCopy[index] = updatedUser;
 
     console.log(appComponent.state.users);

@@ -1,8 +1,8 @@
 import { getPostalCodes } from '../data/hardCodedData';
 
 
+// Returns the distance in km between the two given lat, lon coordinates
 // From https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-lonitude-points-haversine-formula
-// Returns the distances in km between the two lat, lon coordinates
 const distance = (lat1, lon1, lat2, lon2) => {
     let p = 0.017453292519943295;    // Math.PI / 180
     let c = Math.cos;
@@ -14,6 +14,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
 }
 
 
+// Returns the distance in km between user1 and user2
 export const getDistance = (user1, user2) => {
     const postalCodes = getPostalCodes();
     const lat1 = postalCodes[user1.location].lat;
