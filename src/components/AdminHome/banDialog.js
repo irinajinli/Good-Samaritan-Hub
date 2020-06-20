@@ -35,11 +35,7 @@ class BanDialog extends Component {
                                 onChange={this.handleInputChange}/>
                         </div>
                     }
-                    {!ban &&
-                        <div>
-                            <p>Are you sure you want to unban this user?</p>
-                        </div>
-                    }
+                    {!ban && <p>Are you sure you want to unban this user?</p> }
                     <Button className={ban ? "banDialog__ban-button" : "banDialog__unban-button"}
                         variant="outlined"
                         name="reason"

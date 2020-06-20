@@ -72,13 +72,13 @@ class AdminHome extends Component {
         if (!user.isBanned)
             user.banReason = '';
         else {
-            console.log(reason)
             user.banReason = reason;}
         for (let i = 0; i < this.props.users.length; i++) {
-            if (user.username === this.props.users[i].username)
+            if (user.username === this.props.users[i].username) {
                 this.props.users[i] = user;
+                break;
+            }
         }
-        console.log(user)
         this.setState({selectedUser: user, dialogOpen: false});
     }
 
@@ -88,6 +88,26 @@ class AdminHome extends Component {
 
     handleCloseDialog = () => {
         this.setState({dialogOpen: false});
+    }
+
+    handleDeleteReport = (report) => {
+        const user = this.state.selectedUser;
+        for (let i = 0; i < user.reportedMessages.length; i++) {
+            if (report === user.reportedMessages[i]) {
+                user.reportedMessages.splice(i , 1);
+                break;
+            }
+        }
+        for (let i = 0; i < user.reportedPosts.length; i++) {
+            if (report === user.reportedPosts[i]) {
+                user.reportedPosts.splice(i , 1);
+                break;
+            }
+        }
+        if (user.reportedPosts.length + user.reportedMessages.length <= 0) {
+            user.isReported = false;
+        }
+        this.setState({selectedUser: user});
     }
 
     render() {
@@ -139,7 +159,7 @@ class AdminHome extends Component {
                                 })}
                                 {selectedUser.reportedPosts.map((report) => {
                                     return (
-                                        <Report type="Post" content={report}/>
+                                        <Report type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                             </div>
