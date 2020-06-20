@@ -1,5 +1,18 @@
+.MuiButtonGroup-root.post-list__filter-btn-group {
+    margin-bottom: 7px;
+    width: 100%;
+}
+
+.MuiButton-root.post-list__filter-btn {
+    margin-bottom: 7px;
+    width: 33%;
+}
+
+.MuiButton-root.post-list__filter-btn--selected {
+    background-color: whitesmoke 
+}
+
 .post-list__container {
     display: flex;
     flex-direction: column;
-    /* margin: 10px 25% */
 }
