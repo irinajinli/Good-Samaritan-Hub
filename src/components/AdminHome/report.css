@@ -1,0 +1,16 @@
+.report {
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: lightgrey;
+}
+
+.report__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.report__p {
+    margin: 0px 20px 20px 20px;
+}

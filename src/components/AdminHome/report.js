@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import './report.css';
+
 class Report extends Component {
     render() {
         const {type, content, handleDeleteReport} = this.props;
         return (
-            <div className="adminHome__reported-item">
-                <div>
-                   <h2>{type}</h2>
-                    <p className="adminHome__label">{content}</p> 
+            <div className="report">
+                <div className="report__header">
+                    <h2>{type}</h2>
+                    <Button className="adminHome__delete-button" size="small" onClick={() => handleDeleteReport(content)}>
+                        <DeleteIcon fontSize="small"/>
+                    </Button>
                 </div>
-                <Button className="adminHome__delete-button" onClick={() => handleDeleteReport(content)}>
-                    <DeleteIcon/>
-                </Button>
+                <p className="report__p">{content}</p> 
             </div>
         );
     }

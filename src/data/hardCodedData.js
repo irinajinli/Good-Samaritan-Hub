@@ -90,7 +90,7 @@ const users = [
     password: 'user5',
     firstName: 'Sally',
     lastName: 'Sue',
-    location: 'M3K',
+    location: 'M4P',
     bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
@@ -104,8 +104,57 @@ const users = [
     isBanned: true,
     reportedMessages: [],
     reportedPosts: [],
-    banReason: ''
+    banReason: 'User stole money'
   },
+  {
+    username: 'user6',
+    password: 'user6',
+    firstName: 'Pat',
+    lastName: 'Rick',
+    location: 'M3K',
+    bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+    posts: [],
+    messagesSent: [],
+    messagesRecieved: [],
+    isReported: true,
+    isBanned: true,
+    reportedMessages: [`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
+    reportedPosts: [],
+    banReason: 'User said mean words'
+  },
+  {
+    username: 'user7',
+    password: 'user7',
+    firstName: 'Blake',
+    lastName: 'Bradley',
+    location: 'M8V',
+    bio: `I am John`,
+    posts: [],
+    messagesSent: [],
+    messagesRecieved: [],
+    isReported: true,
+    isBanned: false,
+    reportedMessages: [`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
+    reportedPosts: ['I posted this for fun.', `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+      commodo sed egestas.`],
+    banReason: ''
+  }
 ];
 
 // Some posts

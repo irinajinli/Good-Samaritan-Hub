@@ -10,7 +10,7 @@ import Label from './label.js';
 import Table from './table.js';
 import Report from './report.js';
 import BanDialog from './banDialog.js';
-import { render } from '@testing-library/react';
+import SnackBar from './snackBar.js';
 
 const columns = [
     { id: 'name', label: 'Username', showHeader: false},
@@ -35,7 +35,9 @@ function reportedFirstComparator(a, b) {
 class AdminHome extends Component {
     state = {
         selectedUser: null,
-        dialogOpen: false
+        selectedRow: null,
+        dialogOpen: false,
+        oldReport: null
     }
     
     usersToRows = (users) => {
@@ -61,8 +63,10 @@ class AdminHome extends Component {
         const user = this.rowToUser(row);
         if (this.state.selectedUser === user) {
             this.setState({selectedUser: null});
+            this.setState({selectedRow: null});
         } else {
             this.setState({selectedUser: user});
+            this.setState({selectedRow: row});
         }
     }
 
@@ -90,29 +94,58 @@ class AdminHome extends Component {
         this.setState({dialogOpen: false});
     }
 
+    handleOpenSnackBar = (reportType, reportContent, i) => {
+        this.setState({oldReport: {type: reportType, content: reportContent, index: i}});
+    }
+
+    handleCloseSnackBar = () => {
+        this.setState({oldReport: null});
+    }
+
     handleDeleteReport = (report) => {
         const user = this.state.selectedUser;
-        for (let i = 0; i < user.reportedMessages.length; i++) {
+        let type = '';
+        let i = 0;
+        for (i = 0; i < user.reportedMessages.length; i++) {
             if (report === user.reportedMessages[i]) {
                 user.reportedMessages.splice(i , 1);
+                type = 'Message';
                 break;
             }
         }
-        for (let i = 0; i < user.reportedPosts.length; i++) {
-            if (report === user.reportedPosts[i]) {
-                user.reportedPosts.splice(i , 1);
-                break;
-            }
+        if (i === user.reportedMessages.length) {
+           for (i = 0; i < user.reportedPosts.length; i++) {
+                if (report === user.reportedPosts[i]) {
+                    user.reportedPosts.splice(i , 1);
+                    type = 'Post';
+                    break;
+                }
+            } 
         }
+        
         if (user.reportedPosts.length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
         this.setState({selectedUser: user});
+        this.handleOpenSnackBar(type, report, i);
+        setTimeout(() => this.handleCloseSnackBar(), 5000);
+    }
+
+    handleUndoDelete = () => {
+        const report = this.state.oldReport;
+        const user = this.state.selectedUser;
+        if (report.type === 'Message') {
+            user.reportedMessages.splice(report.i, 0, report.content);
+        } else {
+            user.reportedPosts.splice(report.i, 0, report.content);
+        }
+        user.isReported = true;
+        this.setState({selectedUser: user, oldReport: null});
     }
 
     render() {
         const {users} = this.props;
-        const {selectedUser, dialogOpen} = this.state;
+        const {selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
         return (  
             <div className="adminHome">
                 <Card className="adminHome__table">
@@ -122,6 +155,7 @@ class AdminHome extends Component {
                             rows={this.usersToRows(users)}
                             handleSelect={this.handleSelect}
                             compareFunction={reportedFirstComparator}
+                            selectedRow={selectedRow}
                         />
                     </div>
                 </Card>
@@ -154,7 +188,7 @@ class AdminHome extends Component {
                             <div className="adminHome__scroll">
                                 {selectedUser.reportedMessages.map((report) => {
                                     return (
-                                        <Report type="Message" content={report}/>
+                                        <Report type="Message" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                                 {selectedUser.reportedPosts.map((report) => {
@@ -193,6 +227,7 @@ class AdminHome extends Component {
                         }
                     </Card>
                 </div>
+                {oldReport && <SnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
                 {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
         );

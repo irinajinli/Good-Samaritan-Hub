@@ -1,0 +1,24 @@
+.snackBar {
+    background-color: rgb(55, 55, 55) !important;
+    position: fixed;
+    width: 300px;
+    height: fit-content;
+    padding: 8px;
+    bottom: 20px;
+    left: 20px;
+}
+
+.snackBar__label {
+    margin: 0px 5px 0px 5px;
+    color: white;
+}
+
+.MuiPaper-root .snackBar__undo-button {
+    margin: 0px 4px 0px 4px;
+    padding: 0px;
+    float: right;
+}
+.MuiPaper-root .snackBar__close-button {
+    color: white;
+    float: right;
+}

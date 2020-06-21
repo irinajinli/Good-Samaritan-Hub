@@ -19,14 +19,17 @@ class Table extends Component {
         handleSelect: function to handle when clicked
         compareFunction: comparator function to order rows
         */
-        const {columns, rows, handleSelect, compareFunction} = this.props;
+        const {columns, rows, handleSelect, compareFunction, selectedRow} = this.props;
         compareFunction && rows.sort(compareFunction);
         return (
             <div className="table">
                 {this.showHeader(columns) && <Header columns={columns}></Header>}
                 {columns && rows && rows.map((row) => {
                     return (
-                        <Row columns={columns} row={row} handleSelect={handleSelect}/>
+                        <Row columns={columns} row={row} handleSelect={handleSelect} rowSelected={selectedRow && selectedRow.name === row.name ?
+                             true
+                            : false}
+                            />
                     );
                 })}
             </div>
@@ -51,9 +54,9 @@ class Header extends Component {
 
 class Row extends Component {
     render() {
-        const {columns, row, handleSelect} = this.props;
+        const {columns, row, handleSelect, rowSelected} = this.props;
         return (
-            <div className="table__row" onClick={() => handleSelect(row)}>
+            <div className={rowSelected ? "table__row table__row-selected" : "table__row"}onClick={() => handleSelect(row)}>
                 {columns && row && columns.map((column) => {
                     const cell = row[column.id]
                     return (
