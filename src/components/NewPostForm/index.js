@@ -13,7 +13,7 @@ class NewPostForm extends Component {
         body: '',
         poster: this.props.user,
         type: 'Request',
-        date: new Date(), // today's date
+        date: {},
         status: 'active'
     }
 
@@ -21,16 +21,23 @@ class NewPostForm extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        // console.log(name);
-        // console.log(value);
-
         this.setState({
             [name]: value // [name] sets the object property name to the value of the `name` variable.
         });
     };
 
+    onCreateNewPost = () => {
+        this.setState({
+            date: new Date()
+        }, () => { 
+            // Put handleCreateNewPost in the callback of setState to ensure that 
+            // this.state.date is updated before we call handleCreateNewPost
+            this.props.handleCreateNewPost(this.state);
+        });
+    }
+
     render() { 
-        const {handleBackToHome, handleCreateNewPost} = this.props;
+        const {handleBackToHome} = this.props;
 
         return (  
             <div>
@@ -70,7 +77,7 @@ class NewPostForm extends Component {
                 </div>
                 <div className='home__create-post-btn'>
                 <Button variant="contained"
-                        onClick={() => handleCreateNewPost(this.state)}>
+                        onClick={() => this.onCreateNewPost()}>
                         Post
                 </Button>
                 </div>
