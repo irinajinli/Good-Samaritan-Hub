@@ -18,6 +18,7 @@ class Table extends Component {
         rows: array of object with ids from columns
         handleSelect: function to handle when clicked
         compareFunction: comparator function to order rows
+        selectedRow: row being selected
         */
         const {columns, rows, handleSelect, compareFunction, selectedRow} = this.props;
         compareFunction && rows.sort(compareFunction);

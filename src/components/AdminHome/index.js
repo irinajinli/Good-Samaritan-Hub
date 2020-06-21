@@ -105,24 +105,15 @@ class AdminHome extends Component {
     handleDeleteReport = (report) => {
         const user = this.state.selectedUser;
         let type = '';
-        let i = 0;
-        for (i = 0; i < user.reportedMessages.length; i++) {
-            if (report === user.reportedMessages[i]) {
-                user.reportedMessages.splice(i , 1);
-                type = 'Message';
-                break;
-            }
+        let i = user.reportedMessages.indexOf(report);
+        if (i >= 0) {
+            user.reportedMessages.splice(i , 1);
+            type = 'Message';
+        } else {
+            i = user.reportedPosts.indexOf(report);
+            user.reportedPosts.splice(i , 1);
+            type = 'Post';
         }
-        if (i === user.reportedMessages.length) {
-           for (i = 0; i < user.reportedPosts.length; i++) {
-                if (report === user.reportedPosts[i]) {
-                    user.reportedPosts.splice(i , 1);
-                    type = 'Post';
-                    break;
-                }
-            } 
-        }
-        
         if (user.reportedPosts.length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
@@ -135,9 +126,9 @@ class AdminHome extends Component {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
         if (report.type === 'Message') {
-            user.reportedMessages.splice(report.i, 0, report.content);
+            user.reportedMessages.splice(report.index, 0, report.content);
         } else {
-            user.reportedPosts.splice(report.i, 0, report.content);
+            user.reportedPosts.splice(report.index, 0, report.content);
         }
         user.isReported = true;
         this.setState({selectedUser: user, oldReport: null});

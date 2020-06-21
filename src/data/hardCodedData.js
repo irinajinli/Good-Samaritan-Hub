@@ -77,12 +77,7 @@ const users = [
     isReported: true,
     isBanned: false,
     reportedMessages: [],
-    reportedPosts: [`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
+    reportedPosts: [],
     banReason: ''
   },
   {
@@ -150,9 +145,7 @@ const users = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
-    reportedPosts: ['I posted this for fun.', `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas.`],
+    reportedPosts: [],
     banReason: ''
   }
 ];
@@ -193,7 +186,25 @@ const posts = [
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
     poster: users[3],
     type: 'Request',
-    date: new Date(2020, 5, 15),
+    date: new Date(2020, 5, 15, 8, 6, 2),
+    status: 'active'
+  },
+  {
+    title: 'Want personal chef',
+    body: 'I am hungry',
+    poster: users[6],
+    type: 'Request',
+    date: new Date(2020, 5, 6, 20, 1, 43),
+    status: 'active'
+  },
+  {
+    title: 'Candy',
+    body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+      commodo sed egestas.`,
+    poster: users[6],
+    type: 'Offer',
+    date: new Date(2020, 5, 10, 2, 34, 23),
     status: 'active'
   }
 ];
@@ -202,6 +213,11 @@ const posts = [
 users[1].posts.push(posts[0]);
 users[2].posts.push(posts[1]);
 users[3].posts.push(posts[2]);
+users[3].reportedPosts.push(posts[2]);
+users[6].posts.push(posts[3]);
+users[6].posts.push(posts[4]);
+users[6].reportedPosts.push(posts[3]);
+users[6].reportedPosts.push(posts[4]);
 
 export const getPostalCodes = () => postalCodes;
 
