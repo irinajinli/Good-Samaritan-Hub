@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 class Inbox extends Component {
     state = {  }
     render() { 
+        const {user} = this.props
         return (  
-            <div>Inbox</div>
+            <div>{`${user.firstName} ${user.lastName}'s Inbox`}</div>
         );
     }
 }

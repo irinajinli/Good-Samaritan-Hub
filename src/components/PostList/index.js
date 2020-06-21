@@ -54,7 +54,7 @@ class PostList extends Component {
     render() { 
         const {filterCondition} = this.state;
         const {user, posts, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, recentlyReportedPosts} = this.props;
+            handleBack, recentlyReportedPosts, handleGoToProfile} = this.props;
         
         return (  
             <div >
@@ -89,6 +89,7 @@ class PostList extends Component {
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
+                            handleGoToProfile={handleGoToProfile}
                         />
                     ))}
                     {showExpandedPost && 
@@ -99,6 +100,7 @@ class PostList extends Component {
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
+                            handleGoToProfile={handleGoToProfile}
                         />
                     }
                 </div>

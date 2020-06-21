@@ -30,12 +30,11 @@ class LoggedInWrapper extends Component {
 
     sortPosts() {
         const { user, posts, appComponent } = this.props;
-        const postsCopy = sortByDistance(user, posts);
 
         // Posts should not be modified before calling setState
         // console.log(posts);
         appComponent.setState({
-            posts: postsCopy
+            posts: sortByDistance(user, posts)
         });
     }
 
@@ -183,7 +182,7 @@ class LoggedInWrapper extends Component {
                     handleGoToInbox={this.handleGoToInbox}
                 />
 
-                {/* Dashboard */}
+                {/* Home page */}
                 {!viewingProfile && !viewingInbox &&
                 <div className='home__middle-block'>
                     {!showExpandedPost && !creatingNewPost && !showSearchResults &&
@@ -203,6 +202,7 @@ class LoggedInWrapper extends Component {
                         handleBack={this.handleBackToHome} 
                         handleReportPost={this.handleReportPost}
                         recentlyReportedPosts={recentlyReportedPosts}
+                        handleGoToProfile={this.handleGoToProfile}
                     />}
 
                     {creatingNewPost && 
@@ -217,19 +217,21 @@ class LoggedInWrapper extends Component {
                         searchTerm={searchTerm}
                         homeComponent={this}
                         appComponent={appComponent}
+                        handleGoToProfile={this.handleGoToProfile}
                     />}
                 </div>}
 
-                {/* Profile */}
-                {viewingProfile && !viewingInbox &&
+                {/* Profile page */}
+                {viewingProfile && 
                 <Profile 
+                    user={user}
                     userBeingViewed={userBeingViewed}
                 />}
 
-                {/* Inbox */}
+                {/* Inbox page */}
                 {viewingInbox && 
                 <Inbox 
-                    userBeingViewed={userBeingViewed}
+                    user={user}
                 />}
 
             </div>

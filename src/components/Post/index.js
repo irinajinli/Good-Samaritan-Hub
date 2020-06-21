@@ -11,6 +11,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 
 import ReportDialog from '../ReportDialog';
 import './styles.css';
+import '../../index.css';
 import { getDistance } from '../../actions/distance';
 
 class Post extends Component {
@@ -45,7 +46,7 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, post, isExpanded, handleExpandPost, handleBack } = this.props;
+        const { user, post, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
@@ -61,7 +62,10 @@ class Post extends Component {
                     <div className='post__block'>
                         <div className='post__left-block'>
                             <div className='post__poster'>
-                                {`${post.poster.firstName} ${post.poster.lastName}`}<span> — </span>{`${month} ${day}, ${year }`}
+                                <span className='hover-pointer' onClick={() => handleGoToProfile(post.poster)}>
+                                    {`${post.poster.firstName} ${post.poster.lastName}`}
+                                </span>
+                                {` — ${month} ${day}, ${year }`}
                             </div>
                             <div className='post__title'>{post.title}</div>
                         </div>

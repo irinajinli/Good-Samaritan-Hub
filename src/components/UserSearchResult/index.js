@@ -6,18 +6,23 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './styles.css'
 
 class UserSearchResult extends Component {
-    state = {  }
     render() { 
-        const { user } = this.props
+        const { user, handleGoToProfile } = this.props
         return (  
             <Card className='user__card'>
                 <div className='user__block'>
                     <div className='user__left-block'>
-                        <IconButton><AccountCircleIcon color='disabled'/></IconButton>  
+                        <IconButton onClick={() => handleGoToProfile(user)}>
+                            <AccountCircleIcon color='disabled'/>
+                        </IconButton>  
                     </div>
                     <div className='user__left-block'>
-                        <div className='user__username'>{`@${user.username}`}</div>
-                        <div className='user__name'>{`${user.firstName} ${user.lastName}`}</div>
+                        <div className='user__username hover-pointer' onClick={() => handleGoToProfile(user)}>
+                            {`@${user.username}`}
+                        </div>
+                        <div className='user__name hover-pointer' onClick={() => handleGoToProfile(user)}>
+                            {`${user.firstName} ${user.lastName}`}
+                        </div>
                     </div>
                 </div>
             </Card>
