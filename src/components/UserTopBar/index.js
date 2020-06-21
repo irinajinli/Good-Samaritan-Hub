@@ -95,15 +95,14 @@ class UserTopBar extends Component {
   };
 
   render() {
-    const {user, handleBackToHome, classes} = this.props;
+    const {classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox} = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
 
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
-              onClick={handleBackToHome}
-            >
+              onClick={handleBackToHome}>
               <EmojiNatureIcon />
             </IconButton>
 
@@ -130,11 +129,13 @@ class UserTopBar extends Component {
               </div>
             </div>
 
-            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu"
+              onClick={handleGoToInbox}>
                 <MailIcon />
             </IconButton>
             
-            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu">
+            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu" 
+              onClick={() => handleGoToProfile(user)}>
               <AccountBoxIcon />
             </IconButton>
               

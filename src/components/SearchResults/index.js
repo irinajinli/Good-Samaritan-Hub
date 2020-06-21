@@ -33,7 +33,7 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { homeComponent, handleReportPost, recentlyReportedPosts } = this.props;
+        const { homeComponent } = this.props;
 
         return (  
             <div>

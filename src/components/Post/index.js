@@ -21,7 +21,7 @@ class Post extends Component {
     generateTypeChip() {
         const {post} = this.props;
         let className = ''
-        if (post.type == 'Request') {
+        if (post.type === 'Request') {
             className = 'post__type-request'
         } else {
             className = 'post__type-offer'
@@ -45,7 +45,7 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, post, isExpanded, handleExpandPost, handleBack, handleReportPost } = this.props;
+        const { user, post, isExpanded, handleExpandPost, handleBack } = this.props;
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 

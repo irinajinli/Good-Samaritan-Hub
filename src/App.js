@@ -9,7 +9,7 @@ import TopBar from "./components/TopBar";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
-import Home from "./components/Home";
+import LoggedInWrapper from "./components/LoggedInWrapper";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
@@ -54,12 +54,12 @@ class App extends Component {
             <Switch>
               {/* Shows a different component depending on the exact path in the URL */}
 
-              <Route exact path="/home" render={() => <Home
-                                                        appComponent={this}
-                                                        user={user}
-                                                        posts={posts}
-                                                        reportPost={reportPost}
-                                                      />} />
+              <Route exact path={["/home", "/profile", "/inbox"]} render={() => <LoggedInWrapper
+                                                                        appComponent={this}
+                                                                        user={user}
+                                                                        posts={posts}
+                                                                        reportPost={reportPost}
+                                                                      />} />
               <Route exact path="/admin/home" render={() => <AdminHome users={users}/>} />
 
               {/* The pages in this fragment share the same top bar */}

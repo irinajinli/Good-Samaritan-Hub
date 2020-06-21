@@ -7,18 +7,25 @@ import UserTopBar from '../UserTopBar';
 import PostList from '../PostList';
 import NewPostForm from '../NewPostForm';
 import SearchResults from '../SearchResults';
+import Profile from '../Profile';
+import Inbox from '../Inbox';
 import './styles.css';
 
 import { sortByDistance } from '../../actions/distance'
 
-class Home extends Component {
+class LoggedInWrapper extends Component {
     state = {  
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false,
         showSearchResults: false,
         searchTerm: '',
-        recentlyReportedPosts: [] // Posts reported by the user become hidden to the user for the rest of their session
+        recentlyReportedPosts: [], // Posts reported by the user become hidden to the user for the rest of their session
+
+        viewingProfile: false,
+        userBeingViewed: {},
+
+        viewingInbox: false
     }
 
     sortPosts() {
@@ -69,12 +76,16 @@ class Home extends Component {
     }
 
     handleBackToHome = () => {
+        this.addHomeToBrowserHistory();
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
             creatingNewPost: false,
-            showSearchResults: false
-        })
+            showSearchResults: false,
+            viewingProfile: false,
+            userBeingViewed: {},
+            viewingInbox: false
+        });
     }
 
     handleBackToSearchResults = () => {
@@ -83,7 +94,7 @@ class Home extends Component {
             expandedPost: {},
             creatingNewPost: false,
             showSearchResults: true
-        })
+        });
     }
 
     handleCreateNewPost = newPost => {
@@ -119,8 +130,11 @@ class Home extends Component {
             expandedPost: {},
             creatingNewPost: false,
             showSearchResults: true,
-            searchTerm: searchTerm
-        })
+            searchTerm,
+            viewingProfile: false,
+            userBeingViewed: {},
+            viewingInbox: false
+        });
     }
 
     handleReportPost = post => {
@@ -133,11 +147,30 @@ class Home extends Component {
         const { reportPost, appComponent } = this.props;
         reportPost(post, appComponent);
     }
+
+    handleGoToProfile = userBeingViewed => {
+        this.setState({
+            viewingProfile: true,
+            userBeingViewed,
+            viewingInbox: false
+        }, () => {
+            this.props.history.push("/profile"); 
+        });
+    }
+
+    handleGoToInbox = () => {
+        this.setState({
+            viewingProfile: false,
+            viewingInbox: true
+        }, () => {
+            this.props.history.push("/inbox"); 
+        });
+    }
     
     render() { 
         const { user, posts, appComponent } = this.props;
         const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm,
-            recentlyReportedPosts } = this.state;
+            recentlyReportedPosts, viewingProfile, userBeingViewed, viewingInbox } = this.state;
 
         return (  
             <div>
@@ -146,9 +179,12 @@ class Home extends Component {
                     homeComponent={this}
                     handleBackToHome={this.handleBackToHome}
                     handleSearch={this.handleSearch}
+                    handleGoToProfile={this.handleGoToProfile}
+                    handleGoToInbox={this.handleGoToInbox}
                 />
 
-                {/* The middle section of the page */}
+                {/* Dashboard */}
+                {!viewingProfile && !viewingInbox &&
                 <div className='home__middle-block'>
                     {!showExpandedPost && !creatingNewPost && !showSearchResults &&
                     <Button id='home__create-post-btn'
@@ -182,11 +218,23 @@ class Home extends Component {
                         homeComponent={this}
                         appComponent={appComponent}
                     />}
-                </div>
+                </div>}
+
+                {/* Profile */}
+                {viewingProfile && !viewingInbox &&
+                <Profile 
+                    userBeingViewed={userBeingViewed}
+                />}
+
+                {/* Inbox */}
+                {viewingInbox && 
+                <Inbox 
+                    userBeingViewed={userBeingViewed}
+                />}
 
             </div>
         );
     }
 }
  
-export default withRouter(Home);
+export default withRouter(LoggedInWrapper);

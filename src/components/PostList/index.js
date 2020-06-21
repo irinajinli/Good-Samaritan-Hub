@@ -19,30 +19,27 @@ class PostList extends Component {
 
     getBtnClass = type => {
         const {filterCondition} = this.state;
-        if (type === 'all' && filterCondition === this.isAnyType || 
-        type === 'offers' && filterCondition === this.isAnOffer ||
-        type === 'requests' && filterCondition === this.isARequest) {
+        if ((type === 'all' && filterCondition === this.isAnyType) || 
+        (type === 'offers' && filterCondition === this.isAnOffer) ||
+        (type === 'requests' && filterCondition === this.isARequest)) {
             return 'post-list__filter-btn post-list__filter-btn--selected';
         }
         return 'post-list__filter-btn';
     }
 
     showAll = () => {
-        console.log('show all');
         this.setState({
             filterCondition: this.isAnyType
         });
     }
 
     showOnlyOffers = () => {
-        console.log('show only offers');
         this.setState({
             filterCondition: this.isAnOffer
         });
     }
 
     showOnlyRequests = () => {
-        console.log('show only requests');
         this.setState({
             filterCondition: this.isARequest
         });
