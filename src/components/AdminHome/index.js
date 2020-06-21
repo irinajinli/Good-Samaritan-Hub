@@ -7,10 +7,10 @@ import BanIcon from '@material-ui/icons/Gavel';
 import './styles.css';
 import Icon from './../../data/userIcon.png';
 import Label from './label.js';
-import Table from './table.js';
-import Report from './report.js';
-import BanDialog from './banDialog.js';
-import SnackBar from './snackBar.js';
+import Table from './Table/index.js';
+import Report from './Report/index.js';
+import BanDialog from './BanDialog/index.js';
+import UndoSnackBar from './UndoSnackBar/index.js';
 
 const columns = [
     { id: 'name', label: 'Username', showHeader: false},
@@ -227,7 +227,7 @@ class AdminHome extends Component {
                         }
                     </Card>
                 </div>
-                {oldReport && <SnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
+                {oldReport && <UndoSnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
                 {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
         );

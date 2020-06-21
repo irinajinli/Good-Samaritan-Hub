@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './table.css';
+import './styles.css';
 
 class Table extends Component {
     showHeader = (columns) => {

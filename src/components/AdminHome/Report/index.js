@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import './report.css';
+import './styles.css';
 
 class Report extends Component {
     render() {

@@ -4,18 +4,18 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import './snackBar.css';
+import './styles.css';
 
-class snackBar extends Component {
+class undoSnackBar extends Component {
     render() {
         const {handleClose, handleUndo} = this.props;
         return (
-            <Card className="snackBar">
-                <label className="snackBar__label">Report Deleted!</label>
-                <IconButton className="snackBar__close-button" size="small" onClick={handleClose}>
+            <Card className="undoSnackBar">
+                <label className="undoSnackBar__label">Report Deleted!</label>
+                <IconButton className="undoSnackBar__close-button" size="small" onClick={handleClose}>
                     <CloseIcon fontSize="inherit"/>
                 </IconButton>
-                <Button className="snackBar__undo-button" color="primary" size="small" onClick={handleUndo}>
+                <Button className="undoSnackBar__undo-button" color="primary" size="small" onClick={handleUndo}>
                     Undo
                 </Button>
             </Card>
@@ -23,4 +23,4 @@ class snackBar extends Component {
     }
 }
 
-export default snackBar;
+export default undoSnackBar;

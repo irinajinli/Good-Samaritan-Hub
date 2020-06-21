@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import BanIcon from '@material-ui/icons/Gavel';
 import { grey } from '@material-ui/core/colors';
 
-import './banDialog.css';
+import './styles.css';
 
 const theme = createMuiTheme({
     palette: {
