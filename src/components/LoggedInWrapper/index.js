@@ -12,6 +12,7 @@ import Inbox from '../Inbox';
 import './styles.css';
 
 import { sortByDistance } from '../../actions/distance'
+import { createPost, reportPost, deactivatePost } from '../../actions/user';
 
 class LoggedInWrapper extends Component {
     state = {  
@@ -30,9 +31,6 @@ class LoggedInWrapper extends Component {
 
     sortPosts() {
         const { user, posts, appComponent } = this.props;
-
-        // Posts should not be modified before calling setState
-        // console.log(posts);
         appComponent.setState({
             posts: sortByDistance(user, posts)
         });
@@ -59,6 +57,28 @@ class LoggedInWrapper extends Component {
         this.props.history.push('/home');
     }
 
+    handleBackToHome = () => {
+        this.addHomeToBrowserHistory();
+        this.setState({
+            showExpandedPost: false,
+            expandedPost: {},
+            creatingNewPost: false,
+            showSearchResults: false,
+            viewingProfile: false,
+            userBeingViewed: {},
+            viewingInbox: false
+        });
+    }
+
+    handleBackToSearchResults = () => {
+        this.setState({
+            showExpandedPost: false,
+            expandedPost: {},
+            creatingNewPost: false,
+            showSearchResults: true
+        });
+    }
+
     handleExpandPost = post => {
         this.addHomeToBrowserHistory();
         this.setState({
@@ -74,55 +94,6 @@ class LoggedInWrapper extends Component {
         })
     }
 
-    handleBackToHome = () => {
-        this.addHomeToBrowserHistory();
-        this.setState({
-            showExpandedPost: false,
-            expandedPost: {},
-            creatingNewPost: false,
-            showSearchResults: false,
-            viewingProfile: false,
-            userBeingViewed: {},
-            viewingInbox: false
-        });
-    }
-
-    handleBackToSearchResults = () => {
-        console.log('handleBackToSearchResults')
-        this.setState({
-            showExpandedPost: false,
-            expandedPost: {},
-            creatingNewPost: false,
-            showSearchResults: true
-        });
-    }
-
-    handleCreateNewPost = newPost => {
-        const { user, posts, appComponent } = this.props;
-
-        // Add new post to a copy of the global post list
-        let newPosts = posts.concat(newPost);
-        newPosts = sortByDistance(user, newPosts);
-
-        // Add new post to a copy of the cloned user's post list
-        const userCopy = { ...user };
-        const userPosts = userCopy.posts.concat(newPost);
-        userCopy.posts = userPosts;
-
-        // State should not be modified before we call setState
-        // console.log(posts)
-        // console.log(user)
-
-        // Update appComponent's state
-        appComponent.setState({
-            posts: newPosts,
-            user: userCopy
-        });
-
-        // Reset home page
-        this.handleBackToHome();
-    }
-
     handleSearch = searchTerm => {
         this.addHomeToBrowserHistory();
         this.setState({
@@ -135,22 +106,6 @@ class LoggedInWrapper extends Component {
             userBeingViewed: {},
             viewingInbox: false
         });
-    }
-
-    handleReportPost = post => {
-        // Add the post to the list of recently reported posts
-        this.setState({
-            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(post)
-        });
-
-        // Report the poster in the global state
-        const { reportPost, appComponent } = this.props;
-        reportPost(post, appComponent);
-    }
-
-    handleDeactivatePost = post => {
-        const { deactivatePost, appComponent } = this.props;
-        deactivatePost(post, appComponent);
     }
 
     handleGoToProfile = userBeingViewed => {
@@ -170,6 +125,27 @@ class LoggedInWrapper extends Component {
         }, () => {
             this.props.history.push("/inbox"); 
         });
+    }
+
+    handleCreateNewPost = newPost => {
+        createPost(newPost, this.props.appComponent);
+
+        // Reset home page
+        this.handleBackToHome();
+    }
+
+    handleReportPost = post => {
+        // Add the post to the list of recently reported posts
+        this.setState({
+            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(post)
+        });
+
+        // Report the poster in the global state
+        reportPost(post, this.props.appComponent);
+    }
+
+    handleDeactivatePost = post => {
+        deactivatePost(post, this.props.appComponent);
     }
     
     render() { 

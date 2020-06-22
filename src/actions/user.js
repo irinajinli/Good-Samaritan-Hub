@@ -1,3 +1,26 @@
+import { sortByDistance } from './distance';
+
+
+export const createPost = (newPost, appComponent) => {
+    // Add new post to a copy of the global post list
+    let newPosts = appComponent.state.posts.concat(newPost);
+    newPosts = sortByDistance(appComponent.state.user, newPosts);
+
+    // Add new post to a copy of the cloned user's post list
+    const userCopy = { ...appComponent.state.user };
+    const userPosts = userCopy.posts.concat(newPost);
+    userCopy.posts = userPosts;
+
+    // console.log(posts)
+    // console.log(user)
+    // Update appComponent's state
+    appComponent.setState({
+        posts: newPosts,
+        user: userCopy
+    });
+}
+
+
 export const reportPost = (post, appComponent) => {
     console.log('report post');
     const originalPoster = post.poster;

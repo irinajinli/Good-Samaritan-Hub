@@ -13,7 +13,6 @@ import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
 import { getUsers, getPosts } from './data/hardCodedData';
-import { reportPost, deactivatePost } from './actions/user';
 
 class App extends Component {
   // Global theme
@@ -51,7 +50,7 @@ class App extends Component {
           <BrowserRouter>
             <Switch>
               {/* Shows a different component depending on the exact path in the URL */}
-              
+
               <Route
                 exact
                 path={["/home", "/profile", "/inbox"]}
@@ -60,8 +59,6 @@ class App extends Component {
                     appComponent={this}
                     user={user}
                     posts={posts}
-                    reportPost={reportPost}
-                    deactivatePost={deactivatePost}
                   />
                 )}
               />

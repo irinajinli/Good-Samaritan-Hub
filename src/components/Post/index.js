@@ -134,7 +134,7 @@ class Post extends Component {
                     but also creates a weird bar at the top of the screen} */}
                         <MyDialog 
                             title='Remove this post?'
-                            body='Your post will become permanently hidden from public view but will still be viewable by yourself on your profile.'
+                            body='This post will be permanently hidden from public view but will still be viewable by you on your profile.'
                             actionName='Remove'
                             handleClose={this.handleCloseDialog}
                             handleDoAction={this.handleRemovePost}
