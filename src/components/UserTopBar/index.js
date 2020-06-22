@@ -6,12 +6,16 @@ import IconButton from '@material-ui/core/IconButton';
 import EmojiNatureIcon from '@material-ui/icons/EmojiNature';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import MailIcon from '@material-ui/icons/Mail';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase'
 import { fade } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
+import Modal from '@material-ui/core/Modal';
+import DialogContent from '@material-ui/core/DialogContent';
 
+import MyDialog from '../MyDialog';
 import './styles.css'
 
 const styles = theme => ({
@@ -67,7 +71,21 @@ const styles = theme => ({
 
 class UserTopBar extends Component {
   state = {
-    searchTerm: ''
+    searchTerm: '',
+    dialogOpen: false
+  }
+
+  handleOpenDialog = () => {
+    this.setState({dialogOpen: true});
+  }
+
+  handleCloseDialog = () => {
+      this.setState({dialogOpen: false});
+  }
+
+  handleLogOut = () => {
+    // TODO
+    console.log('logout');
   }
 
   handlePressEnter = event => {
@@ -95,7 +113,8 @@ class UserTopBar extends Component {
   };
 
   render() {
-    const {classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox} = this.props;
+    const { dialogOpen } = this.state
+    const { classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -134,12 +153,31 @@ class UserTopBar extends Component {
                 <MailIcon />
             </IconButton>
             
-            <IconButton edge="end" className={classes.menuButton} color="inherit" aria-label="menu" 
+            <IconButton edge="end" className={`${classes.menuButton} user-top-bar__profile-btn`} color="inherit" aria-label="menu" 
               onClick={() => handleGoToProfile(user)}>
               <AccountBoxIcon />
             </IconButton>
               
             <Typography>{`${user.firstName} ${user.lastName}`}</Typography>
+
+            <IconButton edge="end" className={`${classes.menuButton} user-top-bar__logout-btn`} color="inherit" aria-label="menu" 
+              onClick={() => this.handleOpenDialog()}>
+              <ExitToAppIcon />
+            </IconButton>
+
+            <Modal open={dialogOpen}>
+              {/* <DialogContent> */} 
+              {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
+              but also creates a weird bar at the top of the screen} */}
+              <MyDialog 
+                  title='Are you sure you want to log out?'
+                  body=''
+                  actionName='Log out'
+                  handleClose={this.handleCloseDialog}
+                  handleDoAction={this.handleLogOut}
+                />
+              {/* </DialogContent> */}
+            </Modal>
 
           </Toolbar>
         </AppBar>
