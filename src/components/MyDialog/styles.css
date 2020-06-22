@@ -18,16 +18,16 @@
     margin: 5px 20px 0px 20px;
 }
 
-.MuiButton-root.myDialog__button, .MuiButton-root.myDialog__report-button {
+.MuiButton-root.myDialog__button {
     float: right;
     margin: 15px 20px 15px 0px;
 }
 
-.MuiButton-root.myDialog__report-button {
+.MuiButton-root.myDialog__button--report {
     color: crimson;
     border: 1px solid rgba(255, 0, 0, 0.5);
 }
 
-.MuiButton-root.myDialog__report-button:hover {
+.MuiButton-root.myDialog__button--report:hover {
     border: 1px solid red;
 }
