@@ -5,11 +5,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import ReportIcon from '@material-ui/icons/Report';
 import Modal from '@material-ui/core/Modal';
 import DialogContent from '@material-ui/core/DialogContent';
 
-import ReportDialog from '../ReportDialog';
+import MyDialog from '../MyDialog';
 import './styles.css';
 import '../../index.css';
 import { getDistance } from '../../actions/distance';
@@ -34,6 +35,12 @@ class Post extends Component {
         this.handleCloseDialog();
         this.setState({dialogOpen: false});
         this.props.handleReportPost(this.props.post);
+    }
+
+    handleRemovePost = () => {
+        this.handleCloseDialog();
+        this.setState({dialogOpen: false});
+        this.props.deactivatePost(this.props.post);
     }
 
     handleOpenDialog = () => {
@@ -88,24 +95,49 @@ class Post extends Component {
                             <div className='post__body'>{post.body}</div>
                         </div>
                         <div className='post__block post__footer'>
-                            <Button className='post__send-msg-btn'>
-                                Send a message
-                            </Button>
-                            <IconButton size='small' className='post__report-btn' onClick={this.handleOpenDialog}>
-                                <ReportIcon fontSize='small' color='disabled'/>
-                            </IconButton>
+                            {user.username !== post.poster.username &&
+                            <React.Fragment>
+                                <Button className='post__send-msg-btn'>
+                                    Send a message
+                                </Button>
+                                <IconButton size='small' className='post__report-btn' onClick={this.handleOpenDialog}>
+                                    <ReportIcon fontSize='small' color='disabled'/>
+                                </IconButton>
+                            </React.Fragment>}
+                            {user.username === post.poster.username &&
+                            <React.Fragment>
+                                <IconButton size='small' className='post__remove-post-btn' onClick={this.handleOpenDialog}>
+                                    <VisibilityOffIcon fontSize='small' color='disabled'/>
+                                </IconButton>
+                            </React.Fragment>}
                         </div>
                     </React.Fragment>}
                 </Card>
 
-                <Modal open={dialogOpen}>
+                <Modal open={dialogOpen && user.username !== post.poster.username}>
                     {/* <DialogContent> */} 
                     {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
                     but also creates a weird bar at the top of the screen} */}
-                        <ReportDialog 
-                            thing={'post'}
+                        <MyDialog 
+                            title='Report this post?'
+                            body=''
+                            actionName='Report'
                             handleClose={this.handleCloseDialog}
-                            handleReport={this.handleReport}
+                            handleDoAction={this.handleReport}
+                        />
+                    {/* </DialogContent> */}
+                </Modal>
+
+                <Modal open={dialogOpen && user.username === post.poster.username}>
+                    {/* <DialogContent> */} 
+                    {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
+                    but also creates a weird bar at the top of the screen} */}
+                        <MyDialog 
+                            title='Remove this post?'
+                            body='Your post will become permanently hidden from public view but will still be viewable by yourself on your profile.'
+                            actionName='Remove'
+                            handleClose={this.handleCloseDialog}
+                            handleDoAction={this.handleRemovePost}
                         />
                     {/* </DialogContent> */}
                 </Modal>

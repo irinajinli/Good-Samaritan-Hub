@@ -14,6 +14,37 @@ export const reportPost = (post, appComponent) => {
 }
 
 
+export const deactivatePost = (post, appComponent) => {
+    const { posts, user } = appComponent.state;
+
+    // Clone post, posts, user, and user's posts
+    const postCopy = { ...post };
+    const postsCopy = [ ...posts ];
+
+    const userCopy = { ...user };
+    const userPostsCopy = [ ...user.posts ];
+
+    // Update clones
+    postCopy.status = 'inactive';
+
+    let index = posts.indexOf(post);
+    postsCopy[index] = postCopy;
+
+    index = user.posts.indexOf(post);
+    userPostsCopy[index] = postCopy;
+    userCopy.posts = userPostsCopy;
+
+    console.log('deactivate post');
+    console.log(posts);
+    console.log(user);
+    // Update global state
+    appComponent.setState({
+        posts: postsCopy,
+        user: userCopy
+    });
+}
+
+
 const updateUser = (originalUser, updatedUser, appComponent) => {
     console.log('update user');
     const usersCopy = [ ...appComponent.state.users ]; // clone users array
@@ -23,5 +54,6 @@ const updateUser = (originalUser, updatedUser, appComponent) => {
     console.log(appComponent.state.users);
     appComponent.setState({
         users: usersCopy
-    })
+    });
 }
+

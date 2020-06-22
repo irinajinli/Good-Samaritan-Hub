@@ -48,13 +48,19 @@ class PostList extends Component {
     onReportPost = post => {
         const { handleReportPost, handleBack } = this.props;
         handleReportPost(post);
-        handleBack()
+        handleBack();
+    }
+
+    onRemovePost = post => {
+        const { deactivatePost, handleBack } = this.props;
+        deactivatePost(post);
+        handleBack();
     }
 
     render() { 
         const {filterCondition} = this.state;
         const {user, posts, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, recentlyReportedPosts, handleGoToProfile} = this.props;
+            handleBack, recentlyReportedPosts, handleGoToProfile } = this.props;
         
         return (  
             <div >
@@ -77,9 +83,11 @@ class PostList extends Component {
 
                 <div className='post-list__container'>
                     {!showExpandedPost && posts.filter(post => {
-                        return filterCondition(post);
-                    }).filter(post => {
-                        return !recentlyReportedPosts.includes(post);
+                        return (
+                            filterCondition(post) &&
+                            !recentlyReportedPosts.includes(post) &&
+                            post.status === 'active'
+                        );
                     }).map(post => (
                         <Post 
                             key={uid(post)}
@@ -90,6 +98,7 @@ class PostList extends Component {
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
                             handleGoToProfile={handleGoToProfile}
+                            deactivatePost={this.onRemovePost}
                         />
                     ))}
                     {showExpandedPost && 
@@ -101,6 +110,7 @@ class PostList extends Component {
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
                             handleGoToProfile={handleGoToProfile}
+                            deactivatePost={this.onRemovePost}
                         />
                     }
                 </div>

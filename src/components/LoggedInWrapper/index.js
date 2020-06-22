@@ -88,6 +88,7 @@ class LoggedInWrapper extends Component {
     }
 
     handleBackToSearchResults = () => {
+        console.log('handleBackToSearchResults')
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -147,6 +148,11 @@ class LoggedInWrapper extends Component {
         reportPost(post, appComponent);
     }
 
+    handleDeactivatePost = post => {
+        const { deactivatePost, appComponent } = this.props;
+        deactivatePost(post, appComponent);
+    }
+
     handleGoToProfile = userBeingViewed => {
         this.setState({
             viewingProfile: true,
@@ -203,6 +209,7 @@ class LoggedInWrapper extends Component {
                         handleReportPost={this.handleReportPost}
                         recentlyReportedPosts={recentlyReportedPosts}
                         handleGoToProfile={this.handleGoToProfile}
+                        deactivatePost={this.handleDeactivatePost}
                     />}
 
                     {creatingNewPost && 

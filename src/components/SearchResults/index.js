@@ -26,14 +26,14 @@ class SearchResults extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.searchTerm !== this.props.searchTerm) {
+        if (prevProps !== this.props) {
             this.updateResults();
         }
     }
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { homeComponent, handleGoToProfile } = this.props;
+        const { homeComponent } = this.props;
 
         return (  
             <div>
@@ -47,7 +47,7 @@ class SearchResults extends Component {
                     <UserSearchResult 
                         key={uid(user)}
                         user={user}
-                        handleGoToProfile={handleGoToProfile}
+                        handleGoToProfile={homeComponent.handleGoToProfile}
                     />
                 ))}
 
@@ -65,7 +65,8 @@ class SearchResults extends Component {
                     handleBack={homeComponent.handleBackToSearchResults}
                     handleReportPost={homeComponent.handleReportPost}
                     recentlyReportedPosts={homeComponent.state.recentlyReportedPosts}
-                    handleGoToProfile={handleGoToProfile}
+                    handleGoToProfile={homeComponent.handleGoToProfile}
+                    deactivatePost={homeComponent.handleDeactivatePost}
                 />
             </div>
         );

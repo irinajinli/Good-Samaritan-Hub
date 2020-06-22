@@ -25,12 +25,14 @@
     margin-left: 10px;
 }
 
-.post__report-btn {
+.MuiIconButton-sizeSmall.post__report-btn {
     float: right;
+    margin-right: 5px;
 }
 
-.MuiIconButton-sizeSmall.post__report-btn {
+.MuiIconButton-sizeSmall.post__remove-post-btn {
     margin-right: 5px;
+    float: right;
 }
 
 .post__left-block {

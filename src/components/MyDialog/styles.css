@@ -1,4 +1,4 @@
-.reportDialog__dialog {
+.myDialog__dialog {
     position: fixed;
     width: 500px;
     height: fit-content;
@@ -7,21 +7,27 @@
     transform: translate(-50%, 50%);
 }
 
-.reportDialog__title {
+.myDialog__title {
     margin-top: 20px;
     margin-left: 20px;
 }
 
-.MuiButton-root.reportDialog__button, .MuiButton-root.reportDialog__report-button {
+.myDialog__body {
+    color: grey;
+    font-size: 12px;
+    margin: 5px 20px 0px 20px;
+}
+
+.MuiButton-root.myDialog__button, .MuiButton-root.myDialog__report-button {
     float: right;
     margin: 15px 20px 15px 0px;
 }
 
-.MuiButton-root.reportDialog__report-button {
+.MuiButton-root.myDialog__report-button {
     color: crimson;
     border: 1px solid rgba(255, 0, 0, 0.5);
 }
 
-.MuiButton-root.reportDialog__report-button:hover {
+.MuiButton-root.myDialog__report-button:hover {
     border: 1px solid red;
 }
