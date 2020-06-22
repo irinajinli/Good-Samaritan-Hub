@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Login from "../Login";
+import LoginInput from "../LoginInput";
+import Header from "../Header";
 
 const useStyles = makeStyles((theme) => ({
   centre: {
@@ -21,7 +22,8 @@ export default function AdminLogin() {
 
   return (
     <div>
-      <Login></Login>
+      <Header title="Admin Login" />
+      <LoginInput />
     </div>
   );
 }

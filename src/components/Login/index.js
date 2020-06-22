@@ -4,6 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import Header from "../Header";
+import LoginInput from "../LoginInput";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,38 +26,18 @@ const useStyles = makeStyles((theme) => ({
   loginButton: {
     marginTop: "20px",
   },
+  noLeftMargin: {
+    marginLeft: "0px",
+  },
 }));
 
 export default function Login() {
   const classes = useStyles();
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <Box className={classes.centre}>
-        <h1></h1>
-        <div>
-          <TextField
-            className={classes.marginBottom}
-            label="Username"
-            variant="outlined"
-          />
-        </div>
-        <div>
-          <TextField label="Password" variant="outlined" />
-          <Link className="link" to={"/registration"}>
-            Need to register?
-          </Link>
-        </div>
-        <div>
-          <Button
-            className={classes.loginButton}
-            variant="contained"
-            color="primary"
-          >
-            LOG IN
-          </Button>
-        </div>
-      </Box>
-    </form>
+    <div>
+      <Header title="Login" />
+      <LoginInput />
+    </div>
   );
 }
