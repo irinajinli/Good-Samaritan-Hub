@@ -1,12 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import LoginInput from "../LoginInput";
+import Header from "../Header";
 
-class AdminLogin extends Component {
-    state = {  }
-    render() { 
-        return (  
-            <div>AdminLogin</div>
-        );
-    }
+const useStyles = makeStyles((theme) => ({
+  centre: {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+  header: {
+    marginTop: "40px",
+    marginBottom: "40px",
+    textAlign: "center",
+  },
+}));
+
+export default function AdminLogin() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.centre}>
+      <Header title="Admin Login" />
+      <LoginInput />
+    </div>
+  );
 }
- 
-export default AdminLogin;
