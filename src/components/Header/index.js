@@ -9,7 +9,7 @@ class Header extends React.Component {
     const { title, subtitle } = this.props;
 
     return (
-      <div className="header">
+      <div>
         <h1>{title}</h1>
         <h3>{subtitle}</h3>
       </div>

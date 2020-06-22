@@ -21,7 +21,7 @@ export default function AdminLogin() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.centre}>
       <Header title="Admin Login" />
       <LoginInput />
     </div>

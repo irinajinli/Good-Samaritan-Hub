@@ -1,8 +1,8 @@
 /* Styles for the Header React component */
 .header {
-  text-align: center;
+  /* text-align: center;
   position: absolute;
-  left: 37%;
+  left: 42%;
   top: 31%;
-  transform: "translate(-50%, -50%)";
+  transform: "translate(-50%, -50%)"; */
 }

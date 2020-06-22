@@ -35,7 +35,7 @@ export default function Login() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.centre}>
       <Header title="Login" />
       <LoginInput />
     </div>

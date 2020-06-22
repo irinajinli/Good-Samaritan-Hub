@@ -34,7 +34,7 @@ export default function LoginInput() {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <Box className={classes.centre}>
+      <Box>
         <div>
           <TextField
             className={classes.marginBottom}
