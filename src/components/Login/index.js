@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
   },
-  topCentre: {
+  centre: {
     position: "absolute",
     left: "50%",
     top: "50%",
@@ -31,7 +31,8 @@ export default function Login() {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <Box className={classes.topCentre}>
+      <Box className={classes.centre}>
+        <h1></h1>
         <div>
           <TextField
             className={classes.marginBottom}
