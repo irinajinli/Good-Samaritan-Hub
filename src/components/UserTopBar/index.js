@@ -83,11 +83,6 @@ class UserTopBar extends Component {
       this.setState({dialogOpen: false});
   }
 
-  handleLogOut = () => {
-    // TODO
-    console.log('logout');
-  }
-
   handlePressEnter = event => {
     if (event.key == 'Enter') {
       this.props.handleSearch(this.state.searchTerm);
@@ -114,7 +109,7 @@ class UserTopBar extends Component {
 
   render() {
     const { dialogOpen } = this.state
-    const { classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox } = this.props;
+    const { classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox, handleLogout } = this.props;
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -174,7 +169,7 @@ class UserTopBar extends Component {
                   body=''
                   actionName='Log out'
                   handleClose={this.handleCloseDialog}
-                  handleDoAction={this.handleLogOut}
+                  handleDoAction={handleLogout}
                 />
               {/* </DialogContent> */}
             </Modal>

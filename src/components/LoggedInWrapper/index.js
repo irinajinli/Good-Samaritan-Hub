@@ -127,6 +127,11 @@ class LoggedInWrapper extends Component {
         });
     }
 
+    onLogout = () => {
+        this.props.history.push("/");
+        this.props.handleLogout();
+    }
+
     handleCreateNewPost = newPost => {
         createPost(newPost, this.props.appComponent);
 
@@ -149,7 +154,7 @@ class LoggedInWrapper extends Component {
     }
     
     render() { 
-        const { user, posts, appComponent } = this.props;
+        const { user, posts, appComponent, handleLogout } = this.props;
         const { showExpandedPost, expandedPost, creatingNewPost, showSearchResults, searchTerm,
             recentlyReportedPosts, viewingProfile, userBeingViewed, viewingInbox } = this.state;
 
@@ -162,6 +167,7 @@ class LoggedInWrapper extends Component {
                     handleSearch={this.handleSearch}
                     handleGoToProfile={this.handleGoToProfile}
                     handleGoToInbox={this.handleGoToInbox}
+                    handleLogout={this.onLogout}
                 />
 
                 {/* Home page */}

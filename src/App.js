@@ -36,10 +36,22 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: getUsers()[0], // Current user that is logged in. TODO: Init to {}/undefined and change this based on which user is logged in
+    user: getUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
     users: getUsers(),
-    posts: getPosts(),
+    posts: getPosts(), 
   };
+
+  onComponentDidMount() {
+    // Phase 2: Get the list of users and posts from the server and set this component's state
+    // this.setState({
+    //   users: server call to get users
+    //   posts: server call to get posts
+    // });
+  }
+
+  handleLogout = () => {
+    this.setState({ user: {} });
+  }
 
   render() {
     const { user, users, posts } = this.state;
@@ -59,6 +71,7 @@ class App extends Component {
                     appComponent={this}
                     user={user}
                     posts={posts}
+                    handleLogout={this.handleLogout}
                   />
                 )}
               />
