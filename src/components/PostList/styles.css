@@ -1,15 +1,20 @@
 .MuiButtonGroup-root.post-list__filter-btn-group {
-    margin-bottom: 7px;
+    margin: 7px 0px;
     width: 100%;
 }
 
 .MuiButton-root.post-list__filter-btn {
+    background-color: rgb(255, 255, 255, 0.3);
     margin-bottom: 7px;
     width: 33%;
 }
 
+.MuiButton-root.post-list__filter-btn:hover {
+    background-color: rgb(255, 255, 255, 0.6);
+}
+
 .MuiButton-root.post-list__filter-btn--selected {
-    background-color: whitesmoke 
+    background-color: rgb(255, 255, 255);
 }
 
 .post-list__container {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Chip from '@material-ui/core/Chip';
 import PostList from '../PostList';
 import { uid } from "react-uid";
 
@@ -39,9 +40,7 @@ class SearchResults extends Component {
             <div>
                 {/* User search results */}
                 {!homeComponent.state.showExpandedPost &&
-                <div className='search-results__section-title'>
-                    Users
-                </div>}
+                <div><Chip className='search-results__section-title' label='Users'></Chip></div>}
                 {!homeComponent.state.showExpandedPost && 
                 matchingUsers.map(user => (
                     <UserSearchResult 
@@ -53,9 +52,7 @@ class SearchResults extends Component {
 
                 {/* Post search results */}
                 {!homeComponent.state.showExpandedPost &&
-                <div className='search-results__section-title'>
-                    Posts
-                </div>}
+                <div><Chip className='search-results__section-title' label='Posts'></Chip></div>}
                 <PostList 
                     user={homeComponent.props.user}
                     posts={matchingPosts} 
