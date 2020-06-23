@@ -89,7 +89,7 @@ class UserTopBar extends Component {
   }
 
   handlePressEnter = event => {
-    if (event.key == 'Enter') {
+    if (event.key === 'Enter') {
       this.props.handleSearch(this.state.searchTerm);
 
       // Clear input

@@ -17,8 +17,8 @@ class SearchResults extends Component {
 
     updateResults() {
         this.setState({
-            matchingPosts: getMatchingPosts(this.props.searchTerm, this.props.homeComponent.props.posts),
-            matchingUsers: getMatchingUsers(this.props.searchTerm, this.props.appComponent.state.users)
+            matchingPosts: getMatchingPosts(this.props.searchTerm, this.props.posts),
+            matchingUsers: getMatchingUsers(this.props.searchTerm, this.props.users)
         });
     }
 
@@ -34,36 +34,37 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { homeComponent } = this.props;
+        const { user, expandedPost, recentlyReportedPosts, showExpandedPost, handleExpandPost, handleGoToProfile, 
+            handleBackToSearchResults, handleReportPost, handleDeactivatePost } = this.props;
 
         return (  
             <div>
                 {/* User search results */}
-                {!homeComponent.state.showExpandedPost &&
+                {!showExpandedPost &&
                 <div><Chip className='search-results__section-title' label='Users'></Chip></div>}
-                {!homeComponent.state.showExpandedPost && 
+                {!showExpandedPost && 
                 matchingUsers.map(user => (
                     <UserSearchResult 
                         key={uid(user)}
                         user={user}
-                        handleGoToProfile={homeComponent.handleGoToProfile}
+                        handleGoToProfile={handleGoToProfile}
                     />
                 ))}
 
                 {/* Post search results */}
-                {!homeComponent.state.showExpandedPost &&
+                {!showExpandedPost &&
                 <div><Chip className='search-results__section-title' label='Posts'></Chip></div>}
                 <PostList 
-                    user={homeComponent.props.user}
+                    user={user}
                     posts={matchingPosts} 
-                    handleExpandPost={homeComponent.handleExpandPost} 
-                    showExpandedPost={homeComponent.state.showExpandedPost} 
-                    expandedPost={homeComponent.state.expandedPost}
-                    handleBack={homeComponent.handleBackToSearchResults}
-                    handleReportPost={homeComponent.handleReportPost}
-                    recentlyReportedPosts={homeComponent.state.recentlyReportedPosts}
-                    handleGoToProfile={homeComponent.handleGoToProfile}
-                    deactivatePost={homeComponent.handleDeactivatePost}
+                    handleExpandPost={handleExpandPost} 
+                    showExpandedPost={showExpandedPost} 
+                    expandedPost={expandedPost}
+                    handleBack={handleBackToSearchResults}
+                    handleReportPost={handleReportPost}
+                    recentlyReportedPosts={recentlyReportedPosts}
+                    handleGoToProfile={handleGoToProfile}
+                    deactivatePost={handleDeactivatePost}
                 />
             </div>
         );

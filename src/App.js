@@ -8,7 +8,7 @@ import TopBar from "./components/TopBar";
 import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
-import LoggedInWrapper from "./components/LoggedInWrapper";
+import UserView from "./components/UserView";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
@@ -75,9 +75,10 @@ class App extends Component {
                 exact
                 path={["/home", "/profile", "/inbox"]}
                 render={() => (
-                  <LoggedInWrapper
+                  <UserView
                     appComponent={this}
                     user={user}
+                    users={users}
                     posts={posts}
                     handleLogout={this.handleLogout}
                   />

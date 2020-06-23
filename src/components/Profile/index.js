@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 class Profile extends Component {
     state = {  }
     render() { 
-        const { user, userBeingViewed } = this.props
+        const { user, displayedUser } = this.props
         return (  
             <div>{`${user.firstName} ${user.lastName} is viewing 
-            ${userBeingViewed.firstName} ${userBeingViewed.lastName}'s profile`}</div>
+            ${displayedUser.firstName} ${displayedUser.lastName}'s profile`}</div>
         );
     }
 }

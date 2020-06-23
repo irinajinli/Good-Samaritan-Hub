@@ -1,0 +1,13 @@
+.home__middle-block {
+    padding: 10px 25%;
+    width: 50%;
+    display: inline-block;
+}
+
+#home__create-post-btn {
+    margin: 10px 0px 15px;
+}
+
+.home__footer {
+    height: 60px;
+}
