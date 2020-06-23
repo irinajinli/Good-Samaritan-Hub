@@ -20,3 +20,7 @@ code {
 .hover-pointer:hover {
   color: black;
 }
+
+.MuiCard-root.MuiPaper-elevation1 {
+  box-shadow: none;
+}

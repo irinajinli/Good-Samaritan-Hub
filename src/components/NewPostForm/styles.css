@@ -1,3 +1,7 @@
+.new-post__container {
+    margin: 20px;
+}
+
 .new-post__input {
     margin: 20px 5px;
 }
@@ -6,6 +10,10 @@
     padding-top: 15px;
 }
 
-.home__create-post-btn {
-    padding-top: 40px;
+.MuiButton-root.new-post__back-btn {
+    margin-bottom: 15px;
+}
+
+.MuiButton-root.new-post__create-post-btn {
+    margin-top: 40px;
 }
