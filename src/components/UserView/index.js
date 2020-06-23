@@ -49,8 +49,8 @@ class UserView extends Component {
             }
         }
 
-        // Resort posts when new posts are added
-        if (prevProps.posts.length > this.props.posts.length) {
+        // Re-sort posts when new posts are added
+        if (prevProps.posts.length < this.props.posts.length) {
             this.sortPosts();
         }
     }
