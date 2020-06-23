@@ -1,3 +1,12 @@
+.home {
+    min-height: 100vh;
+    max-height: 100%;
+    background-image: url("../../data/background.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+}
+
 .home__middle-block {
     padding: 10px 25%;
     width: 50%;
@@ -5,5 +14,9 @@
 }
 
 #home__create-post-btn {
-    margin: 10px 0px 15px;;
+    margin: 10px 0px 15px;
+}
+
+.home__footer {
+    height: 60px;
 }

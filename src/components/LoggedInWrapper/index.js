@@ -159,7 +159,7 @@ class LoggedInWrapper extends Component {
             recentlyReportedPosts, viewingProfile, userBeingViewed, viewingInbox } = this.state;
 
         return (  
-            <div>
+            <div className='home'>
                 <UserTopBar 
                     user={user}
                     homeComponent={this}
@@ -223,6 +223,7 @@ class LoggedInWrapper extends Component {
                     user={user}
                 />}
 
+                <div className='home__footer'></div>
             </div>
         );
     }

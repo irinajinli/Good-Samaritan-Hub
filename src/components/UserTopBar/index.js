@@ -20,7 +20,12 @@ import './styles.css'
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
+  },
+  bar: {
+    background: 'transparent',
+    color: '#000',
+    boxShadow: 'none'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -112,7 +117,7 @@ class UserTopBar extends Component {
     const { classes, user, handleBackToHome, handleGoToProfile, handleGoToInbox, handleLogout } = this.props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar className={classes.bar} position="static">
           <Toolbar>
 
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"
