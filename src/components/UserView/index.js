@@ -104,6 +104,9 @@ class UserView extends Component {
 
     handleSearch = searchTerm => {
         this.setState({
+            showExpandedPost: false,
+            expandedPost: {},
+            creatingNewPost: false,
             showSearchResults: true,
             searchTerm,
             viewingHome: true,
