@@ -1,0 +1,12 @@
+.inboxSideBarItemContainer {
+    display: flex;
+    margin: 10px;
+}
+
+.inboxSideBarItemImage {
+    width: 70px;
+    height: 70px;
+    border-radius: 35%;
+    margin-right: 10px;
+    
+}
