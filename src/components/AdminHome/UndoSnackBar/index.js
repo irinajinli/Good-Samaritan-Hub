@@ -15,7 +15,7 @@ class undoSnackBar extends Component {
                 <IconButton className="undoSnackBar__close-button" size="small" onClick={handleClose}>
                     <CloseIcon fontSize="inherit"/>
                 </IconButton>
-                <Button className="undoSnackBar__undo-button" color="primary" size="small" onClick={handleUndo}>
+                <Button className="undoSnackBar__undo-button" color="secondary" size="small" onClick={handleUndo}>
                     Undo
                 </Button>
             </Card>
