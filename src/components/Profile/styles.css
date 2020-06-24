@@ -1,0 +1,21 @@
+.profile {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.profilePic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    padding-right: 20px;
+}
+.profileContainer {
+    display: flex;
+    align-items: center;
+}
+
+.profileText {
+    display: inline;
+}
+.textContainer {
+    padding-right: 50px;
+}
