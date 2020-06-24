@@ -6,15 +6,19 @@ const postalCodes = {
 
     // Downtown Toronto
     M5S: {lat: 43.663334, lon: -79.399336},
+    M5B: {lat: 43.657552, long: -79.378027},
 
     // Downsview East / North York
     M3K: {lat: 43.738192, lon: -79.470333},
 
     // Etibocoke
-    M8V: {lat: 43.607141, lon: -79.503639}
+    M8V: {lat: 43.607141, lon: -79.503639},
+
+    // West Toronto
+    M6H: {lat: 43.664417, lon: -79.437448}
   }
 
-// Some users
+// Initial list of users
 const users = [
   {
     username: 'user',
@@ -53,7 +57,7 @@ const users = [
     password: 'user3',
     firstName: 'Diane',
     lastName: 'Doe',
-    location: 'M8V',
+    location: 'M6H',
     bio: 'Hello world, I am Diane Doe!',
     posts: [],
     messagesSent: [],
@@ -85,7 +89,7 @@ const users = [
     password: 'user5',
     firstName: 'Sally',
     lastName: 'Sue',
-    location: 'M4P',
+    location: 'M5B',
     bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
@@ -150,7 +154,7 @@ const users = [
   }
 ];
 
-// Some posts
+// Initial list of posts
 const posts = [
   {
     title: 'Grocery Pickup',
@@ -206,7 +210,7 @@ const posts = [
     type: 'Offer',
     date: new Date(2020, 5, 10, 2, 34, 23),
     status: 'active'
-  }
+  },
 ];
 
 // Add hard-coded posts to the hard-coded users's post lists

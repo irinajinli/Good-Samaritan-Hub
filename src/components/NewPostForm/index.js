@@ -62,7 +62,6 @@ class NewPostForm extends Component {
                                 name='body'
                                 onChange={this.handleInputChange}
                                 label="Body"
-                                placeholder="Placeholder"
                                 multiline
                                 fullWidth={true}
                             />
