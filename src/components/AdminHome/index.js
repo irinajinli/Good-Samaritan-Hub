@@ -9,6 +9,7 @@ import Icon from './../../data/userIcon.png';
 import Label from './label.js';
 import Table from './Table/index.js';
 import Report from './Report/index.js';
+import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
@@ -218,6 +219,24 @@ class AdminHome extends Component {
                         }
                     </Card>
                 </div>
+                <Card className="adminHome__list">
+                    <h1>User's Post History</h1>
+                    {selectedUser && selectedUser.posts.length > 0 && 
+                        <div className="adminHome__scroll">
+                            {selectedUser.posts.map((post) => {
+                                return (
+                                    <Post post={post}></Post>
+                                );
+                            })}
+                        </div>
+                    }
+                    {selectedUser && selectedUser.posts.length <= 0 && 
+                        <label className="adminHome__center">{`${selectedUser.username} has no posts`}</label>
+                    }
+                    {!selectedUser &&
+                        <label className="adminHome__center">No User Selected</label>
+                    }
+                </Card>
                 {oldReport && <UndoSnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
                 {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
