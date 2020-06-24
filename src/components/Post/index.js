@@ -78,7 +78,7 @@ class Post extends Component {
                         </div>
                         <div className='post__right-block'>
                             {this.generateTypeChip()}
-                            <Chip className='post__distance' label={`${dist} km`} />
+                            <Chip className='post__distance' label={`${post.location}, ${dist} km`} />
                             {!isExpanded && 
                             <IconButton onClick={() => handleExpandPost(post)}>
                                 <ArrowForwardIcon />
