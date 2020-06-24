@@ -6,12 +6,11 @@
     margin: 20px 5px;
 }
 
-.new-post__select-block {
-    margin-top: 35px;
-}
-
-.new-post__select {
+.new-post__input.new-post__select {
+    display: inline-block;
+    margin: 20px 20px 5px 0px;
     margin-right: 20px;
+    min-width: 142px;
 }
 
 .new-post__input-label {

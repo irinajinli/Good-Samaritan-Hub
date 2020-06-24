@@ -6,7 +6,7 @@ const postalCodes = {
 
   // Downtown Toronto
   M5S: {lat: 43.663334, lon: -79.399336},
-  M5B: {lat: 43.657552, long: -79.378027},
+  M4X: {lat: 43.669856, lon: -79.365100},
 
   // Downsview East / North York
   M3K: {lat: 43.738192, lon: -79.470333},
@@ -89,7 +89,7 @@ const users = [
     password: 'user5',
     firstName: 'Sally',
     lastName: 'Sue',
-    location: 'M5B',
+    location: 'M4X',
     bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 

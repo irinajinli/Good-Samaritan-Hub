@@ -70,7 +70,7 @@ class NewPostForm extends Component {
                                 fullWidth={true}
                             />
                         </div>
-                        <div className='new-post__select-block'>
+                        <div>
                             <span className='new-post__input new-post__select'>
                                 {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
                                 in the console is caused by Material UI's Select component */}
