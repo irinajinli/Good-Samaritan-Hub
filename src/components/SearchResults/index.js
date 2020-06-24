@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Chip from '@material-ui/core/Chip';
 import PostList from '../PostList';
-import { uid } from "react-uid";
 
 import { getMatchingPosts, getMatchingUsers } from '../../actions/search';
 import UserSearchResult from '../UserSearchResult';
@@ -45,7 +44,7 @@ class SearchResults extends Component {
                 {!showExpandedPost && 
                 matchingUsers.map(user => (
                     <UserSearchResult 
-                        key={uid(user)}
+                        key={user.username}
                         user={user}
                         handleGoToProfile={handleGoToProfile}
                     />

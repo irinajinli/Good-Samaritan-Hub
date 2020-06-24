@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { uid } from "react-uid";
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 
@@ -90,7 +89,7 @@ class PostList extends Component {
                         );
                     }).map(post => (
                         <Post 
-                            key={uid(post)}
+                            key={post.id}
                             user={user}
                             post={post}
                             isExpanded={showExpandedPost}
