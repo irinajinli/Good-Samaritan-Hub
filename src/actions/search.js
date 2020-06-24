@@ -22,3 +22,15 @@ export const getMatchingUsers = (searchTerm, users) => {
             fullName.search(new RegExp(searchTerm, 'i')) !== -1))
     });
 }
+
+
+// Returns a list of the given user's posts
+export const getPosts = (user, posts) => posts.filter(post => user.posts.includes(post.id));
+
+
+// Returns a list of the given user's reported posts
+export const getReportedPosts = (user, posts) => posts.filter(post => user.reportedPosts.includes(post.id));
+
+
+// Returns the post with the given id
+export const getPost = (id, posts) => posts.find(post => post.id === id)

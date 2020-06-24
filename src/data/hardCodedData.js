@@ -43,7 +43,7 @@ const users = [
     lastName: 'Bob',
     location: 'M4P',
     bio: 'Hello world, I am Bobsy Bob!',
-    posts: [],
+    posts: [0],
     messagesSent: [],
     messagesRecieved: [],
     isReported: false,
@@ -59,7 +59,7 @@ const users = [
     lastName: 'Doe',
     location: 'M6H',
     bio: 'Hello world, I am Diane Doe!',
-    posts: [],
+    posts: [1],
     messagesSent: [],
     messagesRecieved: [],
     isReported: false,
@@ -75,13 +75,13 @@ const users = [
     lastName: 'Scott',
     location: 'M5S',
     bio: 'I am!',
-    posts: [],
+    posts: [2],
     messagesSent: [],
     messagesRecieved: [],
     isReported: true,
     isBanned: false,
     reportedMessages: [],
-    reportedPosts: [],
+    reportedPosts: [2],
     banReason: ''
   },
   {
@@ -138,7 +138,7 @@ const users = [
     lastName: 'Bradley',
     location: 'M8V',
     bio: `I am John`,
-    posts: [],
+    posts: [3, 4],
     messagesSent: [],
     messagesRecieved: [],
     isReported: true,
@@ -149,7 +149,7 @@ const users = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
-    reportedPosts: [],
+    reportedPosts: [3, 4],
     banReason: ''
   }
 ];
@@ -157,6 +157,7 @@ const users = [
 // Initial list of posts
 const posts = [
   {
+    id: 0,
     title: 'Grocery Pickup',
     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
@@ -170,6 +171,7 @@ const posts = [
     status: 'active'
   },
   {
+    id: 1,
     title: 'Any pickup in Etobicoke Area',
     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
@@ -183,6 +185,7 @@ const posts = [
     status: 'active'
   },
   {
+    id: 2,
     title: 'Dog Walking Assistance',
     body: `Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
@@ -194,6 +197,7 @@ const posts = [
     status: 'active'
   },
   {
+    id: 3,
     title: 'Want personal chef',
     body: 'I am hungry',
     poster: users[6],
@@ -202,6 +206,7 @@ const posts = [
     status: 'active'
   },
   {
+    id: 4,
     title: 'Candy',
     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
@@ -213,18 +218,9 @@ const posts = [
   },
 ];
 
-// Add hard-coded posts to the hard-coded users's post lists
-users[1].posts.push(posts[0]);
-users[2].posts.push(posts[1]);
-users[3].posts.push(posts[2]);
-users[3].reportedPosts.push(posts[2]);
-users[6].posts.push(posts[3]);
-users[6].posts.push(posts[4]);
-users[6].reportedPosts.push(posts[3]);
-users[6].reportedPosts.push(posts[4]);
 
 export const getPostalCodes = () => postalCodes;
 
-export const getUsers = () => users;
+export const getInitialUsers = () => users;
 
-export const getPosts = () => posts;
+export const getInitialPosts = () => posts;

@@ -12,7 +12,7 @@ import UserView from "./components/UserView";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
-import { getUsers, getPosts } from './data/hardCodedData';
+import { getInitialUsers, getInitialPosts } from './data/hardCodedData';
 
 class App extends Component {
   // Global theme
@@ -44,9 +44,9 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: getUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
-    users: getUsers(),
-    posts: getPosts(), 
+    user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
+    users: getInitialUsers(),
+    posts: getInitialPosts()
   };
 
   onComponentDidMount() {
@@ -74,7 +74,7 @@ class App extends Component {
               <Route
                 exact
                 path={["/home", "/profile", "/inbox"]}
-                render={() => (
+                render={() => 
                   <UserView
                     appComponent={this}
                     user={user}
@@ -82,12 +82,16 @@ class App extends Component {
                     posts={posts}
                     handleLogout={this.handleLogout}
                   />
-                )}
+                }
               />
               <Route
                 exact
                 path="/admin/home"
-                render={() => <AdminHome users={users} />}
+                render={() => 
+                <AdminHome 
+                  users={users} 
+                  posts={posts}
+                />}
               />
 
               {/* The pages in this fragment share the same top bar */}

@@ -11,6 +11,7 @@ import '../../index.css'
 
 class NewPostForm extends Component {
     state = {
+        id: -1,
         title: '',
         body: '',
         poster: this.props.user,

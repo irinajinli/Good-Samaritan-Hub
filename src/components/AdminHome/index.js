@@ -13,6 +13,8 @@ import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
+import { getPosts, getReportedPosts } from '../../actions/search';
+
 const columns = [
     { id: 'name', label: 'Username', showHeader: false},
     { id: 'status', label: 'Status', showHeader: false}
@@ -95,8 +97,8 @@ class AdminHome extends Component {
         this.setState({dialogOpen: false});
     }
 
-    handleOpenSnackBar = (reportType, reportContent, i) => {
-        this.setState({oldReport: {type: reportType, content: reportContent, index: i}});
+    handleOpenSnackBar = (id, reportType, reportContent, i) => {
+        this.setState({oldReport: {id, type: reportType, content: reportContent, index: i}});
     }
 
     handleCloseSnackBar = () => {
@@ -111,7 +113,7 @@ class AdminHome extends Component {
             user.reportedMessages.splice(i , 1);
             type = 'Message';
         } else {
-            i = user.reportedPosts.indexOf(report);
+            i = user.reportedPosts.indexOf(report.id);
             user.reportedPosts.splice(i , 1);
             type = 'Post';
         }
@@ -119,7 +121,7 @@ class AdminHome extends Component {
             user.isReported = false;
         }
         this.setState({selectedUser: user});
-        this.handleOpenSnackBar(type, report, i);
+        this.handleOpenSnackBar(report.id, type, report, i);
         setTimeout(() => this.handleCloseSnackBar(), 5000);
     }
 
@@ -129,14 +131,14 @@ class AdminHome extends Component {
         if (report.type === 'Message') {
             user.reportedMessages.splice(report.index, 0, report.content);
         } else {
-            user.reportedPosts.splice(report.index, 0, report.content);
+            user.reportedPosts.splice(report.index, 0, report.id);
         }
         user.isReported = true;
         this.setState({selectedUser: user, oldReport: null});
     }
 
     render() {
-        const {users} = this.props;
+        const {users, posts} = this.props;
         const {selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
         return (  
             <div className="adminHome">
@@ -183,9 +185,9 @@ class AdminHome extends Component {
                                         <Report type="Message" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
-                                {selectedUser.reportedPosts.map((report) => {
+                                {getReportedPosts(selectedUser, posts).map((report) => {
                                     return (
-                                        <Report type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
+                                        <Report type="Post" id={report.id} content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                             </div>
@@ -223,7 +225,7 @@ class AdminHome extends Component {
                     <h1>User's Post History</h1>
                     {selectedUser && selectedUser.posts.length > 0 && 
                         <div className="adminHome__scroll">
-                            {selectedUser.posts.map((post) => {
+                            {getPosts(selectedUser, posts).map((post) => {
                                 return (
                                     <Post post={post}></Post>
                                 );

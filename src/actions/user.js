@@ -2,17 +2,21 @@ import { sortByDistance } from './distance';
 
 
 export const createPost = (newPost, appComponent) => {
+    const { user, posts } = appComponent.state;
+
+    // Give the post a unique id
+    newPost.id = posts.length;
+
     // Add new post to a copy of the global post list
-    let newPosts = appComponent.state.posts.concat(newPost);
-    newPosts = sortByDistance(appComponent.state.user, newPosts);
+    let newPosts = posts.concat(newPost);
+    newPosts = sortByDistance(user, newPosts);
 
-    // Add new post to a copy of the cloned user's post list
-    const userCopy = { ...appComponent.state.user };
-    const userPosts = userCopy.posts.concat(newPost);
-    userCopy.posts = userPosts;
+    // Add new post id to copy of the cloned user's post list
+    const userCopy = { ...user };
+    userCopy.posts = user.posts.concat(newPost.id);
 
-    // console.log(posts)
-    // console.log(user)
+    console.log(posts)
+    console.log(user)
     // Update appComponent's state
     appComponent.setState({
         posts: newPosts,
@@ -29,8 +33,8 @@ export const reportPost = (post, appComponent) => {
     // Set the cloned poster's isReported status to true
     posterCopy.isReported = true;
 
-    // Add the reported post to the cloned poster's list of reported posts
-    posterCopy.reportedPosts = originalPoster.reportedPosts.concat(post);
+    // Add the reported post's id to the cloned poster's list of reported posts
+    posterCopy.reportedPosts = originalPoster.reportedPosts.concat(post.id);
 
     // Update this user in the global state
     updateUser(originalPoster, posterCopy, appComponent);
@@ -38,32 +42,22 @@ export const reportPost = (post, appComponent) => {
 
 
 export const deactivatePost = (post, appComponent) => {
-    const { posts, user } = appComponent.state;
+    const { posts } = appComponent.state;
 
-    // Clone post, posts, user, and user's posts
+    // Clone post and posts
     const postCopy = { ...post };
     const postsCopy = [ ...posts ];
 
-    const userCopy = { ...user };
-    const userPostsCopy = [ ...user.posts ];
-
     // Update clones
     postCopy.status = 'inactive';
-
     let index = posts.indexOf(post);
     postsCopy[index] = postCopy;
 
-    index = user.posts.indexOf(post);
-    userPostsCopy[index] = postCopy;
-    userCopy.posts = userPostsCopy;
-
     console.log('deactivate post');
     console.log(posts);
-    console.log(user);
     // Update global state
     appComponent.setState({
         posts: postsCopy,
-        user: userCopy
     });
 }
 
