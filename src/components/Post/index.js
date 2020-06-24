@@ -60,7 +60,7 @@ class Post extends Component {
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
         // Calculate distance between this post's poster and the current user
-        let dist = getDistance(user, post.poster);
+        let dist = getDistance(user, post);
         dist = Math.round(dist * 10) / 10;
 
         return (  

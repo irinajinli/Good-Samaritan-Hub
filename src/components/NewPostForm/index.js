@@ -9,6 +9,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import './styles.css'
 import '../../index.css'
 
+import { getPostalCodePrefixes } from '../../data/hardCodedData';
+
 class NewPostForm extends Component {
     state = {
         id: -1,
@@ -17,7 +19,8 @@ class NewPostForm extends Component {
         poster: this.props.user,
         type: 'Request',
         date: {},
-        status: 'active'
+        status: 'active',
+        location: this.props.user.location
     }
 
     handleInputChange = event => {
@@ -67,17 +70,34 @@ class NewPostForm extends Component {
                                 fullWidth={true}
                             />
                         </div>
-                        <div className='new-post__input new-post__type'>
-                            {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
-                            in the console is caused by Material UI's Select component */}
-                            <Select
-                                name='type'
-                                value={this.state.type}
-                                onChange={this.handleInputChange}
-                            >
-                                <MenuItem value={'Request'}>Request</MenuItem>
-                                <MenuItem value={'Offer'}>Offer</MenuItem>
-                            </Select>
+                        <div className='new-post__select-block'>
+                            <span className='new-post__input new-post__select'>
+                                {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
+                                in the console is caused by Material UI's Select component */}
+                                <span className='new-post__input-label'>Type:</span>
+                                <Select
+                                    name='type'
+                                    value={this.state.type}
+                                    onChange={this.handleInputChange}
+                                >
+                                    <MenuItem value={'Request'}>Request</MenuItem>
+                                    <MenuItem value={'Offer'}>Offer</MenuItem>
+                                </Select>
+                            </span>
+                            <span className='new-post__input new-post__select'>
+                                {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
+                                in the console is caused by Material UI's Select component */}
+                                <span className='new-post__input-label'>Location:</span>
+                                <Select
+                                    name='location'
+                                    value={this.state.location}
+                                    onChange={this.handleInputChange}
+                                >
+                                    {getPostalCodePrefixes().map(postalCodePrefix => 
+                                        <MenuItem value={postalCodePrefix}>{postalCodePrefix}</MenuItem>
+                                    )}
+                                </Select>
+                            </span>
                         </div>
                         <Button variant="outlined"
                                 className='new-post__create-post-btn'

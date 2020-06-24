@@ -81,7 +81,8 @@ class PostList extends Component {
                 </div>}
 
                 <div className='post-list__container'>
-                    {!showExpandedPost && posts.filter(post => {
+                    {!showExpandedPost && 
+                    posts.filter(post => {
                         return (
                             filterCondition(post) &&
                             !recentlyReportedPosts.includes(post) &&

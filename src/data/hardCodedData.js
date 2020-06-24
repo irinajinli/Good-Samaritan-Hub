@@ -1,22 +1,22 @@
  // Some Toronto postal codes prefixes mapped to their lat, lon location
 const postalCodes = {
-    // Central Toronto
-    M4V: {lat: 43.686989, lon: -79.402572},
-    M4P: {lat: 43.697225, lon: -79.412968},
+  // Central Toronto
+  M4V: {lat: 43.686989, lon: -79.402572},
+  M4P: {lat: 43.697225, lon: -79.412968},
 
-    // Downtown Toronto
-    M5S: {lat: 43.663334, lon: -79.399336},
-    M5B: {lat: 43.657552, long: -79.378027},
+  // Downtown Toronto
+  M5S: {lat: 43.663334, lon: -79.399336},
+  M5B: {lat: 43.657552, long: -79.378027},
 
-    // Downsview East / North York
-    M3K: {lat: 43.738192, lon: -79.470333},
+  // Downsview East / North York
+  M3K: {lat: 43.738192, lon: -79.470333},
 
-    // Etibocoke
-    M8V: {lat: 43.607141, lon: -79.503639},
+  // Etibocoke
+  M8V: {lat: 43.607141, lon: -79.503639},
 
-    // West Toronto
-    M6H: {lat: 43.664417, lon: -79.437448}
-  }
+  // West Toronto
+  M6H: {lat: 43.664417, lon: -79.437448}
+}
 
 // Initial list of users
 const users = [
@@ -168,7 +168,8 @@ const posts = [
     poster: users[1],
     type: 'Request',
     date: new Date(2020, 5, 12),
-    status: 'active'
+    status: 'active',
+    location: 'M4P'
   },
   {
     id: 1,
@@ -182,7 +183,8 @@ const posts = [
     poster: users[2],
     type: 'Offer',
     date: new Date(2020, 5, 5),
-    status: 'active'
+    status: 'active',
+    location: 'M6H'
   },
   {
     id: 2,
@@ -194,7 +196,8 @@ const posts = [
     poster: users[3],
     type: 'Request',
     date: new Date(2020, 5, 15, 8, 6, 2),
-    status: 'active'
+    status: 'active',
+    location: 'M5S'
   },
   {
     id: 3,
@@ -203,7 +206,8 @@ const posts = [
     poster: users[6],
     type: 'Request',
     date: new Date(2020, 5, 6, 20, 1, 43),
-    status: 'active'
+    status: 'active',
+    location: 'M8V'
   },
   {
     id: 4,
@@ -214,10 +218,12 @@ const posts = [
     poster: users[6],
     type: 'Offer',
     date: new Date(2020, 5, 10, 2, 34, 23),
-    status: 'active'
+    status: 'active',
+    location: 'M8V'
   },
 ];
 
+export const getPostalCodePrefixes = () => Object.keys(postalCodes);
 
 export const getPostalCodes = () => postalCodes;
 

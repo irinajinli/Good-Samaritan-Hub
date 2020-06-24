@@ -14,13 +14,15 @@ const distance = (lat1, lon1, lat2, lon2) => {
 }
 
 
-// Returns the distance in km between user1 and user2
-export const getDistance = (user1, user2) => {
+// Returns the distance in km between a and b 
+// (a and b could be users or posts. e.g. a and b are both posts, both users, or 
+// one is a post and one is a user)
+export const getDistance = (a, b) => {
     const postalCodes = getPostalCodes();
-    const lat1 = postalCodes[user1.location].lat;
-    const lon1 = postalCodes[user1.location].lon;
-    const lat2 = postalCodes[user2.location].lat;
-    const lon2 = postalCodes[user2.location].lon;
+    const lat1 = postalCodes[a.location].lat;
+    const lon1 = postalCodes[a.location].lon;
+    const lat2 = postalCodes[b.location].lat;
+    const lon2 = postalCodes[b.location].lon;
     return distance(lat1, lon1, lat2, lon2);
 }
 
@@ -31,7 +33,7 @@ export const sortByDistance = (user, posts) => {
 
     // Sort postsCopy
     postsCopy.sort((post1, post2) => {
-        return getDistance(user, post1.poster) - getDistance(user, post2.poster);
+        return getDistance(user, post1) - getDistance(user, post2);
     });
     return postsCopy;
 }
