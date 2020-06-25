@@ -9,7 +9,7 @@ export const createPost = (newPost, appComponent) => {
 
     // Add new post to a copy of the global post list
     let newPosts = posts.concat(newPost);
-    newPosts = sortByDistance(user, newPosts);
+    // newPosts = sortByDistance(user.location, newPosts);
 
     // Add new post id to copy of the cloned user's post list
     const userCopy = { ...user };

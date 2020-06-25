@@ -53,14 +53,15 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, post, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
+        const { user, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
         // Calculate distance between this post's poster and the current user
-        let dist = getDistance(user, post);
+        console.log('post', targetLocation);
+        let dist = getDistance(targetLocation, post.location);
         dist = Math.round(dist * 10) / 10;
 
         return (  

@@ -14,26 +14,26 @@ const distance = (lat1, lon1, lat2, lon2) => {
 }
 
 
-// Returns the distance in km between a and b 
-// (a and b could be users or posts. e.g. a and b are both posts, both users, or 
-// one is a post and one is a user)
-export const getDistance = (a, b) => {
+// Returns the distance in km between two postal codes, a and b
+export const getDistance = (postalCode1, postalCode2) => {
     const postalCodes = getPostalCodes();
-    const lat1 = postalCodes[a.location].lat;
-    const lon1 = postalCodes[a.location].lon;
-    const lat2 = postalCodes[b.location].lat;
-    const lon2 = postalCodes[b.location].lon;
+    const lat1 = postalCodes[postalCode1].lat;
+    const lon1 = postalCodes[postalCode1].lon;
+    const lat2 = postalCodes[postalCode2].lat;
+    const lon2 = postalCodes[postalCode2].lon;
     return distance(lat1, lon1, lat2, lon2);
 }
 
 
-// Returns a copy of <posts> that is sorted from closed to farthest from <user>
-export const sortByDistance = (user, posts) => {
+// Returns a copy of <posts> that is sorted from closed to farthest from <postalCode>
+export const sortByDistance = (postalCode, posts) => {
+    console.log('sort by distnace', postalCode)
     const postsCopy = [ ...posts ]; // clone posts array
 
     // Sort postsCopy
     postsCopy.sort((post1, post2) => {
-        return getDistance(user, post1) - getDistance(user, post2);
+        return getDistance(postalCode, post1.location) - getDistance(postalCode, post2.location);
     });
+    console.log(postsCopy)
     return postsCopy;
 }

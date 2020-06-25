@@ -9,9 +9,10 @@ import './styles.css';
 
 class Home extends Component {
     render() { 
-        const { user, users, posts, recentlyReportedPosts, searchTerm, showExpandedPost, expandedPost, 
-            creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleOpenPostCreator, handleCreateNewPost, 
-            handleBackToSearchResults, handleReportPost, handleDeactivatePost, handleGoToProfile} = this.props;
+        const { user, users, posts, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
+            creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
+            handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
+            handleGoToProfile} = this.props;
         // const { showExpandedPost, expandedPost, creatingNewPost } = this.state;
         return (  
             <div className='home__middle-block'>
@@ -26,6 +27,8 @@ class Home extends Component {
                 <PostList 
                     user={user}
                     posts={posts} 
+                    targetLocation={targetLocation}
+                    handleChangeTargetLocation={handleChangeTargetLocation}
                     handleExpandPost={handleExpandPost} 
                     showExpandedPost={showExpandedPost} 
                     expandedPost={expandedPost}
@@ -48,9 +51,11 @@ class Home extends Component {
                     user={user}
                     users={users}
                     posts={posts}
+                    targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     expandedPost={expandedPost}
                     recentlyReportedPosts={recentlyReportedPosts}
+                    handleChangeTargetLocation={handleChangeTargetLocation}
                     showExpandedPost={showExpandedPost}
                     handleExpandPost={handleExpandPost}
                     handleGoToProfile={handleGoToProfile}

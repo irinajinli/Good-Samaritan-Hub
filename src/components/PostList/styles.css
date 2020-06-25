@@ -1,3 +1,19 @@
+
+
+.MuiCard-root.post-list__location-card {
+    display: inline;
+    padding: 5px;
+    padding-right: 18px;
+    background-color: rgb(255, 255, 255, .95);
+    margin: 10px 0px;
+    font-size: 16px;
+    color: #000a12;
+}
+
+.post-list__location-label {
+    margin: 10px 15px;
+}
+
 .MuiButtonGroup-root.post-list__filter-btn-group {
     margin: 7px 0px;
     width: 100%;

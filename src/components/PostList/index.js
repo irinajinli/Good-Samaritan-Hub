@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Card from '@material-ui/core/Card';
 
 import Post from '../Post'
 import './styles.css'
+
+import { getPostalCodePrefixes } from '../../data/hardCodedData';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -15,6 +20,15 @@ class PostList extends Component {
     state = {
         filterCondition: this.isAnyType
     }
+
+    handleInputChange = event => {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        if (name == 'targetLocation') {
+            this.props.handleChangeTargetLocation(value);
+        }
+    };
 
     getBtnClass = type => {
         const {filterCondition} = this.state;
@@ -58,14 +72,29 @@ class PostList extends Component {
 
     render() { 
         const {filterCondition} = this.state;
-        const {user, posts, handleExpandPost, showExpandedPost, expandedPost, 
+        const {user, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
             handleBack, recentlyReportedPosts, handleGoToProfile } = this.props;
         
         return (  
             <div >
                 {!showExpandedPost && 
-                <div >
-                    <ButtonGroup className='post-list__filter-btn-group'
+                <div className='post-list__filter-btn-group'>
+                    {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
+                    in the console is caused by Material UI's Select component */}
+                    <Card className='post-list__location-card'>
+                        <span className='post-list__location-label'>Location:</span>
+                        <Select
+                            name='targetLocation'
+                            value={targetLocation}
+                            onChange={this.handleInputChange}
+                        >
+                            {getPostalCodePrefixes().map(targetLocation => 
+                                <MenuItem value={targetLocation}>{targetLocation}</MenuItem>
+                            )}
+                        </Select>
+                    </Card>
+                    <ButtonGroup 
+                        className='post-list__filter-btn-group'
                         orientation="horizontal"
                         color="primary"
                         aria-label="vertical contained primary button group"
@@ -93,6 +122,7 @@ class PostList extends Component {
                             key={post.id}
                             user={user}
                             post={post}
+                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
@@ -105,6 +135,7 @@ class PostList extends Component {
                         <Post 
                             user={user}
                             post={expandedPost}
+                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}

@@ -20,6 +20,7 @@ class UserView extends Component {
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false,
+        targetLocation: this.props.user.location,
 
         viewingProfile: false,
         displayedUser: {},
@@ -28,9 +29,11 @@ class UserView extends Component {
     }
 
     sortPosts() {
-        const { user, posts, appComponent } = this.props;
+        const { targetLocation } = this.state;
+        console.log('sort posts ', targetLocation);
+        const { posts, appComponent } = this.props;
         appComponent.setState({
-            posts: sortByDistance(user, posts)
+            posts: sortByDistance(targetLocation, posts)
         });
     }
 
@@ -79,6 +82,14 @@ class UserView extends Component {
             viewingProfile: false,
             displayedUser: {},
             viewingInbox: false
+        });
+    }
+
+    handleChangeTargetLocation = targetLocation => {
+        this.setState({
+            targetLocation
+        }, () => {
+            this.sortPosts();
         });
     }
 
@@ -157,7 +168,7 @@ class UserView extends Component {
     
     render() { 
         const { user, users, posts } = this.props;
-        const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, 
+        const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, targetLocation,
             recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox } = this.state;
 
         return (  
@@ -183,10 +194,12 @@ class UserView extends Component {
                     expandedPost={expandedPost}
                     showSearchResults={showSearchResults}
                     recentlyReportedPosts={recentlyReportedPosts}
+                    targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     handleBackToHome={this.handleBackToHome}
                     handleBackToSearchResults={this.handleBackToSearchResults}
                     handleGoToProfile={this.handleGoToProfile}
+                    handleChangeTargetLocation={this.handleChangeTargetLocation}
                     handleOpenPostCreator={this.handleOpenPostCreator}
                     handleCreateNewPost={this.handleCreateNewPost}
                     handleExpandPost={this.handleExpandPost}
