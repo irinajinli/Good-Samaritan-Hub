@@ -8,6 +8,10 @@
     color: #000a12;
 }
 
+.MuiAutocomplete-root {
+    width: 70px;
+}
+
 .post-list__location-selector {
     float: left;
     padding-top: 4px;
@@ -17,6 +21,7 @@
     float:left;
     margin: 10px 15px;
 }
+
 
 .MuiButtonGroup-root.post-list__filter-btn-group {
     margin: 7px 0px;

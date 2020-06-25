@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Card from '@material-ui/core/Card';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -22,6 +23,12 @@ class NewPostForm extends Component {
         status: 'active',
         location: this.props.user.location
     }
+
+    handleLocationChange = (event, values) => {
+        this.setState({
+            location: values
+        });
+    };
 
     handleInputChange = event => {
         const target = event.target;
@@ -43,7 +50,7 @@ class NewPostForm extends Component {
     }
 
     render() { 
-        const {handleBackToHome} = this.props;
+        const {user, handleBackToHome} = this.props;
 
         return (  
             <div >
@@ -85,18 +92,16 @@ class NewPostForm extends Component {
                                 </Select>
                             </span>
                             <span className='new-post__input new-post__select'>
-                                {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
-                                in the console is caused by Material UI's Select component */}
-                                <span className='new-post__input-label'>Location:</span>
-                                <Select
-                                    name='location'
-                                    value={this.state.location}
-                                    onChange={this.handleInputChange}
-                                >
-                                    {getPostalCodePrefixes().map(postalCodePrefix => 
-                                        <MenuItem value={postalCodePrefix}>{postalCodePrefix}</MenuItem>
-                                    )}
-                                </Select>
+                                <span className='new-post__input-label post-list__location-label'>Location:</span>
+                                <div className='new-post__location-selector'>
+                                    <Autocomplete
+                                        defaultValue={user.location}
+                                        disableClearable
+                                        onChange={this.handleLocationChange}
+                                        options={getPostalCodePrefixes()}
+                                        renderInput={(params) => <TextField {...params}/>}
+                                    />
+                                </div>
                             </span>
                         </div>
                         <Button variant="outlined"

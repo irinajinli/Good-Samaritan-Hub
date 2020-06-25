@@ -78,13 +78,10 @@ class PostList extends Component {
                         <span className='post-list__location-label'>Location:</span>
                         <div className='post-list__location-selector'>
                             <Autocomplete
-                                name='targetLocation'
-                                value={targetLocation}
+                                defaultValue={targetLocation}
                                 disableClearable
                                 onChange={this.handleTargetLocationChange}
                                 options={getPostalCodePrefixes()}
-                                // // getOptionLabel={targetLocation}
-                                style={{ width: 70 }}
                                 renderInput={(params) => <TextField {...params}/>}
                             />
                         </div>
