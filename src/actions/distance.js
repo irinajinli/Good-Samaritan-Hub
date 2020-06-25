@@ -27,13 +27,11 @@ export const getDistance = (postalCode1, postalCode2) => {
 
 // Returns a copy of <posts> that is sorted from closed to farthest from <postalCode>
 export const sortByDistance = (postalCode, posts) => {
-    console.log('sort by distnace', postalCode)
     const postsCopy = [ ...posts ]; // clone posts array
 
     // Sort postsCopy
     postsCopy.sort((post1, post2) => {
         return getDistance(postalCode, post1.location) - getDistance(postalCode, post2.location);
     });
-    console.log(postsCopy)
     return postsCopy;
 }

@@ -30,7 +30,6 @@ class UserView extends Component {
 
     sortPosts() {
         const { targetLocation } = this.state;
-        console.log('sort posts ', targetLocation);
         const { posts, appComponent } = this.props;
         appComponent.setState({
             posts: sortByDistance(targetLocation, posts)

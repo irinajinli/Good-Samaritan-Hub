@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Card from '@material-ui/core/Card';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import Post from '../Post'
 import './styles.css'
@@ -21,13 +21,8 @@ class PostList extends Component {
         filterCondition: this.isAnyType
     }
 
-    handleInputChange = event => {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        if (name == 'targetLocation') {
-            this.props.handleChangeTargetLocation(value);
-        }
+    handleTargetLocationChange = (event, values) => {
+        this.props.handleChangeTargetLocation(values);
     };
 
     getBtnClass = type => {
@@ -79,19 +74,20 @@ class PostList extends Component {
             <div >
                 {!showExpandedPost && 
                 <div className='post-list__filter-btn-group'>
-                    {/* Note: The "index.js:1 Warning: findDOMNode is deprecated in StrictMode."
-                    in the console is caused by Material UI's Select component */}
                     <Card className='post-list__location-card'>
                         <span className='post-list__location-label'>Location:</span>
-                        <Select
-                            name='targetLocation'
-                            value={targetLocation}
-                            onChange={this.handleInputChange}
-                        >
-                            {getPostalCodePrefixes().map(targetLocation => 
-                                <MenuItem value={targetLocation}>{targetLocation}</MenuItem>
-                            )}
-                        </Select>
+                        <div className='post-list__location-selector'>
+                            <Autocomplete
+                                name='targetLocation'
+                                value={targetLocation}
+                                disableClearable
+                                onChange={this.handleTargetLocationChange}
+                                options={getPostalCodePrefixes()}
+                                // // getOptionLabel={targetLocation}
+                                style={{ width: 70 }}
+                                renderInput={(params) => <TextField {...params}/>}
+                            />
+                        </div>
                     </Card>
                     <ButtonGroup 
                         className='post-list__filter-btn-group'
