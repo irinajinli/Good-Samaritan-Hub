@@ -56,7 +56,7 @@ class NewPostForm extends Component {
             <div >
                 <Button className='new-post__back-btn'
                         onClick={() => handleBackToHome()}>
-                        <ArrowBackIcon />{'\u00A0'}Nevermind
+                        <ArrowBackIcon className='new-post__btn-icon'/>Nevermind
                 </Button>
                 <Card>
                     <div className='new-post__container'>

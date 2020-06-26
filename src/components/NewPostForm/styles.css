@@ -28,6 +28,11 @@
 
 .MuiButton-root.new-post__back-btn {
     margin: 10px 0px 15px;
+    font-size: 15px;
+}
+
+.new-post__btn-icon {
+    margin-right: 7px;
 }
 
 .MuiButton-root.new-post__create-post-btn {

@@ -4,6 +4,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import Post from '../Post'
 import './styles.css'
@@ -75,6 +76,7 @@ class PostList extends Component {
                 {!showExpandedPost && 
                 <div className='post-list__filter-btn-group'>
                     <Card className='post-list__location-card'>
+                        <LocationOnIcon className='post-list__location-icon'/>
                         <span className='post-list__location-label'>Location:</span>
                         <div className='post-list__location-selector'>
                             <Autocomplete

@@ -17,10 +17,10 @@ class Home extends Component {
         return (  
             <div className='home__middle-block'>
                 {!showExpandedPost && !creatingNewPost && !showSearchResults &&
-                <Button id='home__create-post-btn'
+                <Button className='home__create-post-btn'
                         onClick={handleOpenPostCreator}                           
                 >
-                    Create a post{'\u00A0'}<CreateIcon />
+                    <CreateIcon className='home__create-post-btn-icon'/>Create a post
                 </Button>}
 
                 {!creatingNewPost && !showSearchResults &&

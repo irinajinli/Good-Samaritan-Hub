@@ -1,7 +1,6 @@
 .MuiCard-root.post-list__location-card {
     display: inline-block;
-    padding: 2px;
-    padding-right: 18px;
+    padding: 2px 14px 2px 4px;
     background-color: rgb(255, 255, 255);
     margin: 10px 0px;
     font-size: 16px;
@@ -12,16 +11,22 @@
     width: 70px;
 }
 
+.MuiSvgIcon-root.post-list__location-icon {
+    float: left;
+    font-size: 20px;
+    padding-top: 10px;
+    margin-left: 10px;
+}
+
 .post-list__location-selector {
     float: left;
     padding-top: 4px;
 }
 
 .post-list__location-label {
-    float:left;
-    margin: 10px 15px;
+    float: left;
+    margin: 10px 10px;
 }
-
 
 .MuiButtonGroup-root.post-list__filter-btn-group {
     margin: 7px 0px;

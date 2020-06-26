@@ -4,8 +4,13 @@
     display: inline-block;
 }
 
-#home__create-post-btn {
+.MuiButton-root.home__create-post-btn {
     margin: 10px 0px 25px;
+    font-size: 15px;
+}
+
+.home__create-post-btn-icon {
+    margin-right: 7px;
 }
 
 .home__footer {
