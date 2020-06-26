@@ -13,6 +13,13 @@
     min-width: 142px;
 }
 
+.MuiSvgIcon-root.new-post__location-icon {
+    margin-left: 20px;
+    padding-top: 10px;
+    float: left;
+    font-size: 20px;
+}
+
 .new-post__location-selector {
     float: left;
     padding-top: 4px;

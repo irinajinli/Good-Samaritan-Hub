@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ReportIcon from '@material-ui/icons/Report';
 import Modal from '@material-ui/core/Modal';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -78,7 +79,11 @@ class Post extends Component {
                         </div>
                         <div className='post__right-block'>
                             {this.generateTypeChip()}
-                            <Chip className='post__distance' label={`${post.location}, ${dist} km`} />
+                            <Chip 
+                                className='post__distance' 
+                                label={`${post.location}, ${dist} km`} 
+                                icon={<LocationOnIcon className='post__distance-icon'/>} 
+                            />
                             {!isExpanded && 
                             <IconButton onClick={() => handleExpandPost(post)}>
                                 <ArrowForwardIcon />

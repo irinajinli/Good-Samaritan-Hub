@@ -6,6 +6,7 @@ import Select from '@material-ui/core/Select';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Card from '@material-ui/core/Card';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import './styles.css'
 import '../../index.css'
@@ -92,6 +93,7 @@ class NewPostForm extends Component {
                                 </Select>
                             </span>
                             <span className='new-post__input new-post__select'>
+                                <LocationOnIcon className='new-post__location-icon'/>
                                 <span className='new-post__input-label post-list__location-label'>Location:</span>
                                 <div className='new-post__location-selector'>
                                     <Autocomplete
