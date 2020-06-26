@@ -14,9 +14,10 @@ const distance = (lat1, lon1, lat2, lon2) => {
 }
 
 
-// Returns the distance in km between two postal codes, a and b
+// Returns the distance in km between the two postal codes
 export const getDistance = (postalCode1, postalCode2) => {
     const postalCodes = getPostalCodes();
+    // Get the lat and lon coordinates of the two postal codes
     const lat1 = postalCodes[postalCode1].lat;
     const lon1 = postalCodes[postalCode1].lon;
     const lat2 = postalCodes[postalCode2].lat;

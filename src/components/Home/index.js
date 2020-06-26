@@ -13,7 +13,7 @@ class Home extends Component {
             creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
             handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
             handleGoToProfile} = this.props;
-        // const { showExpandedPost, expandedPost, creatingNewPost } = this.state;
+            
         return (  
             <div className='home__middle-block'>
                 {!showExpandedPost && !creatingNewPost && !showSearchResults &&

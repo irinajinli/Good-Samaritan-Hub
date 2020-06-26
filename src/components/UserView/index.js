@@ -20,7 +20,7 @@ class UserView extends Component {
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false,
-        targetLocation: this.props.user.location,
+        targetLocation: this.props.user.location, // Defaults to the user's location
 
         viewingProfile: false,
         displayedUser: {},
@@ -31,6 +31,8 @@ class UserView extends Component {
     sortPosts() {
         const { targetLocation } = this.state;
         const { posts, appComponent } = this.props;
+
+        // Sort the posts based on the target location
         appComponent.setState({
             posts: sortByDistance(targetLocation, posts)
         });
@@ -41,8 +43,9 @@ class UserView extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        // Handle browser back button
         const { showSearchResults, showExpandedPost, viewingProfile, viewingInbox } = this.state;
+
+        // Reset the page to it's previous state when the browser's back button is clicked
         window.onpopstate = () => {
             if (showSearchResults && (showExpandedPost || viewingProfile || viewingInbox)) {
                 this.handleBackToSearchResults();
@@ -51,13 +54,16 @@ class UserView extends Component {
             }
         }
 
-        // Re-sort posts when new posts are added
+        // Re-sort the posts when new posts are added
         if (prevProps.posts.length < this.props.posts.length) {
             this.sortPosts();
         }
     }
 
     handleBackToHome = () => {
+        // Phase 2: Make a server call to get any new posts that were added while we were on a different page
+        // e.g. call appComponent's requestReload method
+
         this.props.history.push('/home');
         this.setState({
             showExpandedPost: false,
@@ -72,6 +78,9 @@ class UserView extends Component {
     }
 
     handleBackToSearchResults = () => {
+        // Phase 2: Make a server call to get any new posts that were added while we were on a different page
+        // e.g. call appComponent's requestReload method
+
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -88,6 +97,7 @@ class UserView extends Component {
         this.setState({
             targetLocation
         }, () => {
+            // Sort the posts based on the new target location
             this.sortPosts();
         });
     }
@@ -107,8 +117,6 @@ class UserView extends Component {
 
     handleCreateNewPost = newPost => {
         createPost(newPost, this.props.appComponent);
-
-        // Reset home page
         this.handleBackToHome();
     }
 
@@ -157,7 +165,7 @@ class UserView extends Component {
             recentlyReportedPosts: this.state.recentlyReportedPosts.concat(post)
         });
 
-        // Report the poster in the global state
+        // Report the post
         reportPost(post, this.props.appComponent);
     }
 
@@ -182,7 +190,8 @@ class UserView extends Component {
                     handleLogout={this.onLogout}
                 />
 
-                {/* Home page */}
+                {/* Home page (i.e. the post list, expanded post view, search results, 
+                    and new post creator) */}
                 {viewingHome &&
                 <Home
                     users={users}

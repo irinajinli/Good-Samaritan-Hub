@@ -45,11 +45,15 @@ class App extends Component {
   // Initial global state
   state = {
     user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
-    users: getInitialUsers(),
-    posts: getInitialPosts()
+    users: getInitialUsers(), // Phase 2: Initialize users to an empty list
+    posts: getInitialPosts() // Phase 2: Initialize posts to an empty list
   };
 
   onComponentDidMount() {
+    this.requestReload();
+  }
+
+  requestReload = () => {
     // Phase 2: Get the list of users and posts from the server and set this component's state
     // this.setState({
     //   users: server call to get users

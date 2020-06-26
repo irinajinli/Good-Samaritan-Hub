@@ -81,11 +81,11 @@ class UserTopBar extends Component {
   }
 
   handleOpenDialog = () => {
-    this.setState({dialogOpen: true});
+    this.setState({ dialogOpen: true });
   }
 
   handleCloseDialog = () => {
-      this.setState({dialogOpen: false});
+      this.setState({ dialogOpen: false });
   }
 
   handlePressEnter = event => {

@@ -21,7 +21,7 @@ class NewPostForm extends Component {
         type: 'Request',
         date: {},
         status: 'active',
-        location: this.props.user.location
+        location: this.props.user.location // Defaults to the user's location
     }
 
     handleLocationChange = (event, values) => {
@@ -35,7 +35,7 @@ class NewPostForm extends Component {
         const value = target.value;
         const name = target.name;
         this.setState({
-            [name]: value // [name] sets the object property name to the value of the `name` variable.
+            [name]: value
         });
     };
 
@@ -44,7 +44,7 @@ class NewPostForm extends Component {
             date: new Date()
         }, () => { 
             // Put handleCreateNewPost in the callback of setState to ensure that 
-            // this.state.date is updated before we call handleCreateNewPost
+            // this.state.date is set before we call handleCreateNewPost
             this.props.handleCreateNewPost(this.state);
         });
     }

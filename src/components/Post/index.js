@@ -33,22 +33,22 @@ class Post extends Component {
 
     handleReport = () => {
         this.handleCloseDialog();
-        this.setState({dialogOpen: false});
+        this.setState({ dialogOpen: false });
         this.props.handleReportPost(this.props.post);
     }
 
     handleRemovePost = () => {
         this.handleCloseDialog();
-        this.setState({dialogOpen: false});
+        this.setState({ dialogOpen: false });
         this.props.deactivatePost(this.props.post);
     }
 
     handleOpenDialog = () => {
-        this.setState({dialogOpen: true});
+        this.setState({ dialogOpen: true });
     }
 
     handleCloseDialog = () => {
-        this.setState({dialogOpen: false});
+        this.setState({ dialogOpen: false });
     }
     
     render() { 
@@ -59,9 +59,9 @@ class Post extends Component {
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
-        // Calculate distance between this post's poster and the current user
+        // Calculate the distance between this post's poster and the current target location
         let dist = getDistance(targetLocation, post.location);
-        dist = Math.round(dist * 10) / 10;
+        dist = Math.round(dist * 10) / 10; // round to 1 decimal place
 
         return (  
             <React.Fragment>
