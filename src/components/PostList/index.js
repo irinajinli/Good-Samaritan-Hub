@@ -9,7 +9,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Post from '../Post'
 import './styles.css'
 
-import { getPostalCodePrefixes } from '../../data/hardCodedData';
+import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 
 class PostList extends Component {
     isAnyType = () => true;

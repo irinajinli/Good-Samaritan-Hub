@@ -11,7 +11,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './styles.css'
 import '../../index.css'
 
-import { getPostalCodePrefixes } from '../../data/hardCodedData';
+import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 
 class NewPostForm extends Component {
     state = {

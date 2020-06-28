@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import BanIcon from '@material-ui/icons/Gavel';
 
 import './styles.css';
-import Icon from './../../data/userIcon.png';
+import Icon from './../../resources/userIcon.png';
 import Label from './label.js';
 import Table from './Table/index.js';
 import Report from './Report/index.js';

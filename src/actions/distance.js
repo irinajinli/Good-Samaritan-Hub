@@ -1,4 +1,4 @@
-import { getPostalCodes } from '../data/hardCodedData';
+import { getPostalCodes } from '../resources/hardCodedData';
 
 
 // Returns the distance in km between the two given lat, lon coordinates

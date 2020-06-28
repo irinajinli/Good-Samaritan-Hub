@@ -10,7 +10,7 @@ class Profile extends Component {
         <div className='profile'>
             <div className='profileContainer'>
                 <div className='imageContainer'>
-                    <img src={require('../../data/userIcon.png')} className='profilePic'/>
+                    <img src={require('../../resources/userIcon.png')} className='profilePic'/>
                 </div>
                 <div className='textContainer'>
                     <div className='profileText'>

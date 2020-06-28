@@ -12,7 +12,7 @@ import UserView from "./components/UserView";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getInitialPosts } from './data/hardCodedData';
+import { getInitialUsers, getInitialPosts } from './resources/hardCodedData';
 
 class App extends Component {
   // Global theme
