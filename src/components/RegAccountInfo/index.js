@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function RegBasicInfo() {
+export default function RegAccountInfo() {
   const classes = useStyles();
 
   return (
@@ -31,15 +31,8 @@ export default function RegBasicInfo() {
       <div>
         <TextField
           required
-          className={classes.marginRight}
-          label="First name"
-          variant="outlined"
-        />
-
-        <TextField
-          required
-          className={classes.marginLeft}
-          label="Last name"
+          className={classes.long}
+          label="Username"
           variant="outlined"
         />
       </div>
@@ -48,23 +41,14 @@ export default function RegBasicInfo() {
         <TextField
           required
           className={`${classes.marginRight} ${classes.marginTop}`}
-          label="Phone number"
+          label="Password"
           variant="outlined"
         />
 
         <TextField
           required
           className={`${classes.marginLeft} ${classes.marginTop}`}
-          label="Postal code"
-          variant="outlined"
-        />
-      </div>
-
-      <div>
-        <TextField
-          required
-          className={`${classes.long} ${classes.marginTop}`}
-          label="Email address"
+          label="Confirm password"
           variant="outlined"
         />
       </div>

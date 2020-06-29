@@ -6,6 +6,8 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import RegBasicInfo from "../RegBasicInfo";
+import RegAccountInfo from "../RegAccountInfo";
+import RegAccountType from "../RegAccountType";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,9 +20,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
-  marginRight: {
-    marginRight: "4px",
-  },
 }));
 
 function getSteps() {
@@ -32,9 +31,9 @@ function getStepContent(stepIndex) {
     case 0:
       return <RegBasicInfo />;
     case 1:
-      return "What is an ad group anyways?";
+      return <RegAccountInfo />;
     case 2:
-      return "This is the bit I really care about!";
+      return <RegAccountType />;
     default:
       return "Unknown stepIndex";
   }
@@ -70,9 +69,11 @@ export default function HorizontalLabelPositionBelowStepper() {
         {activeStep === steps.length ? (
           <div>
             <Typography className={classes.instructions}>
-              All steps completed
+              Registration complete!
             </Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Button variant="contained" color="primary" onClick={handleReset}>
+              Register again
+            </Button>
           </div>
         ) : (
           <div>
