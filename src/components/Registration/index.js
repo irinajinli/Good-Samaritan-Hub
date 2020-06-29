@@ -31,9 +31,7 @@ export default function Register() {
 
   return (
     <div className={classes.centre}>
-      {/* <Header title="Login" /> */}
       <Stepper />
-      {/* <LoginInput /> */}
     </div>
   );
 }
