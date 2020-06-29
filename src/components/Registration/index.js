@@ -1,8 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+import Stepper from "../Stepper";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
   },
-  topCentre: {
+  centre: {
     position: "absolute",
     left: "50%",
     top: "50%",
@@ -20,98 +18,22 @@ const useStyles = makeStyles((theme) => ({
   marginBottom: {
     marginBottom: "20px",
   },
-  marginRight: {
-    marginRight: "20px",
-  },
   loginButton: {
     marginTop: "20px",
-    position: "absolute",
-    right: "0%",
+  },
+  noLeftMargin: {
+    marginLeft: "0px",
   },
 }));
 
-export default function Registration() {
+export default function Register() {
   const classes = useStyles();
 
   return (
-    <div className={classes.topCentre}>
-      <h1>Register for a new account</h1>
-      <div className={classes.marginBottom}>
-        <TextField
-          className={classes.marginRight}
-          required
-          id="outlined-required"
-          label="First name"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Last name"
-          variant="outlined"
-        />
-      </div>
-      <div className={classes.marginBottom}>
-        <TextField
-          className={classes.marginRight}
-          required
-          id="outlined-required"
-          label="Email address"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Username"
-          variant="outlined"
-        />
-      </div>
-      <div className={classes.marginBottom}>
-        <TextField
-          className={classes.marginRight}
-          required
-          id="outlined-required"
-          label="Postal code"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Phone number"
-          variant="outlined"
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          className={classes.marginRight}
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-password-input"
-          label="Confirm password"
-          type="password"
-          autoComplete="current-password"
-          variant="outlined"
-        />
-      </div>
-      <div>
-        <Link className="link" to={"/login"}>
-          Sign in instead
-        </Link>
-        <Button
-          className={classes.loginButton}
-          variant="contained"
-          color="primary"
-        >
-          LOG IN
-        </Button>
-      </div>
+    <div className={classes.centre}>
+      {/* <Header title="Login" /> */}
+      <Stepper />
+      {/* <LoginInput /> */}
     </div>
   );
 }
