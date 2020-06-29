@@ -60,7 +60,7 @@ class Post extends Component {
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
-        // Calculate the distance between this post's poster and the current target location
+        // Calculate the distance between this post's location and the current target location
         let dist = getDistance(targetLocation, post.location);
         dist = Math.round(dist * 10) / 10; // round to 1 decimal place
 
