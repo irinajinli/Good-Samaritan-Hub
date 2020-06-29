@@ -41,11 +41,17 @@ class Landing extends Component {
 
         <div className="bottomBar">
           <LandingBottom
-            className="floatLeft"
             titleText="Good Samaritan Hub"
             mainText1="999 Yonge St."
             mainText2="Toronto, ON M4W 2L1"
             mainText3="(416) 555-5555"
+          />
+          <p className="space"></p>
+          <LandingBottom
+            titleText="Follow Us"
+            mainText1="Facebook"
+            mainText2="Instagram"
+            mainText3="Twitter"
           />
         </div>
       </div>
