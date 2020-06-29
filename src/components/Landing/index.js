@@ -2,12 +2,8 @@
 // to be separated into components soon :)
 
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import { Box, withTheme } from "@material-ui/core";
-import background from "../../resources/toronto.jpg";
-import { makeStyles } from "@material-ui/core/styles";
 import LandingBlurb from "../LandingBlurb";
+import LandingBottom from "../LandingBottom";
 import "./styles.css";
 
 class Landing extends Component {
@@ -42,6 +38,16 @@ class Landing extends Component {
           occaecat cupidatat non proident, sunt in culpa qui officia deserunt
           mollit anim id est laborum."
         />
+
+        <div className="bottomBar">
+          <LandingBottom
+            className="floatLeft"
+            titleText="Good Samaritan Hub"
+            mainText1="999 Yonge St."
+            mainText2="Toronto, ON M4W 2L1"
+            mainText3="(416) 555-5555"
+          />
+        </div>
       </div>
     );
   }

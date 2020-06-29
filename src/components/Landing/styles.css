@@ -10,5 +10,9 @@
   padding-top: 150px;
   font-size: 40px;
   color: white;
-  /* margin-left: 75px; */
+}
+
+.bottomBar {
+  height: 200px;
+  background-color: #213238;
 }
