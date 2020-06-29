@@ -49,13 +49,15 @@ export default function LoginInput() {
           </Link>
         </div>
         <div>
-          <Button
-            className={classes.loginButton}
-            variant="contained"
-            color="primary"
-          >
-            LOG IN
-          </Button>
+          <Link className="link" to={"/home"}>
+            <Button
+              className={classes.loginButton}
+              variant="contained"
+              color="primary"
+            >
+              LOG IN
+            </Button>
+          </Link>
         </div>
       </Box>
     </form>
