@@ -66,8 +66,24 @@ export default function Registration() {
           variant="outlined"
         />
       </div>
+      <div className={classes.marginBottom}>
+        <TextField
+          className={classes.marginRight}
+          required
+          id="outlined-required"
+          label="Postal code"
+          variant="outlined"
+        />
+        <TextField
+          required
+          id="outlined-required"
+          label="Phone number"
+          variant="outlined"
+        />
+      </div>
       <div>
         <TextField
+          required
           className={classes.marginRight}
           id="outlined-password-input"
           label="Password"
@@ -76,6 +92,7 @@ export default function Registration() {
           variant="outlined"
         />
         <TextField
+          required
           id="outlined-password-input"
           label="Confirm password"
           type="password"

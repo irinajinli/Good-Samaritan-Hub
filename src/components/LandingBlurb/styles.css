@@ -1,0 +1,13 @@
+/* Styles for the LandingBlurb React component */
+.titleText {
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.mainText {
+  font-size: 24px;
+  margin-top: 25px;
+  margin-left: 50px;
+}
