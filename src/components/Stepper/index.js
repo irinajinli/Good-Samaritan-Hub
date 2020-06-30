@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import RegBasicInfo from "../RegBasicInfo";
 import RegAccountInfo from "../RegAccountInfo";
-import RegAccountType from "../RegAccountType";
+import RegBio from "../RegBio";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-  return ["Basic info", "Account info", "Default post type"];
+  return ["Basic info", "Account info", "Account bio"];
 }
 
 function getStepContent(stepIndex) {
@@ -33,7 +33,7 @@ function getStepContent(stepIndex) {
     case 1:
       return <RegAccountInfo />;
     case 2:
-      return <RegAccountType />;
+      return <RegBio />;
     default:
       return "Unknown stepIndex";
   }

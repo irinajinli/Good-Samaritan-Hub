@@ -21,36 +21,22 @@ const useStyles = makeStyles((theme) => ({
   long: {
     width: "431.2px",
   },
+  // tall: {
+  //   height: "200px",
+  // },
 }));
 
-export default function RegAccountInfo() {
+export default function RegBio() {
   const classes = useStyles();
 
   return (
     <form noValidate autoComplete="off">
       <div>
         <TextField
-          required
-          className={classes.long}
-          label="Username"
-          variant="outlined"
-        />
-      </div>
-
-      <div>
-        <TextField
-          required
-          className={`${classes.marginRight} ${classes.marginTop}`}
-          label="Password"
-          type="password"
-          variant="outlined"
-        />
-
-        <TextField
-          required
-          className={`${classes.marginLeft} ${classes.marginTop}`}
-          label="Confirm password"
-          type="password"
+          multiline
+          rows={6}
+          className={`${classes.long} ${classes.tall}`}
+          label="Bio (optional)"
           variant="outlined"
         />
       </div>
