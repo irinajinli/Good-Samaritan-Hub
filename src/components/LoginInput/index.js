@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Box } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
@@ -30,7 +29,7 @@ import "./styles.css";
 //   },
 // }));
 
-export default class LoginInput extends React.Component {
+class LoginInput extends React.Component {
   handleOnChange = (event) => {
     console.log(event.target.value);
 
@@ -54,17 +53,17 @@ export default class LoginInput extends React.Component {
 
   render() {
     return (
-      // <form className={classes.root} noValidate autoComplete="off">
-      <Box>
+      // <form noValidate autoComplete="off">
+      <div>
         <div>
           <TextField
-            className="marginBottom"
             label="Username"
             name="username"
             variant="outlined"
             onChange={this.handleOnChange}
           />
         </div>
+        <div className="marginTop"></div>
         <div>
           <TextField
             label="Password"
@@ -72,6 +71,8 @@ export default class LoginInput extends React.Component {
             variant="outlined"
             onChange={this.handleOnChange}
           />
+        </div>
+        <div>
           <Link className="link" to={"/registration"}>
             Need to register?
           </Link>
@@ -85,8 +86,10 @@ export default class LoginInput extends React.Component {
             LOG IN
           </Button>
         </div>
-      </Box>
-      // </form>;
+      </div>
+      // </form>
     );
   }
 }
+
+export default LoginInput;
