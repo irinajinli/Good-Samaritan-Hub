@@ -44,6 +44,13 @@ class LoginInput extends React.Component {
     });
   };
 
+  handleKeyDown = (event) => {
+    if (event.keyCode == 13) {
+      // if enter key was pressed
+      this.checkCredentials();
+    }
+  };
+
   goToHome = () => {
     window.location.href = "/home";
   };
@@ -83,6 +90,7 @@ class LoginInput extends React.Component {
             name="password"
             variant="outlined"
             onChange={this.handleOnChange}
+            onKeyDown={this.handleKeyDown}
           />
         </div>
         <div>
