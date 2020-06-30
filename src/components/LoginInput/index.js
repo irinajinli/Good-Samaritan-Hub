@@ -30,9 +30,12 @@ import "./styles.css";
 // }));
 
 class LoginInput extends React.Component {
-  handleOnChange = (event) => {
-    console.log(event.target.value);
+  state = {
+    username: "",
+    password: "",
+  };
 
+  handleOnChange = (event) => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -45,10 +48,20 @@ class LoginInput extends React.Component {
     window.location.href = "/home";
   };
 
+  goToAdminHome = () => {
+    window.location.href = "/admin/home";
+  };
+
   checkCredentials = () => {
-    if (this.state.username === "user" && this.state.password === "user") {
-      this.goToHome();
-    } else console.log("credentials incorrect");
+    if (window.location.pathname === "/login") {
+      if (this.state.username === "user" && this.state.password === "user") {
+        this.goToHome();
+      } else console.log("credentials incorrect");
+    } else if (window.location.pathname === "/admin") {
+      if (this.state.username === "admin" && this.state.password === "admin") {
+        this.goToAdminHome();
+      } else console.log("credentials incorrect");
+    }
   };
 
   render() {
