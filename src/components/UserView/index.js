@@ -220,6 +220,16 @@ class UserView extends Component {
                 <Profile 
                     user={user}
                     displayedUser={displayedUser}
+                    posts={posts}
+                    handleChangeTargetLocation={this.handleChangeTargetLocation}
+                    handleExpandPost={this.handleExpandPost}
+                    showExpandedPost={showExpandedPost}
+                    expandedPost={expandedPost}
+                    handleBack={this.handleBackToHome} 
+                    handleReportPost={this.handleReportPost}
+                    recentlyReportedPosts={recentlyReportedPosts}
+                    handleGoToProfile={this.handleGoToProfile}
+                    deactivatePost={this.handleDeactivatePost}
                 />}
 
                 {/* Inbox page */}

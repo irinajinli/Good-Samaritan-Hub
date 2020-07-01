@@ -3,14 +3,6 @@ import React, { Component } from 'react';
 import './styles.css';
 
 class Table extends Component {
-    showHeader = (columns) => {
-        for (let i = 0; i < columns.length; i++) {
-            if (columns[i].showHeader) {
-                return true;
-            }
-        }
-        return false;
-    }
     render() {
         /*
         How to use
@@ -24,28 +16,12 @@ class Table extends Component {
         compareFunction && rows.sort(compareFunction);
         return (
             <div className="table">
-                {this.showHeader(columns) && <Header columns={columns}></Header>}
                 {columns && rows && rows.map((row) => {
                     return (
                         <Row columns={columns} row={row} handleSelect={handleSelect} rowSelected={selectedRow && selectedRow.name === row.name ?
                              true
                             : false}
                             />
-                    );
-                })}
-            </div>
-        );
-    }
-}
-
-class Header extends Component {
-    render() {
-        const {columns} = this.props;
-        return (
-            <div className="table__header">
-                {columns && columns.map((column) => {
-                    return (
-                        <Cell cell={column.showHeader ? column.label : ""}/>
                     );
                 })}
             </div>

@@ -16,8 +16,8 @@ import UndoSnackBar from './UndoSnackBar/index.js';
 import { getPosts, getReportedPosts } from '../../actions/search';
 
 const columns = [
-    { id: 'name', label: 'Username', showHeader: false},
-    { id: 'status', label: 'Status', showHeader: false}
+    { id: 'name', label: 'Username'},
+    { id: 'status', label: 'Status'}
 ];
 
 function generateChip(user) {
