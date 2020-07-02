@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "./styles.css";
+import "../../index.css";
 
 // const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -59,6 +60,10 @@ class LoginInput extends React.Component {
     window.location.href = "/admin/home";
   };
 
+  handleOnClick = () => {
+    window.location.href = "/registration";
+  };
+
   checkCredentials = () => {
     if (window.location.pathname === "/login") {
       if (this.state.username === "user" && this.state.password === "user") {
@@ -94,9 +99,12 @@ class LoginInput extends React.Component {
           />
         </div>
         <div>
-          <Link className="link" to={"/registration"}>
+          <span
+            className="hover-pointer grey"
+            onClick={() => this.handleOnClick()}
+          >
             Need to register?
-          </Link>
+          </span>
         </div>
         <div>
           <Button
