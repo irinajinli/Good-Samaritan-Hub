@@ -72,9 +72,14 @@ class Post extends Component {
         return (  
             <React.Fragment>
                 <Card className='post__card'>
+                    {post.status === 'inactive' &&
+                    <div className='post__block post__status post--small-grey'>
+                        <span>Inactive (Hidden from public)</span>
+                    </div>}
+
                     <div className='post__block'>
                         <div className='post__left-block'>
-                            <div className='post__poster'>
+                            <div className='post--small-grey'>
                                 <span className='hover-pointer' onClick={() => handleGoToProfile(poster)}>
                                     {`${poster.firstName} ${poster.lastName}`}
                                 </span>
@@ -105,7 +110,7 @@ class Post extends Component {
                             <div className='post__body'>{post.body}</div>
                         </div>
                         <div className='post__block post__footer'>
-                            {user.username !== poster.username &&
+                            {user.username !== poster.username && 
                             <React.Fragment>
                                 <Button className='post__send-msg-btn'>
                                     Send a message
@@ -114,7 +119,7 @@ class Post extends Component {
                                     <ReportIcon fontSize='small' color='disabled'/>
                                 </IconButton>
                             </React.Fragment>}
-                            {user.username === poster.username &&
+                            {user.username === poster.username && post.status === 'active' &&
                             <React.Fragment>
                                 <IconButton size='small' className='post__remove-post-btn' onClick={this.handleOpenDialog}>
                                     <VisibilityOffIcon fontSize='small' color='disabled'/>

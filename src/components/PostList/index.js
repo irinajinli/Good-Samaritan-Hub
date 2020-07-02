@@ -109,8 +109,7 @@ class PostList extends Component {
                     posts.filter(post => {
                         return (
                             filterCondition(post) &&
-                            !recentlyReportedPosts.includes(post) &&
-                            post.status === 'active'
+                            !recentlyReportedPosts.includes(post)
                         );
                     }).map(post => (
                         <Post 
