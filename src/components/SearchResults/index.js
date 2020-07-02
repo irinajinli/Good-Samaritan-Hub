@@ -33,7 +33,7 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { user, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
+        const { user, users, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
             handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleDeactivatePost } = this.props;
 
         return (  
@@ -55,6 +55,7 @@ class SearchResults extends Component {
                 <div><Chip className='search-results__section-title' label='Posts'></Chip></div>}
                 <PostList 
                     user={user}
+                    users={users}
                     posts={matchingPosts} 
                     targetLocation={targetLocation}
                     handleExpandPost={handleExpandPost} 

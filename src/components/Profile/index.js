@@ -58,7 +58,7 @@ class Profile extends Component {
     // }
 
     render() { 
-        const {user, displayedUser, posts, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
+        const {user, users, displayedUser, posts, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
             handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost} = this.props;
         const {userPosts} = this.state;
         return (
@@ -79,6 +79,7 @@ class Profile extends Component {
                 <div className='profile__card'>
                     {displayedUser.posts.length > 0 && <PostList
                         user={user}
+                        users={users}
                         posts={userPosts} 
                         targetLocation={targetLocation}
                         handleChangeTargetLocation={handleChangeTargetLocation}

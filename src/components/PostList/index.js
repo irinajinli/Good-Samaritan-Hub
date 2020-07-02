@@ -68,7 +68,7 @@ class PostList extends Component {
 
     render() { 
         const {filterCondition} = this.state;
-        const {user, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
+        const {user, users, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
             handleBack, recentlyReportedPosts, handleGoToProfile } = this.props;
         
         return (  
@@ -116,6 +116,7 @@ class PostList extends Component {
                         <Post 
                             key={post.id}
                             user={user}
+                            users={users}
                             post={post}
                             targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
@@ -129,6 +130,7 @@ class PostList extends Component {
                     {showExpandedPost && 
                         <Post 
                             user={user}
+                            users={users}
                             post={expandedPost}
                             targetLocation={targetLocation}
                             isExpanded={showExpandedPost}

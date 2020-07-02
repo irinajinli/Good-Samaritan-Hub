@@ -224,6 +224,7 @@ class UserView extends Component {
                 {viewingProfile && 
                 <Profile 
                     user={user}
+                    users={users}
                     displayedUser={displayedUser}
                     posts={posts}
                     targetLocation={targetLocation}

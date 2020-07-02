@@ -15,6 +15,7 @@ import MyDialog from '../MyDialog';
 import './styles.css';
 import '../../index.css';
 import { getDistance } from '../../actions/distance';
+import { getUser } from '../../actions/search';
 
 class Post extends Component {
     state = {  
@@ -33,6 +34,7 @@ class Post extends Component {
     }
 
     handleReport = () => {
+        console.log(this.props.users)
         this.handleCloseDialog();
         this.setState({ dialogOpen: false });
         this.props.handleReportPost(this.props.post);
@@ -54,7 +56,10 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
+        const { user, users, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
+
+        // Get the poster
+        const poster = getUser(post.posterId, users);
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
@@ -70,8 +75,8 @@ class Post extends Component {
                     <div className='post__block'>
                         <div className='post__left-block'>
                             <div className='post__poster'>
-                                <span className='hover-pointer' onClick={() => handleGoToProfile(post.poster)}>
-                                    {`${post.poster.firstName} ${post.poster.lastName}`}
+                                <span className='hover-pointer' onClick={() => handleGoToProfile(poster)}>
+                                    {`${poster.firstName} ${poster.lastName}`}
                                 </span>
                                 {` — ${month} ${day}, ${year }`}
                             </div>
@@ -100,7 +105,7 @@ class Post extends Component {
                             <div className='post__body'>{post.body}</div>
                         </div>
                         <div className='post__block post__footer'>
-                            {user.username !== post.poster.username &&
+                            {user.username !== poster.username &&
                             <React.Fragment>
                                 <Button className='post__send-msg-btn'>
                                     Send a message
@@ -109,7 +114,7 @@ class Post extends Component {
                                     <ReportIcon fontSize='small' color='disabled'/>
                                 </IconButton>
                             </React.Fragment>}
-                            {user.username === post.poster.username &&
+                            {user.username === poster.username &&
                             <React.Fragment>
                                 <IconButton size='small' className='post__remove-post-btn' onClick={this.handleOpenDialog}>
                                     <VisibilityOffIcon fontSize='small' color='disabled'/>
@@ -119,7 +124,7 @@ class Post extends Component {
                     </React.Fragment>}
                 </Card>
 
-                <Modal open={dialogOpen && user.username !== post.poster.username}>
+                <Modal open={dialogOpen && user.username !== poster.username}>
                     {/* <DialogContent> */} 
                     {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
                     but also creates a weird bar at the top of the screen} */}
@@ -133,7 +138,7 @@ class Post extends Component {
                     {/* </DialogContent> */}
                 </Modal>
 
-                <Modal open={dialogOpen && user.username === post.poster.username}>
+                <Modal open={dialogOpen && user.username === poster.username}>
                     {/* <DialogContent> */} 
                     {/* {Wrapping ReportDialog with DialogContent gets rid of the error in the console, 
                     but also creates a weird bar at the top of the screen} */}

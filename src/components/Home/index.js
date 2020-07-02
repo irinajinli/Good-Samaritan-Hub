@@ -26,6 +26,7 @@ class Home extends Component {
                 {!creatingNewPost && !showSearchResults &&
                 <PostList 
                     user={user}
+                    users={users}
                     posts={posts} 
                     targetLocation={targetLocation}
                     handleChangeTargetLocation={handleChangeTargetLocation}

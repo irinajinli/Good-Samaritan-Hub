@@ -1,3 +1,6 @@
+import { getUser } from './search';
+
+
 export const createPost = (newPost, appComponent) => {
     const { user, posts } = appComponent.state;
 
@@ -13,10 +16,18 @@ export const createPost = (newPost, appComponent) => {
     // Add new post id to a copy of the cloned user's post list
     userCopy.posts = user.posts.concat(newPost.id);
 
+    // Clone users list
+    const usersCopy = [ ...appComponent.state.users ];
+
+    // Add new user to cloned users list
+    const index = usersCopy.indexOf(user);
+    usersCopy[index] = userCopy;
+
     // Update appComponent's state
     appComponent.setState({
         posts: newPosts,
-        user: userCopy
+        user: userCopy,
+        users: usersCopy
     });
 
     // Phase 2: Make a server call to add the new post
@@ -26,8 +37,8 @@ export const createPost = (newPost, appComponent) => {
 
 export const reportPost = (post, appComponent) => {
     console.log('report post');
-    const originalPoster = post.poster;
-    const posterCopy = { ...post.poster }; // clone poster
+    const originalPoster = getUser(post.posterId, appComponent.state.users);
+    const posterCopy = { ...originalPoster }; // clone poster
     
     // Set the clone's isReported status to true
     posterCopy.isReported = true;

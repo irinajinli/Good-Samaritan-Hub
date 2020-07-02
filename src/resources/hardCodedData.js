@@ -165,7 +165,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
-    poster: users[1],
+    posterId: 'user2',
     type: 'Request',
     date: new Date(2020, 5, 12),
     status: 'active',
@@ -180,7 +180,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    poster: users[2],
+    posterId: 'user3',
     type: 'Offer',
     date: new Date(2020, 5, 5),
     status: 'active',
@@ -193,7 +193,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    poster: users[3],
+    posterId: 'user4',
     type: 'Request',
     date: new Date(2020, 5, 15, 8, 6, 2),
     status: 'active',
@@ -203,7 +203,7 @@ const posts = [
     id: 3,
     title: 'Want personal chef',
     body: 'I am hungry',
-    poster: users[6],
+    posterId: 'user7',
     type: 'Request',
     date: new Date(2020, 5, 6, 20, 1, 43),
     status: 'active',
@@ -215,7 +215,7 @@ const posts = [
     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
       commodo sed egestas.`,
-    poster: users[6],
+    posterId: 'user7',
     type: 'Offer',
     date: new Date(2020, 5, 10, 2, 34, 23),
     status: 'active',

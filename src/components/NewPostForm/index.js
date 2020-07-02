@@ -18,7 +18,7 @@ class NewPostForm extends Component {
         id: -1,
         title: '',
         body: '',
-        poster: this.props.user,
+        posterId: this.props.user.username,
         type: 'Request',
         date: {},
         status: 'active',
