@@ -8,14 +8,37 @@ import Table from './userTable/index.js';
 import PostList from '../PostList';
 
 import './styles.css';
+import { getPosts } from '../../actions/search';
 
 const columns = [{id: "label", name: "Label"}, {id: "content", name: "Content"}];
 
 class Profile extends Component {
     state = {
-        targetLocation: this.props.user.location, // Defaults to the user's locatio
+        userPosts: []
     }
 
+    updateUserPosts() {
+        console.log('profile updateUserPosts')
+        const { displayedUser, posts } = this.props;
+        this.setState({
+            userPosts: getPosts(displayedUser, posts)
+        });
+    }
+
+    componentDidMount() { 
+        console.log(this.props.displayedUser)
+        console.log('mounted')
+        this.updateUserPosts();
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log(this.props.displayedUser)
+        console.log('updated')
+        if (prevProps != this.props) {
+            this.updateUserPosts();
+        }
+    }
+    
     generateRows = (user) => {
         const rows = [];
         rows.push({label: "Username", content: user.username});
@@ -26,18 +49,18 @@ class Profile extends Component {
         return rows;
     }
 
-    getPosts = (user, posts) => {
-        const userPosts = [];
-        for (let i = 0; i < user.posts.length; i++) {
-            userPosts.push(posts[user.posts[i]]);
-        }
-        return userPosts;
-    }
+    // getPosts = (user, posts) => {
+    //     const userPosts = [];
+    //     for (let i = 0; i < user.posts.length; i++) {
+    //         userPosts.push(posts[user.posts[i]]);
+    //     }
+    //     return userPosts;
+    // }
 
     render() { 
-        const {user, displayedUser, posts, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
-            handleBackToHome, handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost} = this.props;
-        const {targetLocation} = this.state;
+        const {user, displayedUser, posts, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
+            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost} = this.props;
+        const {userPosts} = this.state;
         return (
         <div className='profile'>
             <div className='profile__container'>
@@ -56,13 +79,13 @@ class Profile extends Component {
                 <div className='profile__card'>
                     {displayedUser.posts.length > 0 && <PostList
                         user={user}
-                        posts={this.getPosts(displayedUser, posts)} 
+                        posts={userPosts} 
                         targetLocation={targetLocation}
                         handleChangeTargetLocation={handleChangeTargetLocation}
                         handleExpandPost={handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
-                        handleBack={handleBackToHome} 
+                        handleBack={handleGoToProfile} 
                         handleReportPost={handleReportPost}
                         recentlyReportedPosts={recentlyReportedPosts}
                         handleGoToProfile={handleGoToProfile}

@@ -135,11 +135,16 @@ class UserView extends Component {
     }
 
     handleGoToProfile = displayedUser => {
+        if (displayedUser === undefined) {
+            displayedUser = this.state.displayedUser;
+        }
         this.setState({
             viewingHome: false,
             viewingProfile: true,
             displayedUser,
             viewingInbox: false,
+            showExpandedPost: false,
+            expandedPost: {}
         }, () => {
             this.props.history.push("/profile"); 
         });
@@ -221,6 +226,7 @@ class UserView extends Component {
                     user={user}
                     displayedUser={displayedUser}
                     posts={posts}
+                    targetLocation={targetLocation}
                     handleChangeTargetLocation={this.handleChangeTargetLocation}
                     handleExpandPost={this.handleExpandPost}
                     showExpandedPost={showExpandedPost}
@@ -229,7 +235,7 @@ class UserView extends Component {
                     handleReportPost={this.handleReportPost}
                     recentlyReportedPosts={recentlyReportedPosts}
                     handleGoToProfile={this.handleGoToProfile}
-                    deactivatePost={this.handleDeactivatePost}
+                    handleDeactivatePost={this.handleDeactivatePost}
                 />}
 
                 {/* Inbox page */}

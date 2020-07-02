@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './styles.css';
+import { uid } from 'react-uid';
 
 class Table extends Component {
     render() {
@@ -14,7 +15,7 @@ class Table extends Component {
             <div className="userTable">
                 {columns && rows && rows.map((row) => {
                     return (
-                        <Row columns={columns} row={row}/>
+                        <Row key={uid(row)} columns={columns} row={row}/>
                     );
                 })}
             </div>
@@ -30,7 +31,7 @@ class Row extends Component {
                 {columns && row && columns.map((column) => {
                     const cell = row[column.id]
                     return (
-                        <Cell cell={cell}/>
+                        <Cell key={uid(cell)} cell={cell}/>
                     );
                 })}
             </div>
