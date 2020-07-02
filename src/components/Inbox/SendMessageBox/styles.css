@@ -1,0 +1,17 @@
+.sendMessageContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.sendIcon {
+    font-size: 50px;
+}
+.sendIconContainer {
+    font-size: 50px;
+}
+.sendMessageBox {
+    width: 90%;
+    margin-left: 20px;
+
+}
