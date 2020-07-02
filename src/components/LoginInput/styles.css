@@ -1,7 +1,19 @@
-.marginTop {
+.smallMarginTop {
+  margin-top: 13px;
+}
+
+.MuiTextField-root.marginTop {
   margin-top: 25px;
+}
+
+.MuiButton-root.smallMarginTop {
+  margin-top: 13px;
 }
 
 .grey {
   color: grey;
+}
+
+.red {
+  color: red;
 }
