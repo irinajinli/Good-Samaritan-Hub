@@ -36,7 +36,6 @@ export const createPost = (newPost, appComponent) => {
 
 
 export const reportPost = (post, appComponent) => {
-    console.log('report post');
     const originalPoster = getUser(post.posterId, appComponent.state.users);
     const posterCopy = { ...originalPoster }; // clone poster
     

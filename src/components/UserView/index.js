@@ -7,7 +7,7 @@ import Profile from '../Profile';
 import Inbox from '../Inbox';
 import './styles.css';
 
-import { sortByDistance } from '../../actions/distance'
+import { sortByDistance, sortByDate } from '../../actions/sort'
 import { createPost, reportPost, deactivatePost } from '../../actions/user';
 
 class UserView extends Component {
@@ -28,13 +28,14 @@ class UserView extends Component {
         viewingInbox: false
     }
 
+    // Sorts the posts from closest to farthest from the target location. Posts with the 
+    // same distance from the target location are sorted from latest to earliest date
     sortPosts() {
         const { targetLocation } = this.state;
         const { posts, appComponent } = this.props;
 
-        // Sort the posts based on the target location
         appComponent.setState({
-            posts: sortByDistance(targetLocation, posts)
+            posts: sortByDistance(targetLocation, sortByDate(posts))
         });
     }
 

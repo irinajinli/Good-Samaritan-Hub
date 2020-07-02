@@ -10,6 +10,20 @@
     display: inline-block;
 }
 
+.post__status {
+    text-align: center;
+}
+
+.post__status:after {
+    position: relative;
+    top: 8px;
+    height: 1px;
+    background: lightgrey;
+    content: "";
+    width: 100%;
+    display: block;
+  }
+
 .post__body {
     margin: 5px;
 }
@@ -44,7 +58,7 @@
     float: right;
 }
 
-.post__poster {
+.post--small-grey {
     color: grey;
     font-size: 12px;
     margin: 5px;

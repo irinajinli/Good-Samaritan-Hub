@@ -56,7 +56,7 @@ class SearchResults extends Component {
                 <PostList 
                     user={user}
                     users={users}
-                    posts={matchingPosts} 
+                    posts={matchingPosts.filter(post => post.status === 'active')} 
                     targetLocation={targetLocation}
                     handleExpandPost={handleExpandPost} 
                     showExpandedPost={showExpandedPost} 

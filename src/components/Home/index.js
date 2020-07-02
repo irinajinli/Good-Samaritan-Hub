@@ -27,7 +27,7 @@ class Home extends Component {
                 <PostList 
                     user={user}
                     users={users}
-                    posts={posts} 
+                    posts={posts.filter(post => post.status === 'active')} 
                     targetLocation={targetLocation}
                     handleChangeTargetLocation={handleChangeTargetLocation}
                     handleExpandPost={handleExpandPost} 
