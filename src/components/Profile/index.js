@@ -100,6 +100,8 @@ class Profile extends Component {
                     />}
                 </div>
             </div>
+
+            <div className='profile__footer'></div>
         </div>
         )
     }
