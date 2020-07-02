@@ -3,13 +3,13 @@ import './styles.css';
 
 class InboxSideBarItem extends Component {
     state = {}
-    render() { 
-        const {username, name, image} = this.props
+    render() {
+        const { username, name, image } = this.props
         return (
             <div class='inboxSideBarItemContainer' onClick={() => this.props.handleChangeSelectedUser(username)}>
-                <img src={image} className='inboxSideBarItemImage'/>
+                <img src={image} className='inboxSideBarItemImage' />
                 <div class='inboxSideBarItemName'>
-                <p>{name}</p>
+                    <p>{name}</p>
                 </div>
             </div>
         )

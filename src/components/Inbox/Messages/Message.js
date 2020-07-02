@@ -4,7 +4,7 @@ import './styles.css'
 class Message extends Component {
     render() {
         let classMessageName = "messageContainer"
-        if(this.props.username == this.props.messageSender) {
+        if (this.props.username == this.props.messageSender) {
             classMessageName += "RightMessage"
         } else {
             classMessageName += "LeftMessage"

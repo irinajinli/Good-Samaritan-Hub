@@ -2,19 +2,19 @@ import React, { Component } from 'react'
 import Message from './Message'
 
 class MessageList extends Component {
-    state = {  }
+    state = {}
 
     render() {
-        const {messages, user} = this.props
+        const { messages, user } = this.props
         return (
-                messages.map(message => 
-                    <Message
-                        key={message.messageId}
-                        message={message.messageContent}
-                        username={user.username}
-                        messageSender={message.messageSender}
+            messages.map(message =>
+                <Message
+                    key={message.messageId}
+                    message={message.messageContent}
+                    username={user.username}
+                    messageSender={message.messageSender}
                 />
-                )
+            )
         );
     }
 }

@@ -6,12 +6,12 @@ import IconButton from '@material-ui/core/IconButton'
 import './styles.css'
 
 class SendMessageBox extends Component {
-    state = { 
+    state = {
         newMessage: ''
     }
 
-    handleMessageChanges = input => e =>{
-        this.setState({[input]: e.target.value})
+    handleMessageChanges = input => e => {
+        this.setState({ [input]: e.target.value })
         console.log(this.state)
     }
 
@@ -30,9 +30,9 @@ class SendMessageBox extends Component {
                 <div className='sendIconContainer'>
                     <IconButton onClick={() => {
                         this.props.onSend(this.props.userName, this.props.selectedUser, this.state.newMessage);
-                        this.setState({newMessage: ''})
-                        }}>
-                        <SendIcon className="sendIcon"/>
+                        this.setState({ newMessage: '' })
+                    }}>
+                        <SendIcon className="sendIcon" />
                     </IconButton>
                 </div>
             </div>
