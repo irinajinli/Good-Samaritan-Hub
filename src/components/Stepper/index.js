@@ -52,8 +52,8 @@ export default function HorizontalLabelPositionBelowStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const goToLogin = () => {
+    window.location.href = "/login";
   };
 
   return (
@@ -71,8 +71,8 @@ export default function HorizontalLabelPositionBelowStepper() {
             <Typography className={classes.instructions}>
               Registration complete!
             </Typography>
-            <Button variant="contained" color="primary" onClick={handleReset}>
-              Register again
+            <Button variant="contained" color="primary" onClick={goToLogin}>
+              Log in
             </Button>
           </div>
         ) : (
