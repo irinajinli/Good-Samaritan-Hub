@@ -1,7 +1,7 @@
 # Our React App: The Good Samaritan Hub
 
 ## Instructions to Run:
-Clone the github repository by running the following:
+Clone the github repository by running the following:  
 `git clone https://github.com/csc309-summer-2020/team16.git`
 
 Then navigate to `/csc309-summer-2020/team16/` and run the following:   
@@ -40,12 +40,11 @@ password: `user`
 #### Login Instructions and Credentials:
 The admin login page can be found at `/admin`
 
-Credentials:
 username: `admin`  
 password: `admin`  
 
 #### Features:
-- Here they can see a list of all the users. The list is sorted with those having a report pending at the top to allow the admin to easily see them. 
+- After logging in the admin can see a list of all the users. The list is sorted with those having a report pending at the top to allow the admin to easily see them. 
 - Clicking a user shows their complete information and post history, as well as any reports other users have made about them. The admin can look at the reports and either delete the report or ban the user with a ban reason. 
 - The admin also has the ability to unban a previously banned user.
 
