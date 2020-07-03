@@ -72,7 +72,7 @@ export const deactivatePost = (post, appComponent) => {
 }
 
 
-const updateUser = (originalUser, updatedUser, appComponent) => {
+export const updateUser = (originalUser, updatedUser, appComponent) => {
     const usersCopy = [ ...appComponent.state.users ]; // clone users array
     const index = appComponent.state.users.indexOf(originalUser);
     usersCopy[index] = updatedUser;

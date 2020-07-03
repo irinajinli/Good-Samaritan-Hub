@@ -5,6 +5,7 @@ import UserTopBar from '../UserTopBar';
 import Home from '../Home';
 import Profile from '../Profile';
 import Inbox from '../Inbox';
+import Setting from '../Setting';
 import './styles.css';
 
 import { sortByDistance } from '../../actions/distance'
@@ -25,7 +26,8 @@ class UserView extends Component {
         viewingProfile: false,
         displayedUser: {},
 
-        viewingInbox: false
+        viewingInbox: false,
+        viewingEditProfile: false
     }
 
     sortPosts() {
@@ -73,7 +75,8 @@ class UserView extends Component {
             viewingHome: true,
             viewingProfile: false,
             displayedUser: {},
-            viewingInbox: false
+            viewingInbox: false,
+            viewingEditProfile: false
         });
     }
 
@@ -89,7 +92,8 @@ class UserView extends Component {
             viewingHome: true,
             viewingProfile: false,
             displayedUser: {},
-            viewingInbox: false
+            viewingInbox: false,
+            viewingEditProfile: false
         });
     }
 
@@ -131,6 +135,7 @@ class UserView extends Component {
             viewingProfile: false,
             displayedUser: {},
             viewingInbox: false,
+            viewingEditProfile: false
         });
     }
 
@@ -144,9 +149,27 @@ class UserView extends Component {
             displayedUser,
             viewingInbox: false,
             showExpandedPost: false,
+            viewingEditProfile: false,
             expandedPost: {}
         }, () => {
             this.props.history.push("/profile"); 
+        });
+    }
+
+    handleGoToEditProfile = displayedUser => {
+        if (displayedUser === undefined) {
+            displayedUser = this.state.displayedUser;
+        }
+        this.setState({
+            viewingHome: false,
+            viewingProfile: false,
+            displayedUser,
+            viewingInbox: false,
+            showExpandedPost: false,
+            viewingEditProfile: true,
+            expandedPost: {}
+        }, () => {
+            this.props.history.push("/setting"); 
         });
     }
 
@@ -154,7 +177,8 @@ class UserView extends Component {
         this.setState({
             viewingHome: false,
             viewingProfile: false,
-            viewingInbox: true
+            viewingInbox: true,
+            viewingEditProfile: false
         });
         this.props.history.push("/inbox"); 
     }
@@ -181,7 +205,7 @@ class UserView extends Component {
     render() { 
         const { user, users, posts } = this.props;
         const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, targetLocation,
-            recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox } = this.state;
+            recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox, viewingEditProfile } = this.state;
 
         return (  
             <div className='logged-in-wrapper'>
@@ -237,6 +261,7 @@ class UserView extends Component {
                     recentlyReportedPosts={recentlyReportedPosts}
                     handleGoToProfile={this.handleGoToProfile}
                     handleDeactivatePost={this.handleDeactivatePost}
+                    handleGoToEditProfile={this.handleGoToEditProfile}
                 />}
 
                 {/* Inbox page */}
@@ -245,6 +270,14 @@ class UserView extends Component {
                     user={user}
                 />}
 
+                {/* Edit Profile page */}
+                {viewingEditProfile && 
+                <Setting 
+                    user={user}
+                    users={users}
+                    displayedUser={displayedUser}
+                    appComponent={this}
+                />}
             </div>
         );
     }

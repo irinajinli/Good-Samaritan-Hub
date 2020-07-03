@@ -77,7 +77,7 @@ class App extends Component {
 
               <Route
                 exact
-                path={["/home", "/profile", "/inbox"]}
+                path={["/home", "/profile", "/inbox", "/setting"]}
                 render={() => 
                   <UserView
                     appComponent={this}

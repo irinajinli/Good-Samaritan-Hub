@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -65,7 +65,7 @@ class Profile extends Component {
 
     render() { 
         const {user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
-            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost} = this.props;
+            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile} = this.props;
         const {userPosts} = this.state;
         return (
         <div className='profile'>
@@ -76,7 +76,7 @@ class Profile extends Component {
                     <h1>Profile</h1>
                     <Table columns={columns} rows={this.generateRows(displayedUser)}/>
                     {user === displayedUser && <div className='profile__button'>
-                        <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={this.handleSaveInfo}>Edit</Button>
+                        <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => handleGoToEditProfile(displayedUser)}>Edit</Button>
                     </div>}
                 </Card>
                 {!displayedUser.posts.length && <Card className='profile__card'>
@@ -105,4 +105,4 @@ class Profile extends Component {
     }
 }
  
-export default Profile;
+export default withRouter(Profile);
