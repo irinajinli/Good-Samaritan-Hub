@@ -106,6 +106,7 @@ class LoginInput extends React.Component {
         {/* <div className="marginTop"></div> */}
         <div>
           <TextField
+            type="password"
             className="marginTop"
             label="Password"
             name="password"
