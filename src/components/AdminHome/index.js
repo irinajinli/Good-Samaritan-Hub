@@ -111,9 +111,7 @@ class AdminHome extends Component {
         let i = user.reportedMessages.indexOf(report.messageId);
         if (i >= 0) {
             i = user.reportedMessages.indexOf(report.messageId);
-            console.log(i)
-            
-            user.reportedMessages.splice(i , 1);console.log(user)
+            user.reportedMessages.splice(i , 1);
             type = 'Message';
         } else {
             i = user.reportedPosts.indexOf(report.id);
