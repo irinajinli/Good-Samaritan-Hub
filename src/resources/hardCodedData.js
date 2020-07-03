@@ -28,8 +28,8 @@ const users = [
     location: 'M4V',
     bio: 'Hello world, I am John Smith!',
     posts: [],
-    messagesSent: [],
-    messagesRecieved: [],
+    messagesSent: [0, 2, 4, 6],
+    messagesRecieved: [1, 3, 5, 7],
     isReported: false,
     isBanned: false,
     reportedMessages: [],
@@ -44,8 +44,8 @@ const users = [
     location: 'M4P',
     bio: 'Hello world, I am Bobsy Bob!',
     posts: [0],
-    messagesSent: [],
-    messagesRecieved: [],
+    messagesSent: [1, 3],
+    messagesRecieved: [0, 2],
     isReported: false,
     isBanned: false,
     reportedMessages: [],
@@ -60,8 +60,8 @@ const users = [
     location: 'M6H',
     bio: 'Hello world, I am Diane Doe!',
     posts: [1],
-    messagesSent: [],
-    messagesRecieved: [],
+    messagesSent: [5],
+    messagesRecieved: [4],
     isReported: false,
     isBanned: false,
     reportedMessages: [],
@@ -76,11 +76,11 @@ const users = [
     location: 'M5S',
     bio: 'I am!',
     posts: [2],
-    messagesSent: [],
-    messagesRecieved: [],
+    messagesSent: [7],
+    messagesRecieved: [6],
     isReported: true,
     isBanned: false,
-    reportedMessages: [],
+    reportedMessages: [7],
     reportedPosts: [2],
     banReason: ''
   },
@@ -118,16 +118,11 @@ const users = [
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
     posts: [],
-    messagesSent: [],
+    messagesSent: [8],
     messagesRecieved: [],
     isReported: true,
     isBanned: true,
-    reportedMessages: [`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
+    reportedMessages: [8],
     reportedPosts: [],
     banReason: 'User said mean words'
   },
@@ -140,15 +135,10 @@ const users = [
     bio: `I am John`,
     posts: [3, 4],
     messagesSent: [],
-    messagesRecieved: [],
+    messagesRecieved: [8],
     isReported: true,
     isBanned: false,
-    reportedMessages: [`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`],
+    reportedMessages: [],
     reportedPosts: [3, 4],
     banReason: ''
   }
@@ -238,6 +228,7 @@ const messages = [
   { messageId: 5, messageSender: 'user3', messageReceiver: 'user', date: '1593648000', messageContent: 'Hello John' },
   { messageId: 6, messageSender: 'user', messageReceiver: 'user4', date: '1593648000', messageContent: 'Greetings Jack' },
   { messageId: 7, messageSender: 'user4', messageReceiver: 'user', date: '1593648000', messageContent: 'Greetings John' },
+  { messageId: 8, messageSender: 'user6', messageReceiver: 'user7', date: '1593648000', messageContent: 'Hello' },
 ];
 
 export const getPostalCodePrefixes = () => Object.keys(postalCodes);

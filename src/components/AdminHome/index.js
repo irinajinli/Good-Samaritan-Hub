@@ -108,8 +108,9 @@ class AdminHome extends Component {
     handleDeleteReport = (report) => {
         const user = this.state.selectedUser;
         let type = '';
-        let i = user.reportedMessages.indexOf(report);
+        let i = user.reportedMessages.indexOf(report.messageId);
         if (i >= 0) {
+            i = user.reportedMessages.indexOf(report.messageId);
             user.reportedMessages.splice(i , 1);
             type = 'Message';
         } else {
@@ -121,7 +122,7 @@ class AdminHome extends Component {
             user.isReported = false;
         }
         this.setState({selectedUser: user});
-        this.handleOpenSnackBar(report.id, type, report, i);
+        this.handleOpenSnackBar(type === 'Post' ? report.id : report.messageId, type, report, i);
         setTimeout(() => this.handleCloseSnackBar(), 5000);
     }
 
@@ -129,7 +130,7 @@ class AdminHome extends Component {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
         if (report.type === 'Message') {
-            user.reportedMessages.splice(report.index, 0, report.content);
+            user.reportedMessages.splice(report.index, 0, report.id);
         } else {
             user.reportedPosts.splice(report.index, 0, report.id);
         }
@@ -138,7 +139,7 @@ class AdminHome extends Component {
     }
 
     render() {
-        const {users, posts} = this.props;
+        const {users, posts, messages} = this.props;
         const {selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
         return (  
             <div className="adminHome">
@@ -180,14 +181,14 @@ class AdminHome extends Component {
                         <h1>Report Details</h1>
                         {selectedUser && selectedUser.isReported &&
                             <div className="adminHome__scroll">
-                                {selectedUser.reportedMessages.map((report) => {
+                                {selectedUser.reportedMessages.map((reportId) => {
                                     return (
-                                        <Report type="Message" content={report} handleDeleteReport={this.handleDeleteReport}/>
+                                        <Report type="Message" content={messages[reportId]} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                                 {getReportedPosts(selectedUser, posts).map((report) => {
                                     return (
-                                        <Report type="Post" id={report.id} content={report} handleDeleteReport={this.handleDeleteReport}/>
+                                        <Report type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                             </div>
