@@ -8,7 +8,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { updateUser } from '../../actions/user';
 import { getPostalCodePrefixes } from '../../resources/hardCodedData';
-import './styles.css';
 
 class Setting extends Component {
     state = { firstName: this.props.displayedUser.firstName,
@@ -96,11 +95,11 @@ class Setting extends Component {
         return (
         <div className='profile'>
             <div className='profile__container'>
-                <div className="setting__icon-container">
+                {/*<div className="setting__icon-container">
                     <div className="setting__icon-button">Change</div>
                     <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
-                </div>
-                
+                </div>*/}
+                <img src={require('../../resources/userIcon.png')} className='profile__icon'/>
                 <Card className='profile__card'>
                     <h1>Your Profile</h1>
                     <TextField className="profile_textField"
