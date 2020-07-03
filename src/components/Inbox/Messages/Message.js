@@ -22,7 +22,7 @@ class Message extends Component {
         if (this.props.username === this.props.messageSender) {
             classMessageName += "RightMessage"
             toRender =
-                <p>{this.props.message}</p>
+                <p className="messageText">{this.props.message}</p>
         } else {
             toRender =
                 <>
@@ -36,7 +36,7 @@ class Message extends Component {
                             handleDoAction={this.handleDialogClose}
                         />
                     </Modal>
-                    <p className="rightMessageText"> {this.props.message} </p>
+                    <p className="messageText"> {this.props.message} </p>
                 </>
             classMessageName += "LeftMessage"
         }

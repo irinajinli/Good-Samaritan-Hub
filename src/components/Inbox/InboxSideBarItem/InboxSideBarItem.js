@@ -11,7 +11,7 @@ class InboxSideBarItem extends Component {
             classMessageName += "Selected"
         }
         return (
-            <Card>
+            <Card className='inboxSideBarItem'>
                 <div className={classMessageName} onClick={() => this.props.handleChangeSelectedUser(username)}>
                     <img src={image} alt={name} className='inboxSideBarItemImage' />
                     <div className='inboxSideBarItemName'>
