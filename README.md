@@ -4,17 +4,17 @@
 Clone the github repository by running the following:
 `git clone https://github.com/csc309-summer-2020/team16.git`
 
-Then navigate to `/csc309-summer-2020/team16/` and run the following: 
-`npm install`
-`npm start`
+Then navigate to `/csc309-summer-2020/team16/` and run the following:   
+`npm install`  
+`npm start`  
 
 Now open up your browser and go to `localhost:3000`
 
 ## Instructions to Use:
 ### User
 #### Login Credentials:
-username: `user`
-password: `user`
+username: `user`  
+password: `user`  
 
 #### Features:
 
@@ -41,8 +41,8 @@ password: `user`
 The admin login page can be found at `/admin`
 
 Credentials:
-username: `admin`
-password: `admin`
+username: `admin`  
+password: `admin`  
 
 #### Features:
 - Here they can see a list of all the users. The list is sorted with those having a report pending at the top to allow the admin to easily see them. 
