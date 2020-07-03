@@ -43,14 +43,11 @@ class LoginInput extends React.Component {
     if (window.location.pathname === "/login") {
       if (this.state.username === "user" && this.state.password === "user") {
         this.goToHome();
-      } else {
-        this.setState({ wrongCreds: true });
-        // debugger;
-      }
+      } else this.setState({ wrongCreds: true });
     } else if (window.location.pathname === "/admin") {
       if (this.state.username === "admin" && this.state.password === "admin") {
         this.goToAdminHome();
-      } else console.log("credentials incorrect");
+      } else this.setState({ wrongCreds: true });
     }
   };
 
@@ -89,15 +86,16 @@ class LoginInput extends React.Component {
             onKeyDown={this.handleKeyDown}
           />
         </div>
-        {window.location.pathname !== '/admin' &&
+        {window.location.pathname !== "/admin" && (
           <div className="smallMarginTop">
-          <span
-            className="hover-pointer grey"
-            onClick={() => this.handleOnClick()}
-          >
-            Need to register?
-          </span>
-        </div>}
+            <span
+              className="hover-pointer grey"
+              onClick={() => this.handleOnClick()}
+            >
+              Need to register?
+            </span>
+          </div>
+        )}
         <div>
           <Button
             className="smallMarginTop"
