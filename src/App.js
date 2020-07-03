@@ -9,10 +9,9 @@ import Landing from "./components/Landing";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
 import UserView from "./components/UserView";
-import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getInitialPosts} from './resources/hardCodedData';
+import { getInitialUsers, getInitialPosts } from './resources/hardCodedData';
 
 class App extends Component {
   // Global theme
@@ -46,7 +45,7 @@ class App extends Component {
   state = {
     user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
     users: getInitialUsers(), // Phase 2: Initialize users to an empty list
-    posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
+    posts: getInitialPosts() // Phase 2: Initialize posts to an empty list
   };
 
   onComponentDidMount() {
@@ -75,9 +74,9 @@ class App extends Component {
             <Switch>
               {/* Shows a different component depending on the exact path in the URL */}
 
+              {/* User views */}
               <Route
-                exact
-                path={["/home", "/profile", "/inbox", "/setting"]}
+                exact path={["/home", "/profile", "/inbox"]}
                 render={() => 
                   <UserView
                     appComponent={this}
@@ -88,9 +87,10 @@ class App extends Component {
                   />
                 }
               />
+
+              {/* Admin homepage */}
               <Route
-                exact
-                path="/admin/home"
+                exact path="/admin/home"
                 render={() => 
                 <AdminHome 
                   users={users} 
@@ -98,22 +98,32 @@ class App extends Component {
                 />}
               />
 
-              {/* The pages in this fragment share the same top bar */}
-              <React.Fragment>
-                <TopBar />
-                <Route exact path="/" render={() => <Landing />} />
-                <Route
-                  exact
-                  path="/login"
-                  render={() => <Login title="User Login" />}
-                />
-                <Route
-                  exact
-                  path="/registration"
-                  render={() => <Registration />}
-                />
-                <Route exact path="/admin" render={() => <AdminLogin />} />
-              </React.Fragment>
+              {/* User login and registration. */}
+              <Route exact path={["/", "/login", "/registration"]}
+                render={() => 
+                  <React.Fragment>
+                    <TopBar/>
+                    <Route exact path="/" render={() => <Landing />} />
+                    <Route
+                      exact path="/login"
+                      render={() => <Login />}
+                    />
+                    <Route
+                      exact path="/registration"
+                      render={() => <Registration />}
+                    />
+                  </React.Fragment>}
+              />
+
+              {/* Admin login */}
+              <Route exact path="/admin" 
+                render={() => 
+                  <React.Fragment>
+                    <TopBar/>
+                    <Login />
+                  </React.Fragment>} 
+              />
+
             </Switch>
           </BrowserRouter>
         </ThemeProvider>

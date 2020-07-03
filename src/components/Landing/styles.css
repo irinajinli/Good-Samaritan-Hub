@@ -1,15 +1,21 @@
 /* Styles for the Landing React component */
 .backgroundImage {
-  height: 550px;
-  background-image: url("../../resources/toronto.jpg");
+  height: 70vh;
+  background-image: url("../../resources/high-park.jpg");
+  max-width: 100%;
+  background-size: cover;
 }
 
 .mainTitle {
   margin-top: 0px;
   margin-left: 50px;
-  padding-top: 150px;
-  font-size: 40px;
+  padding-top: 53vh;
+  font-size: 46px;
   color: white;
+}
+
+.mainTitle--small {
+  font-size: 40px;
 }
 
 .bottomBar {

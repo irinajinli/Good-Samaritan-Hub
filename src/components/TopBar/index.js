@@ -21,16 +21,22 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  iconLink: {
+    color: 'white'
+  }, 
+  loginRegButton: {
+    color: 'white'
+  }
 }));
 
 export default function TopBar() {
   const classes = useStyles();
-
+  
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar className={classes.bar} position="static">
         <Toolbar>
-          <Link className="link" to={"/"}>
+          <Link className={classes.iconLink} to={"/"}>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -43,9 +49,12 @@ export default function TopBar() {
           <Typography variant="h6" className={classes.title}>
             Good Samaritan Hub
           </Typography>
-          <Link className="link" to={"/login"}>
-            <Button variant="contained">Login/Register</Button>
-          </Link>
+          {window.location.pathname !== '/admin' &&
+            <Link className="link" to={"/login"}>
+            <Button className={classes.loginRegButton}>
+              Login{'\u00a0'}/{'\u00a0'}Register
+            </Button>
+          </Link>}
         </Toolbar>
       </AppBar>
     </div>
