@@ -65,7 +65,7 @@ class Profile extends Component {
 
     render() { 
         const {user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
-            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile} = this.props;
+            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost} = this.props;
         const {userPosts} = this.state;
         return (
         <div className='profile'>
@@ -96,6 +96,7 @@ class Profile extends Component {
                         handleReportPost={handleReportPost}
                         recentlyReportedPosts={recentlyReportedPosts}
                         handleGoToProfile={handleGoToProfile}
+                        handleGoToInboxFromPost={handleGoToInboxFromPost}
                         deactivatePost={handleDeactivatePost}
                     />}
                 </div>

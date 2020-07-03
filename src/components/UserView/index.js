@@ -33,7 +33,7 @@ class UserView extends Component {
 
         messages: getMessages(),
         conversations: getConversations(),
-        inboxFrom: '',
+        inboxFrom: null,
     }
 
     // Sorts the posts from closest to farthest from the target location. Posts with the 
@@ -186,6 +186,7 @@ class UserView extends Component {
             viewingProfile: false,
             viewingInbox: true,
             viewingEditProfile: false,
+            inboxFrom: null,
         });
         this.props.history.push("/inbox"); 
     }
@@ -289,6 +290,7 @@ class UserView extends Component {
                     handleGoToProfile={this.handleGoToProfile}
                     handleDeactivatePost={this.handleDeactivatePost}
                     handleGoToEditProfile={this.handleGoToEditProfile}
+                    handleGoToInboxFromPost={this.handleGoToInboxFromPost}
                 />}
 
                 {/* Inbox page */}
