@@ -68,7 +68,7 @@ export default function HorizontalLabelPositionBelowStepper() {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography className={classes.instructions}>
+            <Typography className={classes.instructions} component={"div"}>
               Registration complete!
             </Typography>
             <Button variant="contained" color="primary" onClick={goToLogin}>
@@ -77,7 +77,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
+            <Typography className={classes.instructions} component={"div"}>
               {getStepContent(activeStep)}
             </Typography>
             <div>

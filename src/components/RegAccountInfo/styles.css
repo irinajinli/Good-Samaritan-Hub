@@ -1,0 +1,15 @@
+.long {
+  width: 431.2px;
+}
+
+.MuiTextField-root.marginTop {
+  margin-top: 30px;
+}
+
+.MuiTextField-root.marginRight {
+  margin-right: 4px;
+}
+
+.MuiTextField-root.marginLeft {
+  margin-left: 4px;
+}
