@@ -9,10 +9,22 @@
 }
 
 .messageContainerLeftMessage{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
     background-color: gray;
     border-radius: 10px;
     margin-right: 25%;
     margin-left: 5%;
     margin-top: 1px;
     margin-bottom: 1px;
+}
+
+.reportButton {
+    margin-left: 3px;
+}
+
+.rightMessageText {
+    margin-left: 5px;
 }
