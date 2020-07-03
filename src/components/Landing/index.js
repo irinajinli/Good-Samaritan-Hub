@@ -14,8 +14,8 @@ class Landing extends Component {
       <div>
         <div className="backgroundImage">
           <h1 className="mainTitle">
-            <div>Connecting volunteers</div> 
-            <div className="mainTitle--small">with those in need.</div> 
+            <div>Connecting volunteers</div>
+            <div className="mainTitle--small">with those in need.</div>
           </h1>
         </div>
 
