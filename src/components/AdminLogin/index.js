@@ -1,28 +1,11 @@
-import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import LoginInput from "../LoginInput";
-import Header from "../Header";
-
-const useStyles = makeStyles((theme) => ({
-  centre: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-  },
-  header: {
-    marginTop: "40px",
-    marginBottom: "40px",
-    textAlign: "center",
-  },
-}));
+import "./styles.css";
 
 export default function AdminLogin() {
-  const classes = useStyles();
-
   return (
-    <div className={classes.centre}>
-      <Header title="Admin Login" />
+    <div className="centre">
+      <div class="title">Admin Login</div>
       <LoginInput />
     </div>
   );
