@@ -13,7 +13,15 @@ class Setting extends Component {
         lastName: null,
         bio: null,
         location: null,
-        password: null }
+
+        oldPassword: null,
+        newPassword: null,
+        confirmPassword: null,
+        
+        oldNotMatch: false,
+        newNotMatch: false,
+
+    }
 
     initState = (displayedUser) => {
         this.setState({
@@ -36,7 +44,7 @@ class Setting extends Component {
 
     handleSaveInfo = (user, displayedUser) => {
         let changed = false;
-        if (!this.state.firstName) {
+        if (this.state.firstName === null) {
             this.initState(displayedUser);
         }
         if (this.state.firstName && displayedUser.firstName !== this.state.firstName) {
@@ -56,18 +64,30 @@ class Setting extends Component {
             changed = true;
         }
         if (changed) {
-            
+            updateUser(user, displayedUser, this.props.appComponent);
         }
     }
 
-    handleChangePassword = () => {
-
+    handleChangePassword = (user, displayedUser) => {
+        let changed = false;
+        if (this.state.firstName === null) {
+            this.initState(displayedUser);
+        }
+        this.setState({oldNotMatch: displayedUser.password !== this.state.oldPassword});
+        this.setState({newNotMatch: !this.state.newPassword ||
+            this.state.newPassword !== this.state.confirmPassword});
+        if (displayedUser.password === this.state.oldPassword && this.state.newPassword &&
+            this.state.newPassword === this.state.confirmPassword &&
+            this.state.newPassword !== displayedUser.password) {
+            displayedUser.password = this.state.newPassword;
+            updateUser(user, displayedUser, this.props.appComponent);
+        }
     }
 
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
         const {user, users, displayedUser} = this.props
-        const {username, firstName, lastName, bio, location, password} = this.state;
+        const {oldNotMatch, newNotMatch} = this.state;
         return (
         <div className='profile'>
             <div className='profile__container'>
@@ -116,17 +136,28 @@ class Setting extends Component {
                     <TextField className="profile_textField"
                         label="Old Password"
                         type="password"
-                        variant="outlined"/>
+                        variant="outlined"
+                        error={oldNotMatch}
+                        helperText={oldNotMatch && "Incorrect Password"}
+                        name="oldPassword"
+                        onChange={this.handleInputChange}/>
                     <TextField className="profile_textField"
                         label="New Password"
                         type="password"
-                        variant="outlined"/>
+                        variant="outlined"
+                        error={newNotMatch}
+                        name="newPassword"
+                        onChange={this.handleInputChange}/>
                     <TextField className="profile_textField"
-                        label="Confirm"
+                        label="Confirm Password"
                         type="password"
-                        variant="outlined"/>
+                        variant="outlined"
+                        error={newNotMatch}
+                        helperText={newNotMatch && "Password does not match"}
+                        name="confirmPassword"
+                        onChange={this.handleInputChange}/>
                     <div className='profile__button'>
-                        <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={this.handleChangePassword}>Save</Button>
+                        <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => this.handleChangePassword(user, displayedUser)}>Save</Button>
                     </div>
                 </Card>
             </div>

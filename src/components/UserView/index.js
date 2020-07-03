@@ -277,7 +277,7 @@ class UserView extends Component {
                     user={user}
                     users={users}
                     displayedUser={displayedUser}
-                    appComponent={this}
+                    appComponent={this.props.appComponent}
                 />}
             </div>
         );
