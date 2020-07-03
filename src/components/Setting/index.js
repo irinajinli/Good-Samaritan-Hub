@@ -4,34 +4,31 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 
+import SaveSnackBar from './SaveSnackBar/index';
 import { updateUser } from '../../actions/user';
 
 import './styles.css';
 
 class Setting extends Component {
-    state = { firstName: null,
-        lastName: null,
-        bio: null,
-        location: null,
+    state = { firstName: this.props.displayedUser.firstName,
+        lastName: this.props.displayedUser.lastName,
+        bio: this.props.displayedUser.bio,
+        location: this.props.displayedUser.location,
 
         oldPassword: null,
         newPassword: null,
         confirmPassword: null,
         
+        firstNameEmpty: false,
+        lastNameEmpty: false,
+        locationEmpty: false,
         oldNotMatch: false,
         newNotMatch: false,
 
+        snackBarOpen: false
     }
 
-    initState = (displayedUser) => {
-        this.setState({
-            firstName: displayedUser.firstName,
-            lastName: displayedUser.lastName,
-            bio: displayedUser.bio,
-            location: displayedUser.location,
-            password: displayedUser.password
-        });
-    }
+    handleCloseSnackBar = () => this.setState({snackBarOpen: false});
 
     handleInputChange = event => {
         const target = event.target;
@@ -44,13 +41,12 @@ class Setting extends Component {
 
     handleSaveInfo = (user, displayedUser) => {
         let changed = false;
-        if (this.state.firstName === null) {
-            this.initState(displayedUser);
-        }
+        this.setState({firstNameEmpty: this.state.firstName === ''});
         if (this.state.firstName && displayedUser.firstName !== this.state.firstName) {
             displayedUser.firstName = this.state.firstName;
             changed = true;
         }
+        this.setState({lastNameEmpty: this.state.lastName == ''});
         if (this.state.lastName && displayedUser.lastName !== this.state.lastName) {
             displayedUser.lastName = this.state.lastName;
             changed = true;
@@ -59,20 +55,19 @@ class Setting extends Component {
             displayedUser.bio = this.state.bio;
             changed = true;
         }
+        this.setState({locationEmpty: this.state.location == ''});
         if (this.state.location && displayedUser.location !== this.state.location) {
             displayedUser.location = this.state.location;
             changed = true;
         }
         if (changed) {
             updateUser(user, displayedUser, this.props.appComponent);
+            this.setState({snackBarOpen: true});
+            setTimeout(() => this.handleCloseSnackBar(), 5000);
         }
     }
 
     handleChangePassword = (user, displayedUser) => {
-        let changed = false;
-        if (this.state.firstName === null) {
-            this.initState(displayedUser);
-        }
         this.setState({oldNotMatch: displayedUser.password !== this.state.oldPassword});
         this.setState({newNotMatch: !this.state.newPassword ||
             this.state.newPassword !== this.state.confirmPassword});
@@ -81,13 +76,15 @@ class Setting extends Component {
             this.state.newPassword !== displayedUser.password) {
             displayedUser.password = this.state.newPassword;
             updateUser(user, displayedUser, this.props.appComponent);
+            this.setState({snackBarOpen: true});
+            setTimeout(() => this.handleCloseSnackBar(), 5000);
         }
     }
-
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
         const {user, users, displayedUser} = this.props
-        const {oldNotMatch, newNotMatch} = this.state;
+        const {firstNameEmpty, lastNameEmpty, locationEmpty, oldNotMatch, newNotMatch, snackBarOpen} = this.state;
+        
         return (
         <div className='profile'>
             <div className='profile__container'>
@@ -105,12 +102,16 @@ class Setting extends Component {
                             defaultValue={displayedUser.firstName}
                             variant="outlined"
                             name="firstName"
+                            error={firstNameEmpty}
+                            helperText={firstNameEmpty && "Name cannot be empty"}
                             onChange={this.handleInputChange}/>
                         <TextField className="profile_textField"
                             label="Last Name"
                             defaultValue={displayedUser.lastName}
                             variant="outlined"
                             name="lastName"
+                            error={lastNameEmpty}
+                            helperText={lastNameEmpty && "Name cannot be empty"}
                             onChange={this.handleInputChange}/>
                     </div>
                     <TextField className="profile_textField"
@@ -126,6 +127,8 @@ class Setting extends Component {
                         defaultValue={displayedUser.location}
                         variant="outlined"
                         name="location"
+                        error={locationEmpty}
+                        helperText={locationEmpty && "Name cannot be empty"}
                         onChange={this.handleInputChange}/>
                     <div className='profile__button'>
                         <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => this.handleSaveInfo(user, displayedUser)}>Save</Button>
@@ -161,6 +164,7 @@ class Setting extends Component {
                     </div>
                 </Card>
             </div>
+            {snackBarOpen && <SaveSnackBar handleClose={this.handleCloseSnackBar}/>}
         </div>
         )
     }
