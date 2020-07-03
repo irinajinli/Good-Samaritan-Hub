@@ -1,19 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Header from "../Header";
 import LoginInput from "../LoginInput";
 
-const useStyles = makeStyles((theme) => ({
-  centre: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
-  }
-}));
+import './styles.css'
 
-export default function Login(props) {
-  const classes = useStyles();
+export default function Login() {
 
   const getTitle = () => {
     if (window.location.pathname === '/admin') {
@@ -24,8 +14,8 @@ export default function Login(props) {
   }
 
   return (
-    <div className={classes.centre}>
-      <Header title={getTitle()} />
+    <div className="centre">
+      <div className="title">{getTitle()}</div>
       <LoginInput />
     </div>
   );
