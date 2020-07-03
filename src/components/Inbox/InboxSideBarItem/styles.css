@@ -1,17 +1,19 @@
 .inboxSideBarItemContainer {
     display: flex;
     padding: 10px;
+    margin-bottom: 3px;
 }
 
 .inboxSideBarItemContainerSelected {
     display: flex;
     padding: 10px;
-    background-color: skyblue;
+    margin-bottom: 3px;
+    background-color: rgba(135, 206, 235, 0.4);
 }
 
 .inboxSideBarItemImage {
     width: 70px;
     height: 70px;
-    border-radius: 35%;
+    border-radius: 45%;
     margin-right: 10px;
 }

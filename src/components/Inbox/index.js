@@ -3,6 +3,7 @@ import './styles.css';
 import InboxSideBarItem from './InboxSideBarItem/InboxSideBarItem'
 import SendMessageBox from './SendMessageBox/SendMessageBox'
 import MessageList from './Messages/MessageList';
+import Paper from '@material-ui/core/Paper'
 
 
 class Inbox extends Component {
@@ -58,7 +59,7 @@ class Inbox extends Component {
 
         return (
             <div className="inboxScreen">
-                <div className="sideBar">
+                <Paper className="sideBar">
                     {sorted_conversations.map(user =>
                         <InboxSideBarItem
                             key={user.username}
@@ -69,8 +70,8 @@ class Inbox extends Component {
                             activeUser={this.state.selectedUser}
                         />
                     )}
-                </div>
-                <div className="messagesScreen">
+                </Paper>
+                <Paper className="messagesScreen">
                     <div className="messageScreenMessages">
                         <MessageList
                             messages={this.props.messages.filter(message =>
@@ -85,7 +86,7 @@ class Inbox extends Component {
                             selectedUser={this.state.selectedUser}
                         />
                     </div>
-                </div>
+                </Paper>
             </div>
         );
     }
