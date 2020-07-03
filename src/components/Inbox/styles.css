@@ -1,6 +1,10 @@
 .inboxScreen {
     display: flex;
-    height: 80vh;
+    margin-top: 10px;
+    height: 85vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .messagesScreen {
@@ -8,11 +12,8 @@
     flex-direction: column;
     height: 100%;
     width: 60%;
-    margin-right: 20px;
-    margin-top: 20px;
+    margin: 3px;
     padding: 5px;
-    border: thin solid black;
-    background-color: ivory;
 }
 
 .messageScreenMessages {
@@ -20,20 +21,19 @@
     display: flex;
     flex-direction: column;
     padding:5px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    margin: 3px;
 }
 
 .messageScreenSendMessage {
     height: 15%;
+    margin: 3px;
 }
 
 .sideBar {
     width: 30%;
     height: 100%;
     padding: 5px;
-    margin-left: 20px;
-    margin-top: 20px;
-    border: thin solid black;
-    background-color: ivory;
-    overflow-y: scroll;
+    margin: 3px;
+    overflow-y: auto;
 }

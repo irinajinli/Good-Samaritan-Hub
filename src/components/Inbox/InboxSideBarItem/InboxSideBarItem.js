@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Card from '@material-ui/core/card'
 import './styles.css';
 
 class InboxSideBarItem extends Component {
@@ -10,12 +11,14 @@ class InboxSideBarItem extends Component {
             classMessageName += "Selected"
         }
         return (
-            <div className={classMessageName} onClick={() => this.props.handleChangeSelectedUser(username)}>
-                <img src={image} alt={name} className='inboxSideBarItemImage' />
-                <div className='inboxSideBarItemName'>
-                    <p>{name}</p>
+            <Card>
+                <div className={classMessageName} onClick={() => this.props.handleChangeSelectedUser(username)}>
+                    <img src={image} alt={name} className='inboxSideBarItemImage' />
+                    <div className='inboxSideBarItemName'>
+                        <p>{name}</p>
+                    </div>
                 </div>
-            </div>
+            </Card>
         )
     }
 }
