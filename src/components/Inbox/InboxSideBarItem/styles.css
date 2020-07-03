@@ -3,15 +3,15 @@
     padding: 10px;
 }
 
+.inboxSideBarItemContainerSelected {
+    display: flex;
+    padding: 10px;
+    background-color: skyblue;
+}
+
 .inboxSideBarItemImage {
     width: 70px;
     height: 70px;
     border-radius: 35%;
     margin-right: 10px;
-}
-
-.inboxSideBarItemContainerSelected {
-    display: flex;
-    padding: 10px;
-    background-color: skyblue;
 }

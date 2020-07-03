@@ -28,30 +28,30 @@ class Inbox extends Component {
 
     constructor(props) {
         super(props);
-        if(props.lookingAtUser !== null) {
+        if (props.lookingAtUser !== null) {
             const found = props.conversations.some(convo => convo.username === props.lookingAtUser.username)
 
-            if(!found) {
+            if (!found) {
                 const curr_time = Date.now()
                 const full_name = props.lookingAtUser.firstName + " " + props.lookingAtUser.lastName
-                var new_conversation = {username: props.lookingAtUser.username, name: full_name, image: 'https://picsum.photos/70', lastMessageTime: curr_time}
+                var new_conversation = { username: props.lookingAtUser.username, name: full_name, image: 'https://picsum.photos/70', lastMessageTime: curr_time }
                 const conversations = [...props.conversations, new_conversation];
                 props.handleUpdateConversation(conversations)
             }
-            this.state = {selectedUser: props.lookingAtUser.username}
-            
+            this.state = { selectedUser: props.lookingAtUser.username }
+
         } else {
             var sorted_conversations = [...props.conversations]
             sorted_conversations.sort((a, b) => b.lastMessageTime - a.lastMessageTime)
             this.state = {
-                selectedUser : sorted_conversations[0].username
+                selectedUser: sorted_conversations[0].username
             }
         }
     }
 
     render() {
 
-        const {user} = this.props
+        const { user } = this.props
 
         var sorted_conversations = [...this.props.conversations]
         sorted_conversations.sort((a, b) => b.lastMessageTime - a.lastMessageTime)

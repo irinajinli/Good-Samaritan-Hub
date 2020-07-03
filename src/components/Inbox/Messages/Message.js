@@ -6,7 +6,7 @@ import './styles.css';
 
 class Message extends Component {
 
-    state = {dialogOpen: false}
+    state = { dialogOpen: false }
 
     handleDialogOpen = () => {
         this.setState({ dialogOpen: true });
@@ -21,28 +21,28 @@ class Message extends Component {
         var toRender;
         if (this.props.username === this.props.messageSender) {
             classMessageName += "RightMessage"
-            toRender = 
+            toRender =
                 <p>{this.props.message}</p>
         } else {
-            toRender = 
+            toRender =
                 <>
-                <ReportIcon className="reportButton" onClick={this.handleDialogOpen}/>
-                <Modal open={this.state.dialogOpen}>
-                    <MyDialog 
-                                title='Report this message?'
-                                body=''
-                                actionName='Report'
-                                handleClose={this.handleDialogClose}
-                                handleDoAction={this.handleDialogClose}
-                    />
-                </Modal>
-                <p className="rightMessageText"> {this.props.message} </p>
+                    <ReportIcon className="reportButton" onClick={this.handleDialogOpen} />
+                    <Modal open={this.state.dialogOpen}>
+                        <MyDialog
+                            title='Report this message?'
+                            body=''
+                            actionName='Report'
+                            handleClose={this.handleDialogClose}
+                            handleDoAction={this.handleDialogClose}
+                        />
+                    </Modal>
+                    <p className="rightMessageText"> {this.props.message} </p>
                 </>
             classMessageName += "LeftMessage"
         }
         return (
             <div className={classMessageName}>
-              {toRender}
+                {toRender}
             </div>
         );
     }

@@ -12,7 +12,6 @@ class SendMessageBox extends Component {
 
     handleMessageChanges = input => e => {
         this.setState({ [input]: e.target.value })
-        console.log(this.state)
     }
 
     render() {
