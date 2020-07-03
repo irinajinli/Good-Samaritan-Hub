@@ -1,59 +1,54 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import "./styles.css";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
-  marginRight: {
-    marginRight: "4px",
-  },
-  marginLeft: {
-    marginLeft: "4px",
-  },
-  marginTop: {
-    marginTop: "30px",
-  },
-  long: {
-    width: "431.2px",
-  },
-}));
+export default class RegAccountInfo extends React.Component {
+  state = {
+    reqsSatisfied: false,
+  };
 
-export default function RegAccountInfo() {
-  const classes = useStyles();
+  handleOnChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    this.setState({
+      [name]: value,
+    });
+  };
 
-  return (
-    <form noValidate autoComplete="off">
-      <div>
-        <TextField
-          required
-          className={classes.long}
-          label="Username"
-          variant="outlined"
-        />
-      </div>
+  render() {
+    return (
+      <form noValidate autoComplete="off">
+        <div>
+          <TextField
+            required
+            name="username"
+            className="long"
+            label="Username"
+            variant="outlined"
+          />
+        </div>
 
-      <div>
-        <TextField
-          required
-          className={`${classes.marginRight} ${classes.marginTop}`}
-          label="Password"
-          type="password"
-          variant="outlined"
-        />
+        <div>
+          <TextField
+            required
+            name="password"
+            className="marginRight marginTop"
+            label="Password"
+            type="password"
+            variant="outlined"
+          />
 
-        <TextField
-          required
-          className={`${classes.marginLeft} ${classes.marginTop}`}
-          label="Confirm password"
-          type="password"
-          variant="outlined"
-        />
-      </div>
-    </form>
-  );
+          <TextField
+            required
+            name="confirmPassword"
+            className="marginLeft marginTop"
+            label="Confirm password"
+            type="password"
+            variant="outlined"
+          />
+        </div>
+      </form>
+    );
+  }
 }
