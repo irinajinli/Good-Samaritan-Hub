@@ -7,13 +7,13 @@ import MessageList from './Messages/MessageList';
 
 class Inbox extends Component {
     handleMessageSent = (username, selectedUser, newMessageContent) => {
-        if (newMessageContent != '') {
+        if (newMessageContent !== '') {
             const curr_id = this.props.messages.reduce((a, b) => a.messageId > b.messageId ? a.messageId : b.messageId);
             var newMessage = { messageId: curr_id + 1, messageSender: username, messageReceiver: selectedUser, date: Date.now(), messageContent: newMessageContent }
             var newMessages = this.props.messages.concat(newMessage)
             this.props.handleUpdateMessages(newMessages)
 
-            var conversationUser = this.props.conversations.filter(convo => convo.username == selectedUser);
+            var conversationUser = this.props.conversations.filter(convo => convo.username === selectedUser);
             const conversations = [...this.props.conversations];
             const index = conversations.indexOf(conversationUser[0])
             conversations[index] = { ...conversationUser[0] }
@@ -29,7 +29,7 @@ class Inbox extends Component {
     constructor(props) {
         super(props);
         if(props.lookingAtUser !== null) {
-            const found = props.conversations.some(convo => convo.username == props.lookingAtUser.username)
+            const found = props.conversations.some(convo => convo.username === props.lookingAtUser.username)
 
             if(!found) {
                 const curr_time = Date.now()
@@ -74,7 +74,7 @@ class Inbox extends Component {
                     <div className="messageScreenMessages">
                         <MessageList
                             messages={this.props.messages.filter(message =>
-                                (message.messageSender == user.username || message.messageReceiver == user.username) && (message.messageSender == this.state.selectedUser || message.messageReceiver == this.state.selectedUser))}
+                                (message.messageSender === user.username || message.messageReceiver === user.username) && (message.messageSender === this.state.selectedUser || message.messageReceiver === this.state.selectedUser))}
                             user={user}
                         />
                     </div>

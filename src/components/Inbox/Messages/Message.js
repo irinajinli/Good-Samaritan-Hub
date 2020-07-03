@@ -18,12 +18,13 @@ class Message extends Component {
 
     render() {
         let classMessageName = "messageContainer"
-        if (this.props.username == this.props.messageSender) {
+        var toRender;
+        if (this.props.username === this.props.messageSender) {
             classMessageName += "RightMessage"
-            var message = 
+            toRender = 
                 <p>{this.props.message}</p>
         } else {
-            var message = 
+            toRender = 
                 <>
                 <ReportIcon className="reportButton" onClick={this.handleDialogOpen}/>
                 <Modal open={this.state.dialogOpen}>
@@ -41,7 +42,7 @@ class Message extends Component {
         }
         return (
             <div className={classMessageName}>
-              {message}
+              {toRender}
             </div>
         );
     }

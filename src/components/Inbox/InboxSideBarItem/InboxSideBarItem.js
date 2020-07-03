@@ -6,12 +6,12 @@ class InboxSideBarItem extends Component {
     render() {
         const { username, name, image , activeUser} = this.props
         let classMessageName = "inboxSideBarItemContainer"
-        if (username == activeUser) {
+        if (username === activeUser) {
             classMessageName += "Selected"
         } 
         return (
             <div className={classMessageName} onClick={() => this.props.handleChangeSelectedUser(username)}>
-                <img src={image} className='inboxSideBarItemImage' />
+                <img src={image} alt={name} className='inboxSideBarItemImage' />
                 <div className='inboxSideBarItemName'>
                     <p>{name}</p>
                 </div>
