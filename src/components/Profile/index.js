@@ -71,7 +71,15 @@ class Profile extends Component {
         <div className='profile'>
             <div className='profile__container'>
                 <img src={require('../../resources/userIcon.png')} className='profile__icon'/>
-                
+
+                {user !== displayedUser &&
+                    <div className='profile__message'>
+                        <Button onClick={() => handleGoToInboxFromPost(displayedUser)}>
+                            Message
+                        </Button> 
+                    </div>
+                }
+
                 <Card className='profile__card'>
                     <h1>Profile</h1>
                     <Table columns={columns} rows={this.generateRows(displayedUser)}/>

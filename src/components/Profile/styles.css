@@ -44,3 +44,7 @@
 .profile__footer {
     height: 80px;
 }
+
+.profile__message {
+    margin-top: 10px;
+}
