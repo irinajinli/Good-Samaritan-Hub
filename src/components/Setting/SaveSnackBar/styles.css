@@ -1,0 +1,16 @@
+.saveSnackBar {
+    background-color: palegreen !important;
+    position: fixed;
+    width: 300px;
+    height: fit-content;
+    padding: 8px;
+    bottom: 20px;
+    left: 20px;
+}
+
+.saveSnackBar__label {
+    margin: 0px 5px 0px 5px;
+}
+.MuiPaper-root .saveSnackBar__close-button {
+    float: right;
+}
