@@ -82,6 +82,15 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         users: usersCopy
     });
 
+    console.log('originalUser', originalUser);
+    console.log('appComponent.state.user', appComponent.state.user);
+    console.log('updatedUser', updatedUser);
+    if (originalUser.username === appComponent.state.user.username) {
+        appComponent.setState({
+            user: updatedUser
+        });
+    }
+
     // Phase 2: Make a server call to update this user
     // ...
 }

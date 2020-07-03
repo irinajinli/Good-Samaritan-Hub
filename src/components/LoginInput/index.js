@@ -34,6 +34,7 @@ class LoginInput extends React.Component {
   state = {
     username: "",
     password: "",
+    wrongCreds: false,
   };
 
   handleOnChange = (event) => {
@@ -68,7 +69,10 @@ class LoginInput extends React.Component {
     if (window.location.pathname === "/login") {
       if (this.state.username === "user" && this.state.password === "user") {
         this.goToHome();
-      } else console.log("credentials incorrect");
+      } else {
+        this.setState({ wrongCreds: true });
+        // debugger;
+      }
     } else if (window.location.pathname === "/admin") {
       if (this.state.username === "admin" && this.state.password === "admin") {
         this.goToAdminHome();
@@ -77,8 +81,19 @@ class LoginInput extends React.Component {
   };
 
   render() {
+    const wrongCreds = this.state.wrongCreds;
+    let wrongCredsMessage;
+
+    if (wrongCreds) {
+      wrongCredsMessage = (
+        <div className="red smallMarginTop">
+          <div>Incorrect credentials.</div>
+          <div>Please try again.</div>
+        </div>
+      );
+    }
+
     return (
-      // <form noValidate autoComplete="off">
       <div>
         <div>
           <TextField
@@ -88,9 +103,10 @@ class LoginInput extends React.Component {
             onChange={this.handleOnChange}
           />
         </div>
-        <div className="marginTop"></div>
+        {/* <div className="marginTop"></div> */}
         <div>
           <TextField
+            className="marginTop"
             label="Password"
             name="password"
             variant="outlined"
@@ -98,7 +114,7 @@ class LoginInput extends React.Component {
             onKeyDown={this.handleKeyDown}
           />
         </div>
-        <div>
+        <div className="smallMarginTop">
           <span
             className="hover-pointer grey"
             onClick={() => this.handleOnClick()}
@@ -108,6 +124,7 @@ class LoginInput extends React.Component {
         </div>
         <div>
           <Button
+            className="smallMarginTop"
             variant="contained"
             color="primary"
             onClick={() => this.checkCredentials()}
@@ -115,8 +132,9 @@ class LoginInput extends React.Component {
             LOG IN
           </Button>
         </div>
+        {/* the following only renders if wrong credentials were input */}
+        {wrongCredsMessage}
       </div>
-      // </form>
     );
   }
 }

@@ -40,3 +40,7 @@
 .profile__button .profile__save-button {
     color: darkblue;
 }
+
+.profile__footer {
+    height: 80px;
+}
