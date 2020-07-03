@@ -47,6 +47,15 @@ class UserView extends Component {
         });
     }
 
+    handleChangeTargetLocation = targetLocation => {
+        this.setState({
+            targetLocation
+        }, () => {
+            // Sort the posts based on the new target location
+            this.sortPosts();
+        });
+    }
+
     componentDidMount() {
         this.sortPosts();
     }
@@ -66,6 +75,11 @@ class UserView extends Component {
         // Re-sort the posts when new posts are added
         if (prevProps.posts.length < this.props.posts.length) {
             this.sortPosts();
+        }
+
+        // Change default target location if the user changed their locaiton in settings
+        if (prevProps.user.location !== this.props.user.location) {
+            this.handleChangeTargetLocation(this.props.user.location);
         }
     }
 
@@ -101,15 +115,6 @@ class UserView extends Component {
             displayedUser: {},
             viewingInbox: false,
             viewingEditProfile: false
-        });
-    }
-
-    handleChangeTargetLocation = targetLocation => {
-        this.setState({
-            targetLocation
-        }, () => {
-            // Sort the posts based on the new target location
-            this.sortPosts();
         });
     }
 

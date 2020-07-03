@@ -3,10 +3,11 @@ import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
-
 import SaveSnackBar from './SaveSnackBar/index';
-import { updateUser } from '../../actions/user';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import { updateUser } from '../../actions/user';
+import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 import './styles.css';
 
 class Setting extends Component {
@@ -30,6 +31,12 @@ class Setting extends Component {
 
     handleCloseSnackBar = () => this.setState({snackBarOpen: false});
 
+    handleLocationChange = (event, values) => {
+        this.setState({
+            location: values
+        });
+    };
+
     handleInputChange = event => {
         const target = event.target;
         const value = target.value;
@@ -40,28 +47,29 @@ class Setting extends Component {
     }
 
     handleSaveInfo = (user, displayedUser) => {
+        const displayedUserCopy = {...displayedUser}; // clone displayed user
         let changed = false;
         this.setState({firstNameEmpty: this.state.firstName === ''});
-        if (this.state.firstName && displayedUser.firstName !== this.state.firstName) {
-            displayedUser.firstName = this.state.firstName;
+        if (this.state.firstName && displayedUserCopy.firstName !== this.state.firstName) {
+            displayedUserCopy.firstName = this.state.firstName;
             changed = true;
         }
         this.setState({lastNameEmpty: this.state.lastName == ''});
-        if (this.state.lastName && displayedUser.lastName !== this.state.lastName) {
-            displayedUser.lastName = this.state.lastName;
+        if (this.state.lastName && displayedUserCopy.lastName !== this.state.lastName) {
+            displayedUserCopy.lastName = this.state.lastName;
             changed = true;
         }
-        if (this.state.bio && displayedUser.bio !== this.state.bio) {
-            displayedUser.bio = this.state.bio;
+        if (this.state.bio && displayedUserCopy.bio !== this.state.bio) {
+            displayedUserCopy.bio = this.state.bio;
             changed = true;
         }
         this.setState({locationEmpty: this.state.location == ''});
-        if (this.state.location && displayedUser.location !== this.state.location) {
-            displayedUser.location = this.state.location;
+        if (this.state.location && displayedUserCopy.location !== this.state.location) {
+            displayedUserCopy.location = this.state.location;
             changed = true;
         }
         if (changed) {
-            updateUser(user, displayedUser, this.props.appComponent);
+            updateUser(user, displayedUserCopy, this.props.appComponent);
             this.setState({snackBarOpen: true});
             setTimeout(() => this.handleCloseSnackBar(), 5000);
         }
@@ -126,16 +134,20 @@ class Setting extends Component {
                         multiline
                         name="bio"
                         onChange={this.handleInputChange}/>
-                    <TextField className="profile_textField"
-                        label="Location"
-                        defaultValue={displayedUser.location}
-                        variant="outlined"
-                        name="location"
-                        error={locationEmpty}
-                        helperText={locationEmpty && "Name cannot be empty"}
-                        onChange={this.handleInputChange}/>
+                    <Autocomplete
+                        className='profile_textField'
+                        defaultValue={user.location}
+                        disableClearable
+                        onChange={this.handleLocationChange}
+                        options={getPostalCodePrefixes()}
+                        renderInput={(params) => <TextField label='Location' variant='outlined'{...params}/>}
+                    />
                     <div className='profile__button'>
-                        <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => this.handleSaveInfo(user, displayedUser)}>Save</Button>
+                        <Button 
+                            className='profile__save-button' 
+                            startIcon={<EditIcon/>} 
+                            onClick={() => this.handleSaveInfo(user, displayedUser)}>Save
+                        </Button>
                     </div>
                 </Card>
                 <Card className='profile__card'>
