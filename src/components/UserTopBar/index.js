@@ -13,7 +13,7 @@ import { fade } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import Modal from '@material-ui/core/Modal';
-import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContent from '@material-ui/core/DialogContent';
 
 import MyDialog from '../MyDialog';
 import './styles.css'

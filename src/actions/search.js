@@ -7,7 +7,7 @@ const cleanInput = input => input.replace(/[\\/:*?"<>|[]/g, '')
 export const getMatchingPosts = (searchTerm, posts) => {
     searchTerm = cleanInput(searchTerm).trim();
     return posts.filter(post => {
-        return searchTerm != '' && post.title.search(new RegExp(searchTerm, 'i')) !== -1;
+        return searchTerm.length !== 0 && post.title.search(new RegExp(searchTerm, 'i')) !== -1;
     });
 }
 
@@ -17,7 +17,7 @@ export const getMatchingUsers = (searchTerm, users) => {
     searchTerm = cleanInput(searchTerm).trim();
     return users.filter(user => {
         const fullName = `${user.firstName} ${user.lastName}`;
-        return (searchTerm != '' &&
+        return (searchTerm.length !== 0 &&
             (user.username.search(new RegExp(searchTerm, 'i')) !== -1 ||
             fullName.search(new RegExp(searchTerm, 'i')) !== -1))
     });
@@ -25,10 +25,12 @@ export const getMatchingUsers = (searchTerm, users) => {
 
 
 // Returns a list of the given user's posts
+// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
 export const getPosts = (user, posts) => posts.filter(post => user.posts.includes(post.id));
 
 
 // Returns a list of the given user's reported posts
+// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
 export const getReportedPosts = (user, posts) => posts.filter(post => user.reportedPosts.includes(post.id));
 
 

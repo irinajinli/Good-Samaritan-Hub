@@ -11,7 +11,8 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getInitialPosts } from './resources/hardCodedData';
+import { getInitialUsers, getInitialPosts, getMessages } from './resources/hardCodedData';
+import Message from "./components/Inbox/Messages/Message";
 
 class App extends Component {
   // Global theme
@@ -43,9 +44,10 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
+    user: getInitialUsers()[0], // Phase 2: Init to {}/undefined and change this based on which user is logged in
     users: getInitialUsers(), // Phase 2: Initialize users to an empty list
-    posts: getInitialPosts() // Phase 2: Initialize posts to an empty list
+    posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
+    messages: getMessages()
   };
 
   onComponentDidMount() {
@@ -65,7 +67,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, users, posts } = this.state;
+    const { user, users, posts, messages } = this.state;
 
     return (
       <React.Fragment>
@@ -95,6 +97,7 @@ class App extends Component {
                 <AdminHome 
                   users={users} 
                   posts={posts}
+                  messages={messages}
                 />}
               />
 

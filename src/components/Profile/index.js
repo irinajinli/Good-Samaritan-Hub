@@ -29,7 +29,7 @@ class Profile extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps != this.props) {
+        if (prevProps !== this.props) {
             this.updateUserPosts();
         }
     }
@@ -55,14 +55,6 @@ class Profile extends Component {
         }
     }
 
-    // getPosts = (user, posts) => {
-    //     const userPosts = [];
-    //     for (let i = 0; i < user.posts.length; i++) {
-    //         userPosts.push(posts[user.posts[i]]);
-    //     }
-    //     return userPosts;
-    // }
-
     render() { 
         const {user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
             handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost} = this.props;
@@ -70,7 +62,7 @@ class Profile extends Component {
         return (
         <div className='profile'>
             <div className='profile__container'>
-                <img src={require('../../resources/userIcon.png')} className='profile__icon'/>
+                <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/>
 
                 {user !== displayedUser &&
                     <div className='profile__message'>

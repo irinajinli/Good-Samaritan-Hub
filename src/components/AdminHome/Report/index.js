@@ -10,12 +10,12 @@ class Report extends Component {
         return (
             <div className="report">
                 <div className="report__header">
-                    <h2>{type === 'Post' ? `(Post) ${content.title}` : type}</h2>
+                    <h2>{type === 'Post' ? `(Post) ${content.title}` : `(Message) ${content.messageReceiver}`}</h2>
                     <Button className="adminHome__delete-button" size="small" onClick={() => handleDeleteReport(content)}>
                         <DeleteIcon fontSize="small"/>
                     </Button>
                 </div>
-                <p className="report__p">{type === 'Post' ? content.body : content}</p> 
+                <p className="report__p">{type === 'Post' ? content.body : content.messageContent}</p> 
             </div>
         );
     }
