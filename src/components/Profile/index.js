@@ -74,7 +74,7 @@ class Profile extends Component {
 
                 {user !== displayedUser &&
                     <div className='profile__message'>
-                        <Button onClick={() => handleGoToInboxFromPost(displayedUser)}>
+                        <Button className='profile__msg-btn' onClick={() => handleGoToInboxFromPost(displayedUser)}>
                             Message
                         </Button> 
                     </div>

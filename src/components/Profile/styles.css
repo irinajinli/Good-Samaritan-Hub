@@ -8,6 +8,15 @@
     border-radius: 50%;
 }
 
+.MuiButton-root.profile__msg-btn {
+    font-size: 15px;
+    background-color: rgb(255, 255, 255, 0.5);
+}
+
+.MuiButton-root.profile__msg-btn:hover {
+    background-color: rgb(255, 255, 255);
+}
+
 .profile__container {
     display: flex;
     flex-direction: column;
