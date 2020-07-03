@@ -82,13 +82,17 @@ class Setting extends Component {
     }
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
-        const {user, users, displayedUser} = this.props
+        const {user, displayedUser} = this.props
         const {firstNameEmpty, lastNameEmpty, locationEmpty, oldNotMatch, newNotMatch, snackBarOpen} = this.state;
         
         return (
         <div className='profile'>
             <div className='profile__container'>
-                <img src={require('../../resources/userIcon.png')} className='profile__icon'/>
+                <div className="setting__icon-container">
+                    <div className="setting__icon-button">Change</div>
+                    <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
+                </div>
+                
                 <Card className='profile__card'>
                     <h1>Your Profile</h1>
                     <TextField className="profile_textField"
@@ -164,6 +168,7 @@ class Setting extends Component {
                     </div>
                 </Card>
             </div>
+            <div className='profile__footer'></div>
             {snackBarOpen && <SaveSnackBar handleClose={this.handleCloseSnackBar}/>}
         </div>
         )

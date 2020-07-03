@@ -275,7 +275,6 @@ class UserView extends Component {
                 {viewingEditProfile && 
                 <Setting 
                     user={user}
-                    users={users}
                     displayedUser={displayedUser}
                     appComponent={this.props.appComponent}
                 />}
