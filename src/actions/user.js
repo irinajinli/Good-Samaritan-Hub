@@ -77,14 +77,10 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
     const index = appComponent.state.users.indexOf(originalUser);
     usersCopy[index] = updatedUser;
 
-    console.log(appComponent.state.users);
     appComponent.setState({
         users: usersCopy
     });
 
-    console.log('originalUser', originalUser);
-    console.log('appComponent.state.user', appComponent.state.user);
-    console.log('updatedUser', updatedUser);
     if (originalUser.username === appComponent.state.user.username) {
         appComponent.setState({
             user: updatedUser

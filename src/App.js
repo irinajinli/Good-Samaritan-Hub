@@ -43,7 +43,7 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
+    user: getInitialUsers()[0], // Phase 2: Init to {}/undefined and change this based on which user is logged in
     users: getInitialUsers(), // Phase 2: Initialize users to an empty list
     posts: getInitialPosts() // Phase 2: Initialize posts to an empty list
   };

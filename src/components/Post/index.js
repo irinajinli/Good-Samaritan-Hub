@@ -9,7 +9,7 @@ import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ReportIcon from '@material-ui/icons/Report';
 import Modal from '@material-ui/core/Modal';
-import DialogContent from '@material-ui/core/DialogContent';
+// import DialogContent from '@material-ui/core/DialogContent';
 
 import MyDialog from '../MyDialog';
 import './styles.css';

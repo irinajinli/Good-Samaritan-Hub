@@ -22,7 +22,6 @@ class Setting extends Component {
         
         firstNameEmpty: false,
         lastNameEmpty: false,
-        locationEmpty: false,
         oldNotMatch: false,
         newNotMatch: false,
 
@@ -54,7 +53,7 @@ class Setting extends Component {
             displayedUserCopy.firstName = this.state.firstName;
             changed = true;
         }
-        this.setState({lastNameEmpty: this.state.lastName == ''});
+        this.setState({lastNameEmpty: this.state.lastName === ''});
         if (this.state.lastName && displayedUserCopy.lastName !== this.state.lastName) {
             displayedUserCopy.lastName = this.state.lastName;
             changed = true;
@@ -63,7 +62,6 @@ class Setting extends Component {
             displayedUserCopy.bio = this.state.bio;
             changed = true;
         }
-        this.setState({locationEmpty: this.state.location == ''});
         if (this.state.location && displayedUserCopy.location !== this.state.location) {
             displayedUserCopy.location = this.state.location;
             changed = true;
@@ -91,14 +89,14 @@ class Setting extends Component {
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
         const {user, displayedUser} = this.props
-        const {firstNameEmpty, lastNameEmpty, locationEmpty, oldNotMatch, newNotMatch, snackBarOpen} = this.state;
+        const {firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen} = this.state;
         
         return (
         <div className='profile'>
             <div className='profile__container'>
                 <div className="setting__icon-container">
                     <div className="setting__icon-button">Change</div>
-                    <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
+                    <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon setting_icon'/>
                 </div>
                 
                 <Card className='profile__card'>
