@@ -69,7 +69,7 @@ class PostList extends Component {
     render() { 
         const {filterCondition} = this.state;
         const {user, users, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, recentlyReportedPosts, handleGoToProfile } = this.props;
+            handleBack, recentlyReportedPosts, handleGoToProfile, handleGoToInboxFromPost} = this.props;
         
         return (  
             <div >
@@ -123,6 +123,7 @@ class PostList extends Component {
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
                             handleGoToProfile={handleGoToProfile}
+                            handleGoToInboxFromPost={handleGoToInboxFromPost}
                             deactivatePost={this.onRemovePost}
                         />
                     ))}
@@ -137,6 +138,7 @@ class PostList extends Component {
                             handleBack={handleBack}
                             handleReportPost={this.onReportPost}
                             handleGoToProfile={handleGoToProfile}
+                            handleGoToInboxFromPost={handleGoToInboxFromPost}
                             deactivatePost={this.onRemovePost}
                         />
                     }

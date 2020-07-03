@@ -56,10 +56,11 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, users, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile } = this.props;
+        const { user, users, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile, handleGoToInboxFromPost} = this.props;
 
         // Get the poster
         const poster = getUser(post.posterId, users);
+
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
@@ -112,7 +113,7 @@ class Post extends Component {
                         <div className='post__block post__footer'>
                             {user.username !== poster.username && 
                             <React.Fragment>
-                                <Button className='post__send-msg-btn'>
+                                <Button className='post__send-msg-btn' onClick={() => handleGoToInboxFromPost(poster)}>
                                     Send a message
                                 </Button>
                                 <IconButton size='small' className='post__report-btn' onClick={this.handleOpenDialog}>

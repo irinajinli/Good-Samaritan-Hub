@@ -12,7 +12,7 @@ import UserView from "./components/UserView";
 import AdminLogin from "./components/AdminLogin";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getInitialPosts } from './resources/hardCodedData';
+import { getInitialUsers, getInitialPosts} from './resources/hardCodedData';
 
 class App extends Component {
   // Global theme
@@ -46,7 +46,7 @@ class App extends Component {
   state = {
     user: getInitialUsers()[0], // TODO: Init to {}/undefined and change this based on which user is logged in
     users: getInitialUsers(), // Phase 2: Initialize users to an empty list
-    posts: getInitialPosts() // Phase 2: Initialize posts to an empty list
+    posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
   };
 
   onComponentDidMount() {

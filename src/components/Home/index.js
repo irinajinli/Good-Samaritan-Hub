@@ -12,7 +12,7 @@ class Home extends Component {
         const { user, users, posts, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
             creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
             handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
-            handleGoToProfile} = this.props;
+            handleGoToProfile, handleGoToInboxFromPost} = this.props;
             
         return (  
             <div className='home__middle-block'>
@@ -37,6 +37,7 @@ class Home extends Component {
                     handleReportPost={handleReportPost}
                     recentlyReportedPosts={recentlyReportedPosts}
                     handleGoToProfile={handleGoToProfile}
+                    handleGoToInboxFromPost={handleGoToInboxFromPost}
                     deactivatePost={handleDeactivatePost}
                 />}
 
@@ -63,6 +64,7 @@ class Home extends Component {
                     handleBackToSearchResults={handleBackToSearchResults}
                     handleReportPost={handleReportPost}
                     handleDeactivatePost={handleDeactivatePost}
+                    handleGoToInboxFromPost={handleGoToInboxFromPost}
                 />}
 
                 <div className='home__footer'></div>

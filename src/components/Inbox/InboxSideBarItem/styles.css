@@ -1,6 +1,6 @@
 .inboxSideBarItemContainer {
     display: flex;
-    margin: 10px;
+    padding: 10px;
 }
 
 .inboxSideBarItemImage {
@@ -8,5 +8,10 @@
     height: 70px;
     border-radius: 35%;
     margin-right: 10px;
-    
+}
+
+.inboxSideBarItemContainerSelected {
+    display: flex;
+    padding: 10px;
+    background-color: skyblue;
 }

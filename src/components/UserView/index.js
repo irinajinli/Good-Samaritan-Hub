@@ -10,6 +10,8 @@ import './styles.css';
 
 import { sortByDistance, sortByDate } from '../../actions/sort'
 import { createPost, reportPost, deactivatePost } from '../../actions/user';
+import {getMessages, getConversations} from '../../resources/hardCodedData';
+
 
 class UserView extends Component {
     state = {
@@ -27,7 +29,11 @@ class UserView extends Component {
         displayedUser: {},
 
         viewingInbox: false,
-        viewingEditProfile: false
+        viewingEditProfile: false,
+
+        messages: getMessages(),
+        conversations: getConversations(),
+        inboxFrom: '',
     }
 
     // Sorts the posts from closest to farthest from the target location. Posts with the 
@@ -179,7 +185,7 @@ class UserView extends Component {
             viewingHome: false,
             viewingProfile: false,
             viewingInbox: true,
-            viewingEditProfile: false
+            viewingEditProfile: false,
         });
         this.props.history.push("/inbox"); 
     }
@@ -202,9 +208,28 @@ class UserView extends Component {
     handleDeactivatePost = post => {
         deactivatePost(post, this.props.appComponent);
     }
+
+    handleGoToInboxFromPost = user => {
+        this.setState({
+            viewingHome: false,
+            viewingProfile: false,
+            viewingInbox: true,
+            viewingEditProfile: false,
+            inboxFrom: user,
+        });
+        this.props.history.push("/inbox"); 
+    }
+
+    handleUpdateMessages = messages => {
+        this.setState({messages})
+    }
+
+    handleUpdateConversation = conversations => {
+        this.setState({conversations})
+    }
     
     render() { 
-        const { user, users, posts } = this.props;
+        const { user, users, posts} = this.props;
         const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, targetLocation,
             recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox, viewingEditProfile } = this.state;
 
@@ -243,6 +268,7 @@ class UserView extends Component {
                     handleExpandPost={this.handleExpandPost}
                     handleReportPost={this.handleReportPost}
                     handleDeactivatePost={this.handleDeactivatePost}
+                    handleGoToInboxFromPost={this.handleGoToInboxFromPost}
                 />}
 
                 {/* Profile page */}
@@ -269,6 +295,11 @@ class UserView extends Component {
                 {viewingInbox && 
                 <Inbox 
                     user={user}
+                    messages={this.state.messages}
+                    conversations={this.state.conversations}
+                    lookingAtUser={this.state.inboxFrom}
+                    handleUpdateMessages={this.handleUpdateMessages}
+                    handleUpdateConversation={this.handleUpdateConversation}
                 />}
 
                 {/* Edit Profile page */}
