@@ -140,3 +140,9 @@ h2 {
 .adminHome__delete-button {
     margin: 10px !important;
 }
+
+.adminHome .adminHome__logout-button {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+}

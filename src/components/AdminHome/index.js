@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router'
 import Card from '@material-ui/core/Card';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import BanIcon from '@material-ui/icons/Gavel';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 
 import './styles.css';
 import Icon from './../../resources/userIcon.png';
@@ -138,6 +140,11 @@ class AdminHome extends Component {
         this.setState({selectedUser: user, oldReport: null});
     }
 
+    onLogout = () => {
+        this.props.history.push("/");
+        this.props.handleLogout();
+    }
+
     render() {
         const {users, posts, messages} = this.props;
         const {selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
@@ -240,6 +247,7 @@ class AdminHome extends Component {
                         <label className="adminHome__center">No User Selected</label>
                     }
                 </Card>
+                <Button className="adminHome__logout-button" startIcon={<LogoutIcon/>} onClick={this.onLogout}>Logout</Button>
                 {oldReport && <UndoSnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
                 {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
@@ -247,4 +255,4 @@ class AdminHome extends Component {
     }
 }
 
-export default AdminHome;
+export default withRouter(AdminHome);
