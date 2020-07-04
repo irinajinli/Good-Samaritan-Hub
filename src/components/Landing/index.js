@@ -22,11 +22,11 @@ class Landing extends Component {
         <LandingBlurb
           titleText="Hello there."
           mainText="Welcome to the Good Samaritan Hub.
-          Our goal is to assist vulnerable groups within our communities, such as the elderly and immunocompromised,
-          who do not have anyone to help them. On our site, we match
+          Our goal is to assist vulnerable groups, such as the elderly and immunocompromised,
+          who do not have someone to help them. On our site, we match
           volunteers with people in need of help—for example, with groceries or pickups.
-          Our site currently only supports locations within the GTA, but we plan to expand
-          our outreach in the near future."
+          Our site currently only supports locations in the GTA, but we plan to expand
+          our reach in the near future."
         />
 
         <div className="bottomBar">
