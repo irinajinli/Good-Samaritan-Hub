@@ -2,13 +2,10 @@
 .titleText {
   font-size: 28px;
   font-weight: bold;
-  margin-top: 85px;
-  margin-left: 85px;
+  margin: 60px 85px 0px;
 }
 
 .mainText {
   font-size: 24px;
-  margin-top: 25px;
-  margin-left: 85px;
-  margin-right: 85px;
+  margin: 20px 85px 60px
 }
