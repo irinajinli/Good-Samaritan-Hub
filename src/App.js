@@ -98,6 +98,7 @@ class App extends Component {
                   users={users} 
                   posts={posts}
                   messages={messages}
+                  handleLogout={this.handleLogout}
                 />}
               />
 

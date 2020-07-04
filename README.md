@@ -14,7 +14,9 @@ Now open up your browser and go to `localhost:3000`
 ### User
 #### Login Credentials:
 username: `user`  
-password: `user`  
+password: `user`
+
+Please note that the registration page (`/registration`) does not yet make a real account.
 
 #### Features:
 
