@@ -24,3 +24,11 @@ code {
 .MuiCard-root.MuiPaper-elevation1 {
   box-shadow: none;
 }
+
+.MuiChip-root.null-state-label {
+  margin: 0px 0px;
+  background-color: rgba(255, 255, 255);
+  font-size: 16px;
+  color: #000a12;
+  width: 100%
+}

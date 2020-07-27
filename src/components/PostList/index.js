@@ -5,9 +5,11 @@ import Card from '@material-ui/core/Card';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Chip from '@material-ui/core/Chip';
 
 import Post from '../Post'
 import './styles.css'
+import '../../index.css'
 
 import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 
@@ -54,6 +56,16 @@ class PostList extends Component {
         });
     }
 
+    getNullStateLabel = () => {
+        if (this.state.filterCondition === this.isAnyType) {
+            return 'No offers or requests';
+        } else if (this.state.filterCondition === this.isAnOffer) {
+            return 'No offers';
+        } else {
+            return 'No requests';
+        }
+    }
+
     onReportPost = post => {
         const { handleReportPost, handleBack } = this.props;
         handleReportPost(post);
@@ -70,6 +82,10 @@ class PostList extends Component {
         const {filterCondition} = this.state;
         const {user, users, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
             handleBack, recentlyReportedPosts, handleGoToProfile, handleGoToInboxFromPost} = this.props;
+
+        const postsToDisplay = posts.filter(post => {
+            return filterCondition(post) && !recentlyReportedPosts.includes(post)
+        });
         
         return (  
             <div >
@@ -105,13 +121,8 @@ class PostList extends Component {
                 </div>}
 
                 <div className='post-list__container'>
-                    {!showExpandedPost && 
-                    posts.filter(post => {
-                        return (
-                            filterCondition(post) &&
-                            !recentlyReportedPosts.includes(post)
-                        );
-                    }).map(post => (
+                    {!showExpandedPost && postsToDisplay.length > 0 &&
+                    postsToDisplay.map(post => (
                         <Post 
                             key={post.id}
                             user={user}
@@ -127,6 +138,9 @@ class PostList extends Component {
                             deactivatePost={this.onRemovePost}
                         />
                     ))}
+                    {!showExpandedPost && postsToDisplay.length == 0 &&
+                        <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
+                    }
                     {showExpandedPost && 
                         <Post 
                             user={user}

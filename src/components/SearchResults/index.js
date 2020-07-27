@@ -3,10 +3,10 @@ import Chip from '@material-ui/core/Chip';
 import PostList from '../PostList';
 
 import { getMatchingPosts, getMatchingUsers } from '../../actions/search';
-import UserSearchResult from '../UserSearchResult';
+import UserSearchResult from './UserSearchResult';
 
 import './styles.css';
-
+import '../../index.css';
 
 class SearchResults extends Component {
     state = {  
@@ -41,7 +41,7 @@ class SearchResults extends Component {
                 {/* User search results */}
                 {!showExpandedPost &&
                 <div><Chip className='search-results__section-title' label='Users'></Chip></div>}
-                {!showExpandedPost && 
+                {!showExpandedPost && matchingUsers.length > 0 &&
                 matchingUsers.map(user => (
                     <UserSearchResult 
                         key={user.username}
@@ -49,6 +49,9 @@ class SearchResults extends Component {
                         handleGoToProfile={handleGoToProfile}
                     />
                 ))}
+                {!showExpandedPost && matchingUsers.length == 0 &&
+                    <div><Chip className='null-state-label' label='No users'></Chip></div>
+                }
 
                 {/* Post search results */}
                 {!showExpandedPost &&
