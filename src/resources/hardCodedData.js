@@ -219,7 +219,7 @@ const posts = [
       pellentesque adipiscing commodo elit. Consequat interdum varius sit amet.`,
     posterId: 'user3',
     type: 'Request',
-    date: new Date(2020, 6, 13, 2, 34, 23),
+    date: new Date(2020, 6, 27, 2, 34, 23),
     status: 'active',
     location: 'M4V'
   },
@@ -230,7 +230,7 @@ const posts = [
       sit amet nisl purus in. Suspendisse potenti nullam ac tortor vitae purus faucibus. `,
     posterId: 'user2',
     type: 'Offer',
-    date: new Date(2020, 6, 27, 2, 34, 23),
+    date: new Date(2019, 8, 27, 2, 34, 23),
     status: 'active',
     location: 'M4V'
   }
