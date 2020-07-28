@@ -24,6 +24,11 @@ export const getMatchingUsers = (searchTerm, users) => {
 }
 
 
+// Returns a list of the posts at the given location
+// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
+export const getPostsByLocation = (posts, location) => posts.filter(post => post.location === location);
+
+
 // Returns a list of the given user's posts
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
 export const getPosts = (user, posts) => posts.filter(post => user.posts.includes(post.id));

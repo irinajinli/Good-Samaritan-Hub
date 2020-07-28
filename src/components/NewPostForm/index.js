@@ -94,7 +94,7 @@ class NewPostForm extends Component {
                             </span>
                             <span className='new-post__input new-post__select'>
                                 <LocationOnIcon className='new-post__location-icon'/>
-                                <span className='new-post__input-label post-list__location-label'>Location:</span>
+                                <span className='new-post__input-label new-post__location-label'>Location:</span>
                                 <div className='new-post__location-selector'>
                                     <Autocomplete
                                         defaultValue={user.location}

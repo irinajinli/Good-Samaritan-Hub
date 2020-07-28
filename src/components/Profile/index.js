@@ -88,6 +88,7 @@ class Profile extends Component {
                         users={users}
                         posts={userPosts.filter(post => this.filterCondition(post))} 
                         targetLocation={targetLocation}
+                        restrictPostsToTargetLocation={false}
                         handleChangeTargetLocation={handleChangeTargetLocation}
                         handleExpandPost={handleExpandPost} 
                         showExpandedPost={showExpandedPost} 

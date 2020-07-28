@@ -8,7 +8,6 @@ import Inbox from '../Inbox';
 import Setting from '../Setting';
 import './styles.css';
 
-import { sortByDistance, sortByDate } from '../../actions/sort'
 import { createPost, reportPost, deactivatePost } from '../../actions/user';
 import {getMessages, getConversations} from '../../resources/hardCodedData';
 
@@ -36,28 +35,10 @@ class UserView extends Component {
         inboxFrom: null,
     }
 
-    // Sorts the posts from closest to farthest from the target location. Posts with the 
-    // same distance from the target location are sorted from latest to earliest date
-    sortPosts() {
-        const { targetLocation } = this.state;
-        const { posts, appComponent } = this.props;
-
-        appComponent.setState({
-            posts: sortByDistance(targetLocation, sortByDate(posts))
-        });
-    }
-
     handleChangeTargetLocation = targetLocation => {
         this.setState({
             targetLocation
-        }, () => {
-            // Sort the posts based on the new target location
-            this.sortPosts();
         });
-    }
-
-    componentDidMount() {
-        this.sortPosts();
     }
 
     componentDidUpdate(prevProps) {
@@ -70,11 +51,6 @@ class UserView extends Component {
             } else {
                 this.handleBackToHome();
             }
-        }
-
-        // Re-sort the posts when new posts are added
-        if (prevProps.posts.length < this.props.posts.length) {
-            this.sortPosts();
         }
 
         // Change default target location if the user changed their locaiton in settings

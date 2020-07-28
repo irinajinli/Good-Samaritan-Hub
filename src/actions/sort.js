@@ -13,13 +13,18 @@ export const sortByDistance = (postalCode, posts) => {
 }
 
 
-// Returns a copy of <posts> that is sorted from latest to earliest date
-export const sortByDate = posts => {
+// Returns a copy of <posts> that is sorted from newest to olded date
+// <newestOrOldestFirst> = 'newest first" or "latest first"
+export const sortByDate = (posts, newestOrOldestFirst) => {
     const postsCopy = [ ...posts ]; // clone posts array
 
     // Sort postsCopy
     postsCopy.sort((post1, post2) => {
-        return post2.date - post1.date;
+        if (newestOrOldestFirst === 'newest first') {
+            return post2.date - post1.date;
+        } else { // 'oldest first'
+            return post1.date - post2.date;
+        }
     });
     return postsCopy;
 }

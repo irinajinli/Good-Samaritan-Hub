@@ -12,6 +12,7 @@ import './styles.css'
 import '../../index.css'
 
 import { getPostalCodePrefixes } from '../../resources/hardCodedData';
+import { sortByDate } from '../../actions/sort';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -21,7 +22,50 @@ class PostList extends Component {
     isARequest = post => { return post.type === 'Request'; }
 
     state = {
-        filterCondition: this.isAnyType
+        postsToDisplay: this.props.posts,
+        filterCondition: this.isAnyType,
+        newestOrOldestFirst: 'newest first'
+    }
+
+    updatePostsToDiplay = () => {
+        const { filterCondition, newestOrOldestFirst } = this.state;
+        const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation } = this.props;
+
+        // Filter posts
+        let postsToDisplay = this.props.posts.filter(post => {
+            return filterCondition(post) 
+                && !recentlyReportedPosts.includes(post) 
+                && (restrictPostsToTargetLocation? post.location === targetLocation : true);
+        })
+
+        // Sort posts by date
+        postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+
+        this.setState({
+            postsToDisplay
+        });
+    }
+
+    componentDidMount() {
+        this.updatePostsToDiplay();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            this.updatePostsToDiplay();
+        }
+    }
+
+    handleChangeSortingOption = (event, values) => {
+        if (values === 'Date: newest first') {
+            values = 'newest first';
+        } else { // values === 'Date: oldest first'
+            values = 'oldest first';
+        }
+        this.setState({ 
+            newestOrOldestFirst: values 
+        }, 
+        this.updatePostsToDiplay);
     }
 
     handleTargetLocationChange = (event, values) => {
@@ -41,19 +85,22 @@ class PostList extends Component {
     showAll = () => {
         this.setState({
             filterCondition: this.isAnyType
-        });
+        },
+        this.updatePostsToDiplay);
     }
 
     showOnlyOffers = () => {
         this.setState({
             filterCondition: this.isAnOffer
-        });
+        },
+        this.updatePostsToDiplay);
     }
 
     showOnlyRequests = () => {
         this.setState({
             filterCondition: this.isARequest
-        });
+        },
+        this.updatePostsToDiplay);
     }
 
     getNullStateLabel = () => {
@@ -79,29 +126,44 @@ class PostList extends Component {
     }
 
     render() { 
-        const {filterCondition} = this.state;
-        const {user, users, posts, targetLocation, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, recentlyReportedPosts, handleGoToProfile, handleGoToInboxFromPost} = this.props;
-
-        const postsToDisplay = posts.filter(post => {
-            return filterCondition(post) && !recentlyReportedPosts.includes(post)
-        });
+        const { postsToDisplay } = this.state;
+        const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, expandedPost, 
+            handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  
             <div >
                 {!showExpandedPost && 
                 <div className='post-list__filter-btn-group'>
-                    <Card className='post-list__location-card'>
-                        <LocationOnIcon className='post-list__location-icon'/>
-                        <span className='post-list__location-label'>Location:</span>
-                        <div className='post-list__location-selector'>
-                            <Autocomplete
-                                defaultValue={targetLocation}
-                                disableClearable
-                                onChange={this.handleTargetLocationChange}
-                                options={getPostalCodePrefixes()}
-                                renderInput={(params) => <TextField {...params}/>}
-                            />
+                    <Card className='post-list__header-card'>
+                        <div className='post-list__header-card-content'>
+                            {restrictPostsToTargetLocation && 
+                            <div>
+                                <LocationOnIcon className='post-list__location-icon'/>
+                                <span className='post-list__header-label'>Location:</span>
+                                <div className='post-list__selector'>
+                                    <Autocomplete
+                                        defaultValue={targetLocation}
+                                        disableClearable
+                                        onChange={this.handleTargetLocationChange}
+                                        options={getPostalCodePrefixes()}
+                                        renderInput={(params) => <TextField {...params}/>}
+                                    />
+                                </div>
+                            </div>}
+                            {!restrictPostsToTargetLocation && 
+                                <h1 className='post-list__header-label bold'>Posts</h1>}
+                            <div className='float-right'>
+                                <span className='post-list__header-label'>Sort by:</span>
+                                <Autocomplete
+                                    className='post-list__selector padding-right'
+                                    style={{ width: 165 }}
+                                    defaultValue={'Date: newest first'}
+                                    disableClearable
+                                    onChange={this.handleChangeSortingOption}
+                                    options={['Date: newest first', 'Date: oldest first']}
+                                    renderInput={(params) => <TextField {...params}/>}
+                                />
+                            </div>
                         </div>
                     </Card>
                     <ButtonGroup 

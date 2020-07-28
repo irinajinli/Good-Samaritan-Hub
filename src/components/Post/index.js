@@ -14,8 +14,8 @@ import Modal from '@material-ui/core/Modal';
 import MyDialog from '../MyDialog';
 import './styles.css';
 import '../../index.css';
-import { getDistance } from '../../actions/distance';
 import { getUser } from '../../actions/search';
+import { getDateDiff } from './date'
 
 class Post extends Component {
     state = {  
@@ -56,19 +56,17 @@ class Post extends Component {
     
     render() { 
         const { dialogOpen } = this.state;
-        const { user, users, post, targetLocation, isExpanded, handleExpandPost, handleBack, handleGoToProfile, handleGoToInboxFromPost} = this.props;
+        const { user, users, post, isExpanded, handleExpandPost, handleBack, handleGoToProfile, handleGoToInboxFromPost} = this.props;
 
         // Get the poster
         const poster = getUser(post.posterId, users);
-
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 
         const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat.formatToParts(post.date)
 
-        // Calculate the distance between this post's location and the current target location
-        let dist = getDistance(targetLocation, post.location);
-        dist = Math.round(dist * 10) / 10; // round to 1 decimal place
+        // Calculate date difference from today
+        const diffString = getDateDiff(post);
 
         return (  
             <React.Fragment>
@@ -84,7 +82,7 @@ class Post extends Component {
                                 <span className='hover-pointer' onClick={() => handleGoToProfile(poster)}>
                                     {`${poster.firstName} ${poster.lastName}`}
                                 </span>
-                                {` — ${month} ${day}, ${year }`}
+                                {` — ${month} ${day}, ${year } (${diffString})`}
                             </div>
                             <div className='post__title'>{post.title}</div>
                         </div>
@@ -92,7 +90,7 @@ class Post extends Component {
                             {this.generateTypeChip()}
                             <Chip 
                                 className='post__distance' 
-                                label={`${post.location}, ${dist} km`} 
+                                label={`${post.location}`}
                                 icon={<LocationOnIcon className='post__distance-icon'/>} 
                             />
                             {!isExpanded && 

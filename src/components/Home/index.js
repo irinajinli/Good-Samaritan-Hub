@@ -29,6 +29,7 @@ class Home extends Component {
                     users={users}
                     posts={posts.filter(post => post.status === 'active')} 
                     targetLocation={targetLocation}
+                    restrictPostsToTargetLocation={true}
                     handleChangeTargetLocation={handleChangeTargetLocation}
                     handleExpandPost={handleExpandPost} 
                     showExpandedPost={showExpandedPost} 

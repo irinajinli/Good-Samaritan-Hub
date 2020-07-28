@@ -43,7 +43,7 @@ const users = [
     lastName: 'Bob',
     location: 'M4P',
     bio: 'Hello world, I am Bobsy Bob!',
-    posts: [0],
+    posts: [0, 6],
     messagesSent: [1, 3],
     messagesRecieved: [0, 2],
     isReported: false,
@@ -59,7 +59,7 @@ const users = [
     lastName: 'Doe',
     location: 'M6H',
     bio: 'Hello world, I am Diane Doe!',
-    posts: [1],
+    posts: [1, 5],
     messagesSent: [5],
     messagesRecieved: [4],
     isReported: false,
@@ -211,6 +211,29 @@ const posts = [
     status: 'active',
     location: 'M8V'
   },
+  {
+    id: 5,
+    title: 'Cat Sitting',
+    body: `Viverra nibh cras pulvinar mattis nunc sed blandit libero. Consequat semper 
+      verra nam libero justo laoreet sit amet. Neque viverra justo nec ultrices. At erat 
+      pellentesque adipiscing commodo elit. Consequat interdum varius sit amet.`,
+    posterId: 'user3',
+    type: 'Request',
+    date: new Date(2020, 6, 13, 2, 34, 23),
+    status: 'active',
+    location: 'M4V'
+  },
+  {
+    id: 6,
+    title: 'Lawn Mowing',
+    body: `Semper risus in hendrerit gravida rutrum quisque non tellus. Sodales ut etiam 
+      sit amet nisl purus in. Suspendisse potenti nullam ac tortor vitae purus faucibus. `,
+    posterId: 'user2',
+    type: 'Offer',
+    date: new Date(2020, 6, 27, 2, 34, 23),
+    status: 'active',
+    location: 'M4V'
+  }
 ];
 
 const conversations = [

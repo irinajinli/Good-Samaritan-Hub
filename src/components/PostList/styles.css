@@ -1,10 +1,14 @@
-.MuiCard-root.post-list__location-card {
+.MuiCard-root.post-list__header-card {
     display: inline-block;
-    padding: 2px 14px 2px 4px;
     background-color: rgb(255, 255, 255);
     margin: 10px 0px;
     font-size: 16px;
     color: #000a12;
+    width: 100%
+}
+
+.post-list__header-card-content {
+    margin: 0px 10px;
 }
 
 .MuiAutocomplete-root {
@@ -18,12 +22,12 @@
     margin-left: 10px;
 }
 
-.post-list__location-selector {
+.post-list__selector {
     float: left;
     padding-top: 4px;
 }
 
-.post-list__location-label {
+.post-list__header-label {
     float: left;
     margin: 10px 10px;
 }
@@ -50,4 +54,8 @@
 .post-list__container {
     display: flex;
     flex-direction: column;
+}
+
+.padding-right {
+    padding-right: 10px;
 }
