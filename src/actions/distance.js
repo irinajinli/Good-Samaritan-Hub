@@ -1,4 +1,4 @@
-import { getPostalCodes } from '../resources/hardCodedData';
+import { getPostalCodes, getPostalCodePrefixes } from '../resources/hardCodedData';
 
 
 // Returns the distance in km between the two given lat, lon coordinates
@@ -23,4 +23,23 @@ export const getDistance = (postalCode1, postalCode2) => {
     const lat2 = postalCodes[postalCode2].lat;
     const lon2 = postalCodes[postalCode2].lon;
     return distance(lat1, lon1, lat2, lon2);
+}
+
+
+// Returns a list containing of locations and their distance from <targetPostalCode>
+// sorted from closest to farthest away from <targetPostalCode>
+export const getNearbyLocations = (targetPostalCode) => {
+    const postalCodePrefixes = getPostalCodePrefixes();
+    const postalCodeToDistance = postalCodePrefixes.map(pcp => {
+        console.log(pcp, targetPostalCode)
+        return { 
+            postalCode: pcp, 
+            distance: getDistance(pcp, targetPostalCode)
+        }
+    });
+    postalCodeToDistance.sort((p1, p2) => {
+        return p1.distance - p2.distance;
+    })
+    console.log(postalCodeToDistance)
+    return postalCodeToDistance;
 }

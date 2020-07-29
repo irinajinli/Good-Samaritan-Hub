@@ -33,11 +33,14 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingPosts, matchingUsers } = this.state;
-        const { user, users, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
+        const { user, users, searchTerm, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
             handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleDeactivatePost, handleGoToInboxFromPost} = this.props;
 
         return (  
             <div>
+                {!showExpandedPost &&
+                <div className='search-results__title'>Showing search results for "{searchTerm}"</div>}
+
                 {/* User search results */}
                 {!showExpandedPost &&
                 <div><Chip className='search-results__section-title' label='Users'></Chip></div>}

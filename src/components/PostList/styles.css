@@ -11,6 +11,16 @@
     margin: 0px 10px;
 }
 
+.post-list__location-card-content {
+    margin: 15px 15px;
+}
+
+.post-list--center {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
 .MuiAutocomplete-root {
     width: 70px;
 }
@@ -58,4 +68,21 @@
 
 .padding-right {
     padding-right: 10px;
+}
+
+.post-list__underline:after {
+    position: relative;
+    top: 8px;
+    height: 1px;
+    background: lightgrey;
+    content: "";
+    width: 100%;
+    display: block;
+}
+
+.post-list__ul {
+    list-style: none;
+    padding: 0px 0px;
+    margin-bottom: 0px;
+    display: block;
 }

@@ -13,6 +13,7 @@ import '../../index.css'
 
 import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 import { sortByDate } from '../../actions/sort';
+import { getNearbyLocations, getDistance } from '../../actions/distance';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -54,6 +55,24 @@ class PostList extends Component {
         if (this.props != prevProps) {
             this.updatePostsToDiplay();
         }
+    }
+
+    showNearbyLocations = () => {
+        const nearbyLocations = getNearbyLocations(this.props.targetLocation);
+        return (
+            <div className='post-list__location-card-content post-list--center'>
+                <div>
+                    <div className='post-list__underline'>Try locations near {this.props.targetLocation}:</div>
+                    <div className='post-list--center'>
+                        <ul className='post-list__ul'>
+                            <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>
+                            <li><div>{nearbyLocations[2].postalCode} - {Math.round(nearbyLocations[2].distance * 10) / 10} km</div></li>
+                            <li><div>{nearbyLocations[3].postalCode} - {Math.round(nearbyLocations[3].distance * 10) / 10} km</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     handleChangeSortingOption = (event, values) => {
@@ -202,6 +221,11 @@ class PostList extends Component {
                     ))}
                     {!showExpandedPost && postsToDisplay.length == 0 &&
                         <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
+                    }
+                    {!showExpandedPost && postsToDisplay.length == 0 && restrictPostsToTargetLocation &&
+                        <Card className='post-list__header-card'>
+                            {this.showNearbyLocations()}
+                        </Card>
                     }
                     {showExpandedPost && 
                         <Post 
