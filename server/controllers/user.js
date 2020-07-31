@@ -5,17 +5,9 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const User = require('../models/user');
-
 const { isMongoError } = require('./common.js');
 
-
 const addUser = (req, res) => {
-    // Check if mongoose connection established
-    if (mongoose.connection.readyState != 1) {
-        res.status(500).send('Internal server error');
-        return;
-    }
-
     // Create a new user
     const user = new User({
         username: req.body.username,
@@ -37,12 +29,6 @@ const addUser = (req, res) => {
 }
 
 const getAllUsers = (req, res) => {
-    // Check if mongoose connection established
-    if (mongoose.connection.readyState != 1) {
-        res.status(500).send('Internal server error');
-        return;
-    }
-
     // Get all users
     User.find()
         .then((users) => {

@@ -3,17 +3,22 @@
 const express = require('express');
 const router = express.Router();
 
+/* Common middleware functions */
+const { mongoChecker } = require('../controllers/common');
+
 /* Controllers */
 const userCtrl = require('../controllers/user');
 
-/* API routes for managing users */
-router.post('/user', userCtrl.addUser);
-router.get('/users', userCtrl.getAllUsers);
+/* Admin routes */
 
-/* API routes for managing posts */
+/* User routes */
+router.post('/user', mongoChecker, userCtrl.addUser);
+router.get('/users', mongoChecker, userCtrl.getAllUsers);
 
-/* API routes for managing conversations */
+/* Post routes */
 
-/* API routes for managing messages */
+/* Conversation routes */
+
+/* Message routes */
 
 module.exports = router;
