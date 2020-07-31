@@ -1,0 +1,33 @@
+.myDialog__dialog {
+    position: fixed;
+    width: 500px;
+    height: fit-content;
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+.myDialog__title {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.myDialog__body {
+    color: grey;
+    font-size: 12px;
+    margin: 5px 20px 0px 20px;
+}
+
+.MuiButton-root.myDialog__button {
+    float: right;
+    margin: 15px 20px 15px 0px;
+}
+
+.MuiButton-root.myDialog__button--report {
+    color: crimson;
+    border: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+.MuiButton-root.myDialog__button--report:hover {
+    border: 1px solid red;
+}

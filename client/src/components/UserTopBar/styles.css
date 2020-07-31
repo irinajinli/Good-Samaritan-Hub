@@ -1,0 +1,14 @@
+.user-top-bar__search-container {
+    position: absolute;
+    display: flex;
+    left: 25%
+}
+
+.MuiIconButton-root.user-top-bar__profile-btn {
+    margin-right: 5px;
+}
+
+.MuiIconButton-root.user-top-bar__logout-btn {
+    margin-left: 16px;
+    margin-right: 0px;
+}

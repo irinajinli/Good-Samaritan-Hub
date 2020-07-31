@@ -1,8 +1,0 @@
-.logged-in-wrapper {
-    min-height: 100vh;
-    max-height: 100%;
-    background-image: url("../../resources/background.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}

@@ -1,0 +1,23 @@
+{
+  "name": "team16",
+  "version": "1.0.0",
+  "description": "Clone the github repository by running the following:  \r `git clone https://github.com/csc309-summer-2020/team16.git`",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-summer-2020/team16.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-summer-2020/team16/issues"
+  },
+  "homepage": "https://github.com/csc309-summer-2020/team16#readme"
+}

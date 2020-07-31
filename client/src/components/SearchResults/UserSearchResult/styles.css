@@ -1,0 +1,38 @@
+.user__card {
+    margin: 10px 0px;
+    margin-right: 10px;
+    min-width: 200px;
+    display: inline-block;
+}
+
+.user__block {
+    width: 97%;
+    padding: 10px;
+    display: inline-block;
+}
+
+.user__left-block {
+    float: left;
+}
+
+.user__right-block {
+    float: right;
+}
+
+.user__name {
+    font-weight: bold;
+    margin: 5px;
+}
+
+.user__username {
+    color: grey;
+    font-size: 12px;
+    margin: 5px;
+}
+
+.user__icon {
+    /* margin: 10px 20px 10px 20px; */
+    width: 30px;
+    /* height: 0px; */
+    border-radius: 50%;
+}
