@@ -1,6 +1,10 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 import "../RegAccountInfo/styles.css";
+import "./styles.css";
+import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 
 export default class RegBasicInfo extends React.Component {
   state = {
@@ -20,6 +24,13 @@ export default class RegBasicInfo extends React.Component {
       [name]: value,
     });
     this.updateReqsSatisfied();
+  };
+
+  handleLocationChange = (event, values) => {
+    this.setState({
+      postCode: values
+    });
+    console.log(this.state)
   };
 
   updateReqsSatisfied = () => {
@@ -62,7 +73,7 @@ export default class RegBasicInfo extends React.Component {
           />
         </div>
 
-        <div>
+        <div className='registration--position-relative'>
           <TextField
             required
             name="phoneNum"
@@ -72,14 +83,16 @@ export default class RegBasicInfo extends React.Component {
             onChange={this.handleOnChange}
           />
 
-          <TextField
-            required
-            name="postCode"
-            className="marginLeft marginTop"
-            label="Postal code"
-            variant="outlined"
-            onChange={this.handleOnChange}
-          />
+          <div className='registration__location-selector'>
+            <Autocomplete
+              defaultValue=""
+              label="Postal Code"
+              options={getPostalCodePrefixes()}
+              onChange={this.handleLocationChange}
+              style={{ width: "100%" }}
+              renderInput={(params) => <TextField {...params} required label="Postal Code" variant="outlined" />}
+            />
+          </div>
         </div>
 
         <div>
