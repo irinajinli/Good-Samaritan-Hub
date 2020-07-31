@@ -1,6 +1,7 @@
 let mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-let postSchema = new mongoose.Schema({
+let postSchema = Schema({
     title: String,
     body: String,
     posterId: {
