@@ -5,7 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const User = require('../models/user');
-const { mongoChecker, validateId, patch, save, find } = require('./common');
+const { mongoChecker, validateId, patch, save, find, findOne } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -26,6 +26,11 @@ router.post('/user', mongoChecker, (req, res) => {
     // Save user to the database
     save(req, res, user);
 });
+
+// GET route to get a user by id
+router.get('/user/:id', mongoChecker, validateId, (req, res) => {
+    findOne(req, res, User, { _id: req.params.id });
+})
 
 // GET route to get all users
 router.get('/users', mongoChecker, (req, res) => {
