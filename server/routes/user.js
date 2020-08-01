@@ -5,7 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const User = require('../models/user');
-const { mongoChecker } = require('./common');
+const { mongoChecker, validateId, patch } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -48,6 +48,17 @@ router.get('/users', mongoChecker, (req, res) => {
             log(error);
             res.status(500).send("Internal Server Error");
         });
+});
+
+// PATCH route to update a user.
+// <req.param.id> is the user's id.
+// <req.body will be an array that consists of a list of changes to make to the post
+// [
+//   { "op": "replace", "path": "/posts", "value": ["f24c5fa61604f593432852b"] }
+//   ...
+// ]
+router.patch('/user/:id', mongoChecker, validateId, (req, res) => { 
+    patch(req, res, User);
 });
 
 module.exports = router;
