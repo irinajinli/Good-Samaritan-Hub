@@ -15,7 +15,7 @@ import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
-import { getPosts, getReportedPosts } from '../../actions/search';
+import { getPostsByUser, getReportedPosts } from '../../actions/search';
 
 const columns = [
     { id: 'name', label: 'Username'},
@@ -233,7 +233,7 @@ class AdminHome extends Component {
                     <h1>User's Post History</h1>
                     {selectedUser && selectedUser.posts.length > 0 && 
                         <div className="adminHome__scroll">
-                            {getPosts(selectedUser, posts).map((post) => {
+                            {getPostsByUser(selectedUser, posts).map((post) => {
                                 return (
                                     <Post post={post}></Post>
                                 );

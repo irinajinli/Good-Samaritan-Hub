@@ -13,7 +13,8 @@ import '../../index.css'
 
 import { getPostalCodePrefixes } from '../../resources/hardCodedData';
 import { sortByDate } from '../../actions/sort';
-import { getNearbyLocations, getDistance } from '../../actions/distance';
+import { getNearbyLocations } from '../../actions/distance';
+import { getPostsByLocation } from '../../actions/search';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -89,6 +90,7 @@ class PostList extends Component {
 
     handleTargetLocationChange = (event, values) => {
         this.props.handleChangeTargetLocation(values);
+        getPostsByLocation(undefined, values);
     };
 
     getBtnClass = type => {

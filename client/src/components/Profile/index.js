@@ -8,7 +8,7 @@ import Table from './userTable/index.js';
 import PostList from '../PostList';
 
 import './styles.css';
-import { getPosts } from '../../actions/search';
+import { getPostsByUser } from '../../actions/search';
 
 const columns = [{id: "label", name: "Label"}, {id: "content", name: "Content"}];
 
@@ -20,7 +20,7 @@ class Profile extends Component {
     updateUserPosts() {
         const { displayedUser, posts } = this.props;
         this.setState({
-            userPosts: getPosts(displayedUser, posts)
+            userPosts: getPostsByUser(displayedUser, posts)
         });
     }
 

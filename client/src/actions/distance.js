@@ -31,15 +31,11 @@ export const getDistance = (postalCode1, postalCode2) => {
 export const getNearbyLocations = (targetPostalCode) => {
     const postalCodePrefixes = getPostalCodePrefixes();
     const postalCodeToDistance = postalCodePrefixes.map(pcp => {
-        console.log(pcp, targetPostalCode)
         return { 
             postalCode: pcp, 
             distance: getDistance(pcp, targetPostalCode)
         }
     });
-    postalCodeToDistance.sort((p1, p2) => {
-        return p1.distance - p2.distance;
-    })
-    console.log(postalCodeToDistance)
+    postalCodeToDistance.sort((p1, p2) => p1.distance - p2.distance);
     return postalCodeToDistance;
 }

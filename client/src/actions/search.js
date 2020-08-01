@@ -25,13 +25,55 @@ export const getMatchingUsers = (searchTerm, users) => {
 
 
 // Returns a list of the posts at the given location
-// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
-export const getPostsByLocation = (posts, location) => posts.filter(post => post.location === location);
-
+export const getPostsByLocation = (location) => {
+    const url = `/post/location=${location}`;
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                console.log('Could not find posts');
+                return [];
+            }
+        })
+        .then(posts => {
+            posts.forEach(post => {
+                post.date = new Date(post.date)
+            });
+            console.log(posts);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
 
 // Returns a list of the given user's posts
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
-export const getPosts = (user, posts) => posts.filter(post => user.posts.includes(post.id));
+export const getPostsByUser = (user, posts) => {
+
+    const url = `/post/posterId=5f24e507a91ad663c847a722`;
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
+            } else {
+                console.log('Could not find posts');
+                return [];
+            }
+        })
+        .then(posts => {
+            posts.forEach(post => {
+                post.date = new Date(post.date)
+            });
+            console.log(posts);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    // TODO: remove later
+    return posts.filter(post => user.posts.includes(post.id)); 
+};
 
 
 // Returns a list of the given user's reported posts
