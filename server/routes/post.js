@@ -41,6 +41,17 @@ router.get('/posts', mongoChecker, (req, res) => {
     find(req, res, Post);
 });
 
+// GET route to get all posts in the location <req.param.location>.
+// <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
+router.get('/post/location=:location', mongoChecker, (req, res) => {
+    find(req, res, Post, { location: req.params.location });
+});
+
+// GET route to get all posts with posterId <req.param.id>
+router.get('/post/posterId=:id', mongoChecker, validateId, (req, res) => {
+    find(req, res, Post, { posterId: req.params.id });
+});
+
 // PATCH route to update a post
 // <req.params.id> is the post's id
 // <req.body> will be an array that consists of a list of changes to make to the post.
