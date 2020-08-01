@@ -5,7 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const Post = require('../models/post');
-const { mongoChecker, validateId, patch } = require('./common');
+const { mongoChecker, validateId, patch, save, find } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -33,30 +33,12 @@ router.post('/post/:id', mongoChecker, validateId, (req, res) => {
     const post = new Post(req.body);
 
     // Save post to the database
-    post.save()
-        .then((result) => {
-            res.send(result);
-        }).catch((error) => {
-            if (isMongoError(error)) {
-                res.status(500).send('Internal server error');
-            } else {
-                log(error);
-                res.status(400).send('Bad Request');
-            }
-        });
+    save(req, res, post);
 });
 
 // GET route to get all posts
 router.get('/posts', mongoChecker, (req, res) => {
-    // Get all posts
-    Post.find()
-        .then((users) => {
-            res.send(users);
-        })
-        .catch((error) => {
-            log(error);
-            res.status(500).send("Internal Server Error");
-        });
+    find(req, res, Post);
 });
 
 // PATCH route to update a post

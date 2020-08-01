@@ -23,14 +23,14 @@ const mongoChecker = (req, res, next) => {
 // Middleware to check that <req.params.id> is a valid Object ID
 const validateId = (req, res, next) => {
     if (!ObjectID.isValid(req.params.id)) {
-        res.status(404).send()
+        res.status(404).send();
         return;
     } else {
-        next()
+        next();
     }
 }
 
-// Generic PATCH function to update <mongooseModel> document
+// Generic function to update a <mongooseModel> document for a PATCH route
 // <req.body> will be an array that consists of a list of changes to make
 // Example:
 // [
@@ -64,9 +64,38 @@ const patch = (req, res, mongooseModel) => {
         });
 }
 
+// Generic function to save a document
+const save = (req, res, document) => {
+    document.save()
+        .then((result) => {
+            res.send(result);
+        }).catch((error) => {
+            if (isMongoError(error)) {
+                res.status(500).send('Internal server error');
+            } else {
+                log(error);
+                res.status(400).send('Bad Request');
+            }
+        });
+}
+
+// Generic function to get all documents in <mongooseModel>
+const find = (req, res, mongooseModel) => {
+    mongooseModel.find()
+        .then((users) => {
+            res.send(users);
+        })
+        .catch((error) => {
+            log(error);
+            res.status(500).send("Internal Server Error");
+        });
+}
+
 module.exports = {
     isMongoError,
     mongoChecker,
     validateId,
-    patch
+    patch,
+    save,
+    find
 };

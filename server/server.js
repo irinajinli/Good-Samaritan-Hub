@@ -15,8 +15,10 @@ app.use(bodyParser.json());
 // Use the API routes in our route files
 const userRoutes = require('./routes/user');
 const postRoutes = require('./routes/post');
+const locationRoutes = require('./routes/location');
 app.use('/', userRoutes);
 app.use('/', postRoutes);
+app.use('/', locationRoutes);
 
 // Listen on port
 const port = process.env.PORT || 5000;
