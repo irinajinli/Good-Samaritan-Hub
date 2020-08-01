@@ -1,13 +1,20 @@
-'use strict';
+"use strict";
 const log = console.log;
 
-const { mongoose } = require('../db/mongoose');
-mongoose.set('bufferCommands', false);
+const { mongoose } = require("../db/mongoose");
+mongoose.set("bufferCommands", false);
 
-const User = require('../models/user');
-const { mongoChecker, validateId, patch, save, find, findOne } = require('./common');
+const User = require("../models/user");
+const {
+  mongoChecker,
+  validateId,
+  patch,
+  save,
+  find,
+  findOne,
+} = require("./common");
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
 // POST route to create a user
@@ -19,22 +26,22 @@ const router = express.Router();
 //     "lastName": String,
 //     "location": String
 // }
-router.post('/user', mongoChecker, (req, res) => {
-    // Create a new user
-    const user = new User(req.body);
+router.post("/user", mongoChecker, (req, res) => {
+  // Create a new user
+  const user = new User(req.body);
 
-    // Save user to the database
-    save(req, res, user);
+  // Save user to the database
+  save(req, res, user);
 });
 
 // GET route to get a user by id
-router.get('/user/:id', mongoChecker, validateId, (req, res) => {
-    findOne(req, res, User, { _id: req.params.id });
-})
+router.get("/user/:id", mongoChecker, validateId, (req, res) => {
+  findOne(req, res, User, { _id: req.params.id });
+});
 
 // GET route to get all users
-router.get('/users', mongoChecker, (req, res) => {
-    find(req, res, User);
+router.get("/users", mongoChecker, (req, res) => {
+  find(req, res, User);
 });
 
 // PATCH route to update a user.
@@ -44,8 +51,28 @@ router.get('/users', mongoChecker, (req, res) => {
 //   { "op": "replace", "path": "/posts", "value": ["f24c5fa61604f593432852b"] }
 //   ...
 // ]
-router.patch('/user/:id', mongoChecker, validateId, (req, res) => { 
-    patch(req, res, User);
+router.patch("/user/:id", mongoChecker, validateId, (req, res) => {
+  patch(req, res, User);
+});
+
+// POST route to log in and create session
+router.post("/users/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  log(username, password);
+
+  // find user
+  User.findbyUsernamePassword(username, password)
+    .then((user) => {
+      req.session.user = user._id;
+      req.ession.username = user.username;
+      res.send({ currentUser: user.username });
+    })
+
+    .catch((error) => {
+      res.status(400).send();
+    });
 });
 
 module.exports = router;
