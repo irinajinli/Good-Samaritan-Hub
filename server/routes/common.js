@@ -15,7 +15,7 @@ const mongoChecker = (req, res, next) => {
     }
 }
 
-// Middleware to validate the <id> param in req
+// Middleware to check that <req.id> is a valid Object ID
 const validateId = (req, res, next) => {
     if (!ObjectID.isValid(req.params.id)) {
         res.status(404).send()

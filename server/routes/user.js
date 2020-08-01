@@ -5,9 +5,21 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const User = require('../models/user');
-const { isMongoError } = require('./common.js');
+const { mongoChecker } = require('./common');
 
-const addUser = (req, res) => {
+const express = require('express');
+const router = express.Router();
+
+// POST route to create a user
+// <req.body> expects the following fields at minimum. See the User model for all fields.
+// {
+//     "username": String,
+//     "password": String,
+//     "firstName": String,
+//     "lastName": String,
+//     "location": String
+// }
+router.post('/user', mongoChecker, (req, res) => {
     // Create a new user
     const user = new User(req.body);
 
@@ -23,9 +35,10 @@ const addUser = (req, res) => {
                 res.status(400).send('Bad Request');
             }
         });
-}
+});
 
-const getAllUsers = (req, res) => {
+// GET route to get all users
+router.get('/users', mongoChecker, (req, res) => {
     // Get all users
     User.find()
         .then((users) => {
@@ -35,9 +48,6 @@ const getAllUsers = (req, res) => {
             log(error);
             res.status(500).send("Internal Server Error");
         });
-}
+});
 
-module.exports = {
-    addUser,
-    getAllUsers
-}
+module.exports = router;

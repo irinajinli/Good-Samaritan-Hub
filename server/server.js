@@ -12,9 +12,11 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// Use the API routes in our apiRoutes file
-const apiRoutes = require('./routes/apiRoutes');
-app.use('/', apiRoutes);
+// Use the API routes in our route files
+const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
+app.use('/', userRoutes);
+app.use('/', postRoutes);
 
 // Listen on port
 const port = process.env.PORT || 5000;
