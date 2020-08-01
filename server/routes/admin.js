@@ -4,9 +4,10 @@ mongoose.set('bufferCommands', false);
 
 const Admin = mongoose.model('Admin');
 
-const { mongoChecker, isMongoError } = require('./common');
+const { mongoChecker, isMongoError, save } = require('./common');
 
 const express = require('express');
+const { find } = require('../models/user');
 const router = express.Router();
 
 // POST route to create an admin
@@ -23,17 +24,7 @@ router.post('/admin', mongoChecker, (req, res) => {
     });
 
     // Save admin to the database
-    admin.save()
-        .then((result) => {
-            res.send(result);
-        }).catch((error) => {
-            if (isMongoError(error)) {
-                res.status(500).send('Internal server error');
-            } else {
-                log(error);
-                res.status(400).send('Bad Request');
-            }
-        });
+    save(req, res, admin);
 });
 
 // GET route to get an admin by its id
@@ -55,15 +46,7 @@ router.get('/admin/:id', mongoChecker, (req, res) => {
 
 // GET route to get all admins
 router.get('/admin', mongoChecker, (req, res) => {
-    // Get all admins
-    Admin.find()
-        .then((admins) => {
-            res.send(admins);
-        })
-        .catch((error) => {
-            log(error);
-            res.status(500).send("Internal Server Error");
-        });
+    find(req, res, Admin);
 });
 
 module.exports = router;
