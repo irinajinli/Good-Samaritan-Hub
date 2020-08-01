@@ -2,6 +2,7 @@
 const log = console.log;
 
 const { mongoose } = require('../db/mongoose');
+const { ObjectID } = require('mongodb');
 
 // Middleware to check if mongoose connection is established
 const mongoChecker = (req, res, next) => {
@@ -14,6 +15,16 @@ const mongoChecker = (req, res, next) => {
     }
 }
 
+// Middleware to validate the <id> param in req
+const validateId = (req, res, next) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        res.status(404).send()
+        return;
+    } else {
+        next()
+    }
+}
+
 // Helper function that checks if Mongo database suddently disconnected
 function isMongoError(error) {
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError";
@@ -21,5 +32,6 @@ function isMongoError(error) {
 
 module.exports = {
     mongoChecker,
+    validateId,
     isMongoError
 };

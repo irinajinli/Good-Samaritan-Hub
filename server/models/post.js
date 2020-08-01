@@ -2,21 +2,38 @@ let mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let postSchema = Schema({
-    title: String,
-    body: String,
+    title: {
+        type: String,
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
     posterId: {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        required: true
     },
     type: {
         type: String,
-        enum: ["Request", "Offer"]
+        enum: ["Request", "Offer"],
+        required: true
     },
-    date: Date,
+    date: {
+        type: Date,
+        required: true
+    },
     status: {
         type: String,
-        enum: ["active", "inactive"]
+        enum: ["active", "inactive"],
+        required: true
     },
-    location: 'M4P'
+    location: {
+        type: String,
+        required: true
+    }
 });
 
-mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema);
+
+module.exports = Post;
