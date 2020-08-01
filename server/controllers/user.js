@@ -9,10 +9,7 @@ const { isMongoError } = require('./common.js');
 
 const addUser = (req, res) => {
     // Create a new user
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password
-    });
+    const user = new User(req.body);
 
     // Save user to the database
     user.save()
