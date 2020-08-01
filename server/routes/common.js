@@ -79,9 +79,13 @@ const save = (req, res, document) => {
         });
 }
 
-// Generic function to get all documents in <mongooseModel>
-const find = (req, res, mongooseModel) => {
-    mongooseModel.find()
+// Generic function to get all documents in <mongooseModel> in match <selector>.
+// If <selector> is not specified, function gets all documents in <mongooseModel>  .
+const find = (req, res, mongooseModel, selector) => {
+    if (!selector) {
+        selector = {};
+    }
+    mongooseModel.find(selector)
         .then((users) => {
             res.send(users);
         })
