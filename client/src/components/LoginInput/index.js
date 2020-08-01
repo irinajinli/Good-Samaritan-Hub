@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { login } from "../../actions/loginreg.js";
 import "./styles.css";
 import "../../index.css";
 
@@ -39,16 +40,22 @@ class LoginInput extends React.Component {
     window.location.href = "/registration";
   };
 
-  checkCredentials = () => {
-    if (window.location.pathname === "/login") {
-      if (this.state.username === "user" && this.state.password === "user") {
-        this.goToHome();
-      } else this.setState({ wrongCreds: true });
-    } else if (window.location.pathname === "/admin") {
-      if (this.state.username === "admin" && this.state.password === "admin") {
-        this.goToAdminHome();
-      } else this.setState({ wrongCreds: true });
-    }
+  // phase 1 version
+  // checkCredentials = () => {
+  //   if (window.location.pathname === "/login") {
+  //     if (this.state.username === "user" && this.state.password === "user") {
+  //       this.goToHome();
+  //     } else this.setState({ wrongCreds: true });
+  //   } else if (window.location.pathname === "/admin") {
+  //     if (this.state.username === "admin" && this.state.password === "admin") {
+  //       this.goToAdminHome();
+  //     } else this.setState({ wrongCreds: true });
+  //   }
+  // };
+
+  // phase 2 version
+  checkCredentials = (loginComp, app) => {
+    login(loginComp, app);
   };
 
   render() {
@@ -101,7 +108,7 @@ class LoginInput extends React.Component {
             className="smallMarginTop"
             variant="contained"
             color="primary"
-            onClick={() => this.checkCredentials()}
+            onClick={() => this.checkCredentials(this, this.props)}
           >
             LOG IN
           </Button>
