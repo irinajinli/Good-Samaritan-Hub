@@ -1,16 +1,21 @@
 'use strict';
 const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
+
 const Admin = mongoose.model('Admin');
-const { isMongoError } = require('./common.js');
 
-const addAdmin = (req, res) => {
-    // Check if mongoose connection established
-    if (mongoose.connection.readyState != 1) {
-        res.status(500).send('Internal server error');
-        return;
-    }
+const { mongoChecker, isMongoError } = require('./common');
 
+const express = require('express');
+const router = express.Router();
+
+// POST route to create an admin
+// <req.body> expects
+// {
+//     "username": String,
+//     "password": String
+// }
+router.post('/admin', mongoChecker, (req, res) => {
     // Create a new admin
     const admin = new Admin({
         username: req.body.username,
@@ -29,15 +34,10 @@ const addAdmin = (req, res) => {
                 res.status(400).send('Bad Request');
             }
         });
-}
+});
 
-const getAdminById = (req, res) => {
-    // Check if mongoose connection established
-    if (mongoose.connection.readyState != 1) {
-        res.status(500).send('Internal server error');
-        return;
-    }
-
+// GET route to get an admin by its id
+router.get('/admin/:id', mongoChecker, (req, res) => {
     // Get admin by id
     Admin.findById(req.params.id)
         .then((admin) => {
@@ -51,15 +51,10 @@ const getAdminById = (req, res) => {
             log(error);
             res.status(500).send("Internal Server Error");
         });
-}
+});
 
-const getAllAdmins = (req, res) => {
-    // Check if mongoose connection established
-    if (mongoose.connection.readyState != 1) {
-        res.status(500).send('Internal server error');
-        return;
-    }
-
+// GET route to get all admins
+router.get('/admin', mongoChecker, (req, res) => {
     // Get all admins
     Admin.find()
         .then((admins) => {
@@ -69,10 +64,6 @@ const getAllAdmins = (req, res) => {
             log(error);
             res.status(500).send("Internal Server Error");
         });
-}
+});
 
-module.exports = {
-    addAdmin,
-    getAdminById,
-    getAllAdmins
-}
+module.exports = router;
