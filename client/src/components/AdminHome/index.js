@@ -16,6 +16,7 @@ import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
 import { getPostsByUser, getReportedPosts } from '../../actions/search';
+import { updateUser } from '../../actions/user';
 
 const columns = [
     { id: 'name', label: 'Username'},
@@ -77,6 +78,7 @@ class AdminHome extends Component {
 
     handleBan = (reason) => {
         const user = this.state.selectedUser;
+        const originalUser = user;
         user.isBanned = !user.isBanned;
         if (!user.isBanned)
             user.banReason = '';
@@ -88,6 +90,8 @@ class AdminHome extends Component {
                 break;
             }
         }
+        // PATCH/PUT USER HERE
+        updateUser(originalUser, user, this);
         this.setState({selectedUser: user, dialogOpen: false});
     }
 
@@ -109,6 +113,7 @@ class AdminHome extends Component {
 
     handleDeleteReport = (report) => {
         const user = this.state.selectedUser;
+        const originalUser = user;
         let type = '';
         let i = user.reportedMessages.indexOf(report.messageId);
         if (i >= 0) {
@@ -123,6 +128,8 @@ class AdminHome extends Component {
         if (user.reportedPosts.length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
+        // PATCH/PUT USER HERE
+        updateUser(originalUser, user, this);
         this.setState({selectedUser: user});
         this.handleOpenSnackBar(type === 'Post' ? report.id : report.messageId, type, report, i);
         setTimeout(() => this.handleCloseSnackBar(), 5000);
@@ -131,12 +138,15 @@ class AdminHome extends Component {
     handleUndoDelete = () => {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
+        const originalUser = user;
         if (report.type === 'Message') {
             user.reportedMessages.splice(report.index, 0, report.id);
         } else {
             user.reportedPosts.splice(report.index, 0, report.id);
         }
         user.isReported = true;
+        // PATCH/PUT USER HERE
+        updateUser(originalUser, user, this);
         this.setState({selectedUser: user, oldReport: null});
     }
 

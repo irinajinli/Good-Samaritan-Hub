@@ -87,7 +87,28 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         });
     }
 
-    // Phase 2: Make a server call to update this user
-    // ...
+    const request = new Request(`/user/${originalUser._id}`, {
+        method: "put",
+        body: JSON.stringify(updatedUser.state),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request).then(res => {
+        if (res.status === 200) {
+            return res.json();
+        }
+    })
+    .then(json => {
+        if (json.currentUser !== undefined) {
+            app.setState({ currentUser: json.currentUser });
+        }
+    })
+    .catch(error => {
+        log(error);
+    });
 }
 
