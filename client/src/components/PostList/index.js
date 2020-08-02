@@ -27,12 +27,13 @@ class PostList extends Component {
         posts: [],
         filterCondition: this.isAnyType,
         newestOrOldestFirst: 'newest first',
-        postalCodes: {}
+        postalCodes: {},
+        targetLocation: this.props.user.location  // Defaults to the user's location
     }
 
     updatePostsToDiplay = () => {
-        const { filterCondition, newestOrOldestFirst } = this.state;
-        const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation, 
+        const { filterCondition, newestOrOldestFirst, targetLocation } = this.state;
+        const { recentlyReportedPosts, restrictPostsToTargetLocation, 
             showInactivePosts } = this.props;
 
         if (restrictPostsToTargetLocation) {
@@ -94,18 +95,13 @@ class PostList extends Component {
         this.updatePostsToDiplay();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props != prevProps) {
-            this.updatePostsToDiplay();
-        }
-    }
-
     showNearbyLocations = () => {
-        const nearbyLocations = getNearbyLocations(this.props.targetLocation, this.state.postalCodes);
+        const { targetLocation, postalCodes } = this.state;
+        const nearbyLocations = getNearbyLocations(targetLocation, postalCodes);
         return (
             <div className='post-list__location-card-content post-list--center'>
                 <div>
-                    <div className='post-list__underline'>Try locations near {this.props.targetLocation}:</div>
+                    <div className='post-list__underline'>Try locations near {targetLocation}:</div>
                     <div className='post-list--center'>
                         <ul className='post-list__ul'>
                             {nearbyLocations.length > 0 && <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>}
@@ -118,6 +114,13 @@ class PostList extends Component {
         );
     }
 
+    handleTargetLocationChange = (event, values) => {
+        this.setState({
+            targetLocation: values
+        },
+        this.updatePostsToDiplay);
+    };
+
     handleChangeSortingOption = (event, values) => {
         if (values === 'Date: newest first') {
             values = 'newest first';
@@ -129,11 +132,6 @@ class PostList extends Component {
         }, 
         this.updatePostsToDiplay);
     }
-
-    handleTargetLocationChange = (event, values) => {
-        this.props.handleChangeTargetLocation(values);
-        this.updatePostsToDiplay();
-    };
 
     getBtnClass = type => {
         const {filterCondition} = this.state;
@@ -189,8 +187,8 @@ class PostList extends Component {
     }
 
     render() { 
-        const { posts, postalCodes } = this.state;
-        const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, 
+        const { posts, postalCodes, targetLocation } = this.state;
+        const { user, users, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, 
             expandedPost, handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  
@@ -253,7 +251,6 @@ class PostList extends Component {
                             user={user}
                             users={users}
                             post={post}
-                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
@@ -276,7 +273,6 @@ class PostList extends Component {
                             user={user}
                             users={users}
                             post={expandedPost}
-                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}

@@ -66,7 +66,7 @@ class Profile extends Component {
     }
 
     render() { 
-        const { user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
+        const { user, users, displayedUser, handleExpandPost, showExpandedPost, expandedPost,
             handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
         const { userPosts } = this.state;
         return (
@@ -97,9 +97,7 @@ class Profile extends Component {
                         user={user}
                         users={users}
                         posts={userPosts.filter(post => this.filterCondition(post))} 
-                        targetLocation={targetLocation}
                         restrictPostsToTargetLocation={false}
-                        handleChangeTargetLocation={handleChangeTargetLocation}
                         handleExpandPost={handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
