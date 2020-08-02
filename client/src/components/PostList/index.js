@@ -14,7 +14,7 @@ import '../../index.css'
 import { getPostalCodes } from '../../actions/location';
 import { sortByDate } from '../../actions/sort';
 import { getNearbyLocations } from '../../actions/distance';
-import { getPostsByLocation } from '../../actions/search';
+import { getPostsByLocation, getMatchingPosts } from '../../actions/search';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -27,17 +27,17 @@ class PostList extends Component {
         posts: [],
         filterCondition: this.isAnyType,
         newestOrOldestFirst: 'newest first',
-        postalCodes: {},
-        targetLocation: this.props.user.location  // Defaults to the user's location
+        postalCodes: {}
     }
 
     updatePostsToDiplay = () => {
-        const { filterCondition, newestOrOldestFirst, targetLocation } = this.state;
-        const { recentlyReportedPosts, restrictPostsToTargetLocation, 
-            showInactivePosts } = this.props;
+        const { filterCondition, newestOrOldestFirst } = this.state;
+        const { recentlyReportedPosts, restrictPostsToTargetLocation, targetLocation, searchTerm,
+            showInactivePosts, recievePostsInProps } = this.props;
 
         if (restrictPostsToTargetLocation) {
 
+            // Get posts matching the current target location
             getPostsByLocation(targetLocation)
                 .then(posts => {
                     // Filter posts
@@ -45,6 +45,9 @@ class PostList extends Component {
                         return filterCondition(post) && !recentlyReportedPosts.includes(post)
                             && (showInactivePosts? true : post.status === 'active');
                     })
+                    if (searchTerm !== undefined) {
+                        posts = getMatchingPosts(searchTerm, posts);
+                    }
 
                     // Sort posts by date
                     posts = sortByDate(posts, newestOrOldestFirst);
@@ -60,11 +63,9 @@ class PostList extends Component {
                     });
                 })
 
-        } else {
+        } else if (recievePostsInProps) {
 
-            // TODO: probably get rid of later
-
-            // Filter posts
+            // Filter the posts recieved in props
             let posts = this.props.posts.filter(post => {
                 return filterCondition(post) && !recentlyReportedPosts.includes(post);
             });
@@ -80,23 +81,36 @@ class PostList extends Component {
     }
 
     componentDidMount() {
-        getPostalCodes()
-            .then(postalCodes => {
-                this.setState({
-                    postalCodes
-                });
-            })
-            .catch(error => {
-                console.log('Could not get postal codes')
-                this.setState({
-                    postalCodes: {}
-                });
-            })
-        this.updatePostsToDiplay();
+        if (this.props.restrictPostsToTargetLocation) {
+
+            getPostalCodes()
+                .then(postalCodes => {
+                    this.setState({
+                        postalCodes
+                    });
+                })
+                .catch(error => {
+                    console.log('Could not get postal codes')
+                    this.setState({
+                        postalCodes: {}
+                    });
+                })
+            this.updatePostsToDiplay();
+
+        } else {
+            this.updatePostsToDiplay();
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.targetLocation !== this.props.targetLocation) {
+            this.updatePostsToDiplay();
+        }
     }
 
     showNearbyLocations = () => {
-        const { targetLocation, postalCodes } = this.state;
+        const { postalCodes } = this.state;
+        const { targetLocation } = this.props;
         const nearbyLocations = getNearbyLocations(targetLocation, postalCodes);
         return (
             <div className='post-list__location-card-content post-list--center'>
@@ -115,10 +129,7 @@ class PostList extends Component {
     }
 
     handleTargetLocationChange = (event, values) => {
-        this.setState({
-            targetLocation: values
-        },
-        this.updatePostsToDiplay);
+        this.props.handleChangeTargetLocation(values);
     };
 
     handleChangeSortingOption = (event, values) => {
@@ -187,8 +198,8 @@ class PostList extends Component {
     }
 
     render() { 
-        const { posts, postalCodes, targetLocation } = this.state;
-        const { user, users, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, 
+        const { posts, postalCodes } = this.state;
+        const { user, users, restrictPostsToTargetLocation, targetLocation, handleExpandPost, showExpandedPost, 
             expandedPost, handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  

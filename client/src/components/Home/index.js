@@ -9,8 +9,8 @@ import './styles.css';
 
 class Home extends Component {
     render() { 
-        const { user, users, recentlyReportedPosts, searchTerm, showExpandedPost, expandedPost, 
-            creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, 
+        const { user, users, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
+            creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
             handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
             handleGoToProfile, handleGoToInboxFromPost} = this.props;
             
@@ -28,7 +28,9 @@ class Home extends Component {
                     user={user}
                     users={users}
                     showInactivePosts={false}
+                    targetLocation={targetLocation}
                     restrictPostsToTargetLocation={true}
+                    handleChangeTargetLocation={handleChangeTargetLocation}
                     handleExpandPost={handleExpandPost} 
                     showExpandedPost={showExpandedPost} 
                     expandedPost={expandedPost}
@@ -51,9 +53,11 @@ class Home extends Component {
                 <SearchResults 
                     user={user}
                     users={users}
+                    targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     expandedPost={expandedPost}
                     recentlyReportedPosts={recentlyReportedPosts}
+                    handleChangeTargetLocation={handleChangeTargetLocation}
                     showExpandedPost={showExpandedPost}
                     handleExpandPost={handleExpandPost}
                     handleGoToProfile={handleGoToProfile}

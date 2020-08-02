@@ -23,6 +23,7 @@ class UserView extends Component {
         showExpandedPost: false,
         expandedPost: {},
         creatingNewPost: false,
+        targetLocation: this.props.user.location, // Defaults to the user's location
 
         viewingProfile: false,
         displayedUser: {},
@@ -35,6 +36,12 @@ class UserView extends Component {
         inboxFrom: null,
     }
 
+    handleChangeTargetLocation = targetLocation => {
+        this.setState({
+            targetLocation
+        });
+    }
+
     componentDidUpdate(prevProps) {
         const { showSearchResults, showExpandedPost, viewingProfile, viewingInbox } = this.state;
 
@@ -45,6 +52,11 @@ class UserView extends Component {
             } else {
                 this.handleBackToHome();
             }
+        }
+
+        // Change default target location if the user changed their location in settings
+        if (prevProps.user.location !== this.props.user.location) {
+            this.handleChangeTargetLocation(this.props.user.location);
         }
     }
 
@@ -206,7 +218,7 @@ class UserView extends Component {
     
     render() { 
         const { user, users, posts} = this.props;
-        const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm,
+        const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, targetLocation,
             recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox, viewingEditProfile } = this.state;
 
         return (  
@@ -233,10 +245,12 @@ class UserView extends Component {
                     expandedPost={expandedPost}
                     showSearchResults={showSearchResults}
                     recentlyReportedPosts={recentlyReportedPosts}
+                    targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     handleBackToHome={this.handleBackToHome}
                     handleBackToSearchResults={this.handleBackToSearchResults}
                     handleGoToProfile={this.handleGoToProfile}
+                    handleChangeTargetLocation={this.handleChangeTargetLocation}
                     handleOpenPostCreator={this.handleOpenPostCreator}
                     handleCreateNewPost={this.handleCreateNewPost}
                     handleExpandPost={this.handleExpandPost}

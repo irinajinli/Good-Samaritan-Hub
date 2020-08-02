@@ -96,6 +96,7 @@ class Profile extends Component {
                     {userPosts.length > 0 && <PostList
                         user={user}
                         users={users}
+                        recievePostsInProps={true}
                         posts={userPosts.filter(post => this.filterCondition(post))} 
                         restrictPostsToTargetLocation={false}
                         handleExpandPost={handleExpandPost} 

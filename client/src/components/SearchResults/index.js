@@ -10,13 +10,11 @@ import '../../index.css';
 
 class SearchResults extends Component {
     state = {  
-        matchingPosts: [],
         matchingUsers: []
     };
 
     updateResults() {
         this.setState({
-            matchingPosts: getMatchingPosts(this.props.searchTerm, this.props.posts),
             matchingUsers: getMatchingUsers(this.props.searchTerm, this.props.users)
         });
     }
@@ -32,7 +30,7 @@ class SearchResults extends Component {
     }
 
     render() { 
-        const { matchingPosts, matchingUsers } = this.state;
+        const { matchingUsers } = this.state;
         const { user, users, searchTerm, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
             handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleDeactivatePost, handleGoToInboxFromPost} = this.props;
 
@@ -62,9 +60,9 @@ class SearchResults extends Component {
                 <PostList 
                     user={user}
                     users={users}
-                    showInactivePosts={false}
                     targetLocation={targetLocation}
                     restrictPostsToTargetLocation={true}
+                    searchTerm={searchTerm}
                     handleExpandPost={handleExpandPost} 
                     showExpandedPost={showExpandedPost} 
                     expandedPost={expandedPost}
