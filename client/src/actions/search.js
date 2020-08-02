@@ -25,54 +25,34 @@ export const getMatchingUsers = (searchTerm, users) => {
 
 
 // Returns a list of the posts at the given location
-export const getPostsByLocation = (location) => {
+export const getPostsByLocation = async (location) => {
+
     const url = `/post/location/${location}`;
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            } else {
-                console.log('Could not find posts');
-                return [];
-            }
-        })
-        .then(posts => {
-            posts.forEach(post => {
-                post.date = new Date(post.date)
-            });
-            console.log(posts);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    const res = await fetch(url);
+    const posts = await res.json();
+    
+    posts.forEach(post => {
+        post.date = new Date(post.date)
+    });
+    console.log('getPostsByLocation', location, posts);
+    return posts;
+
 }
 
 // Returns a list of the given user's posts
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
-export const getPostsByUser = (user, posts) => {
+export const getPostsByUser = async (user) => {
 
-    const url = `/post/posterUsername/5f24e507a91ad663c847a722`;
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                return res.json();
-            } else {
-                console.log('Could not find posts');
-                return [];
-            }
-        })
-        .then(posts => {
-            posts.forEach(post => {
-                post.date = new Date(post.date)
-            });
-            console.log(posts);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+    const url = `/post/posterUsername/${user.username}`;
+    const res = await fetch(url);
+    const posts = await res.json();
+    
+    posts.forEach(post => {
+        post.date = new Date(post.date)
+    });
+    console.log('getPostsByUser', user.username, posts);
+    return posts;
 
-    // TODO: remove later
-    return posts.filter(post => user.posts.includes(post.id)); 
 };
 
 

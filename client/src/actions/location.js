@@ -1,4 +1,5 @@
 export const getPostalCodes = async (component) => {
+
     const url = `/locations`;
     const res = await fetch(url);
     const locations = await res.json();
@@ -12,18 +13,15 @@ export const getPostalCodes = async (component) => {
         postalCodes[location.postalCode].lon = location.lon;
     });
 
-    if (component) {
-        component.setState({
-            postalCodes
-        });
-    }
-
+    console.log('getPostalCodes', postalCodes);
     return postalCodes;
+
 }
 
-export const getPostalCodePrefixes = async (component) => {
+export const getPostalCodePrefixes = async () => {
+
     const postalCodes = await getPostalCodes();
-    component.setState({
-        postalCodePrefixes: Object.keys(postalCodes)
-    });
+    console.log('getPostalCodePrefixes', Object.keys(postalCodes));
+    return Object.keys(postalCodes);
+
 }

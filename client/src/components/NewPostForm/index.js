@@ -27,7 +27,18 @@ class NewPostForm extends Component {
     }
 
     componentDidMount() {
-        getPostalCodePrefixes(this);
+        getPostalCodePrefixes()
+            .then(postalCodePrefixes => {
+                this.setState({
+                postalCodePrefixes
+                });
+            })
+            .catch(error => {
+                console.log('Could not get postal codes');
+                this.setState({
+                postalCodePrefixes: []
+                });
+            });
     }
 
     handleLocationChange = (event, values) => {

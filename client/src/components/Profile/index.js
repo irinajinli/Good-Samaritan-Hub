@@ -18,10 +18,20 @@ class Profile extends Component {
     }
 
     updateUserPosts() {
-        const { displayedUser, posts } = this.props;
-        this.setState({
-            userPosts: getPostsByUser(displayedUser, posts)
-        });
+        const { displayedUser } = this.props;
+
+        getPostsByUser(displayedUser).
+            then(posts => {
+                this.setState({
+                    userPosts: posts 
+                });
+            })
+            .catch(error => {
+                console.log('Could not find posts')
+                this.setState({
+                    userPosts: [] 
+                });
+            });
     }
 
     componentDidMount() { 
@@ -56,9 +66,9 @@ class Profile extends Component {
     }
 
     render() { 
-        const {user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
-            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost} = this.props;
-        const {userPosts} = this.state;
+        const { user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
+            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
+        const { userPosts } = this.state;
         return (
         <div className='profile'>
             <div className='profile__container'>

@@ -19,12 +19,12 @@ import { getPostsByLocation } from '../../actions/search';
 class PostList extends Component {
     isAnyType = () => true;
 
-    isAnOffer = post => { return post.type === 'Offer'; }
+    isAnOffer = post => post.type === 'Offer';
 
-    isARequest = post => { return post.type === 'Request'; }
+    isARequest = post => post.type === 'Request';
 
     state = {
-        postsToDisplay: this.props.posts,
+        postsToDisplay: [],
         filterCondition: this.isAnyType,
         newestOrOldestFirst: 'newest first',
         postalCodes: {}
@@ -34,23 +34,61 @@ class PostList extends Component {
         const { filterCondition, newestOrOldestFirst } = this.state;
         const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation } = this.props;
 
-        // Filter posts
-        let postsToDisplay = this.props.posts.filter(post => {
-            return filterCondition(post) 
-                && !recentlyReportedPosts.includes(post) 
-                && (restrictPostsToTargetLocation? post.location === targetLocation : true);
-        })
+        if (restrictPostsToTargetLocation) {
 
-        // Sort posts by date
-        postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+            getPostsByLocation(targetLocation)
+                .then(postsToDisplay => {
+                    // Filter posts
+                    postsToDisplay = postsToDisplay.filter(post => {
+                        return filterCondition(post) && !recentlyReportedPosts.includes(post);
+                    })
 
-        this.setState({
-            postsToDisplay
-        });
+                    // Sort posts by date
+                    postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+
+                    this.setState({
+                        postsToDisplay
+                    }); 
+                })
+                .catch(error => {
+                    console.log('Could not get posts');
+                    this.setState({
+                        postsToDisplay: []
+                    });
+                })
+
+        } else {
+
+            // TODO: get rid of later
+
+            // Filter posts
+            let postsToDisplay = this.props.posts.filter(post => {
+                return filterCondition(post) && !recentlyReportedPosts.includes(post);
+            })
+
+            // Sort posts by date
+            postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+
+            this.setState({
+                postsToDisplay
+            });
+
+        }
     }
 
     componentDidMount() {
-        getPostalCodes(this);
+        getPostalCodes()
+            .then(postalCodes => {
+                this.setState({
+                    postalCodes
+                });
+            })
+            .catch(error => {
+                console.log('Could not get postal codes')
+                this.setState({
+                    postalCodes: {}
+                });
+            })
         this.updatePostsToDiplay();
     }
 
@@ -92,7 +130,7 @@ class PostList extends Component {
 
     handleTargetLocationChange = (event, values) => {
         this.props.handleChangeTargetLocation(values);
-        getPostsByLocation(undefined, values);
+        this.updatePostsToDiplay();
     };
 
     getBtnClass = type => {
@@ -209,7 +247,7 @@ class PostList extends Component {
                     {!showExpandedPost && postsToDisplay.length > 0 &&
                     postsToDisplay.map(post => (
                         <Post 
-                            key={post.id}
+                            key={post._id}
                             user={user}
                             users={users}
                             post={post}
