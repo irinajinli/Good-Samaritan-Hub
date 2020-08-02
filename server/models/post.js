@@ -31,6 +31,10 @@ let postSchema = Schema({
     location: {
         type: String,
         required: true
+    },
+    isReported: {
+        type: Boolean,
+        default: false
     }
 });
 

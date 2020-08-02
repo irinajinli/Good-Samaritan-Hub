@@ -23,10 +23,6 @@ const UserSchema = new Schema({ // TODO: not completed
         type: String,
         required: true
     },
-    posts: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    },
     messagesSent: {
         type: [Schema.Types.ObjectId],
         default: []
@@ -44,10 +40,6 @@ const UserSchema = new Schema({ // TODO: not completed
         default: false
     },
     reportedMessages: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    },
-    reportedPosts: {
         type: [Schema.Types.ObjectId],
         default: []
     },
