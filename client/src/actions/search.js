@@ -51,7 +51,7 @@ export const getPostsByLocation = (location) => {
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
 export const getPostsByUser = (user, posts) => {
 
-    const url = `/post/posterId/5f24e507a91ad663c847a722`;
+    const url = `/post/posterUsername/5f24e507a91ad663c847a722`;
     fetch(url)
         .then(res => {
             if (res.status === 200) {

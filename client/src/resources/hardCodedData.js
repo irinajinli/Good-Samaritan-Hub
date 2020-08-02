@@ -155,7 +155,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
-    posterId: 'user2',
+    posterUsername: 'user2',
     type: 'Request',
     date: new Date(2020, 5, 12),
     status: 'active',
@@ -170,7 +170,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posterId: 'user3',
+    posterUsername: 'user3',
     type: 'Offer',
     date: new Date(2020, 5, 5),
     status: 'active',
@@ -183,7 +183,7 @@ const posts = [
       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posterId: 'user4',
+    posterUsername: 'user4',
     type: 'Request',
     date: new Date(2020, 5, 15, 8, 6, 2),
     status: 'active',
@@ -193,7 +193,7 @@ const posts = [
     id: 3,
     title: 'Want personal chef',
     body: 'I am hungry',
-    posterId: 'user7',
+    posterUsername: 'user7',
     type: 'Request',
     date: new Date(2020, 5, 6, 20, 1, 43),
     status: 'active',
@@ -205,7 +205,7 @@ const posts = [
     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
       commodo sed egestas.`,
-    posterId: 'user7',
+    posterUsername: 'user7',
     type: 'Offer',
     date: new Date(2020, 5, 10, 2, 34, 23),
     status: 'active',
@@ -217,7 +217,7 @@ const posts = [
     body: `Viverra nibh cras pulvinar mattis nunc sed blandit libero. Consequat semper 
       verra nam libero justo laoreet sit amet. Neque viverra justo nec ultrices. At erat 
       pellentesque adipiscing commodo elit. Consequat interdum varius sit amet.`,
-    posterId: 'user3',
+    posterUsername: 'user3',
     type: 'Request',
     date: new Date(2020, 6, 27, 2, 34, 23),
     status: 'active',
@@ -228,7 +228,7 @@ const posts = [
     title: 'Lawn Mowing',
     body: `Semper risus in hendrerit gravida rutrum quisque non tellus. Sodales ut etiam 
       sit amet nisl purus in. Suspendisse potenti nullam ac tortor vitae purus faucibus. `,
-    posterId: 'user2',
+    posterUsername: 'user2',
     type: 'Offer',
     date: new Date(2019, 8, 27, 2, 34, 23),
     status: 'active',

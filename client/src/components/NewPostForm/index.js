@@ -18,7 +18,7 @@ class NewPostForm extends Component {
         id: -1,
         title: '',
         body: '',
-        posterId: this.props.user.username,
+        posterUsername: this.props.user.username,
         type: 'Request',
         date: {},
         status: 'active',
@@ -51,8 +51,8 @@ class NewPostForm extends Component {
         }, () => { 
             // Put handleCreateNewPost in the callback of setState to ensure that 
             // this.state.date is set before we call handleCreateNewPost
-            const { id, title, body, posterId, type, date, status, location } = this.state;
-            const newPost = { id, title, body, posterId, type, date, status, location };
+            const { id, title, body, posterUsername, type, date, status, location } = this.state;
+            const newPost = { id, title, body, posterUsername, type, date, status, location };
             this.props.handleCreateNewPost(newPost);
         });
     }

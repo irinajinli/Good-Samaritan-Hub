@@ -36,7 +36,7 @@ export const createPost = (newPost, appComponent) => {
 
 
 export const reportPost = (post, appComponent) => {
-    const originalPoster = getUser(post.posterId, appComponent.state.users);
+    const originalPoster = getUser(post.posterUsername, appComponent.state.users);
     const posterCopy = { ...originalPoster }; // clone poster
     
     // Set the clone's isReported status to true
@@ -108,7 +108,7 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         }
     })
     .catch(error => {
-        log(error);
+        console.log(error);
     });
 }
 

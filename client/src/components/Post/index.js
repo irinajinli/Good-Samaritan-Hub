@@ -59,7 +59,7 @@ class Post extends Component {
         const { user, users, post, isExpanded, handleExpandPost, handleBack, handleGoToProfile, handleGoToInboxFromPost} = this.props;
 
         // Get the poster
-        const poster = getUser(post.posterId, users);
+        const poster = getUser(post.posterUsername, users);
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 

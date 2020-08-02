@@ -11,7 +11,7 @@ const express = require('express');
 const router = express.Router();
 
 // A POST Route for making a post.
-// <req.params.id> is the posterId.
+// <req.params.posterUsername> is the poster's username.
 // <req.body> expects the following format:
 // {
 //     "title": "Grocery Pickup",
@@ -21,10 +21,10 @@ const router = express.Router();
 //     "status": "active",
 //     "location": "M4P"
 // }
-router.post('/post/:id', mongoChecker, validateId, (req, res) => {
-    // Get poster id from <id> param
-    const posterId = req.params.id;
-    req.body.posterId = posterId;
+router.post('/post/:posterUsername', mongoChecker, (req, res) => {
+    // Get poster username from <posterUsername> param
+    const posterUsername = req.params.posterUsername;
+    req.body.posterUsername = posterUsername;
 
     // Parse date string
     req.body.date = new Date(req.body.date);
@@ -47,9 +47,9 @@ router.get('/post/location/:location', mongoChecker, (req, res) => {
     find(req, res, Post, { location: req.params.location });
 });
 
-// GET route to get all posts with posterId <req.param.id>
-router.get('/post/posterId/:id', mongoChecker, validateId, (req, res) => {
-    find(req, res, Post, { posterId: req.params.id });
+// GET route to get all posts with posterUsername <req.param.posterUsername>
+router.get('/post/posterUsername/:posterUsername', mongoChecker, (req, res) => {
+    find(req, res, Post, { posterUsername: req.params.posterUsername });
 });
 
 // PATCH route to update a post

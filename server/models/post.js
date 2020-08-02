@@ -10,8 +10,8 @@ let postSchema = Schema({
         type: String,
         required: true
     },
-    posterId: {
-        type: Schema.Types.ObjectId,
+    posterUsername: {
+        type: String,
         required: true
     },
     type: {
