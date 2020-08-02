@@ -81,10 +81,8 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         users: usersCopy
     });
 
-    if (originalUser.username === appComponent.state.user.username) {
-        appComponent.setState({
-            user: updatedUser
-        });
+    if (originalUser.username !== appComponent.state.user.username) {
+        return;
     }
 
     const request = new Request(`/user/${originalUser._id}`, {
@@ -103,8 +101,10 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         }
     })
     .then(json => {
-        if (json.currentUser !== undefined) {
-            app.setState({ currentUser: json.currentUser });
+        if (json !== undefined) {
+            appComponent.setState({
+                user: json
+            });
         }
     })
     .catch(error => {
