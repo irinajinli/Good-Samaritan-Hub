@@ -1,6 +1,3 @@
-import { getPostalCodes, getPostalCodePrefixes } from '../resources/hardCodedData';
-
-
 // Returns the distance in km between the two given lat, lon coordinates
 // From https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-lonitude-points-haversine-formula
 const distance = (lat1, lon1, lat2, lon2) => {
@@ -15,8 +12,7 @@ const distance = (lat1, lon1, lat2, lon2) => {
 
 
 // Returns the distance in km between the two postal codes
-export const getDistance = (postalCode1, postalCode2) => {
-    const postalCodes = getPostalCodes();
+export const getDistance = (postalCode1, postalCode2, postalCodes) => {
     // Get the lat and lon coordinates of the two postal codes
     const lat1 = postalCodes[postalCode1].lat;
     const lon1 = postalCodes[postalCode1].lon;
@@ -28,12 +24,12 @@ export const getDistance = (postalCode1, postalCode2) => {
 
 // Returns a list containing of locations and their distance from <targetPostalCode>
 // sorted from closest to farthest away from <targetPostalCode>
-export const getNearbyLocations = (targetPostalCode) => {
-    const postalCodePrefixes = getPostalCodePrefixes();
+export const getNearbyLocations = (targetPostalCode, postalCodes) => {
+    const postalCodePrefixes = Object.keys(postalCodes);
     const postalCodeToDistance = postalCodePrefixes.map(pcp => {
         return { 
             postalCode: pcp, 
-            distance: getDistance(pcp, targetPostalCode)
+            distance: getDistance(pcp, targetPostalCode, postalCodes)
         }
     });
     postalCodeToDistance.sort((p1, p2) => p1.distance - p2.distance);

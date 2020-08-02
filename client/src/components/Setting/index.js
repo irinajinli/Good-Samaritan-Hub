@@ -7,7 +7,7 @@ import SaveSnackBar from './SaveSnackBar/index';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { updateUser } from '../../actions/user';
-import { getPostalCodePrefixes } from '../../resources/hardCodedData';
+import { getPostalCodePrefixes } from '../../actions/location';
 
 class Setting extends Component {
     state = { firstName: this.props.displayedUser.firstName,
@@ -24,7 +24,13 @@ class Setting extends Component {
         oldNotMatch: false,
         newNotMatch: false,
 
-        snackBarOpen: false
+        snackBarOpen: false,
+
+        postalCodePrefixes: []
+    }
+
+    componentDidMount() {
+        getPostalCodePrefixes(this);
     }
 
     handleCloseSnackBar = () => this.setState({snackBarOpen: false});
@@ -88,7 +94,7 @@ class Setting extends Component {
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
         const {user, displayedUser} = this.props
-        const {firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen} = this.state;
+        const {firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen, postalCodePrefixes} = this.state;
         
         return (
         <div className='profile'>
@@ -136,7 +142,7 @@ class Setting extends Component {
                         defaultValue={user.location}
                         disableClearable
                         onChange={this.handleLocationChange}
-                        options={getPostalCodePrefixes()}
+                        options={postalCodePrefixes}
                         renderInput={(params) => <TextField label='Location' variant='outlined'{...params}/>}
                     />
                     <div className='profile__button'>

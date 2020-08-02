@@ -11,7 +11,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import './styles.css'
 import '../../index.css'
 
-import { getPostalCodePrefixes } from '../../resources/hardCodedData';
+import { getPostalCodePrefixes } from '../../actions/location';
 
 class NewPostForm extends Component {
     state = {
@@ -22,7 +22,12 @@ class NewPostForm extends Component {
         type: 'Request',
         date: {},
         status: 'active',
-        location: this.props.user.location // Defaults to the user's location
+        location: this.props.user.location, // Defaults to the user's location
+        postalCodePrefixes: []
+    }
+
+    componentDidMount() {
+        getPostalCodePrefixes(this);
     }
 
     handleLocationChange = (event, values) => {
@@ -46,12 +51,15 @@ class NewPostForm extends Component {
         }, () => { 
             // Put handleCreateNewPost in the callback of setState to ensure that 
             // this.state.date is set before we call handleCreateNewPost
-            this.props.handleCreateNewPost(this.state);
+            const { id, title, body, posterId, type, date, status, location } = this.state;
+            const newPost = { id, title, body, posterId, type, date, status, location };
+            this.props.handleCreateNewPost(newPost);
         });
     }
 
     render() { 
-        const {user, handleBackToHome} = this.props;
+        const { postalCodePrefixes } = this.state;
+        const { user, handleBackToHome } = this.props;
 
         return (  
             <div >
@@ -100,7 +108,7 @@ class NewPostForm extends Component {
                                         defaultValue={user.location}
                                         disableClearable
                                         onChange={this.handleLocationChange}
-                                        options={getPostalCodePrefixes()}
+                                        options={postalCodePrefixes}
                                         renderInput={(params) => <TextField {...params}/>}
                                     />
                                 </div>

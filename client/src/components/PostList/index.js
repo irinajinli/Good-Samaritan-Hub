@@ -11,7 +11,7 @@ import Post from '../Post'
 import './styles.css'
 import '../../index.css'
 
-import { getPostalCodePrefixes } from '../../resources/hardCodedData';
+import { getPostalCodes } from '../../actions/location';
 import { sortByDate } from '../../actions/sort';
 import { getNearbyLocations } from '../../actions/distance';
 import { getPostsByLocation } from '../../actions/search';
@@ -26,7 +26,8 @@ class PostList extends Component {
     state = {
         postsToDisplay: this.props.posts,
         filterCondition: this.isAnyType,
-        newestOrOldestFirst: 'newest first'
+        newestOrOldestFirst: 'newest first',
+        postalCodes: {}
     }
 
     updatePostsToDiplay = () => {
@@ -49,6 +50,7 @@ class PostList extends Component {
     }
 
     componentDidMount() {
+        getPostalCodes(this);
         this.updatePostsToDiplay();
     }
 
@@ -59,16 +61,16 @@ class PostList extends Component {
     }
 
     showNearbyLocations = () => {
-        const nearbyLocations = getNearbyLocations(this.props.targetLocation);
+        const nearbyLocations = getNearbyLocations(this.props.targetLocation, this.state.postalCodes);
         return (
             <div className='post-list__location-card-content post-list--center'>
                 <div>
                     <div className='post-list__underline'>Try locations near {this.props.targetLocation}:</div>
                     <div className='post-list--center'>
                         <ul className='post-list__ul'>
-                            <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>
-                            <li><div>{nearbyLocations[2].postalCode} - {Math.round(nearbyLocations[2].distance * 10) / 10} km</div></li>
-                            <li><div>{nearbyLocations[3].postalCode} - {Math.round(nearbyLocations[3].distance * 10) / 10} km</div></li>
+                            {nearbyLocations.length > 0 && <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>}
+                            {nearbyLocations.length > 1 && <li><div>{nearbyLocations[2].postalCode} - {Math.round(nearbyLocations[2].distance * 10) / 10} km</div></li>}
+                            {nearbyLocations.length > 2 && <li><div>{nearbyLocations[3].postalCode} - {Math.round(nearbyLocations[3].distance * 10) / 10} km</div></li>}
                         </ul>
                     </div>
                 </div>
@@ -147,7 +149,7 @@ class PostList extends Component {
     }
 
     render() { 
-        const { postsToDisplay } = this.state;
+        const { postsToDisplay, postalCodes } = this.state;
         const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, expandedPost, 
             handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
@@ -166,7 +168,7 @@ class PostList extends Component {
                                         defaultValue={targetLocation}
                                         disableClearable
                                         onChange={this.handleTargetLocationChange}
-                                        options={getPostalCodePrefixes()}
+                                        options={Object.keys(postalCodes)}
                                         renderInput={(params) => <TextField {...params}/>}
                                     />
                                 </div>

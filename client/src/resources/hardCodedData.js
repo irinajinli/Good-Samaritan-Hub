@@ -1,22 +1,22 @@
- // Some Toronto postal codes prefixes mapped to their lat, lon location
-const postalCodes = {
-  // Central Toronto
-  M4V: {lat: 43.686989, lon: -79.402572},
-  M4P: {lat: 43.697225, lon: -79.412968},
+//  // Some Toronto postal codes prefixes mapped to their lat, lon location
+// const postalCodes = {
+//   // Central Toronto
+//   M4V: {lat: 43.686989, lon: -79.402572},
+//   M4P: {lat: 43.697225, lon: -79.412968},
 
-  // Downtown Toronto
-  M5S: {lat: 43.663334, lon: -79.399336},
-  M4X: {lat: 43.669856, lon: -79.365100},
+//   // Downtown Toronto
+//   M5S: {lat: 43.663334, lon: -79.399336},
+//   M4X: {lat: 43.669856, lon: -79.365100},
 
-  // Downsview East / North York
-  M3K: {lat: 43.738192, lon: -79.470333},
+//   // Downsview East / North York
+//   M3K: {lat: 43.738192, lon: -79.470333},
 
-  // Etibocoke
-  M8V: {lat: 43.607141, lon: -79.503639},
+//   // Etibocoke
+//   M8V: {lat: 43.607141, lon: -79.503639},
 
-  // West Toronto
-  M6H: {lat: 43.664417, lon: -79.437448}
-}
+//   // West Toronto
+//   M6H: {lat: 43.664417, lon: -79.437448}
+// }
 
 // Initial list of users
 const users = [
@@ -254,9 +254,9 @@ const messages = [
   { messageId: 8, messageSender: 'user6', messageReceiver: 'user7', date: '1593648000', messageContent: 'Hello' },
 ];
 
-export const getPostalCodePrefixes = () => Object.keys(postalCodes);
+// export const getPostalCodePrefixes = () => Object.keys(postalCodes);
 
-export const getPostalCodes = () => postalCodes;
+// export const getPostalCodes = () => postalCodes;
 
 export const getInitialUsers = () => users;
 

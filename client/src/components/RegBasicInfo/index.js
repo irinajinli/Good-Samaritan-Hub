@@ -4,7 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import "../RegAccountInfo/styles.css";
 import "./styles.css";
-import { getPostalCodePrefixes } from '../../resources/hardCodedData';
+import { getPostalCodePrefixes } from '../../actions/location';
 
 export default class RegBasicInfo extends React.Component {
   state = {
@@ -14,7 +14,12 @@ export default class RegBasicInfo extends React.Component {
     postCode: "",
     email: "",
     reqsSatisfied: false,
+    postalCodePrefixes: []
   };
+
+  componentDidMount() {
+    getPostalCodePrefixes(this);
+  }
 
   handleOnChange = (event) => {
     const target = event.target;
@@ -30,7 +35,6 @@ export default class RegBasicInfo extends React.Component {
     this.setState({
       postCode: values
     });
-    console.log(this.state)
   };
 
   updateReqsSatisfied = () => {
@@ -51,6 +55,7 @@ export default class RegBasicInfo extends React.Component {
   };
 
   render() {
+    const { postalCodePrefixes } = this.state;
     return (
       <form noValidate autoComplete="off">
         <div>
@@ -87,7 +92,7 @@ export default class RegBasicInfo extends React.Component {
             <Autocomplete
               defaultValue=""
               label="Postal Code"
-              options={getPostalCodePrefixes()}
+              options={postalCodePrefixes}
               onChange={this.handleLocationChange}
               style={{ width: "100%" }}
               renderInput={(params) => <TextField {...params} required label="Postal Code" variant="outlined" />}
