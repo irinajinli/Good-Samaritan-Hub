@@ -66,7 +66,7 @@ router.patch("/user/:id", mongoChecker, validateId, (req, res) => {
 //     "location": String
 // }
 router.put("/user/:id", mongoChecker, validateId, (req, res) => {
-  User.findOneAndReplace({_id: id}, req.body, {new: true, useFindAndModify: false})
+  User.findOneAndReplace({_id: req.params.id}, req.body, {new: true, useFindAndModify: false})
 	.then((user) => {
 		if (user) {
 			res.send(user);
