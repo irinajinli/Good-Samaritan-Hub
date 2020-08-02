@@ -8,7 +8,8 @@ import Inbox from '../Inbox';
 import Setting from '../Setting';
 import './styles.css';
 
-import { createPost, reportPost, deactivatePost } from '../../actions/user';
+import { createPost } from '../../actions/post';
+import { reportPost, deactivatePost } from '../../actions/user';
 import {getMessages, getConversations} from '../../resources/hardCodedData';
 
 
@@ -108,8 +109,13 @@ class UserView extends Component {
     }
 
     handleCreateNewPost = newPost => {
-        createPost(newPost, this.props.appComponent);
-        this.handleBackToHome();
+        createPost(newPost)
+            .then(addedPost => {
+                this.handleBackToHome();
+            })
+            .catch(error => {
+                alert('Could not create post. Please try again.');
+            });
     }
 
     handleSearch = searchTerm => {

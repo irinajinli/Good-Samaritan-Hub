@@ -11,7 +11,7 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getInitialPosts, getMessages } from './resources/hardCodedData';
+import { getInitialUsers, getMessages } from './resources/hardCodedData';
 import Message from "./components/Inbox/Messages/Message";
 
 class App extends Component {
@@ -46,7 +46,7 @@ class App extends Component {
   state = {
     user: getInitialUsers()[0], // Phase 2: Init to {}/undefined and change this based on which user is logged in
     users: getInitialUsers(), // Phase 2: Initialize users to an empty list
-    posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
+    // posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
     messages: getMessages()
   };
 
@@ -67,7 +67,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, users, posts, messages } = this.state;
+    const { user, users, messages } = this.state;
 
     return (
       <React.Fragment>
@@ -84,7 +84,7 @@ class App extends Component {
                     appComponent={this}
                     user={user}
                     users={users}
-                    posts={posts}
+                    // posts={posts}
                     handleLogout={this.handleLogout}
                   />
                 }
@@ -96,7 +96,7 @@ class App extends Component {
                 render={() => 
                 <AdminHome 
                   users={users} 
-                  posts={posts}
+                  // posts={posts}
                   messages={messages}
                   handleLogout={this.handleLogout}
                 />}

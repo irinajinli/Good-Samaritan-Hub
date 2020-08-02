@@ -24,7 +24,7 @@ class PostList extends Component {
     isARequest = post => post.type === 'Request';
 
     state = {
-        postsToDisplay: [],
+        posts: [],
         filterCondition: this.isAnyType,
         newestOrOldestFirst: 'newest first',
         postalCodes: {}
@@ -32,45 +32,47 @@ class PostList extends Component {
 
     updatePostsToDiplay = () => {
         const { filterCondition, newestOrOldestFirst } = this.state;
-        const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation } = this.props;
+        const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation, 
+            showInactivePosts } = this.props;
 
         if (restrictPostsToTargetLocation) {
 
             getPostsByLocation(targetLocation)
-                .then(postsToDisplay => {
+                .then(posts => {
                     // Filter posts
-                    postsToDisplay = postsToDisplay.filter(post => {
-                        return filterCondition(post) && !recentlyReportedPosts.includes(post);
+                    posts = posts.filter(post => {
+                        return filterCondition(post) && !recentlyReportedPosts.includes(post)
+                            && (showInactivePosts? true : post.status === 'active');
                     })
 
                     // Sort posts by date
-                    postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+                    posts = sortByDate(posts, newestOrOldestFirst);
 
                     this.setState({
-                        postsToDisplay
+                        posts
                     }); 
                 })
                 .catch(error => {
                     console.log('Could not get posts');
                     this.setState({
-                        postsToDisplay: []
+                        posts: []
                     });
                 })
 
         } else {
 
-            // TODO: get rid of later
+            // TODO: probably get rid of later
 
             // Filter posts
-            let postsToDisplay = this.props.posts.filter(post => {
+            let posts = this.props.posts.filter(post => {
                 return filterCondition(post) && !recentlyReportedPosts.includes(post);
-            })
+            });
 
             // Sort posts by date
-            postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+            posts = sortByDate(posts, newestOrOldestFirst);
 
             this.setState({
-                postsToDisplay
+                posts
             });
 
         }
@@ -187,9 +189,9 @@ class PostList extends Component {
     }
 
     render() { 
-        const { postsToDisplay, postalCodes } = this.state;
-        const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
+        const { posts, postalCodes } = this.state;
+        const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, 
+            expandedPost, handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  
             <div >
@@ -244,8 +246,8 @@ class PostList extends Component {
                 </div>}
 
                 <div className='post-list__container'>
-                    {!showExpandedPost && postsToDisplay.length > 0 &&
-                    postsToDisplay.map(post => (
+                    {!showExpandedPost && posts.length > 0 &&
+                    posts.map(post => (
                         <Post 
                             key={post._id}
                             user={user}
@@ -261,10 +263,10 @@ class PostList extends Component {
                             deactivatePost={this.onRemovePost}
                         />
                     ))}
-                    {!showExpandedPost && postsToDisplay.length == 0 &&
+                    {!showExpandedPost && posts.length == 0 &&
                         <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
                     }
-                    {!showExpandedPost && postsToDisplay.length == 0 && restrictPostsToTargetLocation &&
+                    {!showExpandedPost && posts.length == 0 && restrictPostsToTargetLocation &&
                         <Card className='post-list__header-card'>
                             {this.showNearbyLocations()}
                         </Card>

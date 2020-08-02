@@ -62,7 +62,7 @@ class SearchResults extends Component {
                 <PostList 
                     user={user}
                     users={users}
-                    posts={matchingPosts.filter(post => post.status === 'active')} 
+                    showInactivePosts={false}
                     targetLocation={targetLocation}
                     restrictPostsToTargetLocation={true}
                     handleExpandPost={handleExpandPost} 

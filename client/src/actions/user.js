@@ -1,38 +1,38 @@
 import { getUser } from './search';
 
 
-export const createPost = (newPost, appComponent) => {
-    const { user, posts } = appComponent.state;
+// export const createPost = (newPost, appComponent) => {
+//     const { user, posts } = appComponent.state;
 
-    // Give the post a unique id
-    newPost.id = posts.length; // Phase 2: May need a different way to generate this unique id
+//     // Give the post a unique id
+//     newPost.id = posts.length; // Phase 2: May need a different way to generate this unique id
 
-    // Add new post to a copy of the global post list
-    let newPosts = posts.concat(newPost);
+//     // Add new post to a copy of the global post list
+//     let newPosts = posts.concat(newPost);
 
-    // Clone the user
-    const userCopy = { ...user };
+//     // Clone the user
+//     const userCopy = { ...user };
 
-    // Add new post id to a copy of the cloned user's post list
-    userCopy.posts = user.posts.concat(newPost.id);
+//     // Add new post id to a copy of the cloned user's post list
+//     userCopy.posts = user.posts.concat(newPost.id);
 
-    // Clone users list
-    const usersCopy = [ ...appComponent.state.users ];
+//     // Clone users list
+//     const usersCopy = [ ...appComponent.state.users ];
 
-    // Add new user to cloned users list
-    const index = usersCopy.indexOf(user);
-    usersCopy[index] = userCopy;
+//     // Add new user to cloned users list
+//     const index = usersCopy.indexOf(user);
+//     usersCopy[index] = userCopy;
 
-    // Update appComponent's state
-    appComponent.setState({
-        posts: newPosts,
-        user: userCopy,
-        users: usersCopy
-    });
+//     // Update appComponent's state
+//     appComponent.setState({
+//         posts: newPosts,
+//         user: userCopy,
+//         users: usersCopy
+//     });
 
-    // Phase 2: Make a server call to add the new post
-    // ...
-}
+//     // Phase 2: Make a server call to add the new post
+//     // ...
+// }
 
 
 export const reportPost = (post, appComponent) => {

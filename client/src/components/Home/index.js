@@ -9,7 +9,7 @@ import './styles.css';
 
 class Home extends Component {
     render() { 
-        const { user, users, posts, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
+        const { user, users, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
             creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
             handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
             handleGoToProfile, handleGoToInboxFromPost} = this.props;
@@ -27,7 +27,7 @@ class Home extends Component {
                 <PostList 
                     user={user}
                     users={users}
-                    posts={posts.filter(post => post.status === 'active')} 
+                    showInactivePosts={false}
                     targetLocation={targetLocation}
                     restrictPostsToTargetLocation={true}
                     handleChangeTargetLocation={handleChangeTargetLocation}
@@ -53,7 +53,7 @@ class Home extends Component {
                 <SearchResults 
                     user={user}
                     users={users}
-                    posts={posts}
+                    // posts={posts}
                     targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     expandedPost={expandedPost}

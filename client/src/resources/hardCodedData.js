@@ -145,96 +145,96 @@ const users = [
 ];
 
 // Initial list of posts
-const posts = [
-  {
-    id: 0,
-    title: 'Grocery Pickup',
-    body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
-    posterUsername: 'user2',
-    type: 'Request',
-    date: new Date(2020, 5, 12),
-    status: 'active',
-    location: 'M4P'
-  },
-  {
-    id: 1,
-    title: 'Any pickup in Etobicoke Area',
-    body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posterUsername: 'user3',
-    type: 'Offer',
-    date: new Date(2020, 5, 5),
-    status: 'active',
-    location: 'M6H'
-  },
-  {
-    id: 2,
-    title: 'Dog Walking Assistance',
-    body: `Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posterUsername: 'user4',
-    type: 'Request',
-    date: new Date(2020, 5, 15, 8, 6, 2),
-    status: 'active',
-    location: 'M5S'
-  },
-  {
-    id: 3,
-    title: 'Want personal chef',
-    body: 'I am hungry',
-    posterUsername: 'user7',
-    type: 'Request',
-    date: new Date(2020, 5, 6, 20, 1, 43),
-    status: 'active',
-    location: 'M8V'
-  },
-  {
-    id: 4,
-    title: 'Candy',
-    body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas.`,
-    posterUsername: 'user7',
-    type: 'Offer',
-    date: new Date(2020, 5, 10, 2, 34, 23),
-    status: 'active',
-    location: 'M8V'
-  },
-  {
-    id: 5,
-    title: 'Cat Sitting',
-    body: `Viverra nibh cras pulvinar mattis nunc sed blandit libero. Consequat semper 
-      verra nam libero justo laoreet sit amet. Neque viverra justo nec ultrices. At erat 
-      pellentesque adipiscing commodo elit. Consequat interdum varius sit amet.`,
-    posterUsername: 'user3',
-    type: 'Request',
-    date: new Date(2020, 6, 27, 2, 34, 23),
-    status: 'active',
-    location: 'M4V'
-  },
-  {
-    id: 6,
-    title: 'Lawn Mowing',
-    body: `Semper risus in hendrerit gravida rutrum quisque non tellus. Sodales ut etiam 
-      sit amet nisl purus in. Suspendisse potenti nullam ac tortor vitae purus faucibus. `,
-    posterUsername: 'user2',
-    type: 'Offer',
-    date: new Date(2019, 8, 27, 2, 34, 23),
-    status: 'active',
-    location: 'M4V'
-  }
-];
+// const posts = [
+//   {
+//     id: 0,
+//     title: 'Grocery Pickup',
+//     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+//       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+//       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+//       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+//       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+//       adipiscing. Laoreet non curabitur gravida arcu ac tortor. Thanks!`,
+//     posterUsername: 'user2',
+//     type: 'Request',
+//     date: new Date(2020, 5, 12),
+//     status: 'active',
+//     location: 'M4P'
+//   },
+//   {
+//     id: 1,
+//     title: 'Any pickup in Etobicoke Area',
+//     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+//       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+//       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+//       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+//       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+//       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+//     posterUsername: 'user3',
+//     type: 'Offer',
+//     date: new Date(2020, 5, 5),
+//     status: 'active',
+//     location: 'M6H'
+//   },
+//   {
+//     id: 2,
+//     title: 'Dog Walking Assistance',
+//     body: `Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+//       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+//       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+//       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+//     posterUsername: 'user4',
+//     type: 'Request',
+//     date: new Date(2020, 5, 15, 8, 6, 2),
+//     status: 'active',
+//     location: 'M5S'
+//   },
+//   {
+//     id: 3,
+//     title: 'Want personal chef',
+//     body: 'I am hungry',
+//     posterUsername: 'user7',
+//     type: 'Request',
+//     date: new Date(2020, 5, 6, 20, 1, 43),
+//     status: 'active',
+//     location: 'M8V'
+//   },
+//   {
+//     id: 4,
+//     title: 'Candy',
+//     body: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+//       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+//       commodo sed egestas.`,
+//     posterUsername: 'user7',
+//     type: 'Offer',
+//     date: new Date(2020, 5, 10, 2, 34, 23),
+//     status: 'active',
+//     location: 'M8V'
+//   },
+//   {
+//     id: 5,
+//     title: 'Cat Sitting',
+//     body: `Viverra nibh cras pulvinar mattis nunc sed blandit libero. Consequat semper 
+//       verra nam libero justo laoreet sit amet. Neque viverra justo nec ultrices. At erat 
+//       pellentesque adipiscing commodo elit. Consequat interdum varius sit amet.`,
+//     posterUsername: 'user3',
+//     type: 'Request',
+//     date: new Date(2020, 6, 27, 2, 34, 23),
+//     status: 'active',
+//     location: 'M4V'
+//   },
+//   {
+//     id: 6,
+//     title: 'Lawn Mowing',
+//     body: `Semper risus in hendrerit gravida rutrum quisque non tellus. Sodales ut etiam 
+//       sit amet nisl purus in. Suspendisse potenti nullam ac tortor vitae purus faucibus. `,
+//     posterUsername: 'user2',
+//     type: 'Offer',
+//     date: new Date(2019, 8, 27, 2, 34, 23),
+//     status: 'active',
+//     location: 'M4V'
+//   }
+// ];
 
 const conversations = [
   { username: 'user2', name: 'Bobsy Bob', image: 'https://picsum.photos/70', lastMessageTime: 1593648000 },
@@ -260,7 +260,7 @@ const messages = [
 
 export const getInitialUsers = () => users;
 
-export const getInitialPosts = () => posts;
+// export const getInitialPosts = () => posts;
 
 export const getMessages = () => messages;
 
