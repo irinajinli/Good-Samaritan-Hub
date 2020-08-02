@@ -55,6 +55,31 @@ router.patch("/user/:id", mongoChecker, validateId, (req, res) => {
   patch(req, res, User);
 });
 
+// PUT route to replace a user.
+// <req.param.id> is the user's id.
+// <req.body> expects the following fields at minimum. See the User model for all fields.
+// {
+//     "username": String,
+//     "password": String,
+//     "firstName": String,
+//     "lastName": String,
+//     "location": String
+// }
+router.put("/user/:id", mongoChecker, validateId, (req, res) => {
+  User.findOneAndReplace({_id: id}, req.body, {new: true, useFindAndModify: false})
+	.then((user) => {
+		if (user) {
+			res.send(user);
+		} else {
+			res.status(404).send();
+		}
+	})
+	.catch((error) => {
+    log(error);
+    res.status(500).send('Internal server error');
+	});
+});
+
 // POST route to log in and create session
 router.post("/users/login", (req, res) => {
   const username = req.body.username;

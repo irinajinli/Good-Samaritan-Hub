@@ -81,13 +81,34 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         users: usersCopy
     });
 
-    if (originalUser.username === appComponent.state.user.username) {
-        appComponent.setState({
-            user: updatedUser
-        });
+    if (originalUser.username !== appComponent.state.user.username) {
+        return;
     }
 
-    // Phase 2: Make a server call to update this user
-    // ...
+    const request = new Request(`/user/${originalUser._id}`, {
+        method: "put",
+        body: JSON.stringify(updatedUser.state),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request).then(res => {
+        if (res.status === 200) {
+            return res.json();
+        }
+    })
+    .then(json => {
+        if (json !== undefined) {
+            appComponent.setState({
+                user: json
+            });
+        }
+    })
+    .catch(error => {
+        log(error);
+    });
 }
 
