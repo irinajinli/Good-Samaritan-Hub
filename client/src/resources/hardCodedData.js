@@ -27,122 +27,121 @@ const users = [
     lastName: 'Smith',
     location: 'M4V',
     bio: 'Hello world, I am John Smith!',
-    posts: [],
     messagesSent: [0, 2, 4, 6],
     messagesRecieved: [1, 3, 5, 7],
     isReported: false,
     isBanned: false,
     reportedMessages: [],
-    reportedPosts: [],
-    banReason: ''
-  },
-  {
-    username: 'user2',
-    password: 'user2',
-    firstName: 'Bobsy',
-    lastName: 'Bob',
-    location: 'M4P',
-    bio: 'Hello world, I am Bobsy Bob!',
-    posts: [0, 6],
-    messagesSent: [1, 3],
-    messagesRecieved: [0, 2],
-    isReported: false,
-    isBanned: false,
-    reportedMessages: [],
-    reportedPosts: [],
-    banReason: ''
-  },
-  {
-    username: 'user3',
-    password: 'user3',
-    firstName: 'Diane',
-    lastName: 'Doe',
-    location: 'M6H',
-    bio: 'Hello world, I am Diane Doe!',
-    posts: [1, 5],
-    messagesSent: [5],
-    messagesRecieved: [4],
-    isReported: false,
-    isBanned: false,
-    reportedMessages: [],
-    reportedPosts: [],
-    banReason: ''
-  },
-  {
-    username: 'user4',
-    password: 'user4',
-    firstName: 'Jack',
-    lastName: 'Scott',
-    location: 'M5S',
-    bio: 'I am!',
-    posts: [2],
-    messagesSent: [7],
-    messagesRecieved: [6],
-    isReported: true,
-    isBanned: false,
-    reportedMessages: [7],
-    reportedPosts: [2],
-    banReason: ''
-  },
-  {
-    username: 'user5',
-    password: 'user5',
-    firstName: 'Sally',
-    lastName: 'Sue',
-    location: 'M4X',
-    bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posts: [],
-    messagesSent: [],
-    messagesRecieved: [],
-    isReported: false,
-    isBanned: true,
-    reportedMessages: [],
-    reportedPosts: [],
-    banReason: 'User stole money'
-  },
-  {
-    username: 'user6',
-    password: 'user6',
-    firstName: 'Pat',
-    lastName: 'Rick',
-    location: 'M3K',
-    bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-      tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
-      commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
-      eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
-      nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
-      adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
-    posts: [],
-    messagesSent: [8],
-    messagesRecieved: [],
-    isReported: true,
-    isBanned: true,
-    reportedMessages: [8],
-    reportedPosts: [],
-    banReason: 'User said mean words'
-  },
-  {
-    username: 'user7',
-    password: 'user7',
-    firstName: 'Blake',
-    lastName: 'Bradley',
-    location: 'M8V',
-    bio: `I am John`,
-    posts: [3, 4],
-    messagesSent: [],
-    messagesRecieved: [8],
-    isReported: true,
-    isBanned: false,
-    reportedMessages: [],
-    reportedPosts: [3, 4],
     banReason: ''
   }
-];
+]
+//   {
+//     username: 'user2',
+//     password: 'user2',
+//     firstName: 'Bobsy',
+//     lastName: 'Bob',
+//     location: 'M4P',
+//     bio: 'Hello world, I am Bobsy Bob!',
+//     posts: [0, 6],
+//     messagesSent: [1, 3],
+//     messagesRecieved: [0, 2],
+//     isReported: false,
+//     isBanned: false,
+//     reportedMessages: [],
+//     reportedPosts: [],
+//     banReason: ''
+//   },
+//   {
+//     username: 'user3',
+//     password: 'user3',
+//     firstName: 'Diane',
+//     lastName: 'Doe',
+//     location: 'M6H',
+//     bio: 'Hello world, I am Diane Doe!',
+//     posts: [1, 5],
+//     messagesSent: [5],
+//     messagesRecieved: [4],
+//     isReported: false,
+//     isBanned: false,
+//     reportedMessages: [],
+//     reportedPosts: [],
+//     banReason: ''
+//   },
+//   {
+//     username: 'user4',
+//     password: 'user4',
+//     firstName: 'Jack',
+//     lastName: 'Scott',
+//     location: 'M5S',
+//     bio: 'I am!',
+//     posts: [2],
+//     messagesSent: [7],
+//     messagesRecieved: [6],
+//     isReported: true,
+//     isBanned: false,
+//     reportedMessages: [7],
+//     reportedPosts: [2],
+//     banReason: ''
+//   },
+//   {
+//     username: 'user5',
+//     password: 'user5',
+//     firstName: 'Sally',
+//     lastName: 'Sue',
+//     location: 'M4X',
+//     bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+//       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+//       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+//       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+//       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+//       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+//     posts: [],
+//     messagesSent: [],
+//     messagesRecieved: [],
+//     isReported: false,
+//     isBanned: true,
+//     reportedMessages: [],
+//     reportedPosts: [],
+//     banReason: 'User stole money'
+//   },
+//   {
+//     username: 'user6',
+//     password: 'user6',
+//     firstName: 'Pat',
+//     lastName: 'Rick',
+//     location: 'M3K',
+//     bio: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+//       tempor incididunt ut labore et dolore magna aliqua. Odio pellentesque diam volutpat 
+//       commodo sed egestas. Faucibus purus in massa tempor nec feugiat nisl. Vitae justo 
+//       eget magna fermentum. Et leo duis ut diam quam nulla porttitor. Lectus proin nibh 
+//       nisl condimentum id venenatis. Quis commodo odio aenean sed adipiscing diam donec 
+//       adipiscing. Laoreet non curabitur gravida arcu ac tortor.`,
+//     posts: [],
+//     messagesSent: [8],
+//     messagesRecieved: [],
+//     isReported: true,
+//     isBanned: true,
+//     reportedMessages: [8],
+//     reportedPosts: [],
+//     banReason: 'User said mean words'
+//   },
+//   {
+//     username: 'user7',
+//     password: 'user7',
+//     firstName: 'Blake',
+//     lastName: 'Bradley',
+//     location: 'M8V',
+//     bio: `I am John`,
+//     posts: [3, 4],
+//     messagesSent: [],
+//     messagesRecieved: [8],
+//     isReported: true,
+//     isBanned: false,
+//     reportedMessages: [],
+//     reportedPosts: [3, 4],
+//     banReason: ''
+//   }
+// ];
 
 // Initial list of posts
 // const posts = [
