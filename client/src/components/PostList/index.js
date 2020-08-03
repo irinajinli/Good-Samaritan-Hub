@@ -201,19 +201,17 @@ class PostList extends Component {
     onReportPost = post => {
         const { handleHidePostFromUser, handleBack } = this.props;
 
-        // Report the post then hide it from the user
+        // Report the post
         reportPost(post)
             .then(reportedPost => {
-                console.log(reportedPost); // TODO: remove later
+                // Then hide it from the user
                 return handleHidePostFromUser(reportedPost);
             })
             .then(updatedUser => {
-                console.log('PostList handleHidePostFromUser', updatedUser); // TODO: remove later
                 handleBack();
                 this.updatePostsToDiplay();
             })
             .catch(error => {
-                console.log(error);
                 alert('Unable to report post. Please try again');
             });
     }

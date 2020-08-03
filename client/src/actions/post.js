@@ -49,14 +49,14 @@ export const createPost = async (newPost) => {
 }
 
 
-export const reportPost = async (post) => {
+const changeIsReported = async (post, trueOrFalse) => {
 
     const url = `/post/${post._id}`;
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
         method: 'PATCH',
-        body: JSON.stringify([{ 'op': 'replace', 'path': '/isReported', 'value': true }]),
+        body: JSON.stringify([{ 'op': 'replace', 'path': '/isReported', 'value': trueOrFalse }]),
         headers: {
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
@@ -64,9 +64,19 @@ export const reportPost = async (post) => {
     });
 
     const res = await fetch(request);
-    const reportedPost = await res.json();
-    return reportedPost;
+    const updatedPost = await res.json();
+    return updatedPost;
 
+}
+
+
+export const unreportPost = async (post) => {
+    return await changeIsReported(post, false);
+}
+
+
+export const reportPost = async (post) => {
+    return await changeIsReported(post, true);
 }
 
 
