@@ -93,10 +93,6 @@ class App extends Component {
                 exact path="/admin/home"
                 render={() => 
                 <AdminHome 
-<<<<<<< HEAD
-=======
-                  users={users} 
->>>>>>> 031572d54c6a085b5e3c5dbc10e5dac6ccb2355b
                   messages={messages}
                   handleLogout={this.handleLogout}
                 />}
