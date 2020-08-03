@@ -11,7 +11,7 @@ class Home extends Component {
     render() { 
         const { user, users, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
             creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
-            handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, handleDeactivatePost, 
+            handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, 
             handleGoToProfile, handleGoToInboxFromPost} = this.props;
             
         return (  
@@ -39,7 +39,6 @@ class Home extends Component {
                     recentlyReportedPosts={recentlyReportedPosts}
                     handleGoToProfile={handleGoToProfile}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
-                    deactivatePost={handleDeactivatePost}
                 />}
 
                 {creatingNewPost && 
@@ -63,7 +62,6 @@ class Home extends Component {
                     handleGoToProfile={handleGoToProfile}
                     handleBackToSearchResults={handleBackToSearchResults}
                     handleReportPost={handleReportPost}
-                    handleDeactivatePost={handleDeactivatePost}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
                 />}
 

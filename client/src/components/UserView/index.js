@@ -9,14 +9,16 @@ import Setting from '../Setting';
 import './styles.css';
 
 import { createPost } from '../../actions/post';
-import { reportPost, deactivatePost } from '../../actions/user';
-import {getMessages, getConversations} from '../../resources/hardCodedData';
+import { getMessages, getConversations } from '../../resources/hardCodedData';
 
 
 class UserView extends Component {
     state = {
         searchTerm: '',
-        recentlyReportedPosts: [], // Posts reported by the user become hidden to the user for the rest of their session
+
+        // Posts reported by the user become hidden to the user for the rest of their session
+        // TODO: store recentlyReportedPosts in the session-cookie
+        recentlyReportedPosts: [], 
 
         viewingHome: true,
         showSearchResults: false,
@@ -183,18 +185,10 @@ class UserView extends Component {
         this.props.handleLogout();
     }
 
-    handleReportPost = post => {
-        // Add the post to the list of recently reported posts
+    handleReportPost = reportedPost => {
         this.setState({
-            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(post)
+            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(reportedPost._id)
         });
-
-        // Report the post
-        reportPost(post, this.props.appComponent);
-    }
-
-    handleDeactivatePost = post => {
-        deactivatePost(post, this.props.appComponent);
     }
 
     handleGoToInboxFromPost = user => {
@@ -255,7 +249,6 @@ class UserView extends Component {
                     handleCreateNewPost={this.handleCreateNewPost}
                     handleExpandPost={this.handleExpandPost}
                     handleReportPost={this.handleReportPost}
-                    handleDeactivatePost={this.handleDeactivatePost}
                     handleGoToInboxFromPost={this.handleGoToInboxFromPost}
                 />}
 
