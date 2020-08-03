@@ -1,4 +1,4 @@
-export const getPostalCodes = async (component) => {
+export const getPostalCodes = async () => {
 
     const url = `/locations`;
     const res = await fetch(url);
