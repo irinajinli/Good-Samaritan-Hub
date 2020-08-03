@@ -31,14 +31,14 @@ const validateId = (req, res, next) => {
 }
 
 // Generic function to update a <MongooseModel> document for a PATCH route to update
-// a document with id <req.params.id>.
+// a document matching <filter>
 // <req.body> will be an array that consists of a list of changes to make.
 // Example:
 // [
-//   { "op": "replace", "path": "/posts", "value": [f24c5fa61604f593432852b] }
+//   { "op": "replace", "path": "/postsHiddenFromUser", "value": ["f24c5fa61604f593432852b"] }
 //   ...
 // ]
-const patch = (req, res, MongooseModel) => {
+const patch = (req, res, MongooseModel, filter) => {
 	// Find the fields to update and their values.
 	const fieldsToUpdate = {};
 	req.body.map((change) => {
@@ -47,7 +47,7 @@ const patch = (req, res, MongooseModel) => {
 	})
 
     // Update the document
-    MongooseModel.findByIdAndUpdate(req.params.id, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+    MongooseModel.findOneAndUpdate(filter, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
         .then((result) => {
             if (!result) {
                 res.status(404).send('Resource not found');

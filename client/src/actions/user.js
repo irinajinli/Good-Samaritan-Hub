@@ -51,3 +51,32 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
         console.log(error);
     });
 }
+
+// Hides <post> from the current user
+export const hidePostFromUser = async (post, appComponent) => {
+
+    const user = appComponent.state.user;
+    user.postsHiddenFromUser.push(post._id);
+
+    const url = `/user/username/${user.username}`;
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: 'PATCH',
+        body: JSON.stringify([{ 'op': 'replace', 'path': '/postsHiddenFromUser', 'value': user.postsHiddenFromUser }]),
+        headers: {
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const res = await fetch(request);
+    const updatedUser = await res.json();
+
+    appComponent.setState({
+        user: updatedUser
+    });
+
+    return updatedUser;
+    
+}

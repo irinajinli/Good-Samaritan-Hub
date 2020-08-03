@@ -49,15 +49,14 @@ router.get("/users", mongoChecker, (req, res) => {
   find(req, res, User);
 });
 
-// PATCH route to update a user.
-// <req.param.id> is the user's id.
-// <req.body will be an array that consists of a list of changes to make to the post
+// PATCH route to update a user by username
+// <req.body> will be an array that consists of a list of changes to make to the user
 // [
-//   { "op": "replace", "path": "/posts", "value": ["f24c5fa61604f593432852b"] }
+//   { "op": "replace", "path": "/postsHiddenFromUser", "value": ["f24c5fa61604f593432852b"] }
 //   ...
 // ]
-router.patch("/user/:id", mongoChecker, validateId, (req, res) => {
-  patch(req, res, User);
+router.patch("/user/username/:username", mongoChecker, (req, res) => {
+  patch(req, res, User, { username: req.params.username });
 });
 
 // PUT route to replace a user.

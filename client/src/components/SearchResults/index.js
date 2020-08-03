@@ -42,8 +42,8 @@ class SearchResults extends Component {
 
     render() { 
         const { matchingUsers } = this.state;
-        const { user, users, searchTerm, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
-            handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleGoToInboxFromPost} = this.props;
+        const { user, users, searchTerm, expandedPost, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
+            handleBackToSearchResults, handleChangeTargetLocation, handleHidePostFromUser, handleGoToInboxFromPost} = this.props;
 
         return (  
             <div>
@@ -79,8 +79,7 @@ class SearchResults extends Component {
                     expandedPost={expandedPost}
                     handleChangeTargetLocation={handleChangeTargetLocation}
                     handleBack={handleBackToSearchResults}
-                    handleReportPost={handleReportPost}
-                    recentlyReportedPosts={recentlyReportedPosts}
+                    handleHidePostFromUser={handleHidePostFromUser}
                     handleGoToProfile={handleGoToProfile}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
                 />

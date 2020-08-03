@@ -32,7 +32,8 @@ const users = [
     isReported: false,
     isBanned: false,
     reportedMessages: [],
-    banReason: ''
+    banReason: '',
+    postsHiddenFromUser: []
   }
 ]
 //   {

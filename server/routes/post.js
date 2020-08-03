@@ -60,7 +60,7 @@ router.get('/post/posterUsername/:posterUsername', mongoChecker, (req, res) => {
 //   ...
 // ]
 router.patch('/post/:id', mongoChecker, validateId, (req, res) => { 
-    patch(req, res, Post);
+    patch(req, res, Post, { _id: req.params.id });
 });
 
 module.exports = router;

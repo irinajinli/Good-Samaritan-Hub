@@ -43,7 +43,7 @@ class PostList extends Component {
                 .then(posts => {
                     // Filter posts
                     posts = posts.filter(post => {
-                        return filterCondition(post) && !recentlyReportedPosts.includes(post._id)
+                        return filterCondition(post) && !user.postsHiddenFromUser.includes(post._id)
                             && (showInactivePosts? true : post.status === 'active');
                     });
                     if (searchTerm !== undefined) {
@@ -71,7 +71,7 @@ class PostList extends Component {
                 .then(posts => {
                     // Filter posts
                     posts = posts.filter(post => {
-                        return filterCondition(post) && !recentlyReportedPosts.includes(post._id)
+                        return filterCondition(post) && !user.postsHiddenFromUser.includes(post._id)
                             && ((displayedUser.username !== user.username)? post.status === 'active' : true);
                     });
 
@@ -199,17 +199,23 @@ class PostList extends Component {
     }
 
     onReportPost = post => {
+        const { handleHidePostFromUser, handleBack } = this.props;
 
-        // Report the post
+        // Report the post then hide it from the user
         reportPost(post)
             .then(reportedPost => {
                 console.log(reportedPost); // TODO: remove later
-                this.props.handleReportPost(reportedPost);
-                this.props.handleBack();
+                return handleHidePostFromUser(reportedPost);
+            })
+            .then(updatedUser => {
+                console.log('PostList handleHidePostFromUser', updatedUser); // TODO: remove later
+                handleBack();
+                this.updatePostsToDiplay();
             })
             .catch(error => {
+                console.log(error);
                 alert('Unable to report post. Please try again');
-            })
+            });
     }
 
     onRemovePost = post => {
@@ -221,6 +227,7 @@ class PostList extends Component {
                 this.props.handleBack();
             })
             .catch(error => {
+                console.log(error)
                 alert('Unable to deactivate post. Please try again');
             })
         

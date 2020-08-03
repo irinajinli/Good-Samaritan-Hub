@@ -154,7 +154,7 @@ class Post extends Component {
                     but also creates a weird bar at the top of the screen} */}
                         <MyDialog 
                             title='Report this post?'
-                            body=''
+                            body='This post will be permantly hidden from you.'
                             actionName='Report'
                             handleClose={this.handleCloseDialog}
                             handleDoAction={this.handleReport}

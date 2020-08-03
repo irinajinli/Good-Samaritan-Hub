@@ -25,7 +25,7 @@ class Profile extends Component {
 
     render() { 
         const { user, users, displayedUser, handleExpandPost, showExpandedPost, expandedPost,
-            handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
+            handleHidePostFromUser, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
         return (
         <div className='profile'>
             <div className='profile__container'>
@@ -42,7 +42,7 @@ class Profile extends Component {
                 <Card className='profile__card'>
                     <h1>Profile</h1>
                     <Table columns={columns} rows={this.generateRows(displayedUser)}/>
-                    {user.username === displayedUser.username && <div className='profile__button'>
+                    {user.username === displayedUser && <div className='profile__button'>
                         <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => handleGoToEditProfile(displayedUser)}>Edit</Button>
                     </div>}
                 </Card>
@@ -57,8 +57,7 @@ class Profile extends Component {
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
                         handleBack={handleGoToProfile} 
-                        handleReportPost={handleReportPost}
-                        recentlyReportedPosts={recentlyReportedPosts}
+                        handleHidePostFromUser={handleHidePostFromUser}
                         handleGoToProfile={handleGoToProfile}
                         handleGoToInboxFromPost={handleGoToInboxFromPost}
                         deactivatePost={handleDeactivatePost}

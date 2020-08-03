@@ -8,7 +8,7 @@ import Inbox from '../Inbox';
 import Setting from '../Setting';
 import './styles.css';
 
-import { getUserByUsername } from '../../actions/user';
+import { getUserByUsername, hidePostFromUser } from '../../actions/user';
 import { createPost } from '../../actions/post';
 import { getMessages, getConversations } from '../../resources/hardCodedData';
 
@@ -16,10 +16,6 @@ import { getMessages, getConversations } from '../../resources/hardCodedData';
 class UserView extends Component {
     state = {
         searchTerm: '',
-
-        // Posts reported by the user become hidden to the user for the rest of their session
-        // TODO: store recentlyReportedPosts in the session-cookie
-        recentlyReportedPosts: [], 
 
         viewingHome: true,
         showSearchResults: false,
@@ -64,9 +60,6 @@ class UserView extends Component {
     }
 
     handleBackToHome = () => {
-        // Phase 2: Make a server call to get any new posts that were added while we were on a different page
-        // e.g. call appComponent's requestReload method
-
         this.props.history.push('/home');
         this.setState({
             showExpandedPost: false,
@@ -82,9 +75,6 @@ class UserView extends Component {
     }
 
     handleBackToSearchResults = () => {
-        // Phase 2: Make a server call to get any new posts that were added while we were on a different page
-        // e.g. call appComponent's requestReload method
-
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -203,10 +193,8 @@ class UserView extends Component {
         this.props.handleLogout();
     }
 
-    handleReportPost = reportedPost => {
-        this.setState({
-            recentlyReportedPosts: this.state.recentlyReportedPosts.concat(reportedPost._id)
-        });
+    handleHidePostFromUser = async reportedPost => {
+        return await hidePostFromUser(reportedPost, this.props.appComponent)
     }
 
     handleGoToInboxFromPost = user => {
@@ -231,7 +219,7 @@ class UserView extends Component {
     render() { 
         const { user, users, posts} = this.props;
         const { showSearchResults, showExpandedPost, expandedPost, creatingNewPost, searchTerm, targetLocation,
-            recentlyReportedPosts, viewingHome, viewingProfile, displayedUser, viewingInbox, viewingEditProfile } = this.state;
+            viewingHome, viewingProfile, displayedUser, viewingInbox, viewingEditProfile } = this.state;
 
         return (  
             <div className='logged-in-wrapper'>
@@ -256,7 +244,6 @@ class UserView extends Component {
                     showExpandedPost={showExpandedPost}
                     expandedPost={expandedPost}
                     showSearchResults={showSearchResults}
-                    recentlyReportedPosts={recentlyReportedPosts}
                     targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     handleBackToHome={this.handleBackToHome}
@@ -266,7 +253,7 @@ class UserView extends Component {
                     handleOpenPostCreator={this.handleOpenPostCreator}
                     handleCreateNewPost={this.handleCreateNewPost}
                     handleExpandPost={this.handleExpandPost}
-                    handleReportPost={this.handleReportPost}
+                    handleHidePostFromUser={this.handleHidePostFromUser}
                     handleGoToInboxFromPost={this.handleGoToInboxFromPost}
                 />}
 
@@ -281,8 +268,7 @@ class UserView extends Component {
                     showExpandedPost={showExpandedPost}
                     expandedPost={expandedPost}
                     handleBack={this.handleBackToHome} 
-                    handleReportPost={this.handleReportPost}
-                    recentlyReportedPosts={recentlyReportedPosts}
+                    handleHidePostFromUser={this.handleHidePostFromUser}
                     handleGoToProfile={this.handleGoToProfile}
                     handleDeactivatePost={this.handleDeactivatePost}
                     handleGoToEditProfile={this.handleGoToEditProfile}

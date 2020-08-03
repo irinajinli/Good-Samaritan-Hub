@@ -46,6 +46,10 @@ const UserSchema = new Schema({ // TODO: not completed
     banReason: {
         type: String,
         default: ''
+    },
+    postsHiddenFromUser: {
+        type: [Schema.Types.ObjectId],
+        default: []
     }
 });
 

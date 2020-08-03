@@ -9,9 +9,9 @@ import './styles.css';
 
 class Home extends Component {
     render() { 
-        const { user, users, recentlyReportedPosts, targetLocation, searchTerm, showExpandedPost, expandedPost, 
+        const { user, users, targetLocation, searchTerm, showExpandedPost, expandedPost, 
             creatingNewPost, showSearchResults, handleExpandPost, handleBackToHome, handleChangeTargetLocation, 
-            handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleReportPost, 
+            handleOpenPostCreator, handleCreateNewPost, handleBackToSearchResults, handleHidePostFromUser, 
             handleGoToProfile, handleGoToInboxFromPost} = this.props;
             
         return (  
@@ -35,8 +35,7 @@ class Home extends Component {
                     showExpandedPost={showExpandedPost} 
                     expandedPost={expandedPost}
                     handleBack={handleBackToHome} 
-                    handleReportPost={handleReportPost}
-                    recentlyReportedPosts={recentlyReportedPosts}
+                    handleHidePostFromUser={handleHidePostFromUser}
                     handleGoToProfile={handleGoToProfile}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
                 />}
@@ -55,13 +54,12 @@ class Home extends Component {
                     targetLocation={targetLocation}
                     searchTerm={searchTerm}
                     expandedPost={expandedPost}
-                    recentlyReportedPosts={recentlyReportedPosts}
                     handleChangeTargetLocation={handleChangeTargetLocation}
                     showExpandedPost={showExpandedPost}
                     handleExpandPost={handleExpandPost}
                     handleGoToProfile={handleGoToProfile}
                     handleBackToSearchResults={handleBackToSearchResults}
-                    handleReportPost={handleReportPost}
+                    handleHidePostFromUser={handleHidePostFromUser}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
                 />}
 
