@@ -173,7 +173,6 @@ class Post extends Component {
                             handleClose={this.handleCloseDialog}
                             handleDoAction={this.handleRemovePost}
                         />
-                    {/* </DialogContent> */}
                 </Modal>
             </React.Fragment>
         );
