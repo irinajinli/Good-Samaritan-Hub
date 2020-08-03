@@ -111,9 +111,9 @@ class PostList extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.targetLocation !== this.props.targetLocation ||
-            prevProps.recentlyReportedPosts !== this.props.recentlyReportedPosts) {
-            console.log('this.props.recentlyReportedPosts', this.props.recentlyReportedPosts) // TODO: remove later
+        if (prevProps.targetLocation !== this.props.targetLocation
+            || prevProps.recentlyReportedPosts !== this.props.recentlyReportedPosts
+            || prevProps.searchTerm !== this.props.searchTerm) {
             this.updatePostsToDiplay();
         }
     }
