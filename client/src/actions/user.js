@@ -71,6 +71,17 @@ import { getUser } from './search';
 //     // ...
 // }
 
+export const getAllUsers = async (appComponent) => {
+    const url = `/users`;
+    const res = await fetch(url);
+    const locations = await res.json();
+
+    const users = [];
+    locations.forEach(user => {
+        users.push(user);
+    });
+    return users;
+}
 
 export const updateUser = (originalUser, updatedUser, appComponent) => {
     const usersCopy = [ ...appComponent.state.users ]; // clone users array

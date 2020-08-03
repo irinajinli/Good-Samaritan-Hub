@@ -11,7 +11,12 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
+<<<<<<< HEAD
+import { getInitialUsers, getInitialPosts, getMessages } from './resources/hardCodedData';
+import { getAllUsers } from './actions/user';
+=======
 import { getInitialUsers, getMessages } from './resources/hardCodedData';
+>>>>>>> 07660ceec3c312df0257ed10bdf52206c4de2a94
 import Message from "./components/Inbox/Messages/Message";
 
 class App extends Component {
@@ -95,8 +100,11 @@ class App extends Component {
                 exact path="/admin/home"
                 render={() => 
                 <AdminHome 
+<<<<<<< HEAD
+=======
                   users={users} 
                   // posts={posts}
+>>>>>>> 07660ceec3c312df0257ed10bdf52206c4de2a94
                   messages={messages}
                   handleLogout={this.handleLogout}
                 />}

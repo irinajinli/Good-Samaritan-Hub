@@ -16,7 +16,7 @@ import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
 import { getPostsByUser, getReportedPosts } from '../../actions/search';
-import { updateUser } from '../../actions/user';
+import { updateUser, getAllUsers } from '../../actions/user';
 
 const columns = [
     { id: 'name', label: 'Username'},
@@ -40,10 +40,21 @@ function reportedFirstComparator(a, b) {
 
 class AdminHome extends Component {
     state = {
+        users: [],
+        posts: [],
+        messages: [],
         selectedUser: null,
         selectedRow: null,
         dialogOpen: false,
         oldReport: null
+    }
+
+    componentDidMount = () => {
+        getAllUsers(this).then(users => {
+            this.setState({
+                users
+            });
+        });
     }
     
     usersToRows = (users) => {
@@ -68,11 +79,21 @@ class AdminHome extends Component {
     handleSelect = (row) => {
         const user = this.rowToUser(row);
         if (this.state.selectedUser === user) {
-            this.setState({selectedUser: null});
-            this.setState({selectedRow: null});
+            this.setState({
+                selectedUser: null,
+                selectedRow: null,
+                posts: []
+            });
         } else {
-            this.setState({selectedUser: user});
-            this.setState({selectedRow: row});
+            this.setState({
+                selectedUser: user,
+                selectedRow: row
+            });
+            getPostsByUser(user).then(posts => {
+                this.setState({
+                    posts
+                });
+            });
         }
     }
 
@@ -156,8 +177,8 @@ class AdminHome extends Component {
     }
 
     render() {
-        const {users, posts, messages} = this.props;
-        const {selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
+        const {messages} = this.props;
+        const {users, posts, selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
         return (  
             <div className="adminHome">
                 <Card className="adminHome__table">
@@ -243,7 +264,7 @@ class AdminHome extends Component {
                     <h1>User's Post History</h1>
                     {selectedUser && selectedUser.posts.length > 0 && 
                         <div className="adminHome__scroll">
-                            {getPostsByUser(selectedUser, posts).map((post) => {
+                            {posts.map((post) => {
                                 return (
                                     <Post post={post}></Post>
                                 );
