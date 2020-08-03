@@ -58,7 +58,7 @@ export const getPostsByUser = async (user) => {
 
 // Returns a list of the given user's reported posts
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
-export const getReportedPosts = (user, posts) => posts.filter(post => user.reportedPosts.includes(post.id));
+export const getReportedPosts = (user, posts) => posts.filter(post => post.posterUsername === user.username && post.isReported);
 
 
 // Returns the post with the given id
