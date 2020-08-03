@@ -31,7 +31,7 @@ class Profile extends Component {
             <div className='profile__container'>
                 <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/>
 
-                {user !== displayedUser &&
+                {user.username !== displayedUser.username &&
                     <div className='profile__message'>
                         <Button className='profile__msg-btn' onClick={() => handleGoToInboxFromPost(displayedUser)}>
                             Message

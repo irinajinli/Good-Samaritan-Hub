@@ -8,6 +8,7 @@ import Inbox from '../Inbox';
 import Setting from '../Setting';
 import './styles.css';
 
+import { getUserByUsername } from '../../actions/user';
 import { createPost } from '../../actions/post';
 import { getMessages, getConversations } from '../../resources/hardCodedData';
 
@@ -137,19 +138,36 @@ class UserView extends Component {
 
     handleGoToProfile = displayedUser => {
         if (displayedUser === undefined) {
-            displayedUser = this.state.displayedUser;
+            this.setState({
+                viewingHome: false,
+                viewingProfile: true,
+                viewingInbox: false,
+                showExpandedPost: false,
+                viewingEditProfile: false,
+                expandedPost: {}
+            }, () => {
+                this.props.history.push("/profile"); 
+            });
+
+        } else {
+            getUserByUsername(displayedUser.username)
+                .then(displayedUser => {
+                    this.setState({
+                        viewingHome: false,
+                        viewingProfile: true,
+                        displayedUser,
+                        viewingInbox: false,
+                        showExpandedPost: false,
+                        viewingEditProfile: false,
+                        expandedPost: {}
+                    }, () => {
+                        this.props.history.push("/profile"); 
+                    });
+                })
+                .catch(error => {
+                    alert('Cannot get user.')
+                });
         }
-        this.setState({
-            viewingHome: false,
-            viewingProfile: true,
-            displayedUser,
-            viewingInbox: false,
-            showExpandedPost: false,
-            viewingEditProfile: false,
-            expandedPost: {}
-        }, () => {
-            this.props.history.push("/profile"); 
-        });
     }
 
     handleGoToEditProfile = displayedUser => {

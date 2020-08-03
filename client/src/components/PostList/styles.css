@@ -86,3 +86,7 @@
     margin-bottom: 0px;
     display: block;
 }
+
+.post-list--margin-top {
+    margin-top: 20px;
+}

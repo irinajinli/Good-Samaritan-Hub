@@ -127,11 +127,14 @@ class PostList extends Component {
                 <div>
                     <div className='post-list__underline'>Try locations near {targetLocation}:</div>
                     <div className='post-list--center'>
+                        {nearbyLocations.length > 0 &&
                         <ul className='post-list__ul'>
                             {nearbyLocations.length > 0 && <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>}
                             {nearbyLocations.length > 1 && <li><div>{nearbyLocations[2].postalCode} - {Math.round(nearbyLocations[2].distance * 10) / 10} km</div></li>}
                             {nearbyLocations.length > 2 && <li><div>{nearbyLocations[3].postalCode} - {Math.round(nearbyLocations[3].distance * 10) / 10} km</div></li>}
-                        </ul>
+                        </ul>}
+                        {nearbyLocations.length === 0 && 
+                        <div className='post-list--margin-top'>Could not get nearby locations</div>}
                     </div>
                 </div>
             </div>
@@ -230,103 +233,96 @@ class PostList extends Component {
         
         return (  
             <div >
-                {posts.length === 0 && restrictPostsToUser &&
-                <Card className='post-list__header-card'>
-                    <h1>User has not posted</h1>
-                </Card>}
-                {(posts.length > 0 || restrictPostsToTargetLocation) &&
-                <React.Fragment>
-                    {!showExpandedPost && 
-                    <div className='post-list__filter-btn-group'>
-                            <Card className='post-list__header-card'>
-                                <div className='post-list__header-card-content'>
-                                    {restrictPostsToTargetLocation && 
-                                    <div>
-                                        <LocationOnIcon className='post-list__location-icon'/>
-                                        <span className='post-list__header-label'>Location:</span>
-                                        <div className='post-list__selector'>
-                                            <Autocomplete
-                                                defaultValue={targetLocation}
-                                                disableClearable
-                                                onChange={this.handleTargetLocationChange}
-                                                options={Object.keys(postalCodes)}
-                                                renderInput={(params) => <TextField {...params}/>}
-                                            />
-                                        </div>
-                                    </div>}
-                                    {!restrictPostsToTargetLocation && 
-                                        <h1 className='post-list__header-label bold'>Posts</h1>}
-                                    <div className='float-right'>
-                                        <span className='post-list__header-label'>Sort by:</span>
+                {!showExpandedPost && 
+                <div className='post-list__filter-btn-group'>
+                        <Card className='post-list__header-card'>
+                            <div className='post-list__header-card-content'>
+                                {restrictPostsToTargetLocation && 
+                                <div>
+                                    <LocationOnIcon className='post-list__location-icon'/>
+                                    <span className='post-list__header-label'>Location:</span>
+                                    <div className='post-list__selector'>
                                         <Autocomplete
-                                            className='post-list__selector padding-right'
-                                            style={{ width: 165 }}
-                                            defaultValue={'Date: newest first'}
+                                            defaultValue={targetLocation}
                                             disableClearable
-                                            onChange={this.handleChangeSortingOption}
-                                            options={['Date: newest first', 'Date: oldest first']}
+                                            onChange={this.handleTargetLocationChange}
+                                            options={Object.keys(postalCodes)}
                                             renderInput={(params) => <TextField {...params}/>}
                                         />
                                     </div>
+                                </div>}
+                                {!restrictPostsToTargetLocation && 
+                                    <h1 className='post-list__header-label bold'>Posts</h1>}
+                                <div className='float-right'>
+                                    <span className='post-list__header-label'>Sort by:</span>
+                                    <Autocomplete
+                                        className='post-list__selector padding-right'
+                                        style={{ width: 165 }}
+                                        defaultValue={'Date: newest first'}
+                                        disableClearable
+                                        onChange={this.handleChangeSortingOption}
+                                        options={['Date: newest first', 'Date: oldest first']}
+                                        renderInput={(params) => <TextField {...params}/>}
+                                    />
                                 </div>
-                            </Card>
-                        <ButtonGroup 
-                            className='post-list__filter-btn-group'
-                            orientation="horizontal"
-                            color="primary"
-                            aria-label="vertical contained primary button group"
-                            variant="text"
-                        >
-                            <Button size="small" name='all' className={this.getBtnClass('all')} 
-                                onClick={this.showAll}>All</Button>
-                            <Button size="small" name='offers' className={this.getBtnClass('offers')}
-                                onClick={this.showOnlyOffers}>Offers</Button>
-                            <Button size="small"  name='requests' className={this.getBtnClass('requests')}
-                                onClick={this.showOnlyRequests}>Requests</Button>
-                        </ButtonGroup>
-                    </div>}
+                            </div>
+                        </Card>
+                    <ButtonGroup 
+                        className='post-list__filter-btn-group'
+                        orientation="horizontal"
+                        color="primary"
+                        aria-label="vertical contained primary button group"
+                        variant="text"
+                    >
+                        <Button size="small" name='all' className={this.getBtnClass('all')} 
+                            onClick={this.showAll}>All</Button>
+                        <Button size="small" name='offers' className={this.getBtnClass('offers')}
+                            onClick={this.showOnlyOffers}>Offers</Button>
+                        <Button size="small"  name='requests' className={this.getBtnClass('requests')}
+                            onClick={this.showOnlyRequests}>Requests</Button>
+                    </ButtonGroup>
+                </div>}
 
-                    <div className='post-list__container'>
-                        {!showExpandedPost && posts.length > 0 &&
-                        posts.map(post => (
-                            <Post 
-                                key={post._id}
-                                user={user}
-                                users={users}
-                                post={post}
-                                isExpanded={showExpandedPost}
-                                handleExpandPost={handleExpandPost}
-                                handleBack={handleBack}
-                                handleReportPost={this.onReportPost}
-                                handleGoToProfile={handleGoToProfile}
-                                handleGoToInboxFromPost={handleGoToInboxFromPost}
-                                deactivatePost={this.onRemovePost}
-                            />
-                        ))}
-                        {!showExpandedPost && posts.length == 0 &&
-                            <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
-                        }
-                        {!showExpandedPost && posts.length == 0 && restrictPostsToTargetLocation &&
-                            <Card className='post-list__header-card'>
-                                {this.showNearbyLocations()}
-                            </Card>
-                        }
-                        {showExpandedPost && 
-                            <Post 
-                                user={user}
-                                users={users}
-                                post={expandedPost}
-                                isExpanded={showExpandedPost}
-                                handleExpandPost={handleExpandPost}
-                                handleBack={handleBack}
-                                handleReportPost={this.onReportPost}
-                                handleGoToProfile={handleGoToProfile}
-                                handleGoToInboxFromPost={handleGoToInboxFromPost}
-                                deactivatePost={this.onRemovePost}
-                            />
-                        }
-                    </div>
-                </React.Fragment>}
+                <div className='post-list__container'>
+                    {!showExpandedPost && posts.length > 0 &&
+                    posts.map(post => (
+                        <Post 
+                            key={post._id}
+                            user={user}
+                            users={users}
+                            post={post}
+                            isExpanded={showExpandedPost}
+                            handleExpandPost={handleExpandPost}
+                            handleBack={handleBack}
+                            handleReportPost={this.onReportPost}
+                            handleGoToProfile={handleGoToProfile}
+                            handleGoToInboxFromPost={handleGoToInboxFromPost}
+                            deactivatePost={this.onRemovePost}
+                        />
+                    ))}
+                    {!showExpandedPost && posts.length == 0 &&
+                        <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
+                    }
+                    {!showExpandedPost && posts.length == 0 && restrictPostsToTargetLocation &&
+                        <Card className='post-list__header-card'>
+                            {this.showNearbyLocations()}
+                        </Card>
+                    }
+                    {showExpandedPost && 
+                        <Post 
+                            user={user}
+                            users={users}
+                            post={expandedPost}
+                            isExpanded={showExpandedPost}
+                            handleExpandPost={handleExpandPost}
+                            handleBack={handleBack}
+                            handleReportPost={this.onReportPost}
+                            handleGoToProfile={handleGoToProfile}
+                            handleGoToInboxFromPost={handleGoToInboxFromPost}
+                            deactivatePost={this.onRemovePost}
+                        />
+                    }
+                </div>
             </div>
         );
     }

@@ -39,6 +39,11 @@ router.get("/user/:id", mongoChecker, validateId, (req, res) => {
   findOne(req, res, User, { _id: req.params.id });
 });
 
+// GET route to get a user by username
+router.get("/user/username/:username", mongoChecker, (req, res) => {
+  findOne(req, res, User, { username: req.params.username });
+});
+
 // GET route to get all users
 router.get("/users", mongoChecker, (req, res) => {
   find(req, res, User);
