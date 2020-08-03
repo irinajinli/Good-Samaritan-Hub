@@ -73,7 +73,7 @@ class AdminHome extends Component {
     }
 
     rowToUser = (row) => {
-        const found = this.props.users.find(element => element.username === row['name']);
+        const found = this.state.users.find(element => element.username === row['name']);
         return found;
     }
 
@@ -106,9 +106,9 @@ class AdminHome extends Component {
             user.banReason = '';
         else {
             user.banReason = reason;}
-        for (let i = 0; i < this.props.users.length; i++) {
-            if (user.username === this.props.users[i].username) {
-                this.props.users[i] = user;
+        for (let i = 0; i < this.state.users.length; i++) {
+            if (user.username === this.state.users[i].username) {
+                this.state.users[i] = user;
                 break;
             }
         }
@@ -135,6 +135,7 @@ class AdminHome extends Component {
 
     handleDeleteReport = (report) => {
         const user = this.state.selectedUser;
+        const reportedPosts = getReportedPosts(user, this.state.posts);
         const originalUser = user;
         let type = '';
         let i = user.reportedMessages.indexOf(report.messageId);
@@ -143,11 +144,11 @@ class AdminHome extends Component {
             user.reportedMessages.splice(i , 1);
             type = 'Message';
         } else {
-            i = user.reportedPosts.indexOf(report.id);
-            user.reportedPosts.splice(i , 1);
+            i = reportedPosts.indexOf(report.id);
+            reportedPosts.splice(i , 1);
             type = 'Post';
         }
-        if (user.reportedPosts.length + user.reportedMessages.length <= 0) {
+        if (reportedPosts.length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
         // PATCH/PUT USER HERE
@@ -160,11 +161,12 @@ class AdminHome extends Component {
     handleUndoDelete = () => {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
+        const reportedPosts = getReportedPosts(user, this.state.posts);
         const originalUser = user;
         if (report.type === 'Message') {
             user.reportedMessages.splice(report.index, 0, report.id);
         } else {
-            user.reportedPosts.splice(report.index, 0, report.id);
+            reportedPosts.splice(report.index, 0, report.id);
         }
         user.isReported = true;
         // PATCH/PUT USER HERE
@@ -206,7 +208,7 @@ class AdminHome extends Component {
                                     <Label primary={"Last Name"} secondary={selectedUser.lastName}/>
                                     <Label primary={"Location"} secondary={selectedUser.location}/>
                                     <Label primary={"Biography"} secondary={selectedUser.bio} blockText/>
-                                    <Label primary={"Posts"} secondary={selectedUser.posts.length}/>
+                                    <Label primary={"Posts"} secondary={posts.length}/>
                                     <Label primary={"Messages Sent"} secondary={selectedUser.messagesSent.length}/>
                                     <Label primary={"Messages Recieved"} secondary={selectedUser.messagesRecieved.length}/>
                                 </div>
@@ -263,7 +265,7 @@ class AdminHome extends Component {
                 </div>
                 <Card className="adminHome__list">
                     <h1>User's Post History</h1>
-                    {selectedUser && selectedUser.posts.length > 0 && 
+                    {selectedUser && posts.length > 0 && 
                         <div className="adminHome__scroll">
                             {posts.map((post) => {
                                 return (
@@ -272,7 +274,7 @@ class AdminHome extends Component {
                             })}
                         </div>
                     }
-                    {selectedUser && selectedUser.posts.length <= 0 && 
+                    {selectedUser && posts.length <= 0 && 
                         <label className="adminHome__center">{`${selectedUser.username} has no posts`}</label>
                     }
                     {!selectedUser &&
