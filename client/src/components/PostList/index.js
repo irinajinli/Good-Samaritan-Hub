@@ -14,8 +14,8 @@ import '../../index.css'
 import { getPostalCodes } from '../../actions/location';
 import { sortByDate } from '../../actions/sort';
 import { getNearbyLocations } from '../../actions/distance';
-import { getPostsByLocation, getMatchingPosts, getPostsByUser } from '../../actions/search';
-import { reportPost, deactivatePost } from '../../actions/post';
+import { getMatchingPosts } from '../../actions/search';
+import { getPostsByLocation, getPostsByUser, reportPost, deactivatePost } from '../../actions/post';
 
 class PostList extends Component {
     isAnyType = () => true;

@@ -1,3 +1,33 @@
+export const getPostsByLocation = async (location) => {
+
+    const url = `/post/location/${location}`;
+    const res = await fetch(url);
+    const posts = await res.json();
+    
+    posts.forEach(post => {
+        post.date = new Date(post.date)
+    });
+    console.log('getPostsByLocation', location, posts);
+    return posts;
+
+}
+
+
+export const getPostsByUser = async (user) => {
+
+    const url = `/post/posterUsername/${user.username}`;
+    const res = await fetch(url);
+    const posts = await res.json();
+    
+    posts.forEach(post => {
+        post.date = new Date(post.date)
+    });
+    console.log('getPostsByUser', user.username, posts);
+    return posts;
+
+};
+
+
 export const createPost = async (newPost) => {
 
     const url = `/post/${newPost.posterUsername}`;
