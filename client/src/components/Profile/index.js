@@ -66,7 +66,7 @@ class Profile extends Component {
     }
 
     render() { 
-        const { user, users, displayedUser, targetLocation, handleChangeTargetLocation, handleExpandPost, showExpandedPost, expandedPost,
+        const { user, users, displayedUser, handleExpandPost, showExpandedPost, expandedPost,
             handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
         const { userPosts } = this.state;
         return (
@@ -89,17 +89,16 @@ class Profile extends Component {
                         <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => handleGoToEditProfile(displayedUser)}>Edit</Button>
                     </div>}
                 </Card>
-                {!displayedUser.posts.length && <Card className='profile__card'>
+                {!userPosts.length && <Card className='profile__card'>
                     <h1>User has not posted</h1>
                 </Card>}
                 <div className='profile__card'>
-                    {displayedUser.posts.length > 0 && <PostList
+                    {userPosts.length > 0 && <PostList
                         user={user}
                         users={users}
+                        recievePostsInProps={true}
                         posts={userPosts.filter(post => this.filterCondition(post))} 
-                        targetLocation={targetLocation}
                         restrictPostsToTargetLocation={false}
-                        handleChangeTargetLocation={handleChangeTargetLocation}
                         handleExpandPost={handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}

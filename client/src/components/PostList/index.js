@@ -14,7 +14,7 @@ import '../../index.css'
 import { getPostalCodes } from '../../actions/location';
 import { sortByDate } from '../../actions/sort';
 import { getNearbyLocations } from '../../actions/distance';
-import { getPostsByLocation } from '../../actions/search';
+import { getPostsByLocation, getMatchingPosts } from '../../actions/search';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -24,7 +24,7 @@ class PostList extends Component {
     isARequest = post => post.type === 'Request';
 
     state = {
-        postsToDisplay: [],
+        posts: [],
         filterCondition: this.isAnyType,
         newestOrOldestFirst: 'newest first',
         postalCodes: {}
@@ -32,78 +32,90 @@ class PostList extends Component {
 
     updatePostsToDiplay = () => {
         const { filterCondition, newestOrOldestFirst } = this.state;
-        const { recentlyReportedPosts, targetLocation, restrictPostsToTargetLocation } = this.props;
+        const { recentlyReportedPosts, restrictPostsToTargetLocation, targetLocation, searchTerm,
+            showInactivePosts, recievePostsInProps } = this.props;
 
         if (restrictPostsToTargetLocation) {
 
+            // Get posts matching the current target location
             getPostsByLocation(targetLocation)
-                .then(postsToDisplay => {
+                .then(posts => {
                     // Filter posts
-                    postsToDisplay = postsToDisplay.filter(post => {
-                        return filterCondition(post) && !recentlyReportedPosts.includes(post);
+                    posts = posts.filter(post => {
+                        return filterCondition(post) && !recentlyReportedPosts.includes(post)
+                            && (showInactivePosts? true : post.status === 'active');
                     })
+                    if (searchTerm !== undefined) {
+                        posts = getMatchingPosts(searchTerm, posts);
+                    }
 
                     // Sort posts by date
-                    postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+                    posts = sortByDate(posts, newestOrOldestFirst);
 
                     this.setState({
-                        postsToDisplay
+                        posts
                     }); 
                 })
                 .catch(error => {
                     console.log('Could not get posts');
                     this.setState({
-                        postsToDisplay: []
+                        posts: []
                     });
                 })
 
-        } else {
+        } else if (recievePostsInProps) {
 
-            // TODO: get rid of later
-
-            // Filter posts
-            let postsToDisplay = this.props.posts.filter(post => {
+            // Filter the posts recieved in props
+            let posts = this.props.posts.filter(post => {
                 return filterCondition(post) && !recentlyReportedPosts.includes(post);
-            })
+            });
 
             // Sort posts by date
-            postsToDisplay = sortByDate(postsToDisplay, newestOrOldestFirst);
+            posts = sortByDate(posts, newestOrOldestFirst);
 
             this.setState({
-                postsToDisplay
+                posts
             });
 
         }
     }
 
     componentDidMount() {
-        getPostalCodes()
-            .then(postalCodes => {
-                this.setState({
-                    postalCodes
-                });
-            })
-            .catch(error => {
-                console.log('Could not get postal codes')
-                this.setState({
-                    postalCodes: {}
-                });
-            })
-        this.updatePostsToDiplay();
+        if (this.props.restrictPostsToTargetLocation) {
+
+            getPostalCodes()
+                .then(postalCodes => {
+                    this.setState({
+                        postalCodes
+                    });
+                })
+                .catch(error => {
+                    console.log('Could not get postal codes')
+                    this.setState({
+                        postalCodes: {}
+                    });
+                })
+            this.updatePostsToDiplay();
+
+        } else {
+            this.updatePostsToDiplay();
+        }
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props != prevProps) {
+        if (prevProps.targetLocation !== this.props.targetLocation) {
             this.updatePostsToDiplay();
         }
     }
 
     showNearbyLocations = () => {
-        const nearbyLocations = getNearbyLocations(this.props.targetLocation, this.state.postalCodes);
+        const { postalCodes } = this.state;
+        const { targetLocation } = this.props;
+        const nearbyLocations = getNearbyLocations(targetLocation, postalCodes);
         return (
             <div className='post-list__location-card-content post-list--center'>
                 <div>
-                    <div className='post-list__underline'>Try locations near {this.props.targetLocation}:</div>
+                    <div className='post-list__underline'>Try locations near {targetLocation}:</div>
                     <div className='post-list--center'>
                         <ul className='post-list__ul'>
                             {nearbyLocations.length > 0 && <li><div>{nearbyLocations[1].postalCode} - {Math.round(nearbyLocations[1].distance * 10) / 10} km</div></li>}
@@ -116,6 +128,10 @@ class PostList extends Component {
         );
     }
 
+    handleTargetLocationChange = (event, values) => {
+        this.props.handleChangeTargetLocation(values);
+    };
+
     handleChangeSortingOption = (event, values) => {
         if (values === 'Date: newest first') {
             values = 'newest first';
@@ -127,11 +143,6 @@ class PostList extends Component {
         }, 
         this.updatePostsToDiplay);
     }
-
-    handleTargetLocationChange = (event, values) => {
-        this.props.handleChangeTargetLocation(values);
-        this.updatePostsToDiplay();
-    };
 
     getBtnClass = type => {
         const {filterCondition} = this.state;
@@ -187,9 +198,9 @@ class PostList extends Component {
     }
 
     render() { 
-        const { postsToDisplay, postalCodes } = this.state;
-        const { user, users, targetLocation, restrictPostsToTargetLocation, handleExpandPost, showExpandedPost, expandedPost, 
-            handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
+        const { posts, postalCodes } = this.state;
+        const { user, users, restrictPostsToTargetLocation, targetLocation, handleExpandPost, showExpandedPost, 
+            expandedPost, handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  
             <div >
@@ -244,14 +255,13 @@ class PostList extends Component {
                 </div>}
 
                 <div className='post-list__container'>
-                    {!showExpandedPost && postsToDisplay.length > 0 &&
-                    postsToDisplay.map(post => (
+                    {!showExpandedPost && posts.length > 0 &&
+                    posts.map(post => (
                         <Post 
                             key={post._id}
                             user={user}
                             users={users}
                             post={post}
-                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}
@@ -261,10 +271,10 @@ class PostList extends Component {
                             deactivatePost={this.onRemovePost}
                         />
                     ))}
-                    {!showExpandedPost && postsToDisplay.length == 0 &&
+                    {!showExpandedPost && posts.length == 0 &&
                         <Chip className='null-state-label' label={this.getNullStateLabel()}></Chip>
                     }
-                    {!showExpandedPost && postsToDisplay.length == 0 && restrictPostsToTargetLocation &&
+                    {!showExpandedPost && posts.length == 0 && restrictPostsToTargetLocation &&
                         <Card className='post-list__header-card'>
                             {this.showNearbyLocations()}
                         </Card>
@@ -274,7 +284,6 @@ class PostList extends Component {
                             user={user}
                             users={users}
                             post={expandedPost}
-                            targetLocation={targetLocation}
                             isExpanded={showExpandedPost}
                             handleExpandPost={handleExpandPost}
                             handleBack={handleBack}

@@ -23,7 +23,9 @@ class NewPostForm extends Component {
         date: {},
         status: 'active',
         location: this.props.user.location, // Defaults to the user's location
-        postalCodePrefixes: []
+        postalCodePrefixes: [],
+        titleEmpty: false,
+        bodyEmpty: false
     }
 
     componentDidMount() {
@@ -54,22 +56,38 @@ class NewPostForm extends Component {
         this.setState({
             [name]: value
         });
+
+        if (name === 'title' && value !== '') {
+            this.setState({ titleEmpty: false });
+        }
+        if (name === 'body' && value !== '') {
+            this.setState({ bodyEmpty: false });
+        }
     };
 
     onCreateNewPost = () => {
-        this.setState({
-            date: new Date()
-        }, () => { 
-            // Put handleCreateNewPost in the callback of setState to ensure that 
-            // this.state.date is set before we call handleCreateNewPost
-            const { id, title, body, posterUsername, type, date, status, location } = this.state;
-            const newPost = { id, title, body, posterUsername, type, date, status, location };
-            this.props.handleCreateNewPost(newPost);
-        });
+        const { title, body } = this.state;
+
+        if (title === '' || body === '') {
+            this.setState({ 
+                titleEmpty: true,
+                bodyEmpty: true
+            });
+
+        } else {
+            // Add the post
+            this.setState({
+                date: new Date()
+            }, () => { 
+                const { id, title, body, posterUsername, type, date, status, location } = this.state;
+                const newPost = { id, title, body, posterUsername, type, date, status, location };
+                this.props.handleCreateNewPost(newPost);
+            });
+        }
     }
 
     render() { 
-        const { postalCodePrefixes } = this.state;
+        const { postalCodePrefixes, titleEmpty, bodyEmpty } = this.state;
         const { user, handleBackToHome } = this.props;
 
         return (  
@@ -85,6 +103,8 @@ class NewPostForm extends Component {
                                 name='title'
                                 onChange={this.handleInputChange}
                                 label="Title"
+                                error={titleEmpty}
+                                helperText={titleEmpty && "Title cannot be empty"}
                                 fullWidth={true} 
                             />
                         </div>
@@ -93,6 +113,8 @@ class NewPostForm extends Component {
                                 name='body'
                                 onChange={this.handleInputChange}
                                 label="Body"
+                                error={bodyEmpty}
+                                helperText={bodyEmpty && "Body cannot be empty"}
                                 multiline
                                 fullWidth={true}
                             />
