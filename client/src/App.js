@@ -11,7 +11,7 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getMessages } from './resources/hardCodedData';
+import { getInitialUsers, getMessages } from './resources/hardCodedData'; // TODO: Remove. Not needed in Phase 2.
 
 class App extends Component {
   // Global theme
@@ -43,26 +43,13 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: getInitialUsers()[0], // Phase 2: Init to {}/undefined and change this based on which user is logged in
-    users: getInitialUsers(), // Phase 2: Initialize users to an empty list
-    // posts: getInitialPosts(), // Phase 2: Initialize posts to an empty list
-    messages: getMessages()
+    user: getInitialUsers()[0], // Phase 2: Init to null and change this based on which user is logged in
+    users: getInitialUsers(), // TODO: Remove. Not needed in Phase 2.
+    messages: getMessages() // TODO: Remove. Not needed in Phase 2.
   };
 
-  onComponentDidMount() {
-    this.requestReload();
-  }
-
-  requestReload = () => {
-    // Phase 2: Get the list of users and posts from the server and set this component's state
-    // this.setState({
-    //   users: server call to get users
-    //   posts: server call to get posts
-    // });
-  }
-
   handleLogout = () => {
-    this.setState({ user: {} });
+    this.setState({ user: null });
   }
 
   render() {

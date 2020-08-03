@@ -25,15 +25,5 @@ export const getMatchingUsers = (searchTerm, users) => {
 
 
 // Returns a list of the given user's reported posts
-// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
+// Phase 2: Make a server call to get the posts instead of searching in the <posts> list and move to /actions/user
 export const getReportedPosts = (user, posts) => posts.filter(post => post.posterUsername === user.username && post.isReported);
-
-
-// Returns the post with the given id
-// Phase 2: Make a server call to get the post instead of searching in the <posts> list
-export const getPost = (id, posts) => posts.find(post => post.id === id);
-
-
-// Returns the user with the given username
-// Phase 2: Make a server call to get the user instead of searching in the <users> list
-export const getUser = (username, users) => users.find(user => user.username === username);

@@ -14,12 +14,35 @@ import Modal from '@material-ui/core/Modal';
 import MyDialog from '../MyDialog';
 import './styles.css';
 import '../../index.css';
-import { getUser } from '../../actions/search';
+import { getUserByUsername } from '../../actions/user';
 import { getDateDiff } from './date'
 
 class Post extends Component {
     state = {  
-        dialogOpen: false
+        dialogOpen: false,
+        poster: {
+            username: '',
+            firstName: '',
+            lastName: ''
+        }
+    }
+
+    componentDidMount() {
+        getUserByUsername(this.props.post.posterUsername)
+            .then(poster => {
+                this.setState({
+                    poster 
+                });
+            })
+            .catch(error => {
+                this.setState({
+                    poster: {
+                        username: 'User not found',
+                        firstName: 'User not found',
+                        lastName: ''
+                    }
+                });
+            })
     }
 
     generateTypeChip() {
@@ -55,11 +78,8 @@ class Post extends Component {
     }
     
     render() { 
-        const { dialogOpen } = this.state;
+        const { dialogOpen, poster } = this.state;
         const { user, users, post, isExpanded, handleExpandPost, handleBack, handleGoToProfile, handleGoToInboxFromPost} = this.props;
-
-        // Get the poster
-        const poster = getUser(post.posterUsername, users);
 
         // Format the post's date
         const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' }) 

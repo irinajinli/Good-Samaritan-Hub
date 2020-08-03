@@ -2,7 +2,6 @@ export const getUserByUsername = async (username) => {
     const url =  `/user/username/${username}`;
     const res = await fetch(url);
     const user = await res.json();
-    console.log('getUserByUsername', user);
     return user;
 }
 
