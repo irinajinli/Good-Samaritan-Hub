@@ -8,42 +8,11 @@ import Table from './userTable/index.js';
 import PostList from '../PostList';
 
 import './styles.css';
-import { getPostsByUser } from '../../actions/search';
 
 const columns = [{id: "label", name: "Label"}, {id: "content", name: "Content"}];
 
 class Profile extends Component {
-    state = {
-        userPosts: []
-    }
 
-    updateUserPosts() {
-        const { displayedUser } = this.props;
-
-        getPostsByUser(displayedUser).
-            then(posts => {
-                this.setState({
-                    userPosts: posts 
-                });
-            })
-            .catch(error => {
-                console.log('Could not find posts')
-                this.setState({
-                    userPosts: [] 
-                });
-            });
-    }
-
-    componentDidMount() { 
-        this.updateUserPosts();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.updateUserPosts();
-        }
-    }
-    
     generateRows = user => {
         const rows = [];
         rows.push({label: "Username", content: user.username});
@@ -54,21 +23,9 @@ class Profile extends Component {
         return rows;
     }
 
-    // If the user and displayed user are different, display a post only if it's
-    // status is active. Else, show all posts (active and inactive).
-    filterCondition = post => {
-        const { user, displayedUser } = this.props;
-        if (user.username !== displayedUser.username) {
-            return post.status === 'active'
-        } else {
-            return true;
-        }
-    }
-
     render() { 
         const { user, users, displayedUser, handleExpandPost, showExpandedPost, expandedPost,
             handleReportPost, recentlyReportedPosts, handleGoToProfile, handleDeactivatePost, handleGoToEditProfile, handleGoToInboxFromPost } = this.props;
-        const { userPosts } = this.state;
         return (
         <div className='profile'>
             <div className='profile__container'>
@@ -89,16 +46,13 @@ class Profile extends Component {
                         <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => handleGoToEditProfile(displayedUser)}>Edit</Button>
                     </div>}
                 </Card>
-                {!userPosts.length && <Card className='profile__card'>
-                    <h1>User has not posted</h1>
-                </Card>}
                 <div className='profile__card'>
-                    {userPosts.length > 0 && <PostList
+                    <PostList
                         user={user}
                         users={users}
-                        recievePostsInProps={true}
-                        posts={userPosts.filter(post => this.filterCondition(post))} 
                         restrictPostsToTargetLocation={false}
+                        restrictPostsToUser={true}
+                        displayedUser={displayedUser}
                         handleExpandPost={handleExpandPost} 
                         showExpandedPost={showExpandedPost} 
                         expandedPost={expandedPost}
@@ -108,7 +62,7 @@ class Profile extends Component {
                         handleGoToProfile={handleGoToProfile}
                         handleGoToInboxFromPost={handleGoToInboxFromPost}
                         deactivatePost={handleDeactivatePost}
-                    />}
+                    />
                 </div>
             </div>
 

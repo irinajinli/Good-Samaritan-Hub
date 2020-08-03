@@ -24,38 +24,6 @@ export const getMatchingUsers = (searchTerm, users) => {
 }
 
 
-// Returns a list of the posts at the given location
-export const getPostsByLocation = async (location) => {
-
-    const url = `/post/location/${location}`;
-    const res = await fetch(url);
-    const posts = await res.json();
-    
-    posts.forEach(post => {
-        post.date = new Date(post.date)
-    });
-    console.log('getPostsByLocation', location, posts);
-    return posts;
-
-}
-
-// Returns a list of the given user's posts
-// Phase 2: Make a server call to get the posts instead of searching in the <posts> list
-export const getPostsByUser = async (user) => {
-
-    const url = `/post/posterUsername/${user.username}`;
-    const res = await fetch(url);
-    const posts = await res.json();
-    
-    posts.forEach(post => {
-        post.date = new Date(post.date)
-    });
-    console.log('getPostsByUser', user.username, posts);
-    return posts;
-
-};
-
-
 // Returns a list of the given user's reported posts
 // Phase 2: Make a server call to get the posts instead of searching in the <posts> list
 export const getReportedPosts = (user, posts) => posts.filter(post => post.posterUsername === user.username && post.isReported);

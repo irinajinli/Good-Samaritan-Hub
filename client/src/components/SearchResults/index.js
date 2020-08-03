@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Chip from '@material-ui/core/Chip';
 import PostList from '../PostList';
 
-import { getMatchingPosts, getMatchingUsers } from '../../actions/search';
+import { getAllUsers } from '../../actions/user';
+import { getMatchingUsers } from '../../actions/search';
 import UserSearchResult from './UserSearchResult';
 
 import './styles.css';
@@ -13,26 +14,36 @@ class SearchResults extends Component {
         matchingUsers: []
     };
 
-    updateResults() {
-        this.setState({
-            matchingUsers: getMatchingUsers(this.props.searchTerm, this.props.users)
-        });
+    updateUserResults() {
+        getAllUsers()
+            .then(users => {
+                users = getMatchingUsers(this.props.searchTerm, users)
+                this.setState({ 
+                    matchingUsers: users 
+                });
+            })
+            .catch(error => {
+                console.log('Could not get users');
+                this.setState({ 
+                    matchingUsers: [] 
+                });
+            })
     }
 
     componentDidMount() {
-        this.updateResults();
+        this.updateUserResults();
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps !== this.props) {
-            this.updateResults();
+        if (prevProps.searchTerm !== this.props.searchTerm) {
+            this.updateUserResults();
         }
     }
 
     render() { 
         const { matchingUsers } = this.state;
         const { user, users, searchTerm, expandedPost, recentlyReportedPosts, targetLocation, showExpandedPost, handleExpandPost, handleGoToProfile, 
-            handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleDeactivatePost, handleGoToInboxFromPost} = this.props;
+            handleBackToSearchResults, handleChangeTargetLocation, handleReportPost, handleGoToInboxFromPost} = this.props;
 
         return (  
             <div>
@@ -72,7 +83,6 @@ class SearchResults extends Component {
                     recentlyReportedPosts={recentlyReportedPosts}
                     handleGoToProfile={handleGoToProfile}
                     handleGoToInboxFromPost={handleGoToInboxFromPost}
-                    deactivatePost={handleDeactivatePost}
                 />
             </div>
         );

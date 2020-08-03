@@ -15,7 +15,8 @@ import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
-import { getPostsByUser, getReportedPosts } from '../../actions/search';
+import { getPostsByUser } from '../../actions/post';
+import { getReportedPosts } from '../../actions/search';
 import { updateUser, getAllUsers } from '../../actions/user';
 
 const columns = [
