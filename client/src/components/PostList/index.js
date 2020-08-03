@@ -33,7 +33,7 @@ class PostList extends Component {
 
     updatePostsToDiplay = () => {
         const { filterCondition, newestOrOldestFirst } = this.state;
-        const { recentlyReportedPosts, restrictPostsToTargetLocation, targetLocation, searchTerm,
+        const { restrictPostsToTargetLocation, targetLocation, searchTerm,
             showInactivePosts, restrictPostsToUser, displayedUser, user } = this.props;
 
         if (restrictPostsToTargetLocation) {
@@ -112,7 +112,6 @@ class PostList extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.targetLocation !== this.props.targetLocation
-            || prevProps.recentlyReportedPosts !== this.props.recentlyReportedPosts
             || prevProps.searchTerm !== this.props.searchTerm) {
             this.updatePostsToDiplay();
         }
@@ -148,13 +147,17 @@ class PostList extends Component {
     handleChangeSortingOption = (event, values) => {
         if (values === 'Date: newest first') {
             values = 'newest first';
-        } else { // values === 'Date: oldest first'
+        } else {
             values = 'oldest first';
         }
         this.setState({ 
             newestOrOldestFirst: values 
-        }, 
-        this.updatePostsToDiplay);
+        }, () => { 
+            // Sort posts by date
+            this.setState({
+                posts: sortByDate(this.state.posts, this.state.newestOrOldestFirst)
+            });
+        });
     }
 
     getBtnClass = type => {
@@ -208,11 +211,15 @@ class PostList extends Component {
                 return handleHidePostFromUser(reportedPost);
             })
             .then(updatedUser => {
-                handleBack();
-                this.updatePostsToDiplay();
+                // Reporting the post and hiding it was a success.
+                // Remove reported post from state.posts
+                const posts = this.state.posts.filter(p => p._id !== post._id);
+                this.setState({
+                    posts
+                }, handleBack);
             })
             .catch(error => {
-                alert('Unable to report post. Please try again');
+                alert('Unable to report post. Please try again.');
             });
     }
 
@@ -220,20 +227,18 @@ class PostList extends Component {
 
         deactivatePost(post)
             .then(deactivatedPost => {
-                console.log(deactivatedPost); // TODO: remove later
                 this.updatePostsToDiplay();
                 this.props.handleBack();
             })
             .catch(error => {
-                console.log(error)
-                alert('Unable to deactivate post. Please try again');
+                alert('Unable to deactivate post. Please try again.');
             })
         
     }
 
     render() { 
         const { posts, postalCodes } = this.state;
-        const { user, users, restrictPostsToTargetLocation, restrictPostsToUser, targetLocation, handleExpandPost, showExpandedPost, 
+        const { user, users, restrictPostsToTargetLocation, targetLocation, handleExpandPost, showExpandedPost, 
             expandedPost, handleBack, handleGoToProfile, handleGoToInboxFromPost } = this.props;
         
         return (  

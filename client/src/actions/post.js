@@ -43,8 +43,8 @@ export const createPost = async (newPost) => {
     });
 
     const res = await fetch(request);
-    const addedStudent = await res.json();
-    return addedStudent;
+    const addedPost = await res.json();
+    return addedPost;
 
 }
 
