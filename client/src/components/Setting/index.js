@@ -5,9 +5,12 @@ import Button from '@material-ui/core/Button';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveSnackBar from './SaveSnackBar/index';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { updateUser } from '../../actions/user';
 import { getPostalCodePrefixes } from '../../actions/location';
+
+import './styles.css';
 
 class Setting extends Component {
     state = { firstName: this.props.displayedUser.firstName,
@@ -104,8 +107,8 @@ class Setting extends Component {
     }
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
-        const {user, displayedUser} = this.props
-        const {firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen, postalCodePrefixes} = this.state;
+        const { user, displayedUser, handleGoToProfile } = this.props
+        const { firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen, postalCodePrefixes } = this.state;
         
         return (
         <div className='profile'>
@@ -115,6 +118,12 @@ class Setting extends Component {
                     <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
                 </div>*/}
                 <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/>
+                <div>
+                    <Button className='setting__back-btn'
+                        onClick={() => handleGoToProfile(user)}>
+                        <ArrowBackIcon className='setting__btn-icon'/>Go back to profile
+                    </Button>
+                </div>
                 <Card className='profile__card'>
                     <h1>Your Profile</h1>
                     <TextField className="profile_textField"

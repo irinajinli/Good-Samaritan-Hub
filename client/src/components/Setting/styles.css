@@ -1,0 +1,12 @@
+.MuiButton-root.setting__back-btn {
+    margin-top: 10px;
+    background-color: rgb(255, 255, 255, 0.5);
+}
+
+.MuiButton-root.setting__msg-btn:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.setting__btn-icon {
+    margin-right: 7px;
+}

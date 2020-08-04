@@ -42,7 +42,7 @@ class Profile extends Component {
                 <Card className='profile__card'>
                     <h1>Profile</h1>
                     <Table columns={columns} rows={this.generateRows(displayedUser)}/>
-                    {user.username === displayedUser && <div className='profile__button'>
+                    {user.username === displayedUser.username && <div className='profile__button'>
                         <Button className='profile__save-button' startIcon={<EditIcon/>} onClick={() => handleGoToEditProfile(displayedUser)}>Edit</Button>
                     </div>}
                 </Card>
