@@ -18,9 +18,7 @@ class Table extends Component {
             <div className="table">
                 {columns && rows && rows.map((row) => {
                     return (
-                        <Row columns={columns} row={row} handleSelect={handleSelect} rowSelected={selectedRow && selectedRow.name === row.name ?
-                             true
-                            : false}
+                        <Row key={row.id} columns={columns} row={row} handleSelect={handleSelect} rowSelected={selectedRow && selectedRow.name === row.name}
                             />
                     );
                 })}
@@ -37,7 +35,7 @@ class Row extends Component {
                 {columns && row && columns.map((column) => {
                     const cell = row[column.id]
                     return (
-                        <Cell cell={cell}/>
+                        <Cell key={row.id * 10 + column.id}cell={cell}/>
                     );
                 })}
             </div>

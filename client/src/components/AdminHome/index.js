@@ -15,7 +15,7 @@ import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
-import { getPostsByUser } from '../../actions/post';
+import { getPostsByUser, unreportPost, reportPost } from '../../actions/post';
 import { getReportedPosts } from '../../actions/search';
 import { updateUser, getAllUsers } from '../../actions/user';
 
@@ -43,6 +43,7 @@ class AdminHome extends Component {
     state = {
         users: [],
         posts: [],
+        reportedPosts: [],
         messages: [],
         selectedUser: null,
         selectedRow: null,
@@ -65,6 +66,7 @@ class AdminHome extends Component {
         const row = [];
         for (let i = 0; i < users.length; i++) {
             row.push({
+                id: i,
                 name: users[i].username,
                 status: generateChip(users[i])
             });
@@ -105,16 +107,14 @@ class AdminHome extends Component {
         if (!user.isBanned)
             user.banReason = '';
         else {
-            user.banReason = reason;}
-        for (let i = 0; i < this.state.users.length; i++) {
-            if (user.username === this.state.users[i].username) {
-                this.state.users[i] = user;
-                break;
-            }
+            user.banReason = reason;
         }
-        // PATCH/PUT USER HERE
-        updateUser(originalUser, user, this);
-        this.setState({selectedUser: user, dialogOpen: false});
+        updateUser(originalUser, user).then(user => {
+            const users = this.state.users.slice();
+            const i = users.map(user => user._id).indexOf(user._id);
+            users[i] = user;
+            this.setState({users, selectedUser: user, dialogOpen: false});
+        });
     }
 
     handleOpenDialog = () => {
@@ -133,45 +133,62 @@ class AdminHome extends Component {
         this.setState({oldReport: null});
     }
 
-    handleDeleteReport = (report) => {
+    handleDeleteReport = async (report) => {
         const user = this.state.selectedUser;
-        const reportedPosts = getReportedPosts(user, this.state.posts);
-        const originalUser = user;
+        const originalUser = JSON.parse(JSON.stringify(user));
         let type = '';
         let i = user.reportedMessages.indexOf(report.messageId);
         if (i >= 0) {
             i = user.reportedMessages.indexOf(report.messageId);
             user.reportedMessages.splice(i , 1);
             type = 'Message';
+            this.handleOpenSnackBar(report._id, 'Message', report, i);
         } else {
-            i = reportedPosts.indexOf(report.id);
-            reportedPosts.splice(i , 1);
+            await unreportPost(report).then(post => {
+                const posts = this.state.posts.slice();
+                i = posts.map(p => p._id).indexOf(post._id);
+                posts[i].isReported = false;
+                this.setState({posts});
+                this.handleOpenSnackBar(report._id, 'Post', report, i);
+            });
             type = 'Post';
         }
-        if (reportedPosts.length + user.reportedMessages.length <= 0) {
+        if (getReportedPosts(user, this.state.posts).length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
-        // PATCH/PUT USER HERE
-        updateUser(originalUser, user, this);
-        this.setState({selectedUser: user});
-        this.handleOpenSnackBar(type === 'Post' ? report.id : report.messageId, type, report, i);
+        const users = this.state.users.slice();
+        i = users.map(user => user._id).indexOf(user._id);
+        users[i] = user;
+        updateUser(originalUser, user).then(user => {
+            this.setState({users, selectedUser: user});
+        });
         setTimeout(() => this.handleCloseSnackBar(), 5000);
     }
 
-    handleUndoDelete = () => {
+    handleUndoDelete = async () => {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
-        const reportedPosts = getReportedPosts(user, this.state.posts);
-        const originalUser = user;
+        const originalUser = JSON.parse(JSON.stringify(user));
         if (report.type === 'Message') {
             user.reportedMessages.splice(report.index, 0, report.id);
         } else {
-            reportedPosts.splice(report.index, 0, report.id);
+            reportPost(report.content).then(post => {
+                const posts = this.state.posts.slice();
+                post.date = new Date(post.date);
+                posts[report.index].isReported = true;
+                this.setState({posts});
+            });
         }
         user.isReported = true;
-        // PATCH/PUT USER HERE
-        updateUser(originalUser, user, this);
-        this.setState({selectedUser: user, oldReport: null});
+        
+        updateUser(originalUser, user).then(user => {
+            const users = this.state.users.slice();
+            const i = users.map(user => user._id).indexOf(user._id);
+            users[i] = user;
+            this.setState({
+                users, selectedUser: user, oldReport: null
+            });
+        });
     }
 
     onLogout = () => {

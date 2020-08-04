@@ -12,22 +12,10 @@ export const getAllUsers = async () => {
     return users;
 }
 
-export const updateUser = (originalUser, updatedUser, appComponent) => {
-    const usersCopy = [ ...appComponent.state.users ]; // clone users array
-    const index = appComponent.state.users.indexOf(originalUser);
-    usersCopy[index] = updatedUser;
-
-    appComponent.setState({
-        users: usersCopy
-    });
-
-    if (originalUser.username !== appComponent.state.user.username) {
-        return;
-    }
-
+export const updateUser = async (originalUser, updatedUser) => {
     const request = new Request(`/user/${originalUser._id}`, {
         method: "put",
-        body: JSON.stringify(updatedUser.state),
+        body: JSON.stringify(updatedUser),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -35,21 +23,9 @@ export const updateUser = (originalUser, updatedUser, appComponent) => {
     });
 
     // Send the request with fetch()
-    fetch(request).then(res => {
-        if (res.status === 200) {
-            return res.json();
-        }
-    })
-    .then(json => {
-        if (json !== undefined) {
-            appComponent.setState({
-                user: json
-            });
-        }
-    })
-    .catch(error => {
-        console.log(error);
-    });
+    const res = await fetch(request);
+    const ok = await res.json();
+    return ok
 }
 
 // Hides <post> from the current user
