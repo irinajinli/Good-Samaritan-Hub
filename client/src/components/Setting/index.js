@@ -67,6 +67,7 @@ class Setting extends Component {
     handleSaveInfo = (user, displayedUser) => {
         const displayedUserCopy = {...displayedUser}; // clone displayed user
         let changed = false;
+        let locationChanged = false;
         this.setState({firstNameEmpty: this.state.firstName === ''});
         if (this.state.firstName && displayedUserCopy.firstName !== this.state.firstName) {
             displayedUserCopy.firstName = this.state.firstName;
@@ -84,16 +85,19 @@ class Setting extends Component {
         if (this.state.location && displayedUserCopy.location !== this.state.location) {
             displayedUserCopy.location = this.state.location;
             changed = true;
+            locationChanged = true;
         }
         if (changed) {
-            // updateUser(user, displayedUserCopy, this.props.appComponent);
             updateUser(user, displayedUserCopy)
                 .then(updatedUser => {
                     this.props.appComponent.setState({
                         user: updatedUser
                     });
-                    this.setState({snackBarOpen: true});
+                    this.setState({ snackBarOpen: true });
                     setTimeout(() => this.handleCloseSnackBar(), 5000);
+                    if (locationChanged) {
+                        this.props.handleChangeTargetLocation(updatedUser.location);
+                    }
                 })
                 .catch(error => {
                     console.log(error)
