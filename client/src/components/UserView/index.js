@@ -293,6 +293,7 @@ class UserView extends Component {
                     displayedUser={displayedUser}
                     appComponent={this.props.appComponent}
                     handleGoToProfile={this.handleGoToProfile}
+                    handleChangeTargetLocation={this.handleChangeTargetLocation}
                 />}
             </div>
         );
