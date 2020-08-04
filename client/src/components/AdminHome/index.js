@@ -56,6 +56,10 @@ class AdminHome extends Component {
             this.setState({
                 users
             });
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Could not retrieve users");
         });
     }
     
@@ -114,6 +118,10 @@ class AdminHome extends Component {
             const i = users.map(user => user._id).indexOf(user._id);
             users[i] = user;
             this.setState({users, selectedUser: user, dialogOpen: false});
+        })
+        .catch(error => {
+            console.log(error)
+            alert("Failed to change user's ban status");
         });
     }
 
@@ -246,7 +254,7 @@ class AdminHome extends Component {
                                 })}
                                 {getReportedPosts(selectedUser, posts).map((report) => {
                                     return (
-                                        <Report type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
+                                        <Report key={report._id} type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
                             </div>
@@ -286,7 +294,7 @@ class AdminHome extends Component {
                         <div className="adminHome__scroll">
                             {posts.map((post) => {
                                 return (
-                                    <Post post={post}></Post>
+                                    <Post key={post._id} post={post}></Post>
                                 );
                             })}
                         </div>
