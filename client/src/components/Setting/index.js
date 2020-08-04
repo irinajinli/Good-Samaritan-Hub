@@ -86,9 +86,19 @@ class Setting extends Component {
             changed = true;
         }
         if (changed) {
-            updateUser(user, displayedUserCopy, this.props.appComponent);
-            this.setState({snackBarOpen: true});
-            setTimeout(() => this.handleCloseSnackBar(), 5000);
+            // updateUser(user, displayedUserCopy, this.props.appComponent);
+            updateUser(user, displayedUserCopy)
+                .then(updatedUser => {
+                    this.props.appComponent.setState({
+                        user: updatedUser
+                    });
+                    this.setState({snackBarOpen: true});
+                    setTimeout(() => this.handleCloseSnackBar(), 5000);
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert('Unable to save information. Please try again.');
+                })
         }
     }
 

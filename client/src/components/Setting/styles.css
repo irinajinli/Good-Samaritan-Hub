@@ -3,7 +3,7 @@
     background-color: rgb(255, 255, 255, 0.5);
 }
 
-.MuiButton-root.setting__msg-btn:hover {
+.MuiButton-root.setting__back-btn:hover {
     background-color: rgb(255, 255, 255);
 }
 

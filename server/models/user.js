@@ -23,6 +23,10 @@ const UserSchema = new Schema({ // TODO: not completed
         type: String,
         required: true
     },
+    bio: {
+        type: String,
+        default: ''
+    },
     messagesSent: {
         type: [Schema.Types.ObjectId],
         default: []
