@@ -225,7 +225,11 @@ class AdminHome extends Component {
                         <h1>User Details</h1>
                         {selectedUser && 
                             <div className="adminHome__scroll">
-                                <img className="adminHome__icon" src={Icon} alt="User Icon"></img>
+                                <img
+                                    className="adminHome__icon"
+                                    src={`https://ui-avatars.com/api/?name=${selectedUser.firstName}+${selectedUser.lastName}&format=svg`}
+                                    alt="User Icon">
+                                </img>
                                 <div className="adminHome__user-detail-text">
                                     <Label primary={"Username"} secondary={selectedUser.username}/>
                                     <Label primary={"Status"} secondary={generateChip(selectedUser)}/>
