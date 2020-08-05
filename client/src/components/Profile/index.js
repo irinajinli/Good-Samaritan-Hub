@@ -29,7 +29,7 @@ class Profile extends Component {
         return (
         <div className='profile'>
             <div className='profile__container'>
-                <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/>
+                <img src={`https://ui-avatars.com/api/?name=${displayedUser.firstName}+${displayedUser.lastName}&format=svg`} alt='user icon' className='profile__icon'/>
 
                 {user.username !== displayedUser.username &&
                     <div className='profile__message'>

@@ -8,15 +8,18 @@
 .user__block {
     width: 97%;
     padding: 10px;
+    padding-bottom: 5px;
     display: inline-block;
 }
 
 .user__left-block {
     float: left;
+    position: relative;
 }
 
 .user__right-block {
-    float: right;
+    margin-top: 3px;
+    float: left;
 }
 
 .user__name {
@@ -30,9 +33,12 @@
     margin: 5px;
 }
 
+.MuiIconButton-root.user__icon-button {
+    padding: 0px;
+    transform: scale(0.8);
+}
+
 .user__icon {
-    /* margin: 10px 20px 10px 20px; */
-    width: 30px;
-    /* height: 0px; */
+    size: inherit;
     border-radius: 50%;
 }

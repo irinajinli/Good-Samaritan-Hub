@@ -6,6 +6,9 @@
     width: 200px;
     height: 200px;
     border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(204, 204, 204);
 }
 
 .MuiButton-root.profile__msg-btn {

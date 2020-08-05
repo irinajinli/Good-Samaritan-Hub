@@ -131,7 +131,8 @@ class Setting extends Component {
                     <div className="setting__icon-button">Change</div>
                     <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
                 </div>*/}
-                <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/>
+                {/* <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/> */}
+                <img src={`https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}&format=svg`} alt='user icon' className='profile__icon'/>
                 <div>
                     <Button className='setting__back-btn'
                         onClick={() => handleGoToProfile(user)}>
