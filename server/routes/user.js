@@ -95,37 +95,18 @@ router.post("/users/login", (req, res) => {
   log(username, password);
 
   // find user
-  User.find({ username: username, password: password })
+  User.findOne({ username: username, password: password })
     .then((user) => {
-      req.session.user = user._id;
-      req.ession.username = user.username;
-      res.send({ currentUser: user.username });
+      log(user.location);
+      // req.session.user = user._id;
+      // req.session.username = user.username;
+      res.send(user.username);
     })
 
     .catch((error) => {
+      log(error);
       res.status(400).send();
     });
-});
-
-// POST route to register new user
-router.post("/register", (req, res) => {
-  log(req.body);
-
-  // Create a new user
-  const user = new User({
-    email: req.body.email,
-    password: req.body.password,
-  });
-
-  // Save the user
-  user.save().then(
-    (user) => {
-      res.send(user);
-    },
-    (error) => {
-      res.status(400).send(error); // 400 for bad request
-    }
-  );
 });
 
 module.exports = router;
