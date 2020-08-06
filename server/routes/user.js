@@ -70,18 +70,21 @@ router.patch("/user/username/:username", mongoChecker, (req, res) => {
 //     "location": String
 // }
 router.put("/user/:id", mongoChecker, validateId, (req, res) => {
-  User.findOneAndReplace({_id: req.params.id}, req.body, {new: true, useFindAndModify: false})
-	.then((user) => {
-		if (user) {
-			res.send(user);
-		} else {
-			res.status(404).send();
-		}
-	})
-	.catch((error) => {
-    log(error);
-    res.status(500).send('Internal server error');
-	});
+  User.findOneAndReplace({ _id: req.params.id }, req.body, {
+    new: true,
+    useFindAndModify: false,
+  })
+    .then((user) => {
+      if (user) {
+        res.send(user);
+      } else {
+        res.status(404).send();
+      }
+    })
+    .catch((error) => {
+      log(error);
+      res.status(500).send("Internal server error");
+    });
 });
 
 // POST route to log in and create session
@@ -92,7 +95,7 @@ router.post("/users/login", (req, res) => {
   log(username, password);
 
   // find user
-  User.findbyUsernamePassword(username, password)
+  User.find({ username: username, password: password })
     .then((user) => {
       req.session.user = user._id;
       req.ession.username = user.username;
@@ -102,6 +105,27 @@ router.post("/users/login", (req, res) => {
     .catch((error) => {
       res.status(400).send();
     });
+});
+
+// POST route to register new user
+router.post("/register", (req, res) => {
+  log(req.body);
+
+  // Create a new user
+  const user = new User({
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  // Save the user
+  user.save().then(
+    (user) => {
+      res.send(user);
+    },
+    (error) => {
+      res.status(400).send(error); // 400 for bad request
+    }
+  );
 });
 
 module.exports = router;
