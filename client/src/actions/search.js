@@ -1,6 +1,6 @@
 // Replaces escape/special characters in <input> with '' to prevent Regex errors when 
 // searching for <input> in a string
-const cleanInput = input => input.replace(/[\\/:*?"<>|[]/g, '')
+const cleanInput = input => input.replace(/[\\/:*?"<>|[]/g, '');
 
 
 // Returns the posts in <posts> that contain <searchTerm> in their title
@@ -12,15 +12,13 @@ export const getMatchingPosts = (searchTerm, posts) => {
 }
 
 
-// Returns the users in <users> that contain <searchTerm> in their username or full name
-export const getMatchingUsers = (searchTerm, users) => {
+// Returns users that contain <searchTerm> in their username or full name
+export const getMatchingUsers = async (searchTerm) => {
     searchTerm = cleanInput(searchTerm).trim();
-    return users.filter(user => {
-        const fullName = `${user.firstName} ${user.lastName}`;
-        return (searchTerm.length !== 0 &&
-            (user.username.search(new RegExp(searchTerm, 'i')) !== -1 ||
-            fullName.search(new RegExp(searchTerm, 'i')) !== -1))
-    });
+    const url = `/user/searchTerm/${searchTerm}`;
+    const res = await fetch(url);
+    const matchingUsers = await res.json();
+    return matchingUsers;
 }
 
 
