@@ -9,6 +9,8 @@ let Messages = require('../models/message');
 const express = require('express');
 const router = express.Router();
 
+
+//Gets all messages
 router.get('/messages', (req, res) => {
     Messages.find()
         .then(messages => res.send(messages))
@@ -18,6 +20,14 @@ router.get('/messages', (req, res) => {
         });
 });
 
+
+/* Posts a new message
+{
+    "messageSender": "user",
+    "messageReceiver": "user2",
+    "messageContent": "Lorem Ipsum",
+}
+*/
 router.post('/messages', (req, res) => {
     const message = new Messages({
         messageSender: req.body.messageSender,
@@ -32,6 +42,7 @@ router.post('/messages', (req, res) => {
     })
 });
 
+//Gets all messages of a certain user
 router.get('/messages/:username' ,(req, res) => {
     const username = req.params.username;
     Messages.find({$or: [
