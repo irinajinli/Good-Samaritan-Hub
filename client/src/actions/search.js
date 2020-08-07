@@ -20,7 +20,3 @@ export const getMatchingUsers = async (searchTerm) => {
     const matchingUsers = await res.json();
     return matchingUsers;
 }
-
-
-// Returns a list of the given user's reported posts
-export const getReportedPosts = (user, posts) => posts.filter(post => post.posterUsername === user.username && post.isReported);

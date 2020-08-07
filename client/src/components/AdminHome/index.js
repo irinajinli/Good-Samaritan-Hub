@@ -16,7 +16,6 @@ import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
 import { getPostsByUser, unreportPost, reportPost } from '../../actions/post';
-import { getReportedPosts } from '../../actions/search';
 import { updateUser, getAllUsers } from '../../actions/user';
 
 const columns = [
@@ -62,6 +61,8 @@ class AdminHome extends Component {
             alert("Could not retrieve users");
         });
     }
+
+    getReportedPosts = (posts) => posts.filter(post => post.isReported);
     
     usersToRows = (users) => {
         if (!Array.isArray(users)) {
@@ -161,7 +162,7 @@ class AdminHome extends Component {
             });
             type = 'Post';
         }
-        if (getReportedPosts(user, this.state.posts).length + user.reportedMessages.length <= 0) {
+        if (this.getReportedPosts(this.state.posts).length + user.reportedMessages.length <= 0) {
             user.isReported = false;
         }
         const users = this.state.users.slice();
@@ -256,7 +257,7 @@ class AdminHome extends Component {
                                         <Report type="Message" content={messages[reportId]} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
-                                {getReportedPosts(selectedUser, posts).map((report) => {
+                                {this.getReportedPosts(posts).map((report) => {
                                     return (
                                         <Report key={report._id} type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
