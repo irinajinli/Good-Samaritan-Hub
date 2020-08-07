@@ -19,23 +19,23 @@
 // }
 
 // Initial list of users
-const users = [
-  {
-    username: 'user',
-    password: 'user',
-    firstName: 'John',
-    lastName: 'Smith',
-    location: 'M4V',
-    bio: 'Hello world, I am John Smith!',
-    messagesSent: [0, 2, 4, 6],
-    messagesRecieved: [1, 3, 5, 7],
-    isReported: false,
-    isBanned: false,
-    reportedMessages: [],
-    banReason: '',
-    postsHiddenFromUser: []
-  }
-]
+// const users = [
+//   {
+//     username: 'user',
+//     password: 'user',
+//     firstName: 'John',
+//     lastName: 'Smith',
+//     location: 'M4V',
+//     bio: 'Hello world, I am John Smith!',
+//     messagesSent: [0, 2, 4, 6],
+//     messagesRecieved: [1, 3, 5, 7],
+//     isReported: false,
+//     isBanned: false,
+//     reportedMessages: [],
+//     banReason: '',
+//     postsHiddenFromUser: []
+//   }
+// ]
 //   {
 //     username: 'user2',
 //     password: 'user2',
@@ -258,7 +258,7 @@ const messages = [
 
 // export const getPostalCodes = () => postalCodes;
 
-export const getInitialUsers = () => users;
+// export const getInitialUsers = () => users;
 
 // export const getInitialPosts = () => posts;
 

@@ -52,8 +52,8 @@ class App extends Component {
   state = {
     user: null,
     // user: getInitialUsers()[0], // Phase 2: Init to null and change this based on which user is logged in
-    users: getInitialUsers(), // TODO: Remove. Not needed in Phase 2.
-    messages: getMessages(), // TODO: Remove. Not needed in Phase 2.
+    // users: getInitialUsers(), // TODO: Remove. Not needed in Phase 2.
+    // messages: getMessages(), // TODO: Remove. Not needed in Phase 2.
   };
 
   handleLogout = () => {

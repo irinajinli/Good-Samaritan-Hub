@@ -23,5 +23,4 @@ export const getMatchingUsers = async (searchTerm) => {
 
 
 // Returns a list of the given user's reported posts
-// Phase 2: Make a server call to get the posts instead of searching in the <posts> list and move to /actions/post
 export const getReportedPosts = (user, posts) => posts.filter(post => post.posterUsername === user.username && post.isReported);
