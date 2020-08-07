@@ -6,6 +6,7 @@ mongoose.set("bufferCommands", false);
 
 const User = require("../models/user");
 const {
+  isMongoError,
   mongoChecker,
   validateId,
   patch,
@@ -108,6 +109,30 @@ router.get("/user/username/:username", mongoChecker, (req, res) => {
 router.get("/users", mongoChecker, (req, res) => {
   find(req, res, User);
 });
+
+// GET route to get all users whose username or full name contains <req.params.searchTerm>
+router.get('/user/searchTerm/:searchTerm', (req, res) => {
+  console.log(req.params.searchTerm);
+  let searchTerm = req.params.searchTerm.trim(); 
+  User.find()
+    .then((result) => {
+      const matchingUsers = result.filter(user => {
+          const fullName = `${user.firstName} ${user.lastName}`;
+          return (searchTerm.length !== 0 &&
+              (user.username.search(new RegExp(searchTerm, 'i')) !== -1 ||
+              fullName.search(new RegExp(searchTerm, 'i')) !== -1))
+      });
+      res.send(matchingUsers);
+    })
+    .catch((error) => {
+      if (isMongoError(error)) {
+        res.status(500).send('Internal server error');
+      } else {
+          log(error);
+          res.status(400).send('Bad Request');
+      }
+    });
+})
 
 // PATCH route to update a user by username
 // <req.body> will be an array that consists of a list of changes to make to the user

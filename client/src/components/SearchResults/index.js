@@ -15,11 +15,10 @@ class SearchResults extends Component {
     };
 
     updateUserResults() {
-        getAllUsers()
-            .then(users => {
-                users = getMatchingUsers(this.props.searchTerm, users)
+        getMatchingUsers(this.props.searchTerm)
+            .then(matchingUsers => {
                 this.setState({ 
-                    matchingUsers: users 
+                    matchingUsers
                 });
             })
             .catch(error => {
