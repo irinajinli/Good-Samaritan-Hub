@@ -16,14 +16,16 @@ export const login = (loginComp, app) => {
   fetch(request)
     .then((res) => {
       if (res.status === 200) {
-        return res.json();
+        app.setState({ user: res });
+        console.log(app.state);
+        // return res.json();
       }
     })
-    .then((json) => {
-      if (json.currentUser !== undefined) {
-        app.setState({ currentUser: json.currentUser });
-      }
-    })
+    // .then((json) => {
+    //   // if (json.currentUser !== undefined) {
+    //   //   app.setState({ currentUser: json.currentUser });
+    //   // }
+    // })
     .catch((error) => {
       console.log(error);
     });

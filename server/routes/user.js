@@ -16,6 +16,66 @@ const {
 
 const express = require("express");
 const router = express.Router();
+const session = require("express-session");
+
+/*** Session handling **************************************/
+// Create a session cookie
+router.use(
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60000,
+      httpOnly: true,
+    },
+  })
+);
+
+// POST route to log in and create session
+router.post("/users/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  log(username, password);
+
+  // find user
+  User.findOne({ username: username, password: password })
+    .then((user) => {
+      log(user.location);
+      req.session.user = user._id;
+      req.session.username = user.username;
+      res.send(user.username);
+    })
+
+    .catch((error) => {
+      log(error);
+      res.status(400).send();
+    });
+});
+
+// A route to logout a user
+router.get("/users/logout", (req, res) => {
+  // Remove the session
+  req.session.destroy((error) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.send();
+    }
+  });
+});
+
+// A route to check if a use is logged in on the session cookie
+router.get("/users/check-session", (req, res) => {
+  if (req.session.user) {
+    res.send({ currentUser: req.session.email });
+  } else {
+    res.status(401).send();
+  }
+});
+
+/*********************************************************/
 
 // POST route to create a user
 // <req.body> expects the following fields at minimum. See the User model for all fields.
@@ -87,26 +147,12 @@ router.put("/user/:id", mongoChecker, validateId, (req, res) => {
     });
 });
 
-// POST route to log in and create session
-router.post("/users/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  log(username, password);
-
-  // find user
-  User.findOne({ username: username, password: password })
-    .then((user) => {
-      log(user.location);
-      // req.session.user = user._id;
-      // req.session.username = user.username;
-      res.send(user.username);
-    })
-
-    .catch((error) => {
-      log(error);
-      res.status(400).send();
-    });
+router.get("/users/check-session", (req, res) => {
+  if (req.session.user) {
+    res.send({ currentUser: req.session.email });
+  } else {
+    res.status(401).send();
+  }
 });
 
 module.exports = router;

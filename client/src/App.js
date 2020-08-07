@@ -11,9 +11,16 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getMessages } from './resources/hardCodedData'; // TODO: Remove. Not needed in Phase 2.
+import { getInitialUsers, getMessages } from "./resources/hardCodedData"; // TODO: Remove. Not needed in Phase 2.
+
+import { readCookie } from "./actions/user";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    readCookie(this); // sees if a user is logged in.
+  }
+
   // Global theme
   theme = createMuiTheme({
     typography: {
@@ -33,24 +40,25 @@ class App extends Component {
     },
     palette: {
       primary: {
-        light: '#4f5b62',
-        main: '#263238',
-        dark: '#000a12',
-        contrastText: '#fff',
-      }
-    }
+        light: "#4f5b62",
+        main: "#263238",
+        dark: "#000a12",
+        contrastText: "#fff",
+      },
+    },
   });
 
   // Initial global state
   state = {
-    user: getInitialUsers()[0], // Phase 2: Init to null and change this based on which user is logged in
+    user: null,
+    // user: getInitialUsers()[0], // Phase 2: Init to null and change this based on which user is logged in
     users: getInitialUsers(), // TODO: Remove. Not needed in Phase 2.
-    messages: getMessages() // TODO: Remove. Not needed in Phase 2.
+    messages: getMessages(), // TODO: Remove. Not needed in Phase 2.
   };
 
   handleLogout = () => {
     this.setState({ user: null });
-  }
+  };
 
   render() {
     const { user, users, messages } = this.state;
@@ -64,53 +72,68 @@ class App extends Component {
 
               {/* User views */}
               <Route
-                exact path={["/home", "/profile", "/inbox", "/setting"]}
-                render={() => 
-                  <UserView
-                    appComponent={this}
-                    user={user}
-                    users={users}
-                    handleLogout={this.handleLogout}
-                  />
-                }
+                exact
+                path={["/login", "/home", "/profile", "/inbox", "/setting"]}
+                render={({ history }) => (
+                  // check if someone is logged in
+                  <div className="app">
+                    {!user ? (
+                      <Login appComponent={this} />
+                    ) : (
+                      <UserView
+                        appComponent={this}
+                        user={user}
+                        users={users}
+                        handleLogout={this.handleLogout}
+                      />
+                    )}
+                  </div>
+                )}
               />
 
               {/* Admin homepage */}
               <Route
-                exact path="/admin/home"
-                render={() => 
-                <AdminHome 
-                  messages={messages}
-                  handleLogout={this.handleLogout}
-                />}
+                exact
+                path="/admin/home"
+                render={() => (
+                  <AdminHome
+                    messages={messages}
+                    handleLogout={this.handleLogout}
+                  />
+                )}
               />
 
               {/* User login and registration. */}
-              <Route exact path={["/", "/login", "/registration"]}
-                render={() => 
+              <Route
+                exact
+                // OLD
+                // path={["/", "/login", "/registration"]}
+                path={["/", "/registration"]}
+                render={() => (
                   <React.Fragment>
-                    <TopBar/>
+                    <TopBar />
                     <Route exact path="/" render={() => <Landing />} />
+                    <Route exact path="/login" render={() => <Login />} />
                     <Route
-                      exact path="/login"
-                      render={() => <Login />}
-                    />
-                    <Route
-                      exact path="/registration"
+                      exact
+                      path="/registration"
                       render={() => <Registration />}
                     />
-                  </React.Fragment>}
+                  </React.Fragment>
+                )}
               />
 
               {/* Admin login */}
-              <Route exact path="/admin" 
-                render={() => 
+              <Route
+                exact
+                path="/admin"
+                render={() => (
                   <React.Fragment>
-                    <TopBar/>
+                    <TopBar />
                     <Login />
-                  </React.Fragment>} 
+                  </React.Fragment>
+                )}
               />
-
             </Switch>
           </BrowserRouter>
         </ThemeProvider>

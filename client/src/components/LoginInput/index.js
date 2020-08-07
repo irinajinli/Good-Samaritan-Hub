@@ -6,6 +6,11 @@ import "./styles.css";
 import "../../index.css";
 
 class LoginInput extends React.Component {
+  constructor(props) {
+    super(props);
+    // this.props.history.push("/login");
+  }
+
   state = {
     username: "",
     password: "",
@@ -59,6 +64,9 @@ class LoginInput extends React.Component {
   };
 
   render() {
+    const { appComponent } = this.props;
+    console.log(this);
+
     const wrongCreds = this.state.wrongCreds;
     let wrongCredsMessage;
 
@@ -108,7 +116,7 @@ class LoginInput extends React.Component {
             className="smallMarginTop"
             variant="contained"
             color="primary"
-            onClick={() => this.checkCredentials(this, this.props)}
+            onClick={() => this.checkCredentials(this, appComponent)}
           >
             LOG IN
           </Button>
