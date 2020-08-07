@@ -78,7 +78,10 @@ class App extends Component {
                   // check if someone is logged in
                   <div className="app">
                     {!user ? (
-                      <Login appComponent={this} />
+                      <div>
+                        <TopBar />
+                        <Login appComponent={this} />
+                      </div>
                     ) : (
                       <UserView
                         appComponent={this}
