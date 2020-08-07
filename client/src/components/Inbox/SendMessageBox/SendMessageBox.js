@@ -14,9 +14,17 @@ class SendMessageBox extends Component {
         this.setState({ [input]: e.target.value })
     }
 
+    
+    handleKeyPress = (event) => {
+        if(event.key === 'Enter'){
+          this.props.onSend(this.props.userName, this.props.selectedUser, this.state.newMessage);
+          this.setState({ newMessage: '' })
+        }
+      }
+
     render() {
         return (
-            <div className='sendMessageContainer'>
+            <div className='sendMessageContainer' onKeyPress={this.handleKeyPress}>
                 <div className='sendMessageBox'>
                     <TextField
                         placeholder="Type Message Here"
