@@ -65,7 +65,6 @@ class LoginInput extends React.Component {
 
   render() {
     const { appComponent } = this.props;
-    console.log(this);
 
     const wrongCreds = this.state.wrongCreds;
     let wrongCredsMessage;
