@@ -28,8 +28,9 @@ class LoginInput extends React.Component {
 
   handleKeyDown = (event) => {
     if (event.keyCode == 13) {
+      const { appComponent } = this.props;
       // if enter key was pressed
-      this.checkCredentials();
+      this.checkCredentials(this, appComponent);
     }
   };
 
