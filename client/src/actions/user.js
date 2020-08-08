@@ -38,7 +38,8 @@ export const updateUserStatus = async (originalUser, updatedUser) => {
     method: "PATCH",
     body: JSON.stringify([
       { op: "replace", path: "/isReported", value: updatedUser.isReported },
-      { op: "replace", path: "/isBanned", value: updatedUser.isBanned }
+      { op: "replace", path: "/isBanned", value: updatedUser.isBanned },
+      { op: "replace", path: "/banReason", value: updatedUser.banReason }
     ]),
     headers: {
       Accept: "application/json, text/plain, */*",
