@@ -1,14 +1,74 @@
-'use strict';
-const { mongoose } = require('../db/mongoose');
-mongoose.set('bufferCommands', false);
+"use strict";
+const { mongoose } = require("../db/mongoose");
+mongoose.set("bufferCommands", false);
 
-const Admin = mongoose.model('Admin');
+const Admin = require("../models/admin");
 
-const { mongoChecker, isMongoError, save } = require('./common');
+const { mongoChecker, isMongoError, save } = require("./common");
 
-const express = require('express');
-const { find } = require('../models/user');
+const express = require("express");
+const session = require("express-session");
+// const { find } = require("../models/user");
 const router = express.Router();
+
+/*** Session handling **************************************/
+// Create a session cookie
+router.use(
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      expires: 60000,
+      httpOnly: true,
+    },
+  })
+);
+
+// POST route to log in and create session
+router.post("/admin/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  log(username, password);
+
+  // find user
+  User.findOne({ username: username, password: password })
+    .then((user) => {
+      log(user.location);
+      req.session.user = user._id;
+      req.session.username = user.username;
+      res.status(200).send({ currUser: user });
+    })
+
+    .catch((error) => {
+      log(error);
+      res.status(400).send();
+    });
+});
+
+// A route to logout a user
+router.get("/users/logout", (req, res) => {
+  // Remove the session
+  req.session.destroy((error) => {
+    if (error) {
+      res.status(500).send(error);
+    } else {
+      res.send();
+    }
+  });
+});
+
+// A route to check if a use is logged in on the session cookie
+router.get("/users/check-session", (req, res) => {
+  if (req.session.user) {
+    res.send({ currentUser: req.session.email });
+  } else {
+    res.status(401).send();
+  }
+});
+
+//************************* */
 
 // POST route to create an admin
 // <req.body> expects
@@ -16,37 +76,37 @@ const router = express.Router();
 //     "username": String,
 //     "password": String
 // }
-router.post('/admin', mongoChecker, (req, res) => {
-    // Create a new admin
-    const admin = new Admin({
-        username: req.body.username,
-        password: req.body.password
-    });
+router.post("/admin", mongoChecker, (req, res) => {
+  // Create a new admin
+  const admin = new Admin({
+    username: req.body.username,
+    password: req.body.password,
+  });
 
-    // Save admin to the database
-    save(req, res, admin);
+  // Save admin to the database
+  save(req, res, admin);
 });
 
 // GET route to get an admin by its id
-router.get('/admin/:id', mongoChecker, (req, res) => {
-    // Get admin by id
-    Admin.findById(req.params.id)
-        .then((admin) => {
-            if (admin) {
-                res.send(admin);
-            } else {
-                res.status(404).send(`Admin ${req.params.id} does not exist`);
-            }
-        })
-        .catch((error) => {
-            log(error);
-            res.status(500).send("Internal Server Error");
-        });
+router.get("/admin/:id", mongoChecker, (req, res) => {
+  // Get admin by id
+  Admin.findById(req.params.id)
+    .then((admin) => {
+      if (admin) {
+        res.send(admin);
+      } else {
+        res.status(404).send(`Admin ${req.params.id} does not exist`);
+      }
+    })
+    .catch((error) => {
+      log(error);
+      res.status(500).send("Internal Server Error");
+    });
 });
 
 // GET route to get all admins
-router.get('/admin', mongoChecker, (req, res) => {
-    find(req, res, Admin);
+router.get("/admin", mongoChecker, (req, res) => {
+  find(req, res, Admin);
 });
 
 module.exports = router;
