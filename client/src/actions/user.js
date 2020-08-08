@@ -33,10 +33,13 @@ export const getAllUsers = async () => {
   return users;
 };
 
-export const updateUser = async (originalUser, updatedUser) => {
-  const request = new Request(`/user/${originalUser._id}`, {
-    method: "put",
-    body: JSON.stringify(updatedUser),
+export const updateUserStatus = async (originalUser, updatedUser) => {
+  const request = new Request(`/user/username/${originalUser.username}`, {
+    method: "PATCH",
+    body: JSON.stringify([
+      { op: "replace", path: "/isReported", value: updatedUser.isReported },
+      { op: "replace", path: "/isBanned", value: updatedUser.isBanned }
+    ]),
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
@@ -49,6 +52,32 @@ export const updateUser = async (originalUser, updatedUser) => {
   return ok;
 };
 
+export const updateProfileInfo = async (originalUser, updatedUser) => {
+  const request = new Request(`/user/username/${originalUser.username}`, {
+    method: "PATCH",
+    body: JSON.stringify([
+      { op: "replace", path: "/firstName", value: updatedUser.firstName },
+      { op: "replace", path: "/lastName", value: updatedUser.lastName },
+      { op: "replace", path: "/location", value: updatedUser.location },
+      { op: "replace", path: "/bio", value: updatedUser.bio }
+    ]),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Send the request with fetch()
+  const res = await fetch(request);
+  const ok = await res.json();
+  return ok;
+};
+
+// TODO
+export const updatePassword = async () => {
+  
+}
+
 // Hides <post> from the current user
 export const hidePostFromUser = async (post, appComponent) => {
   const user = appComponent.state.user;
@@ -59,13 +88,7 @@ export const hidePostFromUser = async (post, appComponent) => {
   // Create our request constructor with all the parameters we need
   const request = new Request(url, {
     method: "PATCH",
-    body: JSON.stringify([
-      {
-        op: "replace",
-        path: "/postsHiddenFromUser",
-        value: user.postsHiddenFromUser,
-      },
-    ]),
+    body: JSON.stringify([{ op: "replace", path: "/postsHiddenFromUser", value: user.postsHiddenFromUser }]),
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",

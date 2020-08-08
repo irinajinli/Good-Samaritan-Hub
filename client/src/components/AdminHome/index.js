@@ -16,7 +16,7 @@ import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
 import { getPostsByUser, unreportPost, reportPost } from '../../actions/post';
-import { updateUser, getAllUsers } from '../../actions/user';
+import { updateUserStatus, getAllUsers } from '../../actions/user';
 
 const columns = [
     { id: 'name', label: 'Username'},
@@ -114,7 +114,7 @@ class AdminHome extends Component {
         else {
             user.banReason = reason;
         }
-        updateUser(originalUser, user).then(user => {
+        updateUserStatus(originalUser, user).then(user => {
             const users = this.state.users.slice();
             const i = users.map(user => user._id).indexOf(user._id);
             users[i] = user;
@@ -168,7 +168,7 @@ class AdminHome extends Component {
         const users = this.state.users.slice();
         i = users.map(user => user._id).indexOf(user._id);
         users[i] = user;
-        updateUser(originalUser, user).then(user => {
+        updateUserStatus(originalUser, user).then(user => {
             this.setState({users, selectedUser: user});
         });
         setTimeout(() => this.handleCloseSnackBar(), 5000);
@@ -190,7 +190,7 @@ class AdminHome extends Component {
         }
         user.isReported = true;
         
-        updateUser(originalUser, user).then(user => {
+        updateUserStatus(originalUser, user).then(user => {
             const users = this.state.users.slice();
             const i = users.map(user => user._id).indexOf(user._id);
             users[i] = user;

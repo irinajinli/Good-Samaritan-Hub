@@ -116,7 +116,7 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
   let searchTerm = req.params.searchTerm.trim();
   User.find()
     .then((result) => {
-      const matchingUsers = result.filter((user) => {
+      let matchingUsers = result.filter((user) => {
         const fullName = `${user.firstName} ${user.lastName}`;
         return (
           searchTerm.length !== 0 &&
@@ -124,6 +124,15 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
             fullName.search(new RegExp(searchTerm, "i")) !== -1)
         );
       });
+      matchingUsers = matchingUsers.map(user => {
+        return {
+          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          location: user.location,
+          bio: user.bio,
+        }
+      })
       res.send(matchingUsers);
     })
     .catch((error) => {

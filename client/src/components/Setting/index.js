@@ -7,7 +7,7 @@ import SaveSnackBar from './SaveSnackBar/index';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import { updateUser } from '../../actions/user';
+import { updateProfileInfo } from '../../actions/user';
 import { getPostalCodePrefixes } from '../../actions/location';
 
 import './styles.css';
@@ -88,7 +88,7 @@ class Setting extends Component {
             locationChanged = true;
         }
         if (changed) {
-            updateUser(user, displayedUserCopy)
+            updateProfileInfo(user, displayedUserCopy)
                 .then(updatedUser => {
                     this.props.appComponent.setState({
                         user: updatedUser
@@ -114,7 +114,7 @@ class Setting extends Component {
             this.state.newPassword === this.state.confirmPassword &&
             this.state.newPassword !== displayedUser.password) {
             displayedUser.password = this.state.newPassword;
-            updateUser(user, displayedUser, this.props.appComponent);
+            updateProfileInfo(user, displayedUser, this.props.appComponent);
             this.setState({snackBarOpen: true});
             setTimeout(() => this.handleCloseSnackBar(), 5000);
         }
@@ -127,11 +127,6 @@ class Setting extends Component {
         return (
         <div className='profile'>
             <div className='profile__container'>
-                {/*<div className="setting__icon-container">
-                    <div className="setting__icon-button">Change</div>
-                    <img src={require('../../resources/userIcon.png')} className='profile__icon setting_icon'/>
-                </div>*/}
-                {/* <img src={require('../../resources/userIcon.png')} alt='user icon' className='profile__icon'/> */}
                 <img src={`https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}&format=svg`} alt='user icon' className='profile__icon'/>
                 <div>
                     <Button className='setting__back-btn'
