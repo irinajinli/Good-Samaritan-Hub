@@ -74,7 +74,7 @@ class App extends Component {
               <Route
                 exact
                 path={["/login", "/home", "/profile", "/inbox", "/setting"]}
-                render={({ history }) => (
+                render={() => (
                   // check if someone is logged in
                   <div className="app">
                     {!user ? (
@@ -82,11 +82,16 @@ class App extends Component {
                         <TopBar />
                         <Login appComponent={this} />
                       </div>
-                    ) : (
+                    ) : !user.admin ? (
                       <UserView
                         appComponent={this}
                         user={user}
                         users={users}
+                        handleLogout={this.handleLogout}
+                      />
+                    ) : (
+                      <AdminHome
+                        messages={messages}
                         handleLogout={this.handleLogout}
                       />
                     )}
@@ -132,8 +137,21 @@ class App extends Component {
                 path="/admin"
                 render={() => (
                   <React.Fragment>
-                    <TopBar />
-                    <Login />
+                    {!user ? (
+                      <div>
+                        <TopBar />
+                        <Login appComponent={this} />
+                      </div>
+                    ) : !user.admin ? (
+                      <div>Forbidden</div>
+                    ) : (
+                      <AdminHome
+                        messages={messages}
+                        handleLogout={this.handleLogout}
+                      />
+                    )}
+                    {/* <TopBar />
+                    <Login appComponent={this} /> */}
                   </React.Fragment>
                 )}
               />

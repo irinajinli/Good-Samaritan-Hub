@@ -10,6 +10,7 @@ const express = require("express");
 const session = require("express-session");
 // const { find } = require("../models/user");
 const router = express.Router();
+const log = console.log;
 
 /*** Session handling **************************************/
 // Create a session cookie
@@ -33,9 +34,9 @@ router.post("/admin/login", (req, res) => {
   log(username, password);
 
   // find user
-  User.findOne({ username: username, password: password })
+  Admin.findOne({ username: username, password: password })
     .then((user) => {
-      log(user.location);
+      log(user);
       req.session.user = user._id;
       req.session.username = user.username;
       res.status(200).send({ currUser: user });
@@ -81,6 +82,7 @@ router.post("/admin", mongoChecker, (req, res) => {
   const admin = new Admin({
     username: req.body.username,
     password: req.body.password,
+    admin: true,
   });
 
   // Save admin to the database

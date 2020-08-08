@@ -16,7 +16,10 @@ class Login extends React.Component {
     return (
       <div className="centre">
         <div className="title">{this.getTitle()}</div>
-        <LoginInput appComponent={this.props.appComponent} />
+        <LoginInput
+          userType={this.getTitle()}
+          appComponent={this.props.appComponent}
+        />
       </div>
     );
   }
