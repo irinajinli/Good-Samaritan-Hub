@@ -106,8 +106,8 @@ h2 {
     overflow-x: hidden;
 }
 
-.adminHome__reported-panel .adminHome__scroll {
-    margin-bottom: 60px;
+.adminHome__reported-panel {
+    padding-bottom: 60px;
 }
 
 .adminHome__user-detail-text {

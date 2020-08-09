@@ -253,8 +253,8 @@ class AdminHome extends Component {
                         }
                     </Card>
                     <Card className="adminHome__reported-panel">
-                        <h1>Report Details</h1>
-                        {selectedUser && selectedUser.isReported &&
+                        <h1>Status Details</h1>
+                        {selectedUser && selectedUser.isReported && !selectedUser.isBanned &&
                             <div className="adminHome__scroll">
                                 {selectedUser.reportedMessages.map((reportId) => {
                                     return (
@@ -268,8 +268,11 @@ class AdminHome extends Component {
                                 })}
                             </div>
                         }
-                        {selectedUser && !selectedUser.isReported &&
+                        {selectedUser && !selectedUser.isReported && !selectedUser.isBanned &&
                             <label className="adminHome__center">{selectedUser.username} has not been reported</label>
+                        }
+                        {selectedUser && selectedUser.isBanned &&
+                            <Label primary={"Reason For ban"} secondary={selectedUser.banReason} blockText/>
                         }
                         {selectedUser && !selectedUser.isBanned &&
                             <Button className="adminHome__ban-button"
