@@ -91,8 +91,12 @@ const find = (req, res, MongooseModel, filter) => {
             res.send(result);
         })
         .catch((error) => {
-            log(error);
-            res.status(500).send("Internal Server Error");
+            if (isMongoError(error)) {
+                res.status(500).send("Internal server error");
+            } else {
+                log(error);
+                res.status(400).send("Bad Request");
+            }
         });
 }
 

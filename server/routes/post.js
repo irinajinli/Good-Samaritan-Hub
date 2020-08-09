@@ -44,7 +44,26 @@ router.get('/posts', mongoChecker, (req, res) => {
 // GET route to get all posts in the location <req.param.location>.
 // <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
 router.get('/post/location/:location', mongoChecker, (req, res) => {
-    find(req, res, Post, { location: req.params.location });
+    Post.find({ location: req.params.location })
+        .then((posts) => {
+            // If a post is inactive, only return it if the poster is the current user 
+            posts = posts.filter(post => {
+                if (req.session.username !== post.posterUsername) {
+                    return post.status === 'active';
+                } else {
+                    return true;
+                }
+            })
+            res.send(posts);
+        })
+        .catch((error) => {
+            if (isMongoError(error)) {
+                res.status(500).send("Internal server error");
+            } else {
+                log(error);
+                res.status(400).send("Bad Request");
+            }
+        });
 });
 
 // GET route to get all posts with posterUsername <req.param.posterUsername>
