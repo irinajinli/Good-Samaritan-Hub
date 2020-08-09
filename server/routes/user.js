@@ -17,21 +17,6 @@ const {
 
 const express = require("express");
 const router = express.Router();
-const session = require("express-session");
-
-/*** Session handling **************************************/
-// Create a session cookie
-router.use(
-  session({
-    secret: "oursecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60000,
-      httpOnly: true,
-    },
-  })
-);
 
 // POST route to log in and create session
 router.post("/users/login", (req, res) => {
@@ -72,8 +57,8 @@ router.get("/users/check-session", (req, res) => {
   if (req.session.user) {
     res.send({
       userId: req.session.user,
-      username: req.session.username
-    })
+      username: req.session.username,
+    });
   } else {
     res.status(401).send();
   }
@@ -127,15 +112,15 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
             fullName.search(new RegExp(searchTerm, "i")) !== -1)
         );
       });
-      matchingUsers = matchingUsers.map(user => {
+      matchingUsers = matchingUsers.map((user) => {
         return {
           username: user.username,
           firstName: user.firstName,
           lastName: user.lastName,
           location: user.location,
           bio: user.bio,
-        }
-      })
+        };
+      });
       res.send(matchingUsers);
     })
     .catch((error) => {
@@ -156,10 +141,10 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
 // ]
 router.patch("/user/username/:username", mongoChecker, (req, res) => {
   // // Find the fields to update.
-	// const fieldsToUpdate = [];
-	// req.body.map((change) => {
+  // const fieldsToUpdate = [];
+  // req.body.map((change) => {
   //   const propertyToChange = change.path.substr(1); // getting rid of the '/' character
-	// 	fieldsToUpdate.push(propertyToChange)
+  // 	fieldsToUpdate.push(propertyToChange)
   // })
   // // Check that the current user / admin is authorized to update the fields in fieldsToUpdate
   // if (req.session.type === 'user' && req.session.username === req.params.username) {

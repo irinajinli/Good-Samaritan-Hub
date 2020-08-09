@@ -61,14 +61,11 @@ class LoginInput extends React.Component {
 
   // phase 2 version
   checkCredentials = (loginComp, app, userType) => {
-    console.log("userType in checkCreds is", userType);
     login(loginComp, app, userType);
   };
 
   render() {
     const { appComponent, userType } = this.props;
-
-    console.log("userType in render is", userType);
 
     const wrongCreds = this.state.wrongCreds;
     let wrongCredsMessage;
