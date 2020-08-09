@@ -134,12 +134,23 @@ class AdminHome extends Component {
         this.setState({dialogOpen: false});
     }
 
-    handleOpenSnackBar = (id, reportType, reportContent, i) => {
+    handleOpenSnackBar = async (originalUser, id, reportType, reportContent, i) => {
+        // If report is waiting to be removed, remove first
+        if (this.state.oldReport) {
+            await this.handleCloseSnackBar(originalUser);
+        }
         this.setState({oldReport: {id, type: reportType, content: reportContent, index: i}});
     }
 
-    handleCloseSnackBar = () => {
-        this.setState({oldReport: null});
+    handleCloseSnackBar = (originalUser) => {
+        // If report is waiting to be removed, then remove
+        if (this.state.oldReport) {
+            unreportPost(this.state.oldReport.content);
+            this.setState({oldReport: null});
+        }
+        if (originalUser) {
+            updateUserStatus(originalUser, this.state.selectedUser);
+        }
     }
 
     handleDeleteReport = async (report) => {
@@ -153,13 +164,11 @@ class AdminHome extends Component {
             type = 'Message';
             this.handleOpenSnackBar(report._id, 'Message', report, i);
         } else {
-            await unreportPost(report).then(post => {
-                const posts = this.state.posts.slice();
-                i = posts.map(p => p._id).indexOf(post._id);
-                posts[i].isReported = false;
-                this.setState({posts});
-                this.handleOpenSnackBar(report._id, 'Post', report, i);
-            });
+            const posts = this.state.posts.slice();
+            i = posts.map(p => p._id).indexOf(report._id);
+            posts[i].isReported = false;
+            this.setState({posts});
+            this.handleOpenSnackBar(originalUser, report._id, 'Post', report, i);
             type = 'Post';
         }
         if (this.getReportedPosts(this.state.posts).length + user.reportedMessages.length <= 0) {
@@ -168,10 +177,10 @@ class AdminHome extends Component {
         const users = this.state.users.slice();
         i = users.map(user => user._id).indexOf(user._id);
         users[i] = user;
-        updateUserStatus(originalUser, user).then(user => {
-            this.setState({users, selectedUser: user});
-        });
-        setTimeout(() => this.handleCloseSnackBar(), 5000);
+        this.setState({users, selectedUser: user});
+        setTimeout(() => {
+            this.handleCloseSnackBar(originalUser);
+        }, 5000);
     }
 
     handleUndoDelete = async () => {
@@ -181,22 +190,17 @@ class AdminHome extends Component {
         if (report.type === 'Message') {
             user.reportedMessages.splice(report.index, 0, report.id);
         } else {
-            reportPost(report.content).then(post => {
-                const posts = this.state.posts.slice();
-                post.date = new Date(post.date);
-                posts[report.index].isReported = true;
-                this.setState({posts});
-            });
+            const posts = this.state.posts.slice();
+            report.content.date = new Date(report.content.date);
+            posts[report.index].isReported = true;
+            this.setState({posts});
         }
         user.isReported = true;
-        
-        updateUserStatus(originalUser, user).then(user => {
-            const users = this.state.users.slice();
-            const i = users.map(user => user._id).indexOf(user._id);
-            users[i] = user;
-            this.setState({
-                users, selectedUser: user, oldReport: null
-            });
+        const users = this.state.users.slice();
+        const i = users.map(user => user._id).indexOf(user._id);
+        users[i] = user;
+        this.setState({
+            users, selectedUser: user, oldReport: null
         });
     }
 
@@ -312,7 +316,7 @@ class AdminHome extends Component {
                     }
                 </Card>
                 <Button className="adminHome__logout-button" startIcon={<LogoutIcon/>} onClick={this.onLogout}>Logout</Button>
-                {oldReport && <UndoSnackBar handleClose={this.handleCloseSnackBar} handleUndo={this.handleUndoDelete}/>}
+                {oldReport && <UndoSnackBar handleClose={() => this.handleCloseSnackBar()} handleUndo={this.handleUndoDelete}/>}
                 {dialogOpen && <BanDialog handleBan={this.handleBan} handleClose={this.handleCloseDialog} ban={!selectedUser.isBanned}/>}
             </div>
         );
