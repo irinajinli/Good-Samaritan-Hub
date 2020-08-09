@@ -7,24 +7,8 @@ const Admin = require("../models/admin");
 const { mongoChecker, isMongoError, save } = require("./common");
 
 const express = require("express");
-const session = require("express-session");
-// const { find } = require("../models/user");
 const router = express.Router();
 const log = console.log;
-
-/*** Session handling **************************************/
-// Create a session cookie
-router.use(
-  session({
-    secret: "oursecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60000,
-      httpOnly: true,
-    },
-  })
-);
 
 // POST route to log in and create session
 router.post("/admin/login", (req, res) => {
@@ -65,7 +49,7 @@ router.get("/users/check-session", (req, res) => {
   if (req.session.user) {
     res.send({
       userId: req.session.user,
-      username: req.session.username
+      username: req.session.username,
     });
   } else {
     res.status(401).send();
