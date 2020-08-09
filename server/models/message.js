@@ -18,6 +18,10 @@ const messageSchema = Schema({
         type: String,
         required: true
     },
+    isReported: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const Message = mongoose.model("Message", messageSchema);

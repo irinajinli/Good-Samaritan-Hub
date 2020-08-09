@@ -10,7 +10,6 @@ import './styles.css';
 
 import { getUserByUsername, hidePostFromUser } from '../../actions/user';
 import { createPost } from '../../actions/post';
-import { getMessages, getConversations } from '../../resources/hardCodedData';
 
 
 class UserView extends Component {
@@ -30,8 +29,6 @@ class UserView extends Component {
         viewingInbox: false,
         viewingEditProfile: false,
 
-        messages: getMessages(),
-        conversations: getConversations(),
         inboxFrom: null,
     }
 

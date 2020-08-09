@@ -38,7 +38,7 @@ router.post('/messages', (req, res) => {
     message.save().then(result => res.send(result))
         .catch((error) => {
             console.log(error)
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+            res.status(400).send('Bad Request') 
     })
 });
 
@@ -51,7 +51,6 @@ router.get('/messages/:username' ,(req, res) => {
     ]})
         .then(messages => {
             res.send(messages)
-            console.log(messages)
         })
         .catch((error) => {
             log(error);

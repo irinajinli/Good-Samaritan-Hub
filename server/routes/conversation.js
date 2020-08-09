@@ -9,7 +9,7 @@ let Conversation = require('../models/conversation');
 const express = require('express');
 const router = express.Router();
 
-route.get('/conversations', (req, res) => {
+router.get('/conversations', (req, res) => {
     Conversation.find()
         .then(conversations => res.send(conversations))
         .catch((err) => {
@@ -33,8 +33,8 @@ router.post('/conversations', (req, res) => {
 router.get('/conversations/:username' ,(req, res) => {
     const username = req.params.username;
 
-    Conversation.find({username: username})
-        .then(conversations => res.send(conversations))
+    Conversation.findOne({username: username})
+        .then(conversations => res.send(conversations.conversations))
         .catch((error) => {
             log(error);
             res.status(500).send("Internal Server Error");
@@ -44,14 +44,14 @@ router.get('/conversations/:username' ,(req, res) => {
 router.post('/conversations/:username', (req, res) => {
     const username = req.params.username;
     
-    Conversation.find({username: username}).then((conversations) => {
+    Conversation.findOne({username: username}).then((conversations) => {
         if(!conversations) {
             res.status(404).send('Resource not found')
         } else {
             const conversation = {
                 username: req.body.messagedUser,
                 name: req.body.messagedName,
-                lastMessageTime: new Date(req.body.messagedLastMessageTime)
+                lastMessageTime: Date.now()
             }
             conversations.conversations.push(conversation)
 
@@ -66,5 +66,42 @@ router.post('/conversations/:username', (req, res) => {
         }
     })
 });
+
+router.put('/conversations/:username', (req, res) => {
+    const username = req.params.username;
+    
+    Conversation.updateOne({
+        username: username,
+        'conversations.username': req.body.messagedUser
+    }, {
+        $set: {
+            'conversations.$.lastMessageTime': Date.now()
+        }
+    },
+    (err) => {
+        if(!err) {
+            res.send("Updated conversation")
+        } else {
+            res.send(err)
+        }
+    })
+});
+
+
+router.patch('/conversations/:username', (req, res) => {
+    const username = req.params.username;
+    Conversation.updateOne(
+        {username: username},
+        {$set: {conversations: req.body}},
+        (err) => {
+            if(!err) {
+                res.send("Updated conversation")
+            } else {
+                res.send(err)
+            }
+        }
+    )
+});
+
 
 module.exports = router;

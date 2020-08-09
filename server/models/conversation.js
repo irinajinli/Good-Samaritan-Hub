@@ -17,7 +17,7 @@ const conversationSchema = new Schema({
 })
 const conversationsSchema = new Schema({
     username: {
-        type: Schema.Types.ObjectId,
+        type: String,
         required: true
     },
     conversations: [conversationSchema]

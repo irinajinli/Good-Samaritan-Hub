@@ -17,11 +17,13 @@ const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const locationRoutes = require("./routes/location");
 const messageRoutes = require("./routes/message");
+const conversationRoutes = require("./routes/conversation");
 const adminRoutes = require("./routes/admin");
 app.use("/", userRoutes);
 app.use("/", postRoutes);
 app.use("/", locationRoutes);
 app.use("/", messageRoutes);
+app.use("/", conversationRoutes);
 app.use("/", adminRoutes);
 
 /* Webpage routes below */
