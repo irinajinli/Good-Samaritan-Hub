@@ -96,3 +96,32 @@ export const createNewConversation = async(username, conversation) => {
   }
 
 }
+
+const changeIsReported = async (message, trueOrFalse) => {
+
+  const url = `/messages/${message._id}`;
+
+  // Create our request constructor with all the parameters we need
+  const request = new Request(url, {
+    method: 'PATCH',
+    body: JSON.stringify([{ 'op': 'replace', 'path': '/isReported', 'value': trueOrFalse }]),
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    }
+  });
+
+  const res = await fetch(request);
+  const updatedMessage = await res.json();
+  return updatedMessage;
+}
+
+
+export const unreportMessage = async (message) => {
+  return await changeIsReported(message, false);
+}
+
+
+export const reportMessage = async (message) => {
+  return await changeIsReported(message, true);
+}

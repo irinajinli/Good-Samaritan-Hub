@@ -7,7 +7,6 @@ import BanIcon from '@material-ui/icons/Gavel';
 import LogoutIcon from '@material-ui/icons/ExitToApp';
 
 import './styles.css';
-import Icon from './../../resources/userIcon.png';
 import Label from './label.js';
 import Table from './Table/index.js';
 import Report from './Report/index.js';
@@ -15,7 +14,8 @@ import Post from './Post/index.js';
 import BanDialog from './BanDialog/index.js';
 import UndoSnackBar from './UndoSnackBar/index.js';
 
-import { getPostsByUser, unreportPost, reportPost } from '../../actions/post';
+import { getPostsByUser, unreportPost } from '../../actions/post';
+import { getMessagesForUser, unreportMessage } from '../../actions/inbox';
 import { updateUserStatus, getAllUsers } from '../../actions/user';
 
 const columns = [
@@ -42,7 +42,6 @@ class AdminHome extends Component {
     state = {
         users: [],
         posts: [],
-        reportedPosts: [],
         messages: [],
         selectedUser: null,
         selectedRow: null,
@@ -62,7 +61,7 @@ class AdminHome extends Component {
         });
     }
 
-    getReportedPosts = (posts) => posts.filter(post => post.isReported);
+    getReported = (items) => items.filter(item => item.isReported);
     
     usersToRows = (users) => {
         if (!Array.isArray(users)) {
@@ -100,6 +99,11 @@ class AdminHome extends Component {
             getPostsByUser(user).then(posts => {
                 this.setState({
                     posts
+                });
+            });
+            getMessagesForUser(user.username).then(messages => {
+                this.setState({
+                    messages: messages.filter(message => message.messageSender === user.username)
                 });
             });
         }
@@ -145,7 +149,11 @@ class AdminHome extends Component {
     handleCloseSnackBar = (originalUser) => {
         // If report is waiting to be removed, then remove
         if (this.state.oldReport) {
-            unreportPost(this.state.oldReport.content);
+            if (this.state.oldReport.type === "Message") {
+                unreportMessage(this.state.oldReport.content);
+            } else {
+                unreportPost(this.state.oldReport.content);
+            }
             this.setState({oldReport: null});
         }
         if (originalUser) {
@@ -156,22 +164,21 @@ class AdminHome extends Component {
     handleDeleteReport = async (report) => {
         const user = this.state.selectedUser;
         const originalUser = JSON.parse(JSON.stringify(user));
-        let type = '';
-        let i = user.reportedMessages.indexOf(report.messageId);
-        if (i >= 0) {
-            i = user.reportedMessages.indexOf(report.messageId);
-            user.reportedMessages.splice(i , 1);
-            type = 'Message';
-            this.handleOpenSnackBar(report._id, 'Message', report, i);
+        let i = 0;
+        if (report.messageContent) {
+            const messages = this.state.messages.slice();
+            i = messages.map(m => m._id).indexOf(report._id);
+            messages[i].isReported = false;
+            this.setState({messages});
+            this.handleOpenSnackBar(originalUser, report._id, 'Message', report, i);
         } else {
             const posts = this.state.posts.slice();
             i = posts.map(p => p._id).indexOf(report._id);
             posts[i].isReported = false;
             this.setState({posts});
             this.handleOpenSnackBar(originalUser, report._id, 'Post', report, i);
-            type = 'Post';
         }
-        if (this.getReportedPosts(this.state.posts).length + user.reportedMessages.length <= 0) {
+        if (this.getReported(this.state.posts).length + this.getReported(this.state.messages).length <= 0) {
             user.isReported = false;
         }
         const users = this.state.users.slice();
@@ -186,12 +193,14 @@ class AdminHome extends Component {
     handleUndoDelete = async () => {
         const report = this.state.oldReport;
         const user = this.state.selectedUser;
-        const originalUser = JSON.parse(JSON.stringify(user));
+        report.content.date = new Date(report.content.date);
         if (report.type === 'Message') {
-            user.reportedMessages.splice(report.index, 0, report.id);
+            //this.state.messages.splice(report.index, 0, report.id);
+            const messages = this.state.messages.slice();
+            messages[report.index].isReported = true;
+            this.setState({messages});
         } else {
             const posts = this.state.posts.slice();
-            report.content.date = new Date(report.content.date);
             posts[report.index].isReported = true;
             this.setState({posts});
         }
@@ -210,8 +219,7 @@ class AdminHome extends Component {
     }
 
     render() {
-        const {messages} = this.props;
-        const {users, posts, selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
+        const {users, posts, messages, selectedUser, selectedRow, dialogOpen, oldReport} = this.state;
         return (  
             <div className="adminHome">
                 <Card className="adminHome__table">
@@ -256,12 +264,12 @@ class AdminHome extends Component {
                         <h1>Status Details</h1>
                         {selectedUser && selectedUser.isReported && !selectedUser.isBanned &&
                             <div className="adminHome__scroll">
-                                {selectedUser.reportedMessages.map((reportId) => {
+                                {this.getReported(messages).map((report) => {
                                     return (
-                                        <Report type="Message" content={messages[reportId]} handleDeleteReport={this.handleDeleteReport}/>
+                                        <Report key={report._id} type="Message" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );
                                 })}
-                                {this.getReportedPosts(posts).map((report) => {
+                                {this.getReported(posts).map((report) => {
                                     return (
                                         <Report key={report._id} type="Post" content={report} handleDeleteReport={this.handleDeleteReport}/>
                                     );

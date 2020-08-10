@@ -5,6 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 let Messages = require('../models/message');
+const { mongoChecker, validateId, patch } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -56,6 +57,17 @@ router.get('/messages/:username' ,(req, res) => {
             log(error);
             res.status(500).send("Internal Server Error");
         });
+});
+
+// PATCH route to update a message
+// <req.params.id> is the message's id
+// <req.body> will be an array that consists of a list of changes to make to the message.
+// [
+//   { "op": "replace", "path": "/messageContent", "value": "Sup" }
+//   ...
+// ]
+router.patch('/messages/:id', mongoChecker, validateId, (req, res) => { 
+    patch(req, res, Messages, { _id: req.params.id });
 });
 
 module.exports = router;
