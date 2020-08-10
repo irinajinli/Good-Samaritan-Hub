@@ -140,21 +140,27 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
 //   ...
 // ]
 router.patch("/user/username/:username", mongoChecker, (req, res) => {
-  // // Find the fields to update.
-  // const fieldsToUpdate = [];
-  // req.body.map((change) => {
-  //   const propertyToChange = change.path.substr(1); // getting rid of the '/' character
-  // 	fieldsToUpdate.push(propertyToChange)
-  // })
+	// // Find the fields to update and their values.
+	// const fieldsToUpdate = {};
+	// req.body.map((change) => {
+	// 	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+	// 	fieldsToUpdate[propertyToChange] = change.value;
+	// })
   // // Check that the current user / admin is authorized to update the fields in fieldsToUpdate
   // if (req.session.type === 'user' && req.session.username === req.params.username) {
-  //   if there is an element in fieldsToUpdate that is not in ['firstName', 'lastName', 'bio', 'location'],
-  //   send 401 unathorized and return
+  //   if there is an element in fieldsToUpdate that is not in ['firstName', 'lastName', 'bio', 'location'] {
+  //     send 401 unathorized and return
+  //   }
+  // } else if (req.session.type === 'user') {
+  //   if (there is an element in fieldsToUpdate that is not in ['isReported'] || fieldsToUpdate['isReported] === false) {
+  //     send 401 unathorized and return
+  //   }
   // } else if (req.session.type === 'admin') {
-  //   if there is an element in fieldsToUpdate that is not in ['isReported', 'isBanned', 'banReason'],
-  //   send 401 unathorized and return
+  //   if (there is an element in fieldsToUpdate that is not in ['isReported', 'isBanned', 'banReason']) {
+  //     send 401 unathorized and return
+  //   }
   // } else {
-  //   // neither user nor admin is logged in
+  //   // neither user nor admin is logged in, or user is not authorized to update the given fields and values
   //   send 401 unathorized and return
   // }
 

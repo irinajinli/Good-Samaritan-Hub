@@ -79,6 +79,24 @@ export const updatePassword = async () => {
   
 }
 
+export const reportUser = async (username) => {
+  const url = `/user/username/${username}`;
+
+  // Create our request constructor with all the parameters we need
+  const request = new Request(url, {
+    method: "PATCH",
+    body: JSON.stringify([{ op: "replace", path: "/isReported", value: true }]),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const res = await fetch(request);
+  const reportedUser = await res.json();
+  return reportedUser;
+}
+
 // Hides <post> from the current user
 export const hidePostFromUser = async (post, appComponent) => {
   const user = appComponent.state.user;

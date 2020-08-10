@@ -16,6 +16,7 @@ import { sortByDate } from '../../actions/sort';
 import { getNearbyLocations } from '../../actions/distance';
 import { getMatchingPosts } from '../../actions/search';
 import { getPostsByLocation, getPostsByUser, reportPost, deactivatePost } from '../../actions/post';
+import { reportUser } from '../../actions/user';
 
 class PostList extends Component {
     isAnyType = () => true;
@@ -207,16 +208,20 @@ class PostList extends Component {
         // Report the post
         reportPost(post)
             .then(reportedPost => {
+                // Then report the 
+                return reportUser(post.posterUsername);
+            })
+            .then(reportedUser => {
                 // Then hide it from the user
-                return handleHidePostFromUser(reportedPost);
+                return handleHidePostFromUser(post);
             })
             .then(updatedUser => {
-                // Reporting the post and hiding it was a success.
-                // Remove reported post from state.posts
+                // Then remove the reported post from state.posts
                 const posts = this.state.posts.filter(p => p._id !== post._id);
                 this.setState({
                     posts
-                }, handleBack);
+                }, 
+                handleBack);
             })
             .catch(error => {
                 alert('Unable to report post. Please try again.');
