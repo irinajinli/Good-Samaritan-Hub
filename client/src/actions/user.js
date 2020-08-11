@@ -21,6 +21,11 @@ export const readCookie = (app) => {
     });
 };
 
+export const logoutUser = async () => {
+  const url = `/users/logout`;
+  await fetch(url);
+}
+
 export const getUserByUsername = async (username) => {
   const url = `/user/username/${username}`;
   const res = await fetch(url);

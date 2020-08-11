@@ -11,7 +11,7 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { readCookie } from "./actions/user";
+import { readCookie, logoutUser } from "./actions/user";
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +53,7 @@ class App extends Component {
 
   handleLogout = () => {
     this.setState({ user: null });
+    logoutUser();
   };
 
   render() {
