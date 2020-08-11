@@ -20,6 +20,24 @@ const {
 const express = require("express");
 const router = express.Router();
 
+/****************** Helper Functions *******************/
+
+// Returns <user>'s profile info
+const userProfileInfo = (user) => {
+  return {
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    location: user.location,
+    bio: user.bio,
+  };
+}
+
+/*******************************************************/
+
+
+/****************** Session Handling *******************/
+
 // POST route to log in and create session
 router.post("/users/login", (req, res) => {
   const username = req.body.username;
@@ -70,7 +88,7 @@ router.get("/users/check-session", (req, res) => {
   }
 });
 
-/*********************************************************/
+/*******************************************************/
 
 // POST route to create a user
 // <req.body> expects the following fields at minimum. See the User model for all fields.
@@ -96,7 +114,18 @@ router.get("/user/:id", mongoChecker, authenticateUserOrAdmin, validateId, (req,
 
 // GET route to get a user by username
 router.get("/user/username/:username", authenticateUserOrAdmin, mongoChecker, (req, res) => {
-  findOne(req, res, User, { username: req.params.username });
+  User.findOne({ username: req.params.username })
+    .then((user) => {
+        if (user) {
+            res.send(userProfileInfo(user));
+        } else {
+            res.status(404).send();
+        }
+    })
+    .catch((error) => {
+        log(error);
+        res.status(500).send("Internal Server Error");
+    });
 });
 
 // GET route to get all users
@@ -119,13 +148,7 @@ router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) =
         );
       });
       matchingUsers = matchingUsers.map((user) => {
-        return {
-          username: user.username,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          location: user.location,
-          bio: user.bio,
-        };
+        return userProfileInfo(user);
       });
       res.send(matchingUsers);
     })
