@@ -5,7 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const Post = require('../models/post');
-const { mongoChecker, validateId, patch, save, find } = require('./common');
+const { mongoChecker, authenticateUser, authenticateUserOrAdmin, validateId, patch, save, find } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -21,7 +21,7 @@ const router = express.Router();
 //     "status": "active",
 //     "location": "M4P"
 // }
-router.post('/post/:posterUsername', mongoChecker, (req, res) => {
+router.post('/post/:posterUsername', mongoChecker, authenticateUser, (req, res) => {
     // Get poster username from <posterUsername> param
     const posterUsername = req.params.posterUsername;
     req.body.posterUsername = posterUsername;
@@ -43,7 +43,7 @@ router.get('/posts', mongoChecker, (req, res) => {
 
 // GET route to get all posts in the location <req.param.location>.
 // <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
-router.get('/post/location/:location', mongoChecker, (req, res) => {
+router.get('/post/location/:location', mongoChecker, authenticateUserOrAdmin, (req, res) => {
     Post.find({ location: req.params.location })
         .then((posts) => {
             // If a post is inactive, only return it if the poster is the current user 
@@ -67,7 +67,7 @@ router.get('/post/location/:location', mongoChecker, (req, res) => {
 });
 
 // GET route to get all posts with posterUsername <req.param.posterUsername>
-router.get('/post/posterUsername/:posterUsername', mongoChecker, (req, res) => {
+router.get('/post/posterUsername/:posterUsername', mongoChecker, authenticateUserOrAdmin, (req, res) => {
     find(req, res, Post, { posterUsername: req.params.posterUsername });
 });
 
@@ -78,7 +78,7 @@ router.get('/post/posterUsername/:posterUsername', mongoChecker, (req, res) => {
 //   { "op": "replace", "path": "/status", "value": "inactive" }
 //   ...
 // ]
-router.patch('/post/:id', mongoChecker, validateId, (req, res) => { 
+router.patch('/post/:id', mongoChecker, validateId, authenticateUserOrAdmin, (req, res) => { 
     patch(req, res, Post, { _id: req.params.id });
 });
 

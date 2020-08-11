@@ -29,7 +29,7 @@ const authenticateAdmin = (req, res, next) => {
 	}
 }
 
-// Middleware for vertifying that the current session is a user session
+// Middleware for verifying that the current session is a user session
 const authenticateUser = (req, res, next) => {
 	if (req.session.user && !req.session.admin) {
         next();
@@ -38,7 +38,7 @@ const authenticateUser = (req, res, next) => {
 	}
 }
 
-// Middleware for vertifying that the current session is an admin or user session
+// Middleware for verifying that the current session is an admin or user session
 const authenticateUserOrAdmin = (req, res, next) => {
 	if (req.session.user) {
         next();
