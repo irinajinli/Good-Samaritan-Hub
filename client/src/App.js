@@ -91,7 +91,6 @@ class App extends Component {
                       />
                     ) : (
                       <AdminHome
-                        messages={messages}
                         handleLogout={this.handleLogout}
                       />
                     )}
@@ -105,7 +104,6 @@ class App extends Component {
                 path="/admin/home"
                 render={() => (
                   <AdminHome
-                    messages={messages}
                     handleLogout={this.handleLogout}
                   />
                 )}
