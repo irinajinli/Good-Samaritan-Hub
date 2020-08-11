@@ -4,11 +4,13 @@ const log = console.log;
 const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
-const Post = require('../models/post');
-const { mongoChecker, authenticateUser, authenticateUserOrAdmin, validateId, patch, save, find } = require('./common');
-
 const express = require('express');
 const router = express.Router();
+
+const Post = require('../models/post');
+const User = require('../models/user');
+const { mongoChecker, isMongoError, authenticateUser, authenticateUserOrAdmin, validateId, patch, save, find } = require('./common');
+
 
 // A POST Route for making a post.
 // <req.params.posterUsername> is the poster's username.
@@ -50,16 +52,21 @@ router.get('/posts', mongoChecker, (req, res) => {
 // <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
 router.get('/post/location/:location', mongoChecker, authenticateUserOrAdmin, (req, res) => {
     Post.find({ location: req.params.location })
-        .then((posts) => {
-            // If a post is inactive, only return it if the poster is the current user 
-            posts = posts.filter(post => {
-                if (req.session.username !== post.posterUsername) {
-                    return post.status === 'active';
+        .then(async (posts) => {
+            // If a post is inactive, only return it if the poster is the current user.
+            // If the poster is banned, do not return the post.
+            const validPosts = [];
+            for (let i = 0; i < posts.length; i++) {
+                if (req.session.username !== posts[i].posterUsername) {
+                    const poster = await User.findOne({ username: posts[i].posterUsername });
+                    if (!poster.isBanned && posts[i].status === 'active') {
+                        validPosts.push(posts[i]);
+                    }
                 } else {
-                    return true;
+                    validPosts.push(posts[i]);
                 }
-            })
-            res.send(posts);
+            }
+            res.send(validPosts);
         })
         .catch((error) => {
             if (isMongoError(error)) {
