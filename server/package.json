@@ -4,6 +4,7 @@
   "description": "Clone the github repository by running the following:  \r `git clone https://github.com/csc309-summer-2020/team16.git`",
   "main": "server.js",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",

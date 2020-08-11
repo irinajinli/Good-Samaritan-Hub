@@ -19,6 +19,7 @@ const {
 
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
 /****************** Helper Functions *******************/
 
@@ -31,7 +32,7 @@ const userProfileInfo = (user) => {
     location: user.location,
     bio: user.bio,
   };
-}
+};
 
 // Return <user> without confidential info
 const userSafeInfo = (user) => {
@@ -40,10 +41,9 @@ const userSafeInfo = (user) => {
   delete newUser.email;
   delete newUser.postsHiddenFromUser;
   return newUser;
-}
+};
 
 /*******************************************************/
-
 
 /****************** Session Handling *******************/
 
@@ -52,16 +52,18 @@ router.post("/users/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  log(username, password);
-
   // find user
-  User.findOne({ username: username, password: password })
+  User.findOne({ username: username })
     .then((user) => {
-      log(user.location);
-      req.session.user = user._id;
-      req.session.username = user.username;
-      req.session.admin = false;
-      res.status(200).send({ currUser: user, admin: false });
+      if (bcrypt.compareSync(user.password, password)) {
+        req.session.user = user._id;
+        req.session.username = user.username;
+        req.session.admin = false;
+        res.status(200).send({ currUser: user, admin: false });
+      } else {
+        // wrong password
+        res.status(401).send();
+      }
     })
     .catch((error) => {
       log(error);
@@ -117,31 +119,42 @@ router.post("/user", mongoChecker, (req, res) => {
 });
 
 // GET route to get a user by id
-router.get("/user/:id", mongoChecker, authenticateUserOrAdmin, validateId, (req, res) => {
-  findOne(req, res, User, { _id: req.params.id });
-});
+router.get(
+  "/user/:id",
+  mongoChecker,
+  authenticateUserOrAdmin,
+  validateId,
+  (req, res) => {
+    findOne(req, res, User, { _id: req.params.id });
+  }
+);
 
 // GET route to get a user by username
-router.get("/user/username/:username", authenticateUserOrAdmin, mongoChecker, (req, res) => {
-  User.findOne({ username: req.params.username })
-    .then((user) => {
+router.get(
+  "/user/username/:username",
+  authenticateUserOrAdmin,
+  mongoChecker,
+  (req, res) => {
+    User.findOne({ username: req.params.username })
+      .then((user) => {
         if (user) {
-            res.send(userProfileInfo(user));
+          res.send(userProfileInfo(user));
         } else {
-            res.status(404).send();
+          res.status(404).send();
         }
-    })
-    .catch((error) => {
+      })
+      .catch((error) => {
         log(error);
         res.status(500).send("Internal Server Error");
-    });
-});
+      });
+  }
+);
 
 // GET route to get all users
 router.get("/users", mongoChecker, authenticateAdmin, (req, res) => {
   User.find()
     .then((result) => {
-      res.send(result.map(user => userSafeInfo(user)));
+      res.send(result.map((user) => userSafeInfo(user)));
     })
     .catch((error) => {
       if (isMongoError(error)) {
@@ -154,40 +167,42 @@ router.get("/users", mongoChecker, authenticateAdmin, (req, res) => {
 });
 
 // GET route to get all non-banned users whose username or full name contains <req.params.searchTerm>
-router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) => {
-  console.log(req.params.searchTerm);
-  let searchTerm = req.params.searchTerm.trim();
-  User.find()
-    .then((result) => {
+router.get(
+  "/user/searchTerm/:searchTerm",
+  authenticateUserOrAdmin,
+  (req, res) => {
+    console.log(req.params.searchTerm);
+    let searchTerm = req.params.searchTerm.trim();
+    User.find()
+      .then((result) => {
+        // Filter out users who don't match the search term
+        let matchingUsers = result.filter((user) => {
+          const fullName = `${user.firstName} ${user.lastName}`;
+          return (
+            searchTerm.length !== 0 &&
+            (user.username.search(new RegExp(searchTerm, "i")) !== -1 ||
+              fullName.search(new RegExp(searchTerm, "i")) !== -1)
+          );
+        });
 
-      // Filter out users who don't match the search term
-      let matchingUsers = result.filter((user) => {
-        const fullName = `${user.firstName} ${user.lastName}`;
-        return (
-          searchTerm.length !== 0 &&
-          (user.username.search(new RegExp(searchTerm, "i")) !== -1 ||
-            fullName.search(new RegExp(searchTerm, "i")) !== -1)
-        );
+        // Filter out banned users
+        matchingUsers = matchingUsers.filter((user) => !user.isBanned);
+
+        // Only send the users' profile info
+        matchingUsers = matchingUsers.map((user) => userProfileInfo(user));
+
+        res.send(matchingUsers);
+      })
+      .catch((error) => {
+        if (isMongoError(error)) {
+          res.status(500).send("Internal server error");
+        } else {
+          log(error);
+          res.status(400).send("Bad Request");
+        }
       });
-
-      // Filter out banned users
-      matchingUsers = matchingUsers.filter(user => !user.isBanned);
-
-      // Only send the users' profile info
-      matchingUsers = matchingUsers.map(user => userProfileInfo(user));
-
-      res.send(matchingUsers);
-
-    })
-    .catch((error) => {
-      if (isMongoError(error)) {
-        res.status(500).send("Internal server error");
-      } else {
-        log(error);
-        res.status(400).send("Bad Request");
-      }
-    });
-});
+  }
+);
 
 // PATCH route to update a user by username
 // <req.body> will be an array that consists of a list of changes to make to the user
@@ -195,55 +210,62 @@ router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) =
 //   { "op": "replace", "path": "/postsHiddenFromUser", "value": ["f24c5fa61604f593432852b"] }
 //   ...
 // ]
-router.patch("/user/username/:username", mongoChecker, authenticateUserOrAdmin, (req, res) => {
-  // Find the fields to update and their values.
-  const fieldsToUpdate = {};
-  req.body.map((change) => {
-  	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
-  	fieldsToUpdate[propertyToChange] = change.value;
-  })
+router.patch(
+  "/user/username/:username",
+  mongoChecker,
+  authenticateUserOrAdmin,
+  (req, res) => {
+    // Find the fields to update and their values.
+    const fieldsToUpdate = {};
+    req.body.map((change) => {
+      const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+      fieldsToUpdate[propertyToChange] = change.value;
+    });
 
-  // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
-  const validAdminProps = ['isReported', 'isBanned', 'banReason'];
-  const validProfileProps = ['firstName', 'lastName', 'bio', 'location'];
+    // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
+    const validAdminProps = ["isReported", "isBanned", "banReason"];
+    const validProfileProps = ["firstName", "lastName", "bio", "location"];
 
-  const fields = Object.keys(fieldsToUpdate);
-  log(fields);
-  
-  if (req.session.admin) { // admin updating a user
+    const fields = Object.keys(fieldsToUpdate);
+    log(fields);
 
-    // Only allowed to change properties in validAdminProps
-    for (let i = 0; i < fields.length; i++) {
-      if (!validAdminProps.includes(fields[i])) {
-        res.status(401).send("Unauthorized");
-        return;
+    if (req.session.admin) {
+      // admin updating a user
+
+      // Only allowed to change properties in validAdminProps
+      for (let i = 0; i < fields.length; i++) {
+        if (!validAdminProps.includes(fields[i])) {
+          res.status(401).send("Unauthorized");
+          return;
+        }
+      }
+    } else if (req.session.username === req.params.username) {
+      // regular user updating themself
+
+      // Only allowed to change properties in validProfileProps
+      for (let i = 0; i < fields.length; i++) {
+        if (!validProfileProps.includes(fields[i])) {
+          res.status(401).send("Unauthorized");
+          return;
+        }
+      }
+    } else {
+      // regular user updating another user
+
+      // Only allowed to change 'isReported' to true
+      for (let i = 0; i < fields.length; i++) {
+        if (
+          !(fields[i] === "isReported" && fieldsToUpdate["isReported"] === true)
+        ) {
+          res.status(401).send("Unauthorized");
+          return;
+        }
       }
     }
 
-  } else if (req.session.username === req.params.username) { // regular user updating themself
-
-    // Only allowed to change properties in validProfileProps
-    for (let i = 0; i < fields.length; i++) {
-      if (!validProfileProps.includes(fields[i])) {
-        res.status(401).send("Unauthorized");
-        return;
-      }
-    }
-
-  } else { // regular user updating another user
-
-    // Only allowed to change 'isReported' to true
-    for (let i = 0; i < fields.length; i++) {
-      if (!(fields[i] === 'isReported' && fieldsToUpdate['isReported'] === true)) {
-        res.status(401).send("Unauthorized");
-        return;
-      }
-    }
-
+    patch(req, res, User, { username: req.params.username });
   }
-
-  patch(req, res, User, { username: req.params.username });
-});
+);
 
 // PUT route to replace a user.
 // <req.param.id> is the user's id.
