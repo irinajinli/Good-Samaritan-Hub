@@ -5,20 +5,6 @@ const express = require("express");
 const session = require("express-session");
 const app = express();
 
-/*** Session handling **************************************/
-// Create a session cookie
-app.use(
-  session({
-    secret: "oursecret",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 60000,
-      httpOnly: true,
-    },
-  })
-);
-
 // Use cors middleware to allow requests from different origins
 const cors = require("cors");
 app.use(cors());
@@ -27,6 +13,22 @@ app.use(cors());
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+/* Session handling */
+// Create a session cookie
+app.use(
+  session({
+    secret: "oursecret",
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: {
+      maxAge: 10 * 60 * 1000,
+      httpOnly: true,
+    },
+  })
+);
+
+/* API routes */
 // Use the API routes in our route files
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");

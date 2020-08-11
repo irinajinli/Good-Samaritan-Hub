@@ -92,8 +92,8 @@ router.patch('/post/:id', mongoChecker, validateId, authenticateUserOrAdmin, asy
     })
      
     // The only allowed field to patch is 'isReported' and 'status'.
-    // Only admins are allowe to update 'isReported' to false.
-    // Only users are allowed to set update their own posts 'status'.
+    // Only admins are allowed to update 'isReported' to false.
+    // Only users are allowed to update their own posts 'status'.
     const fields = Object.keys(fieldsToUpdate);
     log(fields)
     for (let i = 0; i < fields.length; i++) {
