@@ -54,7 +54,7 @@ router.get("/users/logout", (req, res) => {
   });
 });
 
-// A route to check if a use is logged in on the session cookie
+// A route to check if a user is logged in on the session cookie
 router.get("/users/check-session", (req, res) => {
   if (req.session.user) {
     User.findById(req.session.user)

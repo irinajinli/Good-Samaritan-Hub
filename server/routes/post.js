@@ -22,9 +22,14 @@ const router = express.Router();
 //     "location": "M4P"
 // }
 router.post('/post/:posterUsername', mongoChecker, authenticateUser, (req, res) => {
+    // Check that req.session.username === req.params.posterUsername
+    if (req.session.username !== req.params.posterUsername) {
+        res.status(401).send("Unauthorized");
+        return;
+    }
+
     // Get poster username from <posterUsername> param
-    const posterUsername = req.params.posterUsername;
-    req.body.posterUsername = posterUsername;
+    req.body.posterUsername = req.params.posterUsername;
 
     // Parse date string
     req.body.date = new Date(req.body.date);
@@ -78,8 +83,43 @@ router.get('/post/posterUsername/:posterUsername', mongoChecker, authenticateUse
 //   { "op": "replace", "path": "/status", "value": "inactive" }
 //   ...
 // ]
-router.patch('/post/:id', mongoChecker, validateId, authenticateUserOrAdmin, (req, res) => { 
-    patch(req, res, Post, { _id: req.params.id });
+router.patch('/post/:id', mongoChecker, validateId, authenticateUserOrAdmin, async (req, res) => {
+    // Find the fields to update and their values.
+	const fieldsToUpdate = {};
+	req.body.map((change) => {
+		const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+		fieldsToUpdate[propertyToChange] = change.value;
+    })
+     
+    // The only allowed field to patch is 'isReported' and 'status'.
+    // Only admins are allowe to update 'isReported' to false.
+    // Only users are allowed to set update their own posts 'status'.
+    const fields = Object.keys(fieldsToUpdate);
+    log(fields)
+    for (let i = 0; i < fields.length; i++) {
+        if (!(fields[i] === 'isReported' || fields[i] === 'status')) {
+            res.status(401).send("Unauthorized");
+            return;
+        } else if (fields[i] === 'isReported') {
+            if (!req.session.admin && fieldsToUpdate['isReported'] === false) {
+                res.status(401).send("Unauthorized");
+                return;
+            }
+        } else { // fields[i] === 'status'
+            if (req.session.admin) {
+                res.status(401).send("Unauthorized");
+                return;
+            } else { // not admin
+                const post = await Post.findOne({ _id: req.params.id });
+                if (post.posterUsername !== req.session.username) {
+                    res.status(401).send("Unauthorized");
+                    return;
+                }
+            }
+        }
+    }
+
+    return patch(req, res, Post, { _id: req.params.id });
 });
 
 module.exports = router;

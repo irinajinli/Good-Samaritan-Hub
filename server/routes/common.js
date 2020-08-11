@@ -25,7 +25,7 @@ const authenticateAdmin = (req, res, next) => {
 	if (req.session.user && req.session.admin) {
         next();
 	} else {
-		res.status(401).send("Unauthorized")
+		res.status(401).send("Unauthorized");
 	}
 }
 
@@ -34,7 +34,7 @@ const authenticateUser = (req, res, next) => {
 	if (req.session.user && !req.session.admin) {
         next();
 	} else {
-		res.status(401).send("Unauthorized")
+		res.status(401).send("Unauthorized");
 	}
 }
 
@@ -43,7 +43,7 @@ const authenticateUserOrAdmin = (req, res, next) => {
 	if (req.session.user) {
         next();
 	} else {
-		res.status(401).send("Unauthorized")
+		res.status(401).send("Unauthorized");
 	}
 }
 
