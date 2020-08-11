@@ -8,6 +8,8 @@ const User = require("../models/user");
 const {
   isMongoError,
   mongoChecker,
+  authenticateAdmin,
+  authenticateUserOrAdmin,
   validateId,
   patch,
   save,
@@ -34,7 +36,6 @@ router.post("/users/login", (req, res) => {
       req.session.admin = false;
       res.status(200).send({ currUser: user, admin: false });
     })
-
     .catch((error) => {
       log(error);
       res.status(400).send();
@@ -89,22 +90,22 @@ router.post("/user", mongoChecker, (req, res) => {
 });
 
 // GET route to get a user by id
-router.get("/user/:id", mongoChecker, validateId, (req, res) => {
+router.get("/user/:id", mongoChecker, authenticateUserOrAdmin, validateId, (req, res) => {
   findOne(req, res, User, { _id: req.params.id });
 });
 
 // GET route to get a user by username
-router.get("/user/username/:username", mongoChecker, (req, res) => {
+router.get("/user/username/:username", authenticateUserOrAdmin, mongoChecker, (req, res) => {
   findOne(req, res, User, { username: req.params.username });
 });
 
 // GET route to get all users
-router.get("/users", mongoChecker, (req, res) => {
+router.get("/users", mongoChecker, authenticateAdmin, (req, res) => {
   find(req, res, User);
 });
 
 // GET route to get all users whose username or full name contains <req.params.searchTerm>
-router.get("/user/searchTerm/:searchTerm", (req, res) => {
+router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) => {
   console.log(req.params.searchTerm);
   let searchTerm = req.params.searchTerm.trim();
   User.find()
@@ -144,15 +145,15 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
 //   { "op": "replace", "path": "/postsHiddenFromUser", "value": ["f24c5fa61604f593432852b"] }
 //   ...
 // ]
-router.patch("/user/username/:username", mongoChecker, (req, res) => {
+router.patch("/user/username/:username", mongoChecker, authenticateUserOrAdmin, (req, res) => {
   // // Find the fields to update and their values.
   // const fieldsToUpdate = {};
   // req.body.map((change) => {
   // 	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
   // 	fieldsToUpdate[propertyToChange] = change.value;
   // })
-  // // Check that the current user / admin is authorized to update the fields in fieldsToUpdate
-  // if (req.session.type === 'user' && req.session.username === req.params.username) {
+  // // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
+  // if (!req.session.admin && req.session.username === req.params.username) {
   //   if there is an element in fieldsToUpdate that is not in ['firstName', 'lastName', 'bio', 'location'] {
   //     send 401 unathorized and return
   //   }

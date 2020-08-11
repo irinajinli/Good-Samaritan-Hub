@@ -26,7 +26,6 @@ router.post("/admin/login", (req, res) => {
       req.session.admin = true;
       res.status(200).send({ currUser: user, admin: true });
     })
-
     .catch((error) => {
       log(error);
       res.status(400).send();

@@ -20,6 +20,33 @@ const mongoChecker = (req, res, next) => {
     }
 }
 
+// Middleware for verifying that current session is an admin session
+const authenticateAdmin = (req, res, next) => {
+	if (req.session.user && req.session.admin) {
+        next();
+	} else {
+		res.status(401).send("Unauthorized")
+	}
+}
+
+// Middleware for vertifying that the current session is a user session
+const authenticateUser = (req, res, next) => {
+	if (req.session.user && !req.session.admin) {
+        next();
+	} else {
+		res.status(401).send("Unauthorized")
+	}
+}
+
+// Middleware for vertifying that the current session is an admin or user session
+const authenticateUserOrAdmin = (req, res, next) => {
+	if (req.session.user) {
+        next();
+	} else {
+		res.status(401).send("Unauthorized")
+	}
+}
+
 // Middleware to check that <req.params.id> is a valid Object ID
 const validateId = (req, res, next) => {
     if (!ObjectID.isValid(req.params.id)) {
@@ -118,6 +145,9 @@ const findOne = (req, res, MongooseModel, conditions) => {
 
 module.exports = {
     isMongoError,
+    authenticateAdmin,
+    authenticateUser,
+    authenticateUserOrAdmin,
     mongoChecker,
     validateId,
     patch,
