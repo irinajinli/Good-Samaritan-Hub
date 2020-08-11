@@ -56,11 +56,14 @@ router.get("/users/logout", (req, res) => {
 // A route to check if a use is logged in on the session cookie
 router.get("/users/check-session", (req, res) => {
   if (req.session.user) {
-    res.send({
-      user: req.session.user,
-      username: req.session.username,
-      admin: req.session.admin,
-    });
+    User.findById(req.session.user)
+      .then((user) => {
+        res.status(200).send({ user: user });
+      })
+      .catch((error) => {
+        log(error);
+        res.status(400).send();
+      });
   } else {
     res.status(401).send();
   }
