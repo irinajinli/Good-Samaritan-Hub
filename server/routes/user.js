@@ -133,12 +133,14 @@ router.get("/users", mongoChecker, authenticateAdmin, (req, res) => {
   find(req, res, User);
 });
 
-// GET route to get all users whose username or full name contains <req.params.searchTerm>
+// GET route to get all non-banned users whose username or full name contains <req.params.searchTerm>
 router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) => {
   console.log(req.params.searchTerm);
   let searchTerm = req.params.searchTerm.trim();
   User.find()
     .then((result) => {
+
+      // Filter out users who don't match the search term
       let matchingUsers = result.filter((user) => {
         const fullName = `${user.firstName} ${user.lastName}`;
         return (
@@ -147,10 +149,17 @@ router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) =
             fullName.search(new RegExp(searchTerm, "i")) !== -1)
         );
       });
+
+      // Filter out banned users
+      matchingUsers = matchingUsers.filter(user => !user.isBanned);
+
+      // Only send the users' profile info
       matchingUsers = matchingUsers.map((user) => {
         return userProfileInfo(user);
       });
+
       res.send(matchingUsers);
+
     })
     .catch((error) => {
       if (isMongoError(error)) {
