@@ -154,9 +154,7 @@ router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) =
       matchingUsers = matchingUsers.filter(user => !user.isBanned);
 
       // Only send the users' profile info
-      matchingUsers = matchingUsers.map((user) => {
-        return userProfileInfo(user);
-      });
+      matchingUsers = matchingUsers.map(user => userProfileInfo(user));
 
       res.send(matchingUsers);
 

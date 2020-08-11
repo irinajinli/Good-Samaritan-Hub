@@ -11,8 +11,6 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 
-import { getInitialUsers, getMessages } from "./resources/hardCodedData"; // TODO: Remove. Not needed in Phase 2.
-
 import { readCookie } from "./actions/user";
 
 class App extends Component {
@@ -50,10 +48,7 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: null,
-    // user: getInitialUsers()[0], // Phase 2: Init to null and change this based on which user is logged in
-    // users: getInitialUsers(), // TODO: Remove. Not needed in Phase 2.
-    // messages: getMessages(), // TODO: Remove. Not needed in Phase 2.
+    user: null
   };
 
   handleLogout = () => {

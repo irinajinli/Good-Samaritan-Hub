@@ -2,8 +2,8 @@
 // to be separated into components soon :)
 
 import React, { Component } from "react";
-import LandingBlurb from "../LandingBlurb";
-import LandingBottom from "../LandingBottom";
+import LandingBlurb from "./LandingBlurb";
+import LandingBottom from "./LandingBottom";
 import "./styles.css";
 
 class Landing extends Component {
