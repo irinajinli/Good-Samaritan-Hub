@@ -11,7 +11,6 @@ export const readCookie = (app) => {
     .then((json) => {
       if (json && json.user) {
         app.setState({ user: json.user });
-        debugger;
         console.log("app state is", json.admin);
         console.log(app.state);
       }
