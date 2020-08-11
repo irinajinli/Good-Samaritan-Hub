@@ -33,6 +33,15 @@ const userProfileInfo = (user) => {
   };
 }
 
+// Return <user> without confidential info
+const userSafeInfo = (user) => {
+  const newUser = JSON.parse(JSON.stringify(user));
+  delete newUser.password;
+  delete newUser.email;
+  delete newUser.postsHiddenFromUser;
+  return newUser;
+}
+
 /*******************************************************/
 
 
@@ -130,7 +139,18 @@ router.get("/user/username/:username", authenticateUserOrAdmin, mongoChecker, (r
 
 // GET route to get all users
 router.get("/users", mongoChecker, authenticateAdmin, (req, res) => {
-  find(req, res, User);
+  User.find()
+    .then((result) => {
+      res.send(result.map(user => userSafeInfo(user)));
+    })
+    .catch((error) => {
+      if (isMongoError(error)) {
+        res.status(500).send("Internal server error");
+      } else {
+        log(error);
+        res.status(400).send("Bad Request");
+      }
+    });
 });
 
 // GET route to get all non-banned users whose username or full name contains <req.params.searchTerm>
