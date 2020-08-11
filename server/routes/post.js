@@ -48,25 +48,27 @@ router.get('/posts', mongoChecker, (req, res) => {
     find(req, res, Post);
 });
 
-// GET route to get all posts in the location <req.param.location>.
-// <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
-router.get('/post/location/:location', mongoChecker, authenticateUserOrAdmin, (req, res) => {
-    Post.find({ location: req.params.location })
+const filterPosts = async (req, res, filter) => {
+    Post.find(filter)
         .then(async (posts) => {
-            // If a post is inactive, only return it if the poster is the current user.
-            // If the poster is banned, do not return the post.
-            const validPosts = [];
-            for (let i = 0; i < posts.length; i++) {
-                if (req.session.username !== posts[i].posterUsername) {
-                    const poster = await User.findOne({ username: posts[i].posterUsername });
-                    if (!poster.isBanned && posts[i].status === 'active') {
+            if (req.session.admin) {
+                res.send(posts);
+            } else {
+                // If a post is inactive, only return it if the poster is the current user.
+                // If the poster is banned, do not return the post.
+                const validPosts = [];
+                for (let i = 0; i < posts.length; i++) {
+                    if (req.session.username !== posts[i].posterUsername) {
+                        const poster = await User.findOne({ username: posts[i].posterUsername });
+                        if (!poster.isBanned && posts[i].status === 'active') {
+                            validPosts.push(posts[i]);
+                        }
+                    } else {
                         validPosts.push(posts[i]);
                     }
-                } else {
-                    validPosts.push(posts[i]);
                 }
+                res.send(validPosts);
             }
-            res.send(validPosts);
         })
         .catch((error) => {
             if (isMongoError(error)) {
@@ -76,11 +78,17 @@ router.get('/post/location/:location', mongoChecker, authenticateUserOrAdmin, (r
                 res.status(400).send("Bad Request");
             }
         });
+}
+
+// GET route to get all posts in the location <req.param.location>.
+// <req.param.location> is expected to be a postal code prefix, e.g. "M4V"
+router.get('/post/location/:location', mongoChecker, authenticateUserOrAdmin, (req, res) => {
+    filterPosts(req, res, { location: req.params.location });
 });
 
 // GET route to get all posts with posterUsername <req.param.posterUsername>
 router.get('/post/posterUsername/:posterUsername', mongoChecker, authenticateUserOrAdmin, (req, res) => {
-    find(req, res, Post, { posterUsername: req.params.posterUsername });
+    filterPosts(req, res, { posterUsername: req.params.posterUsername });
 });
 
 // PATCH route to update a post
