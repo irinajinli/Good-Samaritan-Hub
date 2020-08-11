@@ -146,29 +146,51 @@ router.get("/user/searchTerm/:searchTerm", authenticateUserOrAdmin, (req, res) =
 //   ...
 // ]
 router.patch("/user/username/:username", mongoChecker, authenticateUserOrAdmin, (req, res) => {
-  // // Find the fields to update and their values.
-  // const fieldsToUpdate = {};
-  // req.body.map((change) => {
-  // 	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
-  // 	fieldsToUpdate[propertyToChange] = change.value;
-  // })
-  // // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
-  // if (!req.session.admin && req.session.username === req.params.username) {
-  //   if there is an element in fieldsToUpdate that is not in ['firstName', 'lastName', 'bio', 'location'] {
-  //     send 401 unathorized and return
-  //   }
-  // } else if (req.session.type === 'user') {
-  //   if (there is an element in fieldsToUpdate that is not in ['isReported'] || fieldsToUpdate['isReported] === false) {
-  //     send 401 unathorized and return
-  //   }
-  // } else if (req.session.type === 'admin') {
-  //   if (there is an element in fieldsToUpdate that is not in ['isReported', 'isBanned', 'banReason']) {
-  //     send 401 unathorized and return
-  //   }
-  // } else {
-  //   // neither user nor admin is logged in, or user is not authorized to update the given fields and values
-  //   send 401 unathorized and return
-  // }
+  // Find the fields to update and their values.
+  const fieldsToUpdate = {};
+  req.body.map((change) => {
+  	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+  	fieldsToUpdate[propertyToChange] = change.value;
+  })
+
+  // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
+  const validAdminProps = ['isReported', 'isBanned', 'banReason'];
+  const validProfileProps = ['firstName', 'lastName', 'bio', 'location'];
+
+  const fields = Object.keys(fieldsToUpdate);
+  log(fields);
+  
+  if (req.session.admin) { // admin updating a user
+
+    // Only allowed to change properties in validAdminProps
+    for (let i = 0; i < fields.length; i++) {
+      if (!validAdminProps.includes(fields[i])) {
+        res.status(401).send("Unauthorized");
+        return;
+      }
+    }
+
+  } else if (req.session.username === req.params.username) { // regular user updating themself
+
+    // Only allowed to change properties in validProfileProps
+    for (let i = 0; i < fields.length; i++) {
+      if (!validProfileProps.includes(fields[i])) {
+        res.status(401).send("Unauthorized");
+        return;
+      }
+    }
+
+  } else { // regular user updating another user
+
+    // Only allowed to change 'isReported' to true
+    for (let i = 0; i < fields.length; i++) {
+      if (!(fields[i] === 'isReported' && fieldsToUpdate['isReported'] === true)) {
+        res.status(401).send("Unauthorized");
+        return;
+      }
+    }
+
+  }
 
   patch(req, res, User, { username: req.params.username });
 });

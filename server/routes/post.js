@@ -110,7 +110,7 @@ router.patch('/post/:id', mongoChecker, validateId, authenticateUserOrAdmin, asy
     // Only admins are allowed to update 'isReported' to false.
     // Only users are allowed to update their own posts 'status'.
     const fields = Object.keys(fieldsToUpdate);
-    log(fields)
+    log(fields);
     for (let i = 0; i < fields.length; i++) {
         if (!(fields[i] === 'isReported' || fields[i] === 'status')) {
             res.status(401).send("Unauthorized");
