@@ -31,7 +31,8 @@ router.post("/users/login", (req, res) => {
       log(user.location);
       req.session.user = user._id;
       req.session.username = user.username;
-      res.status(200).send({ currUser: user });
+      req.session.admin = false;
+      res.status(200).send({ currUser: user, admin: false });
     })
 
     .catch((error) => {
@@ -56,8 +57,9 @@ router.get("/users/logout", (req, res) => {
 router.get("/users/check-session", (req, res) => {
   if (req.session.user) {
     res.send({
-      userId: req.session.user,
+      user: req.session.user,
       username: req.session.username,
+      admin: req.session.admin,
     });
   } else {
     res.status(401).send();
@@ -140,12 +142,12 @@ router.get("/user/searchTerm/:searchTerm", (req, res) => {
 //   ...
 // ]
 router.patch("/user/username/:username", mongoChecker, (req, res) => {
-	// // Find the fields to update and their values.
-	// const fieldsToUpdate = {};
-	// req.body.map((change) => {
-	// 	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
-	// 	fieldsToUpdate[propertyToChange] = change.value;
-	// })
+  // // Find the fields to update and their values.
+  // const fieldsToUpdate = {};
+  // req.body.map((change) => {
+  // 	const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+  // 	fieldsToUpdate[propertyToChange] = change.value;
+  // })
   // // Check that the current user / admin is authorized to update the fields in fieldsToUpdate
   // if (req.session.type === 'user' && req.session.username === req.params.username) {
   //   if there is an element in fieldsToUpdate that is not in ['firstName', 'lastName', 'bio', 'location'] {

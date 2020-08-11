@@ -9,8 +9,10 @@ export const readCookie = (app) => {
       }
     })
     .then((json) => {
-      if (json && json.currentUser) {
-        app.setState({ user: json.currentUser });
+      if (json && json.user) {
+        app.setState({ user: json.user, admin: json.admin });
+        debugger;
+        console.log("app state is", json.admin);
         console.log(app.state);
       }
     })
@@ -39,7 +41,7 @@ export const updateUserStatus = async (originalUser, updatedUser) => {
     body: JSON.stringify([
       { op: "replace", path: "/isReported", value: updatedUser.isReported },
       { op: "replace", path: "/isBanned", value: updatedUser.isBanned },
-      { op: "replace", path: "/banReason", value: updatedUser.banReason }
+      { op: "replace", path: "/banReason", value: updatedUser.banReason },
     ]),
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -60,7 +62,7 @@ export const updateProfileInfo = async (originalUser, updatedUser) => {
       { op: "replace", path: "/firstName", value: updatedUser.firstName },
       { op: "replace", path: "/lastName", value: updatedUser.lastName },
       { op: "replace", path: "/location", value: updatedUser.location },
-      { op: "replace", path: "/bio", value: updatedUser.bio }
+      { op: "replace", path: "/bio", value: updatedUser.bio },
     ]),
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -75,9 +77,7 @@ export const updateProfileInfo = async (originalUser, updatedUser) => {
 };
 
 // TODO
-export const updatePassword = async () => {
-  
-}
+export const updatePassword = async () => {};
 
 export const reportUser = async (username) => {
   const url = `/user/username/${username}`;
@@ -95,7 +95,7 @@ export const reportUser = async (username) => {
   const res = await fetch(request);
   const reportedUser = await res.json();
   return reportedUser;
-}
+};
 
 // Hides <post> from the current user
 export const hidePostFromUser = async (post, appComponent) => {
@@ -107,7 +107,13 @@ export const hidePostFromUser = async (post, appComponent) => {
   // Create our request constructor with all the parameters we need
   const request = new Request(url, {
     method: "PATCH",
-    body: JSON.stringify([{ op: "replace", path: "/postsHiddenFromUser", value: user.postsHiddenFromUser }]),
+    body: JSON.stringify([
+      {
+        op: "replace",
+        path: "/postsHiddenFromUser",
+        value: user.postsHiddenFromUser,
+      },
+    ]),
     headers: {
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
