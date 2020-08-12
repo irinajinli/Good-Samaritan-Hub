@@ -70,7 +70,6 @@ export default class RegBasicInfo extends React.Component {
 
         <div className="registration--position-relative">
           <TextField
-            required
             name="phoneNum"
             className="marginRight marginTop half"
             label="Phone number"
@@ -99,7 +98,6 @@ export default class RegBasicInfo extends React.Component {
 
         <div>
           <TextField
-            required
             name="email"
             className="long marginTop"
             label="Email address"

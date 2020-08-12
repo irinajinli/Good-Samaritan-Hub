@@ -2,6 +2,7 @@
 // https://github.com/bradtraversy/react_step_form/blob/master/src/components/UserForm.js
 
 import React from "react";
+import Button from "@material-ui/core/Button";
 import RegBasicInfo from "../RegBasicInfo";
 import RegAccountInfo from "../RegAccountInfo";
 import RegBio from "../RegBio";
@@ -19,14 +20,29 @@ export class RegStepper extends React.Component {
     password: "",
     confirmPass: "",
     bio: "",
+    reqsSatisfied: true,
+    passwordsMatch: true,
+  };
+
+  reset = () => {
+    this.setState({ step: 1, reqsSatisfied: true });
+  };
+
+  passwordsMatch = () => {
+    return this.state.password === this.state.confirmPass;
   };
 
   // Proceed to next step
   nextStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1,
-    });
+    if (this.passwordsMatch()) {
+      const { step } = this.state;
+      this.setState({
+        passwordsMatch: true,
+        step: step + 1,
+      });
+    } else {
+      this.setState({ passwordsMatch: false });
+    }
   };
 
   // Go back to prev step
@@ -37,26 +53,41 @@ export class RegStepper extends React.Component {
     });
   };
 
-  finish = () => {
-    const reqBody = JSON.stringify(this.state);
-    const request = new Request("/user", {
-      method: "post",
-      body: reqBody,
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-      },
-    });
+  reqsSatisfied = () => {
+    if (
+      this.state.username === "" ||
+      this.state.password === "" ||
+      this.state.firstName === "" ||
+      this.state.lastName === "" ||
+      this.state.location === ""
+    ) {
+      this.setState({ reqsSatisfied: false });
+      return false;
+    } else return true;
+  };
 
-    fetch(request)
-      .then((res) => {
-        if (res.status === 200) {
-          window.location.href = "/regsuccess";
-        }
-      })
-      .catch((error) => {
-        console.log(error);
+  finish = () => {
+    if (this.reqsSatisfied()) {
+      const reqBody = JSON.stringify(this.state);
+      const request = new Request("/user", {
+        method: "post",
+        body: reqBody,
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
       });
+
+      fetch(request)
+        .then((res) => {
+          if (res.status === 200) {
+            window.location.href = "/regsuccess";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else console.log("reqs not satisfied");
   };
 
   // Handle fields change
@@ -119,18 +150,31 @@ export class RegStepper extends React.Component {
               handleChange={this.handleChange}
               values={values}
             />
+            {!this.state.passwordsMatch && (
+              <div className="red">Passwords don't match!</div>
+            )}
           </div>
         );
       case 3:
         return (
           <div>
             <div className="title">Registration</div>
-            <RegBio
-              finish={this.finish}
-              prevStep={this.prevStep}
-              handleChange={this.handleChange}
-              values={values}
-            />
+            {!this.state.reqsSatisfied && (
+              <div>
+                Please fill all required fields.
+                <Button color="primary" onClick={this.reset}>
+                  Try again
+                </Button>
+              </div>
+            )}
+            {this.state.reqsSatisfied && (
+              <RegBio
+                finish={this.finish}
+                prevStep={this.prevStep}
+                handleChange={this.handleChange}
+                values={values}
+              />
+            )}
           </div>
         );
       default:

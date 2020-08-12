@@ -30,14 +30,14 @@ export default class RegBio extends React.Component {
         </div>
 
         <div>
-          <Button
+          {/* <Button
             className="marginTop marginRight"
             color="default"
             variant="contained"
             onClick={this.back}
           >
             Back
-          </Button>
+          </Button> */}
 
           <Button
             className="marginTop"
