@@ -43,50 +43,16 @@ export default class RegBasicInfo extends React.Component {
       });
   }
 
-  // handleOnChange = (event) => {
-  //   const { values, handleChange } = this.props;
-  //   const target = event.target;
-  //   const value = target.value;
-  //   const name = target.name;
-  //   this.setState({
-  //     [name]: value,
-  //   });
-  //   this.updateReqsSatisfied();
-  // };
-
-  // handleLocationChange = (event, values) => {
-  //   this.setState({
-  //     postCode: values,
-  //   });
-  // };
-
-  updateReqsSatisfied = () => {
-    if (
-      // check if any required fields are empty
-      !this.state.firstName ||
-      !this.state.lastName ||
-      !this.state.phoneNum ||
-      !this.state.postCode ||
-      !this.state.email
-    ) {
-      console.log("something is not filled");
-      this.setState({ reqsSatisfied: false });
-    } else {
-      this.setState({ reqsSatisfied: true });
-      console.log("everything filled");
-    }
-  };
-
   render() {
     const { postalCodePrefixes } = this.state;
     const { handleChange, handleLocationChange } = this.props;
     return (
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" className="wide">
         <div>
           <TextField
             required
             name="firstName"
-            className="marginRight"
+            className="marginRight half"
             label="First name"
             variant="outlined"
             onChange={handleChange("firstName")}
@@ -95,7 +61,7 @@ export default class RegBasicInfo extends React.Component {
           <TextField
             required
             name="lastName"
-            className="marginLeft"
+            className="marginLeft half"
             label="Last name"
             variant="outlined"
             onChange={handleChange("lastName")}
@@ -106,7 +72,7 @@ export default class RegBasicInfo extends React.Component {
           <TextField
             required
             name="phoneNum"
-            className="marginRight marginTop"
+            className="marginRight marginTop half"
             label="Phone number"
             variant="outlined"
             onChange={handleChange("phoneNum")}
@@ -143,7 +109,12 @@ export default class RegBasicInfo extends React.Component {
         </div>
 
         <div>
-          <Button color="primary" variant="contained" onClick={this.continue}>
+          <Button
+            className="marginTop"
+            color="primary"
+            variant="contained"
+            onClick={this.continue}
+          >
             Continue
           </Button>
         </div>

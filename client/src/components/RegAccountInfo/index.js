@@ -30,7 +30,7 @@ export default class RegAccountInfo extends React.Component {
   render() {
     const { handleChange } = this.props;
     return (
-      <form noValidate autoComplete="off">
+      <form noValidate className="wide" autoComplete="off">
         <div>
           <TextField
             required
@@ -46,7 +46,7 @@ export default class RegAccountInfo extends React.Component {
           <TextField
             required
             name="password"
-            className="marginRight marginTop"
+            className="marginRight marginTop half"
             label="Password"
             type="password"
             variant="outlined"
@@ -56,7 +56,7 @@ export default class RegAccountInfo extends React.Component {
           <TextField
             required
             name="confirmPassword"
-            className="marginLeft marginTop"
+            className="marginLeft marginTop half"
             label="Confirm password"
             type="password"
             variant="outlined"
@@ -65,11 +65,21 @@ export default class RegAccountInfo extends React.Component {
         </div>
 
         <div>
-          <Button color="default" variant="contained" onClick={this.back}>
+          <Button
+            className="marginTop marginRight"
+            color="default"
+            variant="contained"
+            onClick={this.back}
+          >
             Back
           </Button>
 
-          <Button color="primary" variant="contained" onClick={this.continue}>
+          <Button
+            className="marginTop"
+            color="primary"
+            variant="contained"
+            onClick={this.continue}
+          >
             Continue
           </Button>
         </div>

@@ -5,6 +5,7 @@ import React from "react";
 import RegBasicInfo from "../RegBasicInfo";
 import RegAccountInfo from "../RegAccountInfo";
 import RegBio from "../RegBio";
+import "./styles.css";
 
 export class RegStepper extends React.Component {
   state = {
@@ -98,30 +99,39 @@ export class RegStepper extends React.Component {
     switch (step) {
       case 1:
         return (
-          <RegBasicInfo
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            handleLocationChange={this.handleLocationChange}
-            values={values}
-          />
+          <div>
+            <div className="title">Registration</div>
+            <RegBasicInfo
+              nextStep={this.nextStep}
+              handleChange={this.handleChange}
+              handleLocationChange={this.handleLocationChange}
+              values={values}
+            />
+          </div>
         );
       case 2:
         return (
-          <RegAccountInfo
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
+          <div>
+            <div className="title">Registration</div>
+            <RegAccountInfo
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
+            />
+          </div>
         );
       case 3:
         return (
-          <RegBio
-            finish={this.finish}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
+          <div>
+            <div className="title">Registration</div>
+            <RegBio
+              finish={this.finish}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
+            />
+          </div>
         );
       default:
         console.log("Whoops, this step doesn't exist!");

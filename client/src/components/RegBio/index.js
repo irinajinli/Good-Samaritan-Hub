@@ -17,7 +17,7 @@ export default class RegBio extends React.Component {
   render() {
     const { handleChange } = this.props;
     return (
-      <form noValidate autoComplete="off">
+      <form noValidate className="wide" autoComplete="off">
         <div>
           <TextField
             multiline
@@ -30,11 +30,21 @@ export default class RegBio extends React.Component {
         </div>
 
         <div>
-          <Button color="default" variant="contained" onClick={this.back}>
+          <Button
+            className="marginTop marginRight"
+            color="default"
+            variant="contained"
+            onClick={this.back}
+          >
             Back
           </Button>
 
-          <Button color="primary" variant="contained" onClick={this.finish}>
+          <Button
+            className="marginTop"
+            color="primary"
+            variant="contained"
+            onClick={this.finish}
+          >
             Finish
           </Button>
         </div>

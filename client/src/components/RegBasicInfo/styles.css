@@ -1,11 +1,11 @@
 .registration--position-relative {
-    position: relative;
-  }
-  
-  .registration__location-selector {
-    display: inline-block;
-    position: absolute;
-    bottom: 0px;
-    margin-left: 1%;
-    width: 49%;
-  }
+  position: relative;
+}
+
+.registration__location-selector {
+  display: inline-block;
+  position: absolute;
+  bottom: 0px;
+  margin-left: 1%;
+  width: 49%;
+}

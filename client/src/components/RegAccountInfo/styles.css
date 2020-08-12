@@ -7,9 +7,25 @@
 }
 
 .MuiTextField-root.marginRight {
-  margin-right: 4px;
+  margin-right: 1%;
 }
 
 .MuiTextField-root.marginLeft {
-  margin-left: 4px;
+  margin-left: 1%;
+}
+
+.half {
+  width: 49%;
+}
+
+.MuiButton-root.marginTop {
+  margin-top: 30px;
+}
+
+.MuiButton-root.marginRight {
+  margin-right: 2%;
+}
+
+.wide {
+  width: 500px;
 }
