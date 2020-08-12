@@ -3,11 +3,11 @@ const bcrypt = require("bcryptjs");
 
 // A function to send a POST request with the user to be logged in
 export const login = (loginComp, app, userType) => {
-  let reqBody = { username: loginComp.state.username, password: null };
+  // let reqBody = { username: loginComp.state.username, password: null };
 
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(loginComp.state.password, salt);
-  reqBody.password = hash;
+  // const salt = bcrypt.genSaltSync(10);
+  // const hash = bcrypt.hashSync(loginComp.state.password, salt);
+  // reqBody.password = hash;
 
   // request depends on userType
   let request;
@@ -23,7 +23,7 @@ export const login = (loginComp, app, userType) => {
   } else {
     request = new Request("/users/login", {
       method: "post",
-      body: JSON.stringify(reqBody),
+      body: JSON.stringify(loginComp.state),
       // body: testJson,
       headers: {
         Accept: "application/json, text/plain, */*",

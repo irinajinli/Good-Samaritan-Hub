@@ -6,13 +6,15 @@ import RegBasicInfo from "../RegBasicInfo";
 import RegAccountInfo from "../RegAccountInfo";
 import RegBio from "../RegBio";
 
+const bcrypt = require("bcryptjs");
+
 export class RegStepper extends React.Component {
   state = {
     step: 1,
     firstName: "",
     lastName: "",
     phoneNum: "",
-    postCode: "",
+    location: "",
     email: "",
     username: "",
     password: "",
@@ -37,14 +39,39 @@ export class RegStepper extends React.Component {
   };
 
   finish = () => {
-    window.location.href = "/regsuccess";
+    this.state.location = "PLACEHOLDER";
+
+    // BCRYPT HASHING
+    // const password = this.state.password;
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(this.state.password, salt);
+    console.log(hash);
+    this.state.password = hash;
+
+    const reqBody = JSON.stringify(this.state);
+    const request = new Request("/user", {
+      method: "post",
+      body: reqBody,
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+
+    fetch(request)
+      .then((res) => {
+        if (res.status === 200) {
+          window.location.href = "/regsuccess";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // Handle fields change
   handleChange = (input) => (e) => {
-    console.log("here!");
     this.setState({ [input]: e.target.value });
-    console.log(this.state);
   };
 
   render() {
@@ -53,7 +80,7 @@ export class RegStepper extends React.Component {
       firstName,
       lastName,
       phoneNum,
-      postCode,
+      location,
       email,
       username,
       password,
@@ -64,7 +91,7 @@ export class RegStepper extends React.Component {
       firstName,
       lastName,
       phoneNum,
-      postCode,
+      location,
       email,
       username,
       password,
@@ -95,6 +122,7 @@ export class RegStepper extends React.Component {
           <RegBio
             finish={this.finish}
             prevStep={this.prevStep}
+            handleChange={this.handleChange}
             values={values}
           />
         );

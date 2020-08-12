@@ -117,7 +117,7 @@ export default class RegBasicInfo extends React.Component {
               defaultValue=""
               label="Postal Code"
               options={postalCodePrefixes}
-              onChange={handleChange("postCode")}
+              onChange={handleChange("location")}
               style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField

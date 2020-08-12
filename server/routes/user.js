@@ -113,7 +113,8 @@ router.get("/users/check-session", (req, res) => {
 router.post("/user", mongoChecker, (req, res) => {
   // Create a new user
   const user = new User(req.body);
-
+  console.log(user);
+  res.send(200);
   // Save user to the database
   save(req, res, user);
 });
