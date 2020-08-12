@@ -9,6 +9,8 @@ export const login = (loginComp, app, userType) => {
   // const hash = bcrypt.hashSync(loginComp.state.password, salt);
   // reqBody.password = hash;
 
+  console.log(loginComp.state);
+
   // request depends on userType
   let request;
   if (userType === "Admin Login") {

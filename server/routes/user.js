@@ -51,11 +51,12 @@ const userSafeInfo = (user) => {
 router.post("/users/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  console.log(username, password);
 
   // find user
   User.findOne({ username: username })
     .then((user) => {
-      if (bcrypt.compareSync(user.password, password)) {
+      if (bcrypt.compareSync(password, user.password)) {
         req.session.user = user._id;
         req.session.username = user.username;
         req.session.admin = false;
