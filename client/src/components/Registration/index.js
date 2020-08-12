@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "../Stepper";
+import RegStepper from "../RegStepper/index";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +31,7 @@ export default function Register() {
 
   return (
     <div className={classes.centre}>
-      <Stepper />
+      <RegStepper />
     </div>
   );
 }

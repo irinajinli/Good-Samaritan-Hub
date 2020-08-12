@@ -1,10 +1,11 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Button from "@material-ui/core/Button";
 
 import "../RegAccountInfo/styles.css";
 import "./styles.css";
-import { getPostalCodePrefixes } from '../../actions/location';
+import { getPostalCodePrefixes } from "../../actions/location";
 
 export default class RegBasicInfo extends React.Component {
   state = {
@@ -14,25 +15,36 @@ export default class RegBasicInfo extends React.Component {
     postCode: "",
     email: "",
     reqsSatisfied: false,
-    postalCodePrefixes: []
+    postalCodePrefixes: [],
+  };
+
+  continue = (e) => {
+    e.preventDefault();
+    this.props.nextStep();
+  };
+
+  back = (e) => {
+    e.preventDefault();
+    this.props.prevStep();
   };
 
   componentDidMount() {
     getPostalCodePrefixes()
-      .then(postalCodePrefixes => {
-          this.setState({
-            postalCodePrefixes
-          });
+      .then((postalCodePrefixes) => {
+        this.setState({
+          postalCodePrefixes,
+        });
       })
-      .catch(error => {
-          console.log('Could not get postal codes');
-          this.setState({
-            postalCodePrefixes: []
-          });
+      .catch((error) => {
+        console.log("Could not get postal codes");
+        this.setState({
+          postalCodePrefixes: [],
+        });
       });
   }
 
   handleOnChange = (event) => {
+    const { values, handleChange } = this.props;
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -44,7 +56,7 @@ export default class RegBasicInfo extends React.Component {
 
   handleLocationChange = (event, values) => {
     this.setState({
-      postCode: values
+      postCode: values,
     });
   };
 
@@ -67,6 +79,7 @@ export default class RegBasicInfo extends React.Component {
 
   render() {
     const { postalCodePrefixes } = this.state;
+    const { handleChange } = this.props;
     return (
       <form noValidate autoComplete="off">
         <div>
@@ -76,7 +89,7 @@ export default class RegBasicInfo extends React.Component {
             className="marginRight"
             label="First name"
             variant="outlined"
-            onChange={this.handleOnChange}
+            onChange={handleChange("firstName")}
           />
 
           <TextField
@@ -85,28 +98,35 @@ export default class RegBasicInfo extends React.Component {
             className="marginLeft"
             label="Last name"
             variant="outlined"
-            onChange={this.handleOnChange}
+            onChange={handleChange("lastName")}
           />
         </div>
 
-        <div className='registration--position-relative'>
+        <div className="registration--position-relative">
           <TextField
             required
             name="phoneNum"
             className="marginRight marginTop"
             label="Phone number"
             variant="outlined"
-            onChange={this.handleOnChange}
+            onChange={handleChange("phoneNum")}
           />
 
-          <div className='registration__location-selector'>
+          <div className="registration__location-selector">
             <Autocomplete
               defaultValue=""
               label="Postal Code"
               options={postalCodePrefixes}
-              onChange={this.handleLocationChange}
+              onChange={handleChange("postCode")}
               style={{ width: "100%" }}
-              renderInput={(params) => <TextField {...params} required label="Postal Code" variant="outlined" />}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  label="Postal Code"
+                  variant="outlined"
+                />
+              )}
             />
           </div>
         </div>
@@ -120,6 +140,12 @@ export default class RegBasicInfo extends React.Component {
             variant="outlined"
             onChange={this.handleOnChange}
           />
+        </div>
+
+        <div>
+          <Button color="primary" variant="contained" onClick={this.continue}>
+            Continue
+          </Button>
         </div>
       </form>
     );
