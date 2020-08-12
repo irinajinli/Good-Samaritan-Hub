@@ -6,8 +6,6 @@ import RegBasicInfo from "../RegBasicInfo";
 import RegAccountInfo from "../RegAccountInfo";
 import RegBio from "../RegBio";
 
-const bcrypt = require("bcryptjs");
-
 export class RegStepper extends React.Component {
   state = {
     step: 1,
@@ -39,13 +37,6 @@ export class RegStepper extends React.Component {
   };
 
   finish = () => {
-    // BCRYPT HASHING
-    // const password = this.state.password;
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(this.state.password, salt);
-    console.log(hash);
-    this.state.password = hash;
-
     const reqBody = JSON.stringify(this.state);
     const request = new Request("/user", {
       method: "post",

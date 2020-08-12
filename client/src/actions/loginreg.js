@@ -1,5 +1,4 @@
 // actions for logging in and registering
-const bcrypt = require("bcryptjs");
 
 // A function to send a POST request with the user to be logged in
 export const login = (loginComp, app, userType) => {

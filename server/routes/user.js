@@ -112,6 +112,11 @@ router.get("/users/check-session", (req, res) => {
 //     "location": String
 // }
 router.post("/user", mongoChecker, (req, res) => {
+  // password hashing
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  req.body.password = hash;
+
   // Create a new user
   const user = new User(req.body);
   console.log(user);
