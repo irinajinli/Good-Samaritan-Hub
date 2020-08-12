@@ -28,7 +28,7 @@ export default class RegAccountInfo extends React.Component {
   };
 
   render() {
-    const { handleChange } = this.props;
+    const { handleChange, handleKeyDown } = this.props;
     return (
       <form noValidate className="wide" autoComplete="off">
         <div>
@@ -61,6 +61,7 @@ export default class RegAccountInfo extends React.Component {
             type="password"
             variant="outlined"
             onChange={handleChange("confirmPass")}
+            onKeyDown={handleKeyDown}
           />
         </div>
 

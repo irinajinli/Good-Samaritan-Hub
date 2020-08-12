@@ -90,6 +90,12 @@ export class RegStepper extends React.Component {
     }
   };
 
+  handleKeyDown = (event) => {
+    if (event.keyCode == 13) {
+      this.nextStep();
+    }
+  };
+
   // Handle fields change
   handleChange = (input) => (e) => {
     this.setState({ [input]: e.target.value });
@@ -148,6 +154,7 @@ export class RegStepper extends React.Component {
               nextStep={this.nextStep}
               prevStep={this.prevStep}
               handleChange={this.handleChange}
+              handleKeyDown={this.handleKeyDown}
               values={values}
             />
             {!this.state.passwordsMatch && (
