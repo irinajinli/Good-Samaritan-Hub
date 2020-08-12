@@ -43,6 +43,7 @@ class AdminHome extends Component {
         users: [],
         posts: [],
         messages: [],
+        messagesReceived: [],
         selectedUser: null,
         selectedRow: null,
         dialogOpen: false,
@@ -103,7 +104,8 @@ class AdminHome extends Component {
             });
             getMessagesForUser(user.username).then(messages => {
                 this.setState({
-                    messages: messages.filter(message => message.messageSender === user.username)
+                    messages: messages.filter(message => message.messageSender === user.username),
+                    messagesReceived: messages.filter(message => message.messageReceiver === user.username)
                 });
             });
         }
@@ -251,8 +253,8 @@ class AdminHome extends Component {
                                     <Label primary={"Location"} secondary={selectedUser.location}/>
                                     <Label primary={"Biography"} secondary={selectedUser.bio} blockText/>
                                     <Label primary={"Posts"} secondary={posts.length}/>
-                                    <Label primary={"Messages Sent"} secondary={selectedUser.messagesSent.length}/>
-                                    <Label primary={"Messages Recieved"} secondary={selectedUser.messagesRecieved.length}/>
+                                    <Label primary={"Messages Sent"} secondary={this.state.messages.length}/>
+                                    <Label primary={"Messages Recieved"} secondary={this.state.messagesReceived.length}/>
                                 </div>
                             </div>
                         }
