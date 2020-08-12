@@ -10,6 +10,7 @@ import Login from "./components/Login";
 import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
+import RegSuccess from "./components/RegSuccess";
 
 import { readCookie, logoutUser } from "./actions/user";
 
@@ -48,7 +49,7 @@ class App extends Component {
 
   // Initial global state
   state = {
-    user: null
+    user: null,
   };
 
   handleLogout = () => {
@@ -86,9 +87,7 @@ class App extends Component {
                         handleLogout={this.handleLogout}
                       />
                     ) : (
-                      <AdminHome
-                        handleLogout={this.handleLogout}
-                      />
+                      <AdminHome handleLogout={this.handleLogout} />
                     )}
                   </div>
                 )}
@@ -98,11 +97,7 @@ class App extends Component {
               <Route
                 exact
                 path="/admin/home"
-                render={() => (
-                  <AdminHome
-                    handleLogout={this.handleLogout}
-                  />
-                )}
+                render={() => <AdminHome handleLogout={this.handleLogout} />}
               />
 
               {/* User login and registration. */}
@@ -124,6 +119,8 @@ class App extends Component {
                   </React.Fragment>
                 )}
               />
+
+              <Route exact path="/regsuccess" render={() => <RegSuccess />} />
 
               {/* Admin login */}
               <Route

@@ -87,7 +87,7 @@ export class RegStepper extends React.Component {
         .catch((error) => {
           console.log(error);
         });
-    } else console.log("reqs not satisfied");
+    }
   };
 
   // Handle fields change
