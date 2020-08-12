@@ -39,8 +39,6 @@ export class RegStepper extends React.Component {
   };
 
   finish = () => {
-    this.state.location = "PLACEHOLDER";
-
     // BCRYPT HASHING
     // const password = this.state.password;
     const salt = bcrypt.genSaltSync(10);
@@ -74,6 +72,13 @@ export class RegStepper extends React.Component {
     this.setState({ [input]: e.target.value });
   };
 
+  handleLocationChange = (e, values) => {
+    this.setState({
+      location: values,
+    });
+    console.log(this.state);
+  };
+
   render() {
     const { step } = this.state;
     const {
@@ -105,6 +110,7 @@ export class RegStepper extends React.Component {
           <RegBasicInfo
             nextStep={this.nextStep}
             handleChange={this.handleChange}
+            handleLocationChange={this.handleLocationChange}
             values={values}
           />
         );

@@ -43,22 +43,22 @@ export default class RegBasicInfo extends React.Component {
       });
   }
 
-  handleOnChange = (event) => {
-    const { values, handleChange } = this.props;
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value,
-    });
-    this.updateReqsSatisfied();
-  };
+  // handleOnChange = (event) => {
+  //   const { values, handleChange } = this.props;
+  //   const target = event.target;
+  //   const value = target.value;
+  //   const name = target.name;
+  //   this.setState({
+  //     [name]: value,
+  //   });
+  //   this.updateReqsSatisfied();
+  // };
 
-  handleLocationChange = (event, values) => {
-    this.setState({
-      postCode: values,
-    });
-  };
+  // handleLocationChange = (event, values) => {
+  //   this.setState({
+  //     postCode: values,
+  //   });
+  // };
 
   updateReqsSatisfied = () => {
     if (
@@ -79,7 +79,7 @@ export default class RegBasicInfo extends React.Component {
 
   render() {
     const { postalCodePrefixes } = this.state;
-    const { handleChange } = this.props;
+    const { handleChange, handleLocationChange } = this.props;
     return (
       <form noValidate autoComplete="off">
         <div>
@@ -117,7 +117,7 @@ export default class RegBasicInfo extends React.Component {
               defaultValue=""
               label="Postal Code"
               options={postalCodePrefixes}
-              onChange={handleChange("location")}
+              onChange={handleLocationChange}
               style={{ width: "100%" }}
               renderInput={(params) => (
                 <TextField
