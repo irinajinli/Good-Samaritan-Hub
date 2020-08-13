@@ -34,7 +34,7 @@ export const login = (loginComp, app, userType) => {
   }
 
   // Send the request with fetch()
-  fetch(request)
+  return fetch(request)
     .then((res) => {
       if (res.status === 200) {
         return res.json();
@@ -44,6 +44,7 @@ export const login = (loginComp, app, userType) => {
       if (json.currUser !== undefined) {
         app.setState({ user: json.currUser });
       }
+      return json;
     })
     .catch((error) => {
       console.log(error);
