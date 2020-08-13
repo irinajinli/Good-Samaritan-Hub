@@ -15,12 +15,9 @@ router.post("/admin/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  log(username, password);
-
   // find user
   Admin.findOne({ username: username, password: password })
     .then((user) => {
-      log(user);
       req.session.user = user._id;
       req.session.username = user.username;
       req.session.admin = true;
