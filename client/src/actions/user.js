@@ -81,7 +81,22 @@ export const updateProfileInfo = async (originalUser, updatedUser) => {
 };
 
 // TODO
-export const updatePassword = async () => {};
+export const updatePassword = async (username, oldPassword, newPassword) => {
+  const url = `/user/username/${username}/${oldPassword}`;
+
+  // Create our request constructor with all the parameters we need
+  const request = new Request(url, {
+    method: "PATCH",
+    body: JSON.stringify([{ op: "replace", path: "/password", value: newPassword }]),
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+  });
+
+  const res = await fetch(request);
+  return await res.status;
+};
 
 export const reportUser = async (username) => {
   const url = `/user/username/${username}`;

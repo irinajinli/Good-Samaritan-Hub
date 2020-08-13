@@ -274,6 +274,48 @@ router.patch(
   }
 );
 
+// PATCH route to update a user by username
+// <req.param> is the user's username and current password.
+// <req.body> will be an array that consists of one object to replace a password for a user
+// NOTE: Passwords in param and body are not encypted
+// [
+//   { "op": "replace", "path": "/password", "value": "f24c5fa61604f593432852b" }
+//   ...
+// ]
+router.patch(
+  "/user/username/:username/:password",
+  mongoChecker,
+  authenticateUserOrAdmin,
+  (req, res) => {
+    // Find the fields to update and their values.
+    const fieldsToUpdate = {};
+    req.body.map((change) => {
+      const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+      fieldsToUpdate[propertyToChange] = change.value;
+    });
+
+    if (req.session.username === req.params.username) {
+      // Only allowed to change properties if req.param.password matches db
+      User.findOne({ username: req.params.username })
+        .then((user) => {
+          if (bcrypt.compareSync(req.params.password, user.password)) {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(req.body[0].value, salt);
+            req.body[0].value = hash;
+            patch(req, res, User, { username: req.params.username });
+          } else {
+            // wrong password
+            res.status(401).send();
+          }
+        })
+        .catch((error) => {
+          res.status(400).send();
+        });
+    }
+  }
+);
+
+
 // PUT route to replace a user.
 // <req.param.id> is the user's id.
 // <req.body> expects the following fields at minimum. See the User model for all fields.
