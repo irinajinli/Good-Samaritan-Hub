@@ -13,7 +13,7 @@ class RegSuccess extends React.Component {
       <div className="centre">
         <div className="title">Registration successful!</div>
         <div>
-          <Button color="primary" onClick={this.goToLogin}>
+          <Button variant="contained" color="primary" onClick={this.goToLogin}>
             Log in
           </Button>
         </div>
