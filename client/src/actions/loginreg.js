@@ -42,7 +42,11 @@ export const login = (loginComp, app, userType) => {
     })
     .then((json) => {
       if (json.currUser !== undefined) {
-        app.setState({ user: json.currUser });
+        if (json.currUser.isBanned) {
+          alert("Your account is banned.");
+        } else {
+          app.setState({ user: json.currUser });
+        }
       }
     })
     .catch((error) => {
