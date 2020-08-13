@@ -8,3 +8,21 @@
     font-size: 16px;
     color: #000a12;
 }
+
+.search-results__users-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.center {
+    text-align: center;
+}
+
+.MuiIconButton-sizeSmall.moreButton {
+    background-color: white;
+}
+
+.MuiIconButton-sizeSmall.moreButton:hover {
+    background-color: white;
+}
