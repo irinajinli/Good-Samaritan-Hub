@@ -16,7 +16,7 @@ export const readCookie = (app) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log("error", error);
     });
 };
 

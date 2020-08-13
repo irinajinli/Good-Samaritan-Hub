@@ -45,7 +45,7 @@ app.use("/", adminRoutes);
 
 /* Webpage routes below */
 // Serve the build
-app.use(express.static(__dirname + "/../client/public"));
+app.use(express.static(__dirname + "/../client/build"));
 
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
@@ -60,7 +60,7 @@ app.get("*", (req, res) => {
     "/admin/home",
     "/home",
     "/profile",
-    "setting",
+    "/setting",
     "/inbox",
   ];
   if (!goodPageRoutes.includes(req.url)) {
@@ -69,7 +69,7 @@ app.get("*", (req, res) => {
   }
 
   // Send index.html
-  res.sendFile("client/public/index.html", { root: "../" });
+  res.sendFile("client/build/index.html", { root: "../" });
 });
 
 // Listen on port

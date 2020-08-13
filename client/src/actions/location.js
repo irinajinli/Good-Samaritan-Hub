@@ -13,7 +13,6 @@ export const getPostalCodes = async () => {
         postalCodes[location.postalCode].lon = location.lon;
     });
 
-    console.log('getPostalCodes', postalCodes);
     return postalCodes;
 
 }
@@ -21,7 +20,6 @@ export const getPostalCodes = async () => {
 export const getPostalCodePrefixes = async () => {
 
     const postalCodes = await getPostalCodes();
-    console.log('getPostalCodePrefixes', Object.keys(postalCodes));
     return Object.keys(postalCodes);
 
 }
