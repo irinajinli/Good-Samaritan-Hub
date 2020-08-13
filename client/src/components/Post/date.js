@@ -26,10 +26,10 @@ export const getDateDiff = (post) => {
 const dateDiff = {
 
     inDays: function(d1, d2) {
-        let t2 = d2.getTime();
-        let t1 = d1.getTime();
+        let t2 = d2.getDate();
+        let t1 = d1.getDate();
 
-        return parseInt((t2-t1)/(24*3600*1000));
+        return parseInt(t2-t1);
     },
 
     inWeeks: function(d1, d2) {

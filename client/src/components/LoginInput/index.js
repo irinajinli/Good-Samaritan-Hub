@@ -23,6 +23,7 @@ class LoginInput extends React.Component {
     const name = target.name;
     this.setState({
       [name]: value,
+      wrongCreds: false,
     });
   };
 
@@ -61,7 +62,13 @@ class LoginInput extends React.Component {
 
   // phase 2 version
   checkCredentials = (loginComp, app, userType) => {
-    login(loginComp, app, userType);
+    login(loginComp, app, userType).then(result => {
+      if (!result) {
+        this.setState({ wrongCreds: true });
+      }
+    }).catch(error => {
+      this.setState({ wrongCreds: true });
+    });
   };
 
   render() {

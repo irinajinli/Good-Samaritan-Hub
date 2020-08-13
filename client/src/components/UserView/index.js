@@ -287,7 +287,6 @@ class UserView extends Component {
                 {viewingEditProfile && 
                 <Setting 
                     user={user}
-                    displayedUser={displayedUser}
                     appComponent={this.props.appComponent}
                     handleGoToProfile={this.handleGoToProfile}
                     handleChangeTargetLocation={this.handleChangeTargetLocation}

@@ -27,14 +27,6 @@ const UserSchema = new Schema({ // TODO: not completed
         type: String,
         default: ''
     },
-    messagesSent: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    },
-    messagesRecieved: {
-        type: [Schema.Types.ObjectId],
-        default: []
-    },
     isReported: {
         type: Boolean,
         default: false
@@ -42,10 +34,6 @@ const UserSchema = new Schema({ // TODO: not completed
     isBanned: {
         type: Boolean,
         default: false
-    },
-    reportedMessages: {
-        type: [Schema.Types.ObjectId],
-        default: []
     },
     banReason: {
         type: String,
