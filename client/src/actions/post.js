@@ -7,7 +7,6 @@ export const getPostsByLocation = async (location) => {
     posts.forEach(post => {
         post.date = new Date(post.date)
     });
-    console.log('getPostsByLocation', location, posts);
     return posts;
 
 }
@@ -22,7 +21,6 @@ export const getPostsByUser = async (user) => {
     posts.forEach(post => {
         post.date = new Date(post.date)
     });
-    console.log('getPostsByUser', user.username, posts);
     return posts;
 
 };
