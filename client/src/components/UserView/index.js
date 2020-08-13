@@ -57,7 +57,6 @@ class UserView extends Component {
     }
 
     handleBackToHome = () => {
-        this.props.history.push('/home');
         this.setState({
             showExpandedPost: false,
             expandedPost: {},
@@ -68,6 +67,8 @@ class UserView extends Component {
             displayedUser: {},
             viewingInbox: false,
             viewingEditProfile: false
+        }, () => {
+            this.props.history.push('/home');
         });
     }
 
@@ -82,6 +83,8 @@ class UserView extends Component {
             displayedUser: {},
             viewingInbox: false,
             viewingEditProfile: false
+        }, () => {
+            this.props.history.push('/home');
         });
     }
 
@@ -120,6 +123,8 @@ class UserView extends Component {
             displayedUser: {},
             viewingInbox: false,
             viewingEditProfile: false
+        }, () => {
+            this.props.history.push('/home');
         });
     }
 
