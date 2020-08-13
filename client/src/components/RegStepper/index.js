@@ -169,9 +169,15 @@ export class RegStepper extends React.Component {
             {!this.state.reqsSatisfied && (
               <div>
                 Please fill all required fields.
-                <Button color="primary" onClick={this.reset}>
-                  Try again
-                </Button>
+                <div>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.reset}
+                  >
+                    Try again
+                  </Button>
+                </div>
               </div>
             )}
             {this.state.reqsSatisfied && (
