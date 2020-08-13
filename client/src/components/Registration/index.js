@@ -181,11 +181,13 @@ export class Registration extends React.Component {
           <div className={classes.centre}>
             <div className="title">Registration</div>
             {!this.state.reqsSatisfied && (
-              <div>
+              <div >
                 Please fill all required fields.
-                <Button color="primary" variant="contained" onClick={this.reset}>
-                  Try again
-                </Button>
+                <div>
+                  <Button color="primary" variant="contained" onClick={this.reset} className="marginTop">
+                    Try again
+                  </Button>
+                </div>
               </div>
             )}
             {this.state.reqsSatisfied && (

@@ -102,7 +102,7 @@ export default class RegBasicInfo extends React.Component {
             className="long marginTop"
             label="Email address"
             variant="outlined"
-            onChange={this.handleOnChange}
+            onChange={handleChange("email")}
           />
         </div>
 
