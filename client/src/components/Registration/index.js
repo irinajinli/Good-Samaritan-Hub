@@ -2,7 +2,7 @@
 // https://github.com/bradtraversy/react_step_form/blob/master/src/components/UserForm.js
 
 import React from "react";
-import { withStyles } from '@material-ui/styles';
+import { withStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 
 import RegBasicInfo from "../RegBasicInfo";
@@ -16,7 +16,7 @@ const styles = () => ({
     left: "50%",
     top: "50%",
     transform: "translate(-50%, -50%)",
-  }
+  },
 });
 
 export class Registration extends React.Component {
@@ -33,6 +33,8 @@ export class Registration extends React.Component {
     bio: "",
     reqsSatisfied: true,
     passwordsMatch: true,
+    stepComplete1: true,
+    stepComplete2: true,
   };
 
   reset = () => {
@@ -45,15 +47,43 @@ export class Registration extends React.Component {
 
   // Proceed to next step
   nextStep = () => {
-    if (this.passwordsMatch()) {
-      const { step } = this.state;
-      this.setState({
-        passwordsMatch: true,
-        step: step + 1,
-      });
-    } else {
-      this.setState({ passwordsMatch: false });
+    const {
+      step,
+      firstName,
+      lastName,
+      location,
+      username,
+      password,
+      confirmPass,
+    } = this.state;
+    if (step === 1) {
+      if (firstName === "" || lastName === "" || location === "") {
+        this.setState({ stepComplete1: false });
+        console.log("step 1 incomplete");
+        return;
+      }
+    } else if (step === 2) {
+      if (username === "" || password === "" || confirmPass === "") {
+        this.setState({ stepComplete2: false });
+        console.log("step 2 incomplete");
+        return;
+      } else {
+        this.setState({ stepComplete2: true });
+      }
+      if (this.passwordsMatch()) {
+        const { step } = this.state;
+        this.setState({
+          passwordsMatch: true,
+          step: step + 1,
+        });
+        return;
+      } else {
+        this.setState({ passwordsMatch: false });
+        return;
+      }
     }
+
+    this.setState({ step: step + 1 });
   };
 
   // Go back to prev step
@@ -132,7 +162,7 @@ export class Registration extends React.Component {
       confirmPass,
       bio,
     } = this.state;
-    
+
     const values = {
       firstName,
       lastName,
@@ -158,6 +188,9 @@ export class Registration extends React.Component {
               handleLocationChange={this.handleLocationChange}
               values={values}
             />
+            {!this.state.stepComplete1 && (
+              <div className="red">Please fill in all required fields.</div>
+            )}
           </div>
         );
       case 2:
@@ -174,6 +207,9 @@ export class Registration extends React.Component {
             {!this.state.passwordsMatch && (
               <div className="red">Passwords don't match!</div>
             )}
+            {!this.state.stepComplete2 && (
+              <div className="red">Please fill in all required fields.</div>
+            )}
           </div>
         );
       case 3:
@@ -181,10 +217,15 @@ export class Registration extends React.Component {
           <div className={classes.centre}>
             <div className="title">Registration</div>
             {!this.state.reqsSatisfied && (
-              <div >
+              <div>
                 Please fill all required fields.
                 <div>
-                  <Button color="primary" variant="contained" onClick={this.reset} className="marginTop">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    onClick={this.reset}
+                    className="marginTop"
+                  >
                     Try again
                   </Button>
                 </div>
@@ -201,7 +242,11 @@ export class Registration extends React.Component {
           </div>
         );
       default:
-        return <div className={classes.centre}>"Whoops, this step doesn't exist!"</div>
+        return (
+          <div className={classes.centre}>
+            "Whoops, this step doesn't exist!"
+          </div>
+        );
     }
   }
 }

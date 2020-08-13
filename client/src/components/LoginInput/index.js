@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { login } from "../../actions/loginreg.js";
+import { login } from "../../actions/user.js";
 import "./styles.css";
 import "../../index.css";
 
@@ -62,13 +62,15 @@ class LoginInput extends React.Component {
 
   // phase 2 version
   checkCredentials = (loginComp, app, userType) => {
-    login(loginComp, app, userType).then(result => {
-      if (!result) {
+    login(loginComp, app, userType)
+      .then((result) => {
+        if (!result) {
+          this.setState({ wrongCreds: true });
+        }
+      })
+      .catch((error) => {
         this.setState({ wrongCreds: true });
-      }
-    }).catch(error => {
-      this.setState({ wrongCreds: true });
-    });
+      });
   };
 
   render() {

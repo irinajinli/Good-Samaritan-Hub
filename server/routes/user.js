@@ -51,7 +51,6 @@ const userSafeInfo = (user) => {
 router.post("/users/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(username, password);
 
   // find user
   User.findOne({ username: username })
@@ -119,7 +118,6 @@ router.post("/user", mongoChecker, (req, res) => {
 
   // Create a new user
   const user = new User(req.body);
-  console.log(user);
   res.send(200);
   // Save user to the database
   save(req, res, user);
@@ -314,7 +312,6 @@ router.patch(
     }
   }
 );
-
 
 // PUT route to replace a user.
 // <req.param.id> is the user's id.
