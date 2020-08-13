@@ -49,7 +49,10 @@ class SearchResults extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.searchTerm !== this.props.searchTerm) {
-            this.updateUserResults();
+            this.setState({
+                page: 1
+            },
+            this.updateUserResults);
         }
     }
 
