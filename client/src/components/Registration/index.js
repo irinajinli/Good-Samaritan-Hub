@@ -146,7 +146,6 @@ export class Registration extends React.Component {
     this.setState({
       location: values,
     });
-    console.log(this.state);
   };
 
   render() {
@@ -186,10 +185,11 @@ export class Registration extends React.Component {
               nextStep={this.nextStep}
               handleChange={this.handleChange}
               handleLocationChange={this.handleLocationChange}
+              handleKeyDown={this.handleKeyDown}
               values={values}
             />
             {!this.state.stepComplete1 && (
-              <div className="red">Please fill in all required fields.</div>
+              <div className="red registration--margin-top">Please fill in all required fields.</div>
             )}
           </div>
         );
@@ -205,10 +205,10 @@ export class Registration extends React.Component {
               values={values}
             />
             {!this.state.passwordsMatch && (
-              <div className="red">Passwords don't match!</div>
+              <div className="red registration--margin-top">Passwords don't match!</div>
             )}
             {!this.state.stepComplete2 && (
-              <div className="red">Please fill in all required fields.</div>
+              <div className="red registration--margin-top">Please fill in all required fields.</div>
             )}
           </div>
         );
@@ -236,6 +236,7 @@ export class Registration extends React.Component {
                 finish={this.finish}
                 prevStep={this.prevStep}
                 handleChange={this.handleChange}
+                handleKeyDown={this.handleKeyDown}
                 values={values}
               />
             )}
