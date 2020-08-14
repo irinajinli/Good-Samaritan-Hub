@@ -7,6 +7,7 @@ const Admin = require("../models/admin");
 const { mongoChecker, isMongoError, save } = require("./common");
 
 const express = require("express");
+const bcrypt = require("bcryptjs");
 const router = express.Router();
 const log = console.log;
 
@@ -16,12 +17,17 @@ router.post("/admin/login", (req, res) => {
   const password = req.body.password;
 
   // find user
-  Admin.findOne({ username: username, password: password })
+  Admin.findOne({ username: username })
     .then((user) => {
-      req.session.user = user._id;
-      req.session.username = user.username;
-      req.session.admin = true;
-      res.status(200).send({ currUser: user, admin: true });
+      if (bcrypt.compareSync(password, user.password)) {
+        req.session.user = user._id;
+        req.session.username = user.username;
+        req.session.admin = true;
+        res.status(200).send({ currUser: user, admin: true });
+      } else {
+        // wrong password
+        res.status(404).send();
+      }
     })
     .catch((error) => {
       log(error);
@@ -63,6 +69,11 @@ router.get("/users/logout", (req, res) => {
 //     "password": String
 // }
 router.post("/admin", mongoChecker, (req, res) => {
+  // password hashing
+  const salt = bcrypt.genSaltSync(10);
+  const hash = bcrypt.hashSync(req.body.password, salt);
+  req.body.password = hash;
+
   // Create a new admin
   const admin = new Admin({
     username: req.body.username,

@@ -47,19 +47,6 @@ class LoginInput extends React.Component {
     window.location.href = "/registration";
   };
 
-  // phase 1 version
-  // checkCredentials = () => {
-  //   if (window.location.pathname === "/login") {
-  //     if (this.state.username === "user" && this.state.password === "user") {
-  //       this.goToHome();
-  //     } else this.setState({ wrongCreds: true });
-  //   } else if (window.location.pathname === "/admin") {
-  //     if (this.state.username === "admin" && this.state.password === "admin") {
-  //       this.goToAdminHome();
-  //     } else this.setState({ wrongCreds: true });
-  //   }
-  // };
-
   // phase 2 version
   checkCredentials = (loginComp, app, userType) => {
     login(loginComp, app, userType)
