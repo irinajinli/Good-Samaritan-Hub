@@ -134,11 +134,27 @@ router.post("/user", mongoChecker, (req, res) => {
   save(req, res, user);
 });
 
+// GET route that returns whether the specified username already exists
+router.get("/user/check-username/:username", mongoChecker, (req, res) => {
+  User.findOne({ username: req.params.username })
+    .then((user) => {
+      if (user) {
+        res.send({result: "Username exists"});
+      } else {
+        res.send({result: "Username does not exist"});
+      }
+    })
+    .catch((error) => {
+      log(error);
+      res.status(500).send("Internal Server Error");
+    });
+})
+
 // GET route to get a user by username
 router.get(
   "/user/username/:username",
-  authenticateUserOrAdmin,
   mongoChecker,
+  authenticateUserOrAdmin,
   (req, res) => {
     User.findOne({ username: req.params.username })
       .then((user) => {

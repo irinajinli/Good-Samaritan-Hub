@@ -68,15 +68,6 @@ export default class RegAccountInfo extends React.Component {
         </div>
 
         <div>
-          {/* <Button
-            className="marginTop marginRight"
-            color="default"
-            variant="contained"
-            onClick={this.back}
-          >
-            Back
-          </Button> */}
-
           <Button
             className="marginTop"
             color="primary"
