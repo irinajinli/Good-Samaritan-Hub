@@ -15,6 +15,7 @@ const {
   save,
   find,
   findOne,
+  authenticateUser,
 } = require("./common");
 
 const express = require("express");
@@ -85,24 +86,9 @@ router.get("/users/logout", (req, res) => {
 });
 
 // A route to check if a user is logged in on the session cookie
-router.get("/users/check-session", (req, res) => {
-  // NORMAL USER
-  if (!req.session.admin) {
-    if (req.session.user) {
-      User.findById(req.session.user)
-        .then((user) => {
-          res.status(200).send({ user: user });
-        })
-        .catch((error) => {
-          log(error);
-          res.status(400).send();
-        });
-    } else {
-      res.status(401).send();
-    }
-  }
+router.get("/users/check-session", authenticateUserOrAdmin, (req, res) => {
   // ADMIN
-  else if (req.session.admin) {
+  if (req.session.admin) {
     Admin.findById(req.session.user)
       .then((user) => {
         res.status(200).send({ user: user, admin: true });
@@ -112,7 +98,15 @@ router.get("/users/check-session", (req, res) => {
         res.status(400).send();
       });
   } else {
-    res.status(401).send();
+    // NORMAL USER
+    User.findById(req.session.user)
+      .then((user) => {
+        res.status(200).send({ user: user });
+      })
+      .catch((error) => {
+        log(error);
+        res.status(400).send();
+      });
   }
 });
 
