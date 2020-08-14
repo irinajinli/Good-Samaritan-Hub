@@ -5,7 +5,7 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 const Location = require('../models/location');
-const { mongoChecker, save, find } = require('./common');
+const { mongoChecker, authenticateAdmin, save, find } = require('./common');
 
 const express = require('express');
 const router = express.Router();
@@ -17,7 +17,7 @@ const router = express.Router();
 //     "lat": 43.697225,
 //     "lon": -79.412968
 // }
-router.post('/location', mongoChecker, (req, res) => {
+router.post('/location', mongoChecker, authenticateAdmin, (req, res) => {
     // Create a new location
     const location = new Location(req.body);
 
