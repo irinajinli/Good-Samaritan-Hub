@@ -56,6 +56,7 @@ app.get("*", (req, res) => {
     "/",
     "/login",
     "/registration",
+    "/regsuccess",
     "/admin",
     "/admin/home",
     "/home",
