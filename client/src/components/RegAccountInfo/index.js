@@ -39,6 +39,7 @@ export default class RegAccountInfo extends React.Component {
             label="Username"
             variant="outlined"
             onChange={handleChange("username")}
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -51,6 +52,7 @@ export default class RegAccountInfo extends React.Component {
             type="password"
             variant="outlined"
             onChange={handleChange("password")}
+            onKeyDown={handleKeyDown}
           />
 
           <TextField

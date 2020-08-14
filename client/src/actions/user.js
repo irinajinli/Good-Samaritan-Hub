@@ -61,7 +61,11 @@ export const login = (loginComp, app, userType) => {
       return json;
     })
     .catch((error) => {
-      console.log(error);
+      if (error instanceof TypeError) {
+        console.log("Wrong credentials!");
+      } else {
+        console.log(error);
+      }
     });
 };
 

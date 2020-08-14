@@ -146,7 +146,6 @@ export class Registration extends React.Component {
     this.setState({
       location: values,
     });
-    console.log(this.state);
   };
 
   render() {
@@ -186,6 +185,7 @@ export class Registration extends React.Component {
               nextStep={this.nextStep}
               handleChange={this.handleChange}
               handleLocationChange={this.handleLocationChange}
+              handleKeyDown={this.handleKeyDown}
               values={values}
             />
             {!this.state.stepComplete1 && (
@@ -236,6 +236,7 @@ export class Registration extends React.Component {
                 finish={this.finish}
                 prevStep={this.prevStep}
                 handleChange={this.handleChange}
+                handleKeyDown={this.handleKeyDown}
                 values={values}
               />
             )}
