@@ -97,7 +97,15 @@ class App extends Component {
               <Route
                 exact
                 path="/admin/home"
-                render={() => <AdminHome handleLogout={this.handleLogout} />}
+                render={() =>
+                  !user ? (
+                    <div>Forbidden</div>
+                  ) : !user.admin ? (
+                    <div>Forbidden</div>
+                  ) : (
+                    <AdminHome handleLogout={this.handleLogout} />
+                  )
+                }
               />
 
               {/* User login and registration. */}

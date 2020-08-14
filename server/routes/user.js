@@ -20,6 +20,7 @@ const {
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const Admin = require("../models/admin");
 
 /****************** Helper Functions *******************/
 
@@ -85,10 +86,26 @@ router.get("/users/logout", (req, res) => {
 
 // A route to check if a user is logged in on the session cookie
 router.get("/users/check-session", (req, res) => {
-  if (req.session.user) {
-    User.findById(req.session.user)
+  // NORMAL USER
+  if (!req.session.admin) {
+    if (req.session.user) {
+      User.findById(req.session.user)
+        .then((user) => {
+          res.status(200).send({ user: user });
+        })
+        .catch((error) => {
+          log(error);
+          res.status(400).send();
+        });
+    } else {
+      res.status(401).send();
+    }
+  }
+  // ADMIN
+  else if (req.session.admin) {
+    Admin.findById(req.session.user)
       .then((user) => {
-        res.status(200).send({ user: user });
+        res.status(200).send({ user: user, admin: true });
       })
       .catch((error) => {
         log(error);
