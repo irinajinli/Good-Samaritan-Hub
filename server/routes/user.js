@@ -62,7 +62,7 @@ router.post("/users/login", (req, res) => {
         res.status(200).send({ currUser: user, admin: false });
       } else {
         // wrong password
-        res.status(401).send();
+        res.status(404).send();
       }
     })
     .catch((error) => {
