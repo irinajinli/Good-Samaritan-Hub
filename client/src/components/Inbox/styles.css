@@ -30,6 +30,11 @@
     margin: 3px;
 }
 
+.messageTopBar {
+    height: 5%;
+    width: 100%;
+}
+
 .sideBar {
     width: 30%;
     height: 100%;

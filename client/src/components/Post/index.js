@@ -131,7 +131,7 @@ class Post extends Component {
                         <div className='post__block post__footer'>
                             {user.username !== poster.username && 
                             <React.Fragment>
-                                <Button className='post__send-msg-btn' onClick={() => handleGoToInboxFromPost(poster)}>
+                                <Button className='post__send-msg-btn' onClick={() => handleGoToInboxFromPost(poster, post)}>
                                     Send a message
                                 </Button>
                                 <IconButton size='small' className='post__report-btn' onClick={this.handleOpenDialog}>

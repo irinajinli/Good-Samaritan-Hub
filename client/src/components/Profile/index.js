@@ -33,7 +33,7 @@ class Profile extends Component {
 
                 {user.username !== displayedUser.username &&
                     <div className='profile__message'>
-                        <Button className='profile__msg-btn' onClick={() => handleGoToInboxFromPost(displayedUser)}>
+                        <Button className='profile__msg-btn' onClick={() => handleGoToInboxFromPost(displayedUser, null)}>
                             Message
                         </Button> 
                     </div>

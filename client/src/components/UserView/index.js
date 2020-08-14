@@ -30,6 +30,7 @@ class UserView extends Component {
         viewingEditProfile: false,
 
         inboxFrom: null,
+        inboxFromPost: null,
     }
 
     handleChangeTargetLocation = targetLocation => {
@@ -186,6 +187,7 @@ class UserView extends Component {
             viewingInbox: true,
             viewingEditProfile: false,
             inboxFrom: null,
+            inboxFromPost: null,
         });
         this.props.history.push("/inbox"); 
     }
@@ -199,13 +201,14 @@ class UserView extends Component {
         return await hidePostFromUser(reportedPost, this.props.appComponent)
     }
 
-    handleGoToInboxFromPost = user => {
+    handleGoToInboxFromPost = (user, post) => {
         this.setState({
             viewingHome: false,
             viewingProfile: false,
             viewingInbox: true,
             viewingEditProfile: false,
             inboxFrom: user,
+            inboxFromPost: post
         });
         this.props.history.push("/inbox"); 
     }
@@ -284,8 +287,10 @@ class UserView extends Component {
                     messages={this.state.messages}
                     conversations={this.state.conversations}
                     lookingAtUser={this.state.inboxFrom}
+                    lookingAtPost={this.state.inboxFromPost}
                     handleUpdateMessages={this.handleUpdateMessages}
                     handleUpdateConversation={this.handleUpdateConversation}
+                    handleGoToProfile={this.handleGoToProfile}
                 />}
 
                 {/* Edit Profile page */}

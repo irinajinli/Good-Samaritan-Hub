@@ -75,6 +75,8 @@ router.put('/conversations/:username', (req, res) => {
         'conversations.username': req.body.messagedUser
     }, {
         $set: {
+            'conversations.$.name': req.body.messagedUserFullName,
+            'conversations.$.post': req.body.post,
             'conversations.$.lastMessageTime': Date.now()
         }
     },
@@ -88,20 +90,9 @@ router.put('/conversations/:username', (req, res) => {
 });
 
 
-router.patch('/conversations/:username', (req, res) => {
-    const username = req.params.username;
-    Conversation.updateOne(
-        {username: username},
-        {$set: {conversations: req.body}},
-        (err) => {
-            if(!err) {
-                res.send("Updated conversation")
-            } else {
-                res.send(err)
-            }
-        }
-    )
-});
+
+
+
 
 
 module.exports = router;

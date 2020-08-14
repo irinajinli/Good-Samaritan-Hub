@@ -1,0 +1,18 @@
+.messageTopBarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+}
+
+.messageTopBarPerson {
+    margin-left: 40px;
+    margin-top: 4px;
+    margin-bottom: 3px;
+}
+
+.messageTopBarPost {
+    margin-right: 40px;
+    margin-top: 4px;
+    margin-bottom: 3px;
+}
