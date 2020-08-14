@@ -11,6 +11,7 @@ import Registration from "./components/Registration";
 import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 import RegSuccess from "./components/RegSuccess";
+import NotFound from "./components/NotFound";
 
 import { readCookie, logoutUser } from "./actions/user";
 
@@ -157,6 +158,9 @@ class App extends Component {
                   </React.Fragment>
                 )}
               />
+
+              {/* otherwise, not found */}
+              <Route render={() => <NotFound />} />
             </Switch>
           </BrowserRouter>
         </ThemeProvider>
