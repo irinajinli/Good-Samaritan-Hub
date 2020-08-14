@@ -1,8 +1,11 @@
 {
     "name": "good_samaritan_hub_app",
     "version": "1.0.0",
+    "engines": {
+      "node": "12.x"
+    },
     "scripts": {
-      "heroku-prebuild": "cd client && npm install && npm run build && cd ../server && npm install",
+      "heroku-prebuild": "cd client && npm install && npm run build && cd ../server && npm install cd ..",
       "start": "cd server && npm start"
     }
 }
