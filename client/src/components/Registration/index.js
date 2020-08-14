@@ -34,6 +34,7 @@ export class Registration extends React.Component {
     reqsSatisfied: true,
     passwordsMatch: true,
     usernameAlreadyExists: false,
+    passwordTooShort: false,
     stepComplete1: true,
     stepComplete2: true,
   };
@@ -89,6 +90,14 @@ export class Registration extends React.Component {
           if (json.result === "Username does not exist") { // username doesn't already exist
             this.setState({usernameAlreadyExists: false});
 
+            // Check if password is at least 8 characters
+            if (password.length < 8) {
+              this.setState({ passwordTooShort: true });
+              return;
+            } else {
+              this.setState({ passwordTooShort: false });
+            }
+
             // Check if passwords match
             if (this.passwordsMatch()) { // passwords match
               const { step } = this.state;
@@ -103,7 +112,8 @@ export class Registration extends React.Component {
           } else { // username already exists
             this.setState({
               usernameAlreadyExists: true,
-              passwordsMatch: false
+              passwordsMatch: true,
+              passwordTooShort: false
             });
           }
         })
@@ -234,6 +244,9 @@ export class Registration extends React.Component {
             />
             {!this.state.passwordsMatch && 
               <div className="red registration--margin-top">Passwords don't match!</div>
+            }
+            {this.state.passwordsMatch && this.state.passwordTooShort &&
+              <div className="red registration--margin-top">Passwords must be at least 8 characters!</div>
             }
             {this.state.usernameAlreadyExists && 
               <div className="red registration--margin-top">Username already exists!</div>
