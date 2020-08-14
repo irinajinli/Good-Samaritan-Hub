@@ -33,6 +33,8 @@ export class Registration extends React.Component {
     bio: "",
     reqsSatisfied: true,
     passwordsMatch: true,
+    usernameAlreadyExists: false,
+    passwordTooShort: false,
     stepComplete1: true,
     stepComplete2: true,
   };
@@ -61,6 +63,11 @@ export class Registration extends React.Component {
         this.setState({ stepComplete1: false });
         console.log("step 1 incomplete");
         return;
+      } else {
+        this.setState({ 
+          stepComplete1: true,
+          step: step + 1 
+        });
       }
     } else if (step === 2) {
       if (username === "" || password === "" || confirmPass === "") {
@@ -70,20 +77,51 @@ export class Registration extends React.Component {
       } else {
         this.setState({ stepComplete2: true });
       }
-      if (this.passwordsMatch()) {
-        const { step } = this.state;
-        this.setState({
-          passwordsMatch: true,
-          step: step + 1,
-        });
-        return;
-      } else {
-        this.setState({ passwordsMatch: false });
-        return;
-      }
-    }
 
-    this.setState({ step: step + 1 });
+      // Check if username already exists
+      const url = `/user/check-username/${username}`;
+      console.log(url)
+      fetch(url)
+        .then(res => {
+          return res.json()
+        })
+        .then((json) => {
+          console.log(json)
+          if (json.result === "Username does not exist") { // username doesn't already exist
+            this.setState({usernameAlreadyExists: false});
+
+            // Check if password is at least 8 characters
+            if (password.length < 8) {
+              this.setState({ passwordTooShort: true });
+              return;
+            } else {
+              this.setState({ passwordTooShort: false });
+            }
+
+            // Check if passwords match
+            if (this.passwordsMatch()) { // passwords match
+              const { step } = this.state;
+              this.setState({
+                passwordsMatch: true,
+                step: step + 1,
+              });
+            } else { // passwords don't match
+              this.setState({ passwordsMatch: false });
+            }
+
+          } else { // username already exists
+            this.setState({
+              usernameAlreadyExists: true,
+              passwordsMatch: true,
+              passwordTooShort: false
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          alert("Unable to verify username. Please try again.");
+        });
+    }
   };
 
   // Go back to prev step
@@ -126,7 +164,7 @@ export class Registration extends React.Component {
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error finishing registration");
         });
     }
   };
@@ -204,12 +242,18 @@ export class Registration extends React.Component {
               handleKeyDown={this.handleKeyDown}
               values={values}
             />
-            {!this.state.passwordsMatch && (
+            {!this.state.passwordsMatch && 
               <div className="red registration--margin-top">Passwords don't match!</div>
-            )}
-            {!this.state.stepComplete2 && (
+            }
+            {this.state.passwordsMatch && this.state.passwordTooShort &&
+              <div className="red registration--margin-top">Passwords must be at least 8 characters!</div>
+            }
+            {this.state.usernameAlreadyExists && 
+              <div className="red registration--margin-top">Username already exists!</div>
+            }
+            {!this.state.stepComplete2 && 
               <div className="red registration--margin-top">Please fill in all required fields.</div>
-            )}
+            }
           </div>
         );
       case 3:
