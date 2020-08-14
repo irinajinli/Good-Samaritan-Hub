@@ -140,17 +140,6 @@ router.post("/user", mongoChecker, (req, res) => {
   save(req, res, user);
 });
 
-// GET route to get a user by id
-router.get(
-  "/user/:id",
-  mongoChecker,
-  authenticateUserOrAdmin,
-  validateId,
-  (req, res) => {
-    findOne(req, res, User, { _id: req.params.id });
-  }
-);
-
 // GET route to get a user by username
 router.get(
   "/user/username/:username",
@@ -329,33 +318,5 @@ router.patch(
     }
   }
 );
-
-// PUT route to replace a user.
-// <req.param.id> is the user's id.
-// <req.body> expects the following fields at minimum. See the User model for all fields.
-// {
-//     "username": String,
-//     "password": String,
-//     "firstName": String,
-//     "lastName": String,
-//     "location": String
-// }
-router.put("/user/:id", mongoChecker, validateId, (req, res) => {
-  User.findOneAndReplace({ _id: req.params.id }, req.body, {
-    new: true,
-    useFindAndModify: false,
-  })
-    .then((user) => {
-      if (user) {
-        res.send(user);
-      } else {
-        res.status(404).send();
-      }
-    })
-    .catch((error) => {
-      log(error);
-      res.status(500).send("Internal server error");
-    });
-});
 
 module.exports = router;

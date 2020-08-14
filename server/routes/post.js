@@ -30,24 +30,17 @@ router.post('/post/:posterUsername', mongoChecker, authenticateUser, (req, res) 
         return;
     }
 
-    // Get poster username from <posterUsername> param
-    req.body.posterUsername = req.params.posterUsername;
-
-    // Parse date string
-    req.body.date = new Date(req.body.date);
-
-    // Create a new post
+    // Create new post
+    req.body.posterUsername = req.params.posterUsername; // set posterUsername
+    req.body.date = new Date(req.body.date); // parse date string
     const post = new Post(req.body);
 
     // Save post to the database
     save(req, res, post);
 });
 
-// GET route to get all posts
-router.get('/posts', mongoChecker, (req, res) => {
-    find(req, res, Post);
-});
-
+// Finds and returns the posts that satisfy <filter> and that the current user is 
+// authorized to see
 const filterPosts = async (req, res, filter) => {
     Post.find(filter)
         .then(async (posts) => {
