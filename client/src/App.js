@@ -99,7 +99,10 @@ class App extends Component {
                 path="/admin/home"
                 render={() =>
                   !user ? (
-                    <div>Forbidden</div>
+                    <div>
+                      <TopBar />
+                      <Login appComponent={this} />
+                    </div>
                   ) : !user.admin ? (
                     <div>Forbidden</div>
                   ) : (
