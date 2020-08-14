@@ -61,8 +61,6 @@ class LoginInput extends React.Component {
   };
 
   render() {
-    const { appComponent, userType } = this.props;
-
     const wrongCreds = this.state.wrongCreds;
     let wrongCredsMessage;
 
@@ -75,6 +73,8 @@ class LoginInput extends React.Component {
       );
     }
 
+    const { appComponent, userType } = this.props;
+
     return (
       <div>
         <div>
@@ -83,6 +83,7 @@ class LoginInput extends React.Component {
             name="username"
             variant="outlined"
             onChange={this.handleOnChange}
+            onKeyDown={this.handleKeyDown}
           />
         </div>
         {/* <div className="marginTop"></div> */}

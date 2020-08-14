@@ -45,7 +45,7 @@ export default class RegBasicInfo extends React.Component {
 
   render() {
     const { postalCodePrefixes } = this.state;
-    const { handleChange, handleLocationChange } = this.props;
+    const { handleChange, handleLocationChange, handleKeyDown } = this.props;
     return (
       <form noValidate autoComplete="off" className="wide">
         <div>
@@ -56,6 +56,7 @@ export default class RegBasicInfo extends React.Component {
             label="First name"
             variant="outlined"
             onChange={handleChange("firstName")}
+            onKeyDown={handleKeyDown}
           />
 
           <TextField
@@ -65,6 +66,7 @@ export default class RegBasicInfo extends React.Component {
             label="Last name"
             variant="outlined"
             onChange={handleChange("lastName")}
+            onKeyDown={handleKeyDown}
           />
         </div>
 
@@ -75,6 +77,7 @@ export default class RegBasicInfo extends React.Component {
             label="Phone number"
             variant="outlined"
             onChange={handleChange("phoneNum")}
+            onKeyDown={handleKeyDown}
           />
 
           <div className="registration__location-selector">
@@ -103,6 +106,7 @@ export default class RegBasicInfo extends React.Component {
             label="Email address"
             variant="outlined"
             onChange={handleChange("email")}
+            onKeyDown={handleKeyDown}
           />
         </div>
 
