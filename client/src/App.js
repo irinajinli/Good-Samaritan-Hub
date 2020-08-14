@@ -12,6 +12,7 @@ import UserView from "./components/UserView";
 import AdminHome from "./components/AdminHome";
 import RegSuccess from "./components/RegSuccess";
 import NotFound from "./components/NotFound";
+import Forbidden from "./components/Forbidden";
 
 import { readCookie, logoutUser } from "./actions/user";
 
@@ -105,7 +106,7 @@ class App extends Component {
                       <Login appComponent={this} />
                     </div>
                   ) : !user.admin ? (
-                    <div>Forbidden</div>
+                    <Forbidden />
                   ) : (
                     <AdminHome handleLogout={this.handleLogout} />
                   )
