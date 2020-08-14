@@ -5,7 +5,10 @@ import "./styles.css";
 
 class Login extends React.Component {
   getTitle = () => {
-    if (window.location.pathname === "/admin") {
+    if (
+      window.location.pathname === "/admin" ||
+      window.location.pathname === "/admin/home"
+    ) {
       return "Admin Login";
     } else {
       return "Login";

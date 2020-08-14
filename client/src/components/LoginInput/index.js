@@ -98,16 +98,17 @@ class LoginInput extends React.Component {
             onKeyDown={this.handleKeyDown}
           />
         </div>
-        {window.location.pathname !== "/admin" && (
-          <div className="smallMarginTop">
-            <span
-              className="hover-pointer grey"
-              onClick={() => this.handleOnClick()}
-            >
-              Need to register?
-            </span>
-          </div>
-        )}
+        {window.location.pathname !== "/admin" &&
+          window.location.pathname !== "/admin/home" && (
+            <div className="smallMarginTop">
+              <span
+                className="hover-pointer grey"
+                onClick={() => this.handleOnClick()}
+              >
+                Need to register?
+              </span>
+            </div>
+          )}
         <div>
           <Button
             className="smallMarginTop"
