@@ -27,6 +27,7 @@ class Setting extends Component {
         lastNameEmpty: false,
         oldNotMatch: false,
         newNotMatch: false,
+        newTooShort: false,
 
         snackBarOpen: false,
 
@@ -110,7 +111,9 @@ class Setting extends Component {
     handleChangePassword = () => {
         this.setState({newNotMatch: !this.state.newPassword ||
             this.state.newPassword !== this.state.confirmPassword});
-        if (this.state.newPassword &&
+        this.setState({newTooShort: !this.state.newPassword ||
+            this.state.newPassword.length < 8});
+        if (this.state.newPassword && this.state.newPassword.length >= 8 &&
             this.state.newPassword === this.state.confirmPassword) {
             updatePassword(this.props.user.username, this.state.oldPassword, this.state.newPassword)
                 .then(status => {
@@ -137,7 +140,7 @@ class Setting extends Component {
     render() {
         // NOTE: since The user can only edit their own profile, user === displayUser on this page
         const { user, handleGoToProfile } = this.props
-        const { firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, snackBarOpen, postalCodePrefixes } = this.state;
+        const { firstNameEmpty, lastNameEmpty, oldNotMatch, newNotMatch, newTooShort, snackBarOpen, postalCodePrefixes } = this.state;
         
         return (
         <div className='profile'>
@@ -212,7 +215,8 @@ class Setting extends Component {
                         label="New Password"
                         type="password"
                         variant="outlined"
-                        error={newNotMatch}
+                        error={newNotMatch || newTooShort}
+                        helperText={newTooShort && "Password must be at least 8 characters!"}
                         name="newPassword"
                         onChange={this.handleInputChange}/>
                     <TextField className="profile_textField"
