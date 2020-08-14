@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Card from '@material-ui/core/card'
+import Card from '@material-ui/core/Card';
 import './styles.css';
 
 class InboxSideBarItem extends Component {
