@@ -28,8 +28,13 @@ const dateDiff = {
     inDays: function(d1, d2) {
         let t2 = d2.getDate();
         let t1 = d1.getDate();
+        let intDiff = t2-t1;
 
-        return parseInt(t2-t1);
+        t2 = d2.getTime();
+        t1 = d1.getTime();
+        let exactDiff=(t2-t1)/(24*3600*1000);
+
+        return parseInt(Math.max(intDiff, exactDiff));
     },
 
     inWeeks: function(d1, d2) {
