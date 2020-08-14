@@ -147,7 +147,7 @@ class App extends Component {
                         <Login appComponent={this} />
                       </div>
                     ) : !user.admin ? (
-                      <div>Forbidden</div>
+                      <Forbidden />
                     ) : (
                       <AdminHome
                         messages={messages}
