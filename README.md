@@ -40,7 +40,7 @@ Please note that the registration page (`/registration`) does not yet make a rea
 ### Admin
 
 #### Login Instructions and Credentials:
-The admin login page can be found at `/admin`
+The admin login page can be found at `/adminLogin`
 
 username: `admin`  
 password: `admin`  

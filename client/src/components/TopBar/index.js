@@ -49,7 +49,7 @@ export default function TopBar() {
           <Typography variant="h6" className={classes.title}>
             Good Samaritan Hub
           </Typography>
-          {window.location.pathname !== '/admin' &&
+          {window.location.pathname !== '/adminLogin' &&
             <Link className="link" to={"/login"}>
             <Button className={classes.loginRegButton}>
               Login{'\u00a0'}/{'\u00a0'}Register

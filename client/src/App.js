@@ -98,7 +98,7 @@ class App extends Component {
               {/* Admin homepage */}
               <Route
                 exact
-                path="/admin/home"
+                path="/adminHome"
                 render={() =>
                   !user ? (
                     <div>
@@ -138,7 +138,7 @@ class App extends Component {
               {/* Admin login */}
               <Route
                 exact
-                path="/admin"
+                path="/adminLogin"
                 render={() => (
                   <React.Fragment>
                     {!user ? (

@@ -40,7 +40,7 @@ class LoginInput extends React.Component {
   };
 
   goToAdminHome = () => {
-    window.location.href = "/admin/home";
+    window.location.href = "/adminHome";
   };
 
   handleOnClick = () => {
@@ -98,8 +98,8 @@ class LoginInput extends React.Component {
             onKeyDown={this.handleKeyDown}
           />
         </div>
-        {window.location.pathname !== "/admin" &&
-          window.location.pathname !== "/admin/home" && (
+        {window.location.pathname !== "/adminLogin" &&
+          window.location.pathname !== "/adminHome" && (
             <div className="smallMarginTop">
               <span
                 className="hover-pointer grey"

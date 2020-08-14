@@ -216,7 +216,7 @@ class AdminHome extends Component {
     }
 
     onLogout = () => {
-        this.props.history.push("/");
+        this.props.history.push("/adminLogin");
         this.props.handleLogout();
     }
 
