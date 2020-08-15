@@ -5,14 +5,14 @@ const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
 let Messages = require('../models/message');
-const { mongoChecker, validateId, patch } = require('./common');
+const { mongoChecker, validateId, patch, authenticateUserOrAdmin, authenticateAdmin} = require('./common');
 
 const express = require('express');
 const router = express.Router();
 
 
 //Gets all messages
-router.get('/messages', (req, res) => {
+router.get('/messages', authenticateAdmin, (req, res) => {
     Messages.find()
         .then(messages => res.send(messages))
         .catch((err) => {
@@ -44,7 +44,7 @@ router.post('/messages', (req, res) => {
 });
 
 //Gets all messages of a certain user
-router.get('/messages/:username' ,(req, res) => {
+router.get('/messages/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
     Messages.find({$or: [
         {messageReceiver: username},

@@ -1,6 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const conversationSchema = new Schema({
+    username: {
+        type: String,
+        required:true
+    }, 
+    lastMessageTime: {
+        type: Date,
+        required: true
+    },
+    post: {
+        type: Schema.Types.ObjectId,
+        
+    }
+})
+
 const UserSchema = new Schema({ // TODO: not completed
     username: {
         type: String,
@@ -42,7 +57,12 @@ const UserSchema = new Schema({ // TODO: not completed
     postsHiddenFromUser: {
         type: [Schema.Types.ObjectId],
         default: []
+    },
+    conversations: {
+        type:[conversationSchema],
+        default: []
     }
+        
 });
 
 const User = mongoose.model('User', UserSchema);

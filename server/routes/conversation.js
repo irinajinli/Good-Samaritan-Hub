@@ -4,36 +4,26 @@ const log = console.log;
 const { mongoose } = require('../db/mongoose');
 mongoose.set('bufferCommands', false);
 
-let Conversation = require('../models/conversation');
+let User = require('../models/user');
 
+const { authenticateUserOrAdmin, authenticateAdmin } = require('./common');
 const express = require('express');
 const router = express.Router();
 
-router.get('/conversations', (req, res) => {
-    Conversation.find()
+router.get('/conversations', authenticateAdmin, (req, res) => {
+    User.find()
         .then(conversations => res.send(conversations))
         .catch((err) => {
             log(err);
             res.status(500).send("Internal Server Error");
         });
 });
-router.post('/conversations', (req, res) => {
-    const conversation = new Conversation({
-        username: req.body.username,
-        conversations: []
-    })
 
-    conversation.save().then(res.send("Created conversation"))
-        .catch((error) => {
-            console.log(error)
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-    })
-});
 
-router.get('/conversations/:username' ,(req, res) => {
+router.get('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
 
-    Conversation.findOne({username: username})
+    User.findOne({username: username})
         .then(conversations => res.send(conversations.conversations))
         .catch((error) => {
             log(error);
@@ -41,19 +31,36 @@ router.get('/conversations/:username' ,(req, res) => {
         });
 });
 
-router.post('/conversations/:username', (req, res) => {
+router.post('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
-    
-    Conversation.findOne({username: username}).then((conversations) => {
+    const curr_date = Date.now()
+    User.findOne({username: username}).then((conversations) => {
         if(!conversations) {
             res.status(404).send('Resource not found')
         } else {
             const conversation = {
                 username: req.body.messagedUser,
-                name: req.body.messagedName,
-                lastMessageTime: Date.now()
+                lastMessageTime: curr_date
             }
             conversations.conversations.push(conversation)
+
+            User.findOne({username: req.body.messagedUser}).then((conversations2) => {
+                if(!conversations2) {
+                    res.status(404).send('Resource not found')
+                } else {
+                    const conversation2 = {
+                        username: username,
+                        lastMessageTime: curr_date
+                    }
+                    conversations2.conversations.push(conversation2)
+
+                    conversations2.save()
+                    .catch((error) => {
+                        console.log(error)
+                        res.status(400).send('Bad Request')  // server error
+                    })
+                }
+            })
 
             conversations.save().then((result) => {
 				res.send(result)
@@ -67,32 +74,38 @@ router.post('/conversations/:username', (req, res) => {
     })
 });
 
-router.put('/conversations/:username', (req, res) => {
+router.put('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
-    
-    Conversation.updateOne({
+    const curr_date = Date.now()
+    User.updateOne({
         username: username,
         'conversations.username': req.body.messagedUser
     }, {
         $set: {
-            'conversations.$.name': req.body.messagedUserFullName,
             'conversations.$.post': req.body.post,
-            'conversations.$.lastMessageTime': Date.now()
+            'conversations.$.lastMessageTime': curr_date
         }
     },
     (err) => {
         if(!err) {
+            User.updateOne({
+                username: req.body.messagedUser,
+                'conversations.username': username
+            }, {
+                $set: {
+                    'conversations.$.post': req.body.post,
+                    'conversations.$.lastMessageTime': curr_date
+                }
+            }, (err) => {
+                if(err) {
+                    res.send(err)
+                }
+            })
             res.send("Updated conversation")
         } else {
             res.send(err)
         }
     })
 });
-
-
-
-
-
-
 
 module.exports = router;

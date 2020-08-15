@@ -4,7 +4,6 @@ import './styles.css'
 class MessageTopBar extends Component {
     state = {}
     render() {
-        console.log(this.props)
         return (
             <span className="messageTopBarContainer">
             {this.props.currUser != null &&

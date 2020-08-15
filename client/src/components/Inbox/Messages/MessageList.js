@@ -1,27 +1,13 @@
 import React, { Component } from 'react'
 import Message from './Message'
-import {getMessagesForUser} from '../../../actions/inbox'
+import {reportMessage} from '../../../actions/inbox'
 
 class MessageList extends Component {
     state = {messages: [], user: {}}
 
-    // componentDidMount() {
-    //     getMessagesForUser(this.props.user.username)
-    //     .then(messages => {
-    //         this.setState({
-    //             messages: messages
-    //         });
-    //     })
-    // }
-
-    // componentDidUpdate() {
-    //     getMessagesForUser(this.props.user.username)
-    //     .then(messages => {
-    //         this.setState({
-    //             messages: messages
-    //         });
-    //     })
-    // }
+    handleReportMessage = (message) => {
+        reportMessage(message)
+    }
     
     componentDidUpdate() {
         const {messages} = this.props;
@@ -37,6 +23,8 @@ class MessageList extends Component {
                     message={message.messageContent}
                     username={user.username}
                     messageSender={message.messageSender}
+                    handleReportMessage={this.handleReportMessage}
+                    messageToReport={message}
                 />
             )
         );

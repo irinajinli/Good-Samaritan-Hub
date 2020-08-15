@@ -3,6 +3,7 @@ import ReportIcon from '@material-ui/icons/Report';
 import Modal from '@material-ui/core/Modal';
 import MyDialog from '../../MyDialog';
 import './styles.css';
+import { reportMessage} from '../../../actions/inbox'
 
 class Message extends Component {
 
@@ -13,6 +14,11 @@ class Message extends Component {
     }
 
     handleDialogClose = () => {
+        this.setState({ dialogOpen: false });
+    }
+
+    handleReportMessage = () => {
+        this.props.handleReportMessage(this.props.messageToReport)
         this.setState({ dialogOpen: false });
     }
 
@@ -33,7 +39,7 @@ class Message extends Component {
                             body=''
                             actionName='Report'
                             handleClose={this.handleDialogClose}
-                            handleDoAction={this.handleDialogClose}
+                            handleDoAction={this.handleReportMessage}
                         />
                     </Modal>
                     <p className="messageText"> {this.props.message} </p>

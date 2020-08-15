@@ -5,7 +5,7 @@ import './styles.css';
 class InboxSideBarItem extends Component {
     state = {}
     render() {
-        const { username, name, image, activeUser } = this.props
+        const { username, name, activeUser, firstName, lastName} = this.props
         let classMessageName = "inboxSideBarItemContainer"
         if (username === activeUser) {
             classMessageName += "Selected"
@@ -13,7 +13,9 @@ class InboxSideBarItem extends Component {
         return (
             <Card className='inboxSideBarItem'>
                 <div className={classMessageName} onClick={() => this.props.handleChangeSelectedUser(username)}>
-                    <img src={image} alt={name} className='inboxSideBarItemImage' />
+                {firstName != null && lastName != null &&
+                    <img src={`https://ui-avatars.com/api/?name=${firstName}+${lastName}&format=svg`} alt={name} className='inboxSideBarItemImage' />
+                }
                     <div className='inboxSideBarItemName'>
                         <p>{name}</p>
                     </div>

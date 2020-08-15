@@ -6,17 +6,12 @@ const conversationSchema = new Schema({
         type: String,
         required:true
     }, 
-    name: {
-        type: String,
-        required: true
-    }, 
     lastMessageTime: {
         type: Date,
         required: true
     },
     post: {
         type: Schema.Types.ObjectId,
-        
     }
 })
 const conversationsSchema = new Schema({
