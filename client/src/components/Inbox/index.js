@@ -130,18 +130,17 @@ class Inbox extends Component {
     }
 
     componentDidMount() {
-        try {
-            this.handleComponentMount()
-        } catch (error) {
-            alert("Page failed to load")
-            this.setState({
-                selectedUser: null,
-                selectedUserInfo: null,
-                selectedUserPost: null,
-                conversations: [],
-                messages: [],
-            })
-        }
+        this.handleComponentMount()
+            .catch(error => {
+                console.log("Page failed to load");
+                this.setState({
+                    selectedUser: null,
+                    selectedUserInfo: null,
+                    selectedUserPost: null,
+                    conversations: [],
+                    messages: [],
+                })
+            });
     }
 
     render() {
@@ -152,7 +151,7 @@ class Inbox extends Component {
             var sorted_conversations = [...this.state.conversations]
             sorted_conversations.sort((a, b) => new Date(b.lastMessageTime) - new Date(a.lastMessageTime))
         } catch(error) {
-            alert("Page failed to load")
+            console.log("Page failed to load")
             var sorted_conversations = []
         }
         return (

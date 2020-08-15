@@ -9,7 +9,7 @@ const router = express.Router();
 
 const Post = require('../models/post');
 const User = require('../models/user');
-const { mongoChecker, isMongoError, authenticateUser, authenticateUserOrAdmin, validateId, patch, save, find } = require('./common');
+const { mongoChecker, isMongoError, authenticateUser, authenticateUserOrAdmin, validateId, patch, save } = require('./common');
 
 
 // A POST Route for making a post.
