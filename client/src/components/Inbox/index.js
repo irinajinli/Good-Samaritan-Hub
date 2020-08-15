@@ -122,13 +122,16 @@ class Inbox extends Component {
             a.name = a.user_info.firstName + " " + a.user_info.lastName
         }
         this.setState({conversations: conversations})
-        var user_info = this.state.conversations.filter(con => con.username == this.state.selectedUser)[0].user_info
-        this.setState({selectedUserInfo: user_info})
-        var user_post = this.state.conversations.filter(con => con.username == this.state.selectedUser)[0].post_info
-        this.setState({selectedUserPost: user_post})
+        if (conversations[0] != null) {
+            var user_info = this.state.conversations.filter(con => con.username == this.state.selectedUser)[0].user_info
+            this.setState({selectedUserInfo: user_info})
+            var user_post = this.state.conversations.filter(con => con.username == this.state.selectedUser)[0].post_info
+            this.setState({selectedUserPost: user_post})
+        } else {
+            this.setState({selectedUserInfo: null, selectedUserPost: null})
+        }
 
     }
-
     componentDidMount() {
         this.handleComponentMount()
             .catch(error => {
@@ -171,17 +174,17 @@ class Inbox extends Component {
                     )}
                 </Paper>
                 <Paper className="messagesScreen">
-                    <Paper className="messageTopBar">
-                        {this.state.selectedUser !== null &&
-                            <MessageTopBar
-                                currUser={this.state.selectedUserInfo}
-                                currPost={this.state.selectedUserPost}
-                                handleGoToProfile={this.props.handleGoToProfile}
-                            />
-                        }
-                    </Paper>
+                    {this.state.selectedUser !== null && <Paper className="messageTopBar">
+                                <MessageTopBar
+                                    currUser={this.state.selectedUserInfo}
+                                    currPost={this.state.selectedUserPost}
+                                    handleGoToProfile={this.props.handleGoToProfile}
+                                />
+                            
+                        </Paper>
+                    }
                     <div className="messageScreenMessages">
-                       
+                       {this.state.selectedUser == null && <h1 className="noMessageText">No messages yet! Hit 'Message' on a post or profile to get started!</h1>}
                         <MessageList
                             messages={messages.filter(message =>
                                 (message.messageSender === user.username || message.messageReceiver === user.username) && (message.messageSender === this.state.selectedUser || message.messageReceiver === this.state.selectedUser))}
