@@ -10,12 +10,8 @@ const {
   mongoChecker,
   authenticateAdmin,
   authenticateUserOrAdmin,
-  validateId,
   patch,
-  save,
-  find,
-  findOne,
-  authenticateUser,
+  save
 } = require("./common");
 
 const express = require("express");

@@ -127,7 +127,7 @@ class Inbox extends Component {
     componentDidMount() {
         this.handleComponentMount()
             .catch(error => {
-                alert("Page failed to load");
+                console.log("Page failed to load");
                 this.setState({
                     selectedUser: null,
                     selectedUserInfo: null,

@@ -4,8 +4,6 @@ mongoose.set("bufferCommands", false);
 
 const Admin = require("../models/admin");
 
-const { mongoChecker, isMongoError, save } = require("./common");
-
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const router = express.Router();
@@ -16,7 +14,7 @@ router.post("/admin/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
-  // find user
+  // find admin
   Admin.findOne({ username: username })
     .then((user) => {
       if (bcrypt.compareSync(password, user.password)) {
@@ -35,76 +33,49 @@ router.post("/admin/login", (req, res) => {
     });
 });
 
-// A route to logout a user
-router.get("/users/logout", (req, res) => {
-  // Remove the session
-  req.session.destroy((error) => {
-    if (error) {
-      res.status(500).send(error);
-    } else {
-      res.send();
-    }
-  });
-});
-
-// A route to check if a use is logged in on the session cookie
-// TODO delete; already in user.js routes
-// router.get("/users/check-session", (req, res) => {
-//   if (req.session.user) {
-//     res.send({
-//       userId: req.session.user,
-//       username: req.session.username,
-//     });
-//   } else {
-//     res.status(401).send();
-//   }
-// });
-
-//************************* */
-
 // POST route to create an admin
 // <req.body> expects
 // {
 //     "username": String,
 //     "password": String
 // }
-router.post("/admin", mongoChecker, (req, res) => {
-  // password hashing
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hashSync(req.body.password, salt);
-  req.body.password = hash;
+// router.post("/admin", mongoChecker, (req, res) => {
+//   // password hashing
+//   const salt = bcrypt.genSaltSync(10);
+//   const hash = bcrypt.hashSync(req.body.password, salt);
+//   req.body.password = hash;
 
-  // Create a new admin
-  const admin = new Admin({
-    username: req.body.username,
-    password: req.body.password,
-    admin: true,
-  });
+//   // Create a new admin
+//   const admin = new Admin({
+//     username: req.body.username,
+//     password: req.body.password,
+//     admin: true,
+//   });
 
-  // Save admin to the database
-  save(req, res, admin);
-});
+//   // Save admin to the database
+//   save(req, res, admin);
+// });
 
 // GET route to get an admin by its id
-router.get("/admin/:id", mongoChecker, (req, res) => {
-  // Get admin by id
-  Admin.findById(req.params.id)
-    .then((admin) => {
-      if (admin) {
-        res.send(admin);
-      } else {
-        res.status(404).send(`Admin ${req.params.id} does not exist`);
-      }
-    })
-    .catch((error) => {
-      log(error);
-      res.status(500).send("Internal Server Error");
-    });
-});
+// router.get("/admin/:id", mongoChecker, (req, res) => {
+//   // Get admin by id
+//   Admin.findById(req.params.id)
+//     .then((admin) => {
+//       if (admin) {
+//         res.send(admin);
+//       } else {
+//         res.status(404).send(`Admin ${req.params.id} does not exist`);
+//       }
+//     })
+//     .catch((error) => {
+//       log(error);
+//       res.status(500).send("Internal Server Error");
+//     });
+// });
 
 // GET route to get all admins
-router.get("/admin", mongoChecker, (req, res) => {
-  find(req, res, Admin);
-});
+// router.get("/admin", mongoChecker, (req, res) => {
+//   find(req, res, Admin);
+// });
 
 module.exports = router;
