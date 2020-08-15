@@ -18,8 +18,6 @@ Now open up your browser and go to `localhost:5000`
 username: `user`  
 password: `user`
 
-Please note that the registration page (`/registration`) does not yet make a real account.
-
 #### Features:
 
 - The landing page (`/`) explains to newcomers what the site is about. Its header contains a link back to the landing page and a link to the login page.
