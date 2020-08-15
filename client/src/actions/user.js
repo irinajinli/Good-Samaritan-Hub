@@ -61,9 +61,7 @@ export const login = (loginComp, app, userType) => {
       return json;
     })
     .catch((error) => {
-      if (error instanceof TypeError) {
-        console.log("Wrong credentials!");
-      } else {
+      if (!(error instanceof TypeError)) {
         console.log(error);
       }
     });
@@ -129,7 +127,6 @@ export const updateProfileInfo = async (originalUser, updatedUser) => {
   return ok;
 };
 
-// TODO
 export const updatePassword = async (username, oldPassword, newPassword) => {
   const url = `/user/username/${username}/${oldPassword}`;
 
