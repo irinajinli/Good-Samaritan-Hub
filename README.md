@@ -25,7 +25,7 @@ password: `user`
 - After logging in, the user is taken to the homepage (`/home`) where they can see a list of current posts in their own location (i.e. the location in their profile), filter these posts by offer/request, restrict the posts to a different location, create a new post, and search for users/posts by username, first and/or last name, and post title. At the top is a link to the homepage, a search box, a link to the user’s inbox, a link to the user’s profile page, and a logout button.
     - Clicking a post’s arrow button will expand the post, and you can read the full description of the post, go back, or click on the poster’s name to view their profile. 
         - If it’s your own post, you can also remove the post. Posts that you remove become permanently hidden from the public and are viewable only by you on your profile.
-        - If it’s another person's post, you can also report the post or send the poster a message. Reported posts are permanently hidden from you.. 
+        - If it’s another person's post, you can also report the post or send the poster a message. Posts that you report become permanently hidden from you. 
     - Creating a new post will take you to a screen where you can input the title, body, type of request, and location and post it.
     - In search, if there are more than 6 users that match the search term (e.g. "user"), only 6 users are shown initially. You can click the arrow to show (at most) 6 more.
 - On the Inbox page (`/inbox`), you can see all of your past messages and can message another user about their post. You can also report another person’s message. The header of each conversation with a user shows the latest request/offer involved (if any).
