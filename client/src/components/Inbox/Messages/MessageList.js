@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
-import Message from './Message'
-import {reportMessage} from '../../../actions/inbox'
+import React, { Component } from 'react';
+import Message from './Message';
+import {reportMessage} from '../../../actions/inbox';
+import { reportUser } from '../../../actions/user';
 
 class MessageList extends Component {
     state = {messages: [], user: {}}
 
     handleReportMessage = (message) => {
-        reportMessage(message)
+        reportMessage(message).then(reportedMessage => {
+            // Then report the 
+            reportUser(reportedMessage.messageSender);
+        })
     }
     
     componentDidUpdate() {

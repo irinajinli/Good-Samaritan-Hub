@@ -6,7 +6,7 @@ import MessageList from './Messages/MessageList';
 import MessageTopBar from './MessageTopBar/MessageTopBar'
 import Paper from '@material-ui/core/Paper'
 import {getMessagesForUser, sendMessage, getConversationsForUser, createNewConversation, updateConversations, reportMessage} from '../../actions/inbox'
-import { getUserByUsername } from '../../actions/user';
+import { getUserByUsername, reportUser } from '../../actions/user';
 import { getPostsByUser } from '../../actions/post';
 
 
@@ -47,7 +47,10 @@ class Inbox extends Component {
     }
 
     handleReportMessage = (message) => {
-        reportMessage(message)
+        reportMessage(message).then(reportedMessage => {
+            // Then report the 
+            reportUser(reportedMessage.messageSender);
+        })
     }
 
     handleChangeSelectedUser = (username) => {
