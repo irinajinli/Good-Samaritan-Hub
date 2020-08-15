@@ -4,19 +4,18 @@ const Schema = mongoose.Schema;
 const conversationSchema = new Schema({
     username: {
         type: String,
-        required:true
+        required: true
     }, 
     lastMessageTime: {
         type: Date,
         required: true
     },
     post: {
-        type: Schema.Types.ObjectId,
-        
+        type: Schema.Types.ObjectId, 
     }
-})
+});
 
-const UserSchema = new Schema({ // TODO: not completed
+const UserSchema = new Schema({
     username: {
         type: String,
         required: true
@@ -59,10 +58,9 @@ const UserSchema = new Schema({ // TODO: not completed
         default: []
     },
     conversations: {
-        type:[conversationSchema],
+        type: [conversationSchema],
         default: []
-    }
-        
+    }   
 });
 
 const User = mongoose.model('User', UserSchema);
