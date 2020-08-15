@@ -44,10 +44,11 @@ class AdminHome extends Component {
         posts: [],
         messages: [],
         messagesReceived: [],
-        selectedUser: null,
-        selectedRow: null,
+        selectedUser: undefined,
+        selectedRow: undefined,
         dialogOpen: false,
-        oldReport: null
+        oldReportedUser: undefined,
+        oldReport: undefined
     }
 
     componentDidMount = () => {
@@ -88,8 +89,8 @@ class AdminHome extends Component {
         const user = this.rowToUser(row);
         if (this.state.selectedUser === user) {
             this.setState({
-                selectedUser: null,
-                selectedRow: null,
+                selectedUser: undefined,
+                selectedRow: undefined,
                 posts: []
             });
         } else {
@@ -143,12 +144,12 @@ class AdminHome extends Component {
     handleOpenSnackBar = async (originalUser, id, reportType, reportContent, i) => {
         // If report is waiting to be removed, remove first
         if (this.state.oldReport) {
-            await this.handleCloseSnackBar(originalUser);
+            await this.handleCloseSnackBar();
         }
         this.setState({oldReport: {id, type: reportType, content: reportContent, index: i}});
     }
 
-    handleCloseSnackBar = (originalUser) => {
+    handleCloseSnackBar = () => {
         // If report is waiting to be removed, then remove
         if (this.state.oldReport) {
             if (this.state.oldReport.type === "Message") {
@@ -156,29 +157,30 @@ class AdminHome extends Component {
             } else {
                 unreportPost(this.state.oldReport.content);
             }
-            this.setState({oldReport: null});
+            this.setState({oldReport: undefined});
         }
-        if (originalUser) {
-            updateUserStatus(originalUser, this.state.selectedUser);
+        if (this.state.oldReportedUser) {
+            updateUserStatus(this.state.oldReportedUser, this.state.selectedUser);
+            this.setState({oldReportedUser: undefined});
         }
     }
 
     handleDeleteReport = async (report) => {
         const user = this.state.selectedUser;
-        const originalUser = JSON.parse(JSON.stringify(user));
+        this.setState({oldReportedUser: JSON.parse(JSON.stringify(user)) });
         let i = 0;
         if (report.messageContent) {
             const messages = this.state.messages.slice();
             i = messages.map(m => m._id).indexOf(report._id);
             messages[i].isReported = false;
             this.setState({messages});
-            this.handleOpenSnackBar(originalUser, report._id, 'Message', report, i);
+            this.handleOpenSnackBar(this.state.oldReportedUser, report._id, 'Message', report, i);
         } else {
             const posts = this.state.posts.slice();
             i = posts.map(p => p._id).indexOf(report._id);
             posts[i].isReported = false;
             this.setState({posts});
-            this.handleOpenSnackBar(originalUser, report._id, 'Post', report, i);
+            this.handleOpenSnackBar(this.state.oldReportedUser, report._id, 'Post', report, i);
         }
         if (this.getReported(this.state.posts).length + this.getReported(this.state.messages).length <= 0) {
             user.isReported = false;
@@ -186,9 +188,11 @@ class AdminHome extends Component {
         const users = this.state.users.slice();
         i = users.map(user => user._id).indexOf(user._id);
         users[i] = user;
-        this.setState({users, selectedUser: user});
+        this.setState({users, selectedUser: user, oldReportedUser: user});
         setTimeout(() => {
-            this.handleCloseSnackBar(originalUser);
+            if (this.state.oldReport) {
+                this.handleCloseSnackBar();
+            }
         }, 5000);
     }
 
@@ -197,7 +201,6 @@ class AdminHome extends Component {
         const user = this.state.selectedUser;
         report.content.date = new Date(report.content.date);
         if (report.type === 'Message') {
-            //this.state.messages.splice(report.index, 0, report.id);
             const messages = this.state.messages.slice();
             messages[report.index].isReported = true;
             this.setState({messages});
@@ -211,13 +214,17 @@ class AdminHome extends Component {
         const i = users.map(user => user._id).indexOf(user._id);
         users[i] = user;
         this.setState({
-            users, selectedUser: user, oldReport: null
+            users, selectedUser: user, oldReport: undefined, oldReportedUser: undefined
         });
     }
 
-    onLogout = () => {
-        this.props.history.push("/adminLogin");
-        this.props.handleLogout();
+    onLogout = async () => {
+        if (this.state.oldReport) {
+            console.log("it is")
+            await this.handleCloseSnackBar();
+        }
+        await this.props.history.push("/adminLogin");
+        await this.props.handleLogout();
     }
 
     render() {
