@@ -11,7 +11,7 @@ const {
   authenticateAdmin,
   authenticateUserOrAdmin,
   patch,
-  save
+  save,
 } = require("./common");
 
 const express = require("express");
@@ -46,6 +46,11 @@ const userSafeInfo = (user) => {
 /****************** Session Handling *******************/
 
 // POST route to log in and create session
+// <req.body> expects
+// {
+//     "username": String,
+//     "password": String
+// }
 router.post("/users/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -125,7 +130,7 @@ router.post("/user", mongoChecker, (req, res) => {
 
   // Create a new user
   const user = new User(req.body);
-  res.send(200);
+  res.status(200);
   // Save user to the database
   save(req, res, user);
 });
@@ -135,16 +140,16 @@ router.get("/user/check-username/:username", mongoChecker, (req, res) => {
   User.findOne({ username: req.params.username })
     .then((user) => {
       if (user) {
-        res.send({result: "Username exists"});
+        res.send({ result: "Username exists" });
       } else {
-        res.send({result: "Username does not exist"});
+        res.send({ result: "Username does not exist" });
       }
     })
     .catch((error) => {
       log(error);
       res.status(500).send("Internal Server Error");
     });
-})
+});
 
 // GET route to get a user by username
 router.get(
@@ -241,7 +246,13 @@ router.patch(
 
     // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
     const validAdminProps = ["isReported", "isBanned", "banReason"];
-    const validUserProps = ["firstName", "lastName", "bio", "location", "postsHiddenFromUser"];
+    const validUserProps = [
+      "firstName",
+      "lastName",
+      "bio",
+      "location",
+      "postsHiddenFromUser",
+    ];
 
     const fields = Object.keys(fieldsToUpdate);
     log(fields);
@@ -281,32 +292,39 @@ router.patch(
     }
 
     // Update the user
-    User.findOneAndUpdate({ username: req.params.username }, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+    User.findOneAndUpdate(
+      { username: req.params.username },
+      { $set: fieldsToUpdate },
+      { new: true, useFindAndModify: false }
+    )
       .then((user) => {
-          if (!user) {
-              res.status(404).send('Resource not found');
-          } else {   
-            if (req.session.admin || (req.session.username === req.params.username)) {
-              res.send(user);
-            } else {
-              res.send({
-                username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                location: user.location,
-                bio: user.bio,
-                isReported: user.isReported
-              });
-            }
+        if (!user) {
+          res.status(404).send("Resource not found");
+        } else {
+          if (
+            req.session.admin ||
+            req.session.username === req.params.username
+          ) {
+            res.send(user);
+          } else {
+            res.send({
+              username: user.username,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              location: user.location,
+              bio: user.bio,
+              isReported: user.isReported,
+            });
           }
+        }
       })
       .catch((error) => {
-          if (isMongoError(error)) {
-              res.status(500).send('Internal server error')
-          } else {;
-              log(error);
-              res.status(400).send('Bad Request');
-          }
+        if (isMongoError(error)) {
+          res.status(500).send("Internal server error");
+        } else {
+          log(error);
+          res.status(400).send("Bad Request");
+        }
       });
   }
 );

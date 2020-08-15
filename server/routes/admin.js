@@ -10,28 +10,35 @@ const router = express.Router();
 const log = console.log;
 
 // POST route to log in and create session
-router.post("/admin/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
+// <req.body> expects
+// {
+//     "username": String,
+//     "password": String
+// }
+"/admin/login",
+  (req, res) => {
+    router.post;
+    const username = req.body.username;
+    const password = req.body.password;
 
-  // find admin
-  Admin.findOne({ username: username })
-    .then((user) => {
-      if (bcrypt.compareSync(password, user.password)) {
-        req.session.user = user._id;
-        req.session.username = user.username;
-        req.session.admin = true;
-        res.status(200).send({ currUser: user, admin: true });
-      } else {
-        // wrong password
-        res.status(404).send();
-      }
-    })
-    .catch((error) => {
-      log(error);
-      res.status(400).send();
-    });
-});
+    // find admin
+    Admin.findOne({ username: username })
+      .then((user) => {
+        if (bcrypt.compareSync(password, user.password)) {
+          req.session.user = user._id;
+          req.session.username = user.username;
+          req.session.admin = true;
+          res.status(200).send({ currUser: user, admin: true });
+        } else {
+          // wrong password
+          res.status(404).send();
+        }
+      })
+      .catch((error) => {
+        log(error);
+        res.status(400).send();
+      });
+  };
 
 // POST route to create an admin
 // <req.body> expects
