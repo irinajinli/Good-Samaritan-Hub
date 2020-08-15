@@ -31,7 +31,7 @@ const log = console.log;
           res.status(200).send({ currUser: user, admin: true });
         } else {
           // wrong password
-          res.status(404).send();
+          res.status(401).send();
         }
       })
       .catch((error) => {
