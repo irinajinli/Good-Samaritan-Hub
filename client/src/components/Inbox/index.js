@@ -88,9 +88,15 @@ class Inbox extends Component {
         else {
             var sorted_conversations = [...this.state.conversations]
             sorted_conversations.sort((a, b) => new Date(b.lastMessageTime) - new Date(a.lastMessageTime))
-            this.setState({
-                selectedUser: sorted_conversations[0].username
-            })
+            if (sorted_conversations[0] != null) {
+                this.setState({
+                    selectedUser: sorted_conversations[0].username
+                })
+            } else {
+                this.setState({
+                    selectedUser: null
+                })
+            }
         }
 
         if(this.props.lookingAtPost != null) {

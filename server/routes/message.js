@@ -30,33 +30,42 @@ router.get('/messages', authenticateAdmin, (req, res) => {
 }
 */
 router.post('/messages', (req, res) => {
-    const message = new Messages({
-        messageSender: req.body.messageSender,
-        messageReceiver: req.body.messageReceiver,
-        messageContent: req.body.messageContent,
-    })
+    if (req.session.username == req.body.messageSender) {
+        const message = new Messages({
+            messageSender: req.body.messageSender,
+            messageReceiver: req.body.messageReceiver,
+            messageContent: req.body.messageContent,
+        })
 
-    message.save().then(result => res.send(result))
-        .catch((error) => {
-            console.log(error)
-            res.status(400).send('Bad Request') 
-    })
+        message.save().then(result => res.send(result))
+            .catch((error) => {
+                console.log(error)
+                res.status(400).send('Bad Request') 
+        })
+    } else {
+        res.status(401).send("Unauthorized");
+    }
 });
 
 //Gets all messages of a certain user
 router.get('/messages/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
-    Messages.find({$or: [
-        {messageReceiver: username},
-        {messageSender: username}
-    ]})
-        .then(messages => {
-            res.send(messages)
-        })
-        .catch((error) => {
-            log(error);
-            res.status(500).send("Internal Server Error");
-        });
+
+    if (req.session.username == username || req.session.admin) {
+        Messages.find({$or: [
+            {messageReceiver: username},
+            {messageSender: username}
+        ]})
+            .then(messages => {
+                res.send(messages)
+            })
+            .catch((error) => {
+                log(error);
+                res.status(500).send("Internal Server Error");
+            });
+    } else {
+        res.status(401).send("Unauthorized");
+    }
 });
 
 // PATCH route to update a message
@@ -67,7 +76,18 @@ router.get('/messages/:username', authenticateUserOrAdmin, (req, res) => {
 //   ...
 // ]
 router.patch('/messages/:id', mongoChecker, validateId, (req, res) => { 
-    patch(req, res, Messages, { _id: req.params.id });
+    const fieldsToUpdate = {};
+	req.body.map((change) => {
+		const propertyToChange = change.path.substr(1); // getting rid of the '/' character
+		fieldsToUpdate[propertyToChange] = change.value;
+    })
+    
+    Messages.findById(req.params.id)
+    .then(message => {
+        if((message.messageReceiver == req.session.username && Object.keys(fieldsToUpdate).length == 1 && fieldsToUpdate.isReported == true) || req.session.admin) {
+            patch(req, res, Messages, { _id: req.params.id });
+        }
+    })
 });
 
 module.exports = router;
