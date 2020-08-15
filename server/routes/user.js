@@ -241,7 +241,7 @@ router.patch(
 
     // Check that the current user/admin is authorized to update the fields in fieldsToUpdate
     const validAdminProps = ["isReported", "isBanned", "banReason"];
-    const validProfileProps = ["firstName", "lastName", "bio", "location"];
+    const validUserProps = ["firstName", "lastName", "bio", "location", "postsHiddenFromUser"];
 
     const fields = Object.keys(fieldsToUpdate);
     log(fields);
@@ -257,11 +257,11 @@ router.patch(
         }
       }
     } else if (req.session.username === req.params.username) {
-      // regular user updating themself
+      // regular user updating themselves
 
-      // Only allowed to change properties in validProfileProps
+      // Only allowed to change properties in validUserProps
       for (let i = 0; i < fields.length; i++) {
-        if (!validProfileProps.includes(fields[i])) {
+        if (!validUserProps.includes(fields[i])) {
           res.status(401).send("Unauthorized");
           return;
         }
