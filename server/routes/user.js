@@ -280,7 +280,34 @@ router.patch(
       }
     }
 
-    patch(req, res, User, { username: req.params.username });
+    // Update the user
+    User.findOneAndUpdate({ username: req.params.username }, {$set: fieldsToUpdate}, {new: true, useFindAndModify: false})
+      .then((user) => {
+          if (!user) {
+              res.status(404).send('Resource not found');
+          } else {   
+            if (req.session.admin || (req.session.username === req.params.username)) {
+              res.send(user);
+            } else {
+              res.send({
+                username: user.username,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                location: user.location,
+                bio: user.bio,
+                isReported: user.isReported
+              });
+            }
+          }
+      })
+      .catch((error) => {
+          if (isMongoError(error)) {
+              res.status(500).send('Internal server error')
+          } else {;
+              log(error);
+              res.status(400).send('Bad Request');
+          }
+      });
   }
 );
 
