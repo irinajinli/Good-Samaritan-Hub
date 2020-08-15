@@ -1,9 +1,9 @@
 # Our React App: The Good Samaritan Hub
 
-## Link to App:
+## Link to App
 https://hidden-fjord-63319.herokuapp.com/
 
-## Instructions to Run:
+## !! DEPRECATED Instructions to Run
 Clone the github repository by running the following:  
 `git clone https://github.com/csc309-summer-2020/team16.git`
 
@@ -13,7 +13,7 @@ Then navigate to `/csc309-summer-2020/team16/` and run the following:
 
 Now open up your browser and go to `localhost:3000`
 
-## Instructions to Use:
+## Instructions to Use
 ### User
 #### Login Credentials:
 username: `user`  
@@ -53,3 +53,4 @@ password: `admin`
 - Clicking a user shows their complete information and post history, as well as any reports other users have made about them. The admin can look at the reports and either delete the report or ban the user with a ban reason. 
 - The admin also has the ability to unban a previously banned user.
 
+## Overview of Routes
