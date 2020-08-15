@@ -8,10 +8,9 @@ Clone the github repository by running the following:
 `git clone https://github.com/csc309-summer-2020/team16.git`
 
 Then navigate to `/csc309-summer-2020/team16/` and run the following:   
-`npm install`  
-`npm start`  
+`cd client && npm install && npm run build && cd ../server && npm install && npm start`
 
-Now open up your browser and go to `localhost:3000`
+Now open up your browser and go to `localhost:5000`
 
 ## Instructions to Use
 ### User
