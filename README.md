@@ -28,7 +28,7 @@ password: `user`
         - If it’s another person's post, you can also report the post or send the poster a message. Posts that you report become permanently hidden from you. 
     - Creating a new post will take you to a screen where you can input the title, body, type of request, and location and post it.
     - In search, if there are more than 6 users that match the search term (e.g. "user"), only 6 users are shown initially. You can click the arrow to show (at most) 6 more.
-- On the Inbox page (`/inbox`), you can see all of your past messages and can message another user about their post. You can also report another person’s message. The header of each conversation with a user shows the latest request/offer involved (if any).
+- On the Inbox page (`/inbox`), you can see all of your past messages and can message another user about their post. You can also report another person’s message. The header of each conversation with a user shows the latest request/offer involved (if any) as well as their location and a link to their profile page.
 - The profile page (`/profile`) allows you to see a user’s info along with any posts they have made. 
     - If it’s your own profile, you also have the option to edit your info. 
     - If it’s another person’s profile, you can click Message to message them, which will bring up the past messages you have with this person or start a new conversation with them.
