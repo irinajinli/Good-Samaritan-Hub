@@ -124,7 +124,6 @@ Create a user:  `POST "/user"`
 			"email": String (optional),
 			"bio": String (optional)
 		}
-	```
 - Expected response
     - If registration was successful, the newly created User document
     - If registration was unsuccessful (ex. due to the request body being not well formed), status 400
