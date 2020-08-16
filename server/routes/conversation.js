@@ -10,7 +10,10 @@ const { authenticateUserOrAdmin } = require('./common');
 const express = require('express');
 const router = express.Router();
 
-
+/* Get a conversation for a single user
+Users can only access their own conversation, admins can get an user's conversation
+Expected Response: [{username: String, lastMessageTime: Date, post: ObjectID} ...] or 401 Unauthorized 
+*/
 router.get('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
     if(username == req.session.username || req.session.admin) {
@@ -25,6 +28,11 @@ router.get('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     }
 });
 
+/* Create a conversation
+Updates both the conversation for both the user and the user being message
+Expected Body: {"messagedUser": String}
+Expected Response: Updated Conversation for user or 401 Unauthorized
+*/
 router.post('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
     const curr_date = Date.now()
@@ -72,6 +80,10 @@ router.post('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     }
 });
 
+/* Updates a conversation's attributes
+Expected Body: {"messagedUser": String, "Post": ObjectID}
+Expected Response: 200 if conversation is updated or 401 unauthorized
+*/
 router.put('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
     const username = req.params.username;
     const curr_date = Date.now()
