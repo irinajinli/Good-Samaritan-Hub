@@ -72,7 +72,7 @@ User Login:  `POST "/users/login"`
 
 User and Admin Logout:  `GET "/users/logout"`
 - Expected response: 
-    - status 200
+    - Status 200
 
 Admin Login:  `POST "/admin/login"`
 - Expected request body:
@@ -113,16 +113,18 @@ Check if a username already exists:  `GET "/user/check-username/:username"`
 
 Create a user:  `POST "/user"`
 - Expected request body:
-    - { 
-	"username": String, 
-	"password": String, 
-	"firstName": String, 
-	"lastName": String, 
-	"location": String (Preferably a postal code, e.g. "M4V"),
-"phoneNum": String (optional),
-"email": String (optional),
-"bio": String (optional)
-}
+    - ```
+    	{ 
+			"username": String, 
+			"password": String, 
+			"firstName": String, 
+			"lastName": String, 
+			"location": String (Preferably a postal code, e.g. "M4V"),
+			"phoneNum": String (optional),
+			"email": String (optional),
+			"bio": String (optional)
+		}
+	```
 - Expected response
     - If registration was successful, the newly created User document
     - If registration was unsuccessful (ex. due to the request body being not well formed), status 400
