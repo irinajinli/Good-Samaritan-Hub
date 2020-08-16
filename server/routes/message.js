@@ -84,8 +84,10 @@ router.patch('/messages/:id', mongoChecker, validateId, (req, res) => {
     
     Messages.findById(req.params.id)
     .then(message => {
-        if((message.messageReceiver == req.session.username && Object.keys(fieldsToUpdate).length == 1 && fieldsToUpdate.isReported == true) || req.session.admin) {
+        if ((message.messageReceiver == req.session.username && Object.keys(fieldsToUpdate).length == 1 && fieldsToUpdate.isReported == true) || req.session.admin) {
             patch(req, res, Messages, { _id: req.params.id });
+        } else {
+            res.status(401).send("Unauthorized")
         }
     })
 });

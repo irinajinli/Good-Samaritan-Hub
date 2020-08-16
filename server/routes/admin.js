@@ -15,9 +15,8 @@ const log = console.log;
 //     "username": String,
 //     "password": String
 // }
-"/admin/login",
+router.post("/admin/login",
   (req, res) => {
-    router.post;
     const username = req.body.username;
     const password = req.body.password;
 
@@ -38,7 +37,7 @@ const log = console.log;
         log(error);
         res.status(400).send();
       });
-  };
+});
 
 // POST route to create an admin
 // <req.body> expects

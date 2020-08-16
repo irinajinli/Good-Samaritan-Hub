@@ -103,7 +103,6 @@ h2 {
 .adminHome__scroll {
     flex-grow: 0;
     overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .adminHome__reported-panel {
