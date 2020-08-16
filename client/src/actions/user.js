@@ -53,7 +53,7 @@ export const login = (loginComp, app, userType) => {
     .then((json) => {
       if (json.currUser !== undefined) {
         if (json.currUser.isBanned) {
-          alert("Your account is banned.");
+          alert(`Your account is banned.\nReason: ${json.currUser.banReason}`);
         } else {
           app.setState({ user: json.currUser });
         }
