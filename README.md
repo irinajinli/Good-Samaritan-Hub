@@ -149,8 +149,8 @@ Get all non-banned users who username or full name contains a search term: `GET 
 
 Update a user: `PATCH "/user/username/:username"`
 - Expected request body:
-    - A list of changes to make to the user: [ { "op": "replace", "path": <path>, "value": <value> } ... ]
-    - For convenience, here is a list of all possible values for <path> and types for <value>
+    - A list of changes to make to the user: [ { "op": "replace", "path": `<path>`, "value": `<value>` } ... ]
+    - For convenience, here is a list of all possible values for `<path>` and types for `<value>`
 		- ```
 			[ 
 				{ "op": "replace", "path": "/isBanned", "value": Boolean },
@@ -168,14 +168,14 @@ Update a user: `PATCH "/user/username/:username"`
 "/firstName", "/lastName", "/bio", "/location", and "/postsHiddenFromUser", if they are updating themself
 "/isReported" to true if they are updating another user
 - Expected response:
-    - If the current user or admin is not authorized to change <path>, status 401 is sent
+    - If the current user or admin is not authorized to change `<path>`, status 401 is sent
     - Otherwise:
         - for an admin, or a user updating themself, the entire User document for the updated user is sent
         - for a user updating another user, the updated user"s basic profile information and isReported property is sent
 
 Update password: `PATCH "/user/username/:username/:password"`
 - Expected request body:
-    - [ { "op": "replace", "path": "/password" , "value": <newPassword> } ]
+    - [ { "op": "replace", "path": "/password" , "value": `<newPassword>` } ]
 - Expected response:
     - If req.session.username !== req.params.username, status 401 is sent
     - If the old password (req.params.password) is incorrect, status 401 is sent
@@ -244,8 +244,8 @@ Get all posts from a user: `GET "/post/posterUsername/:posterUsername"`
 Update a post by post id: `PATCH "/post/:id"`
 - Expected request body:
     - A list of changes to make to the post:
-[ { "op": "replace", "path": <path>, "value": <value> } ... ]
-    - For convenience, here is a list of all possible values for <path> and types for <value>:
+[ { "op": "replace", "path": `<path>`, "value": `<value>` } ... ]
+    - For convenience, here is a list of all possible values for `<path>` and types for `<value>`:
 	- ```
 		[ 
 			{ "op": "replace", "path": "/isReported", "value": Boolean }, 
@@ -256,7 +256,7 @@ Update a post by post id: `PATCH "/post/:id"`
     - Users are only allowed to change "/isReported" to false
     - Users are only allowed to change "/status" if it is their own post
 - Expected response:
-    - If the current user or admin is not authorized to change <path>, status 401 is sent. 
+    - If the current user or admin is not authorized to change `<path>`, status 401 is sent. 
     - Otherwise, the updated post is sent.
 
 ### Message Routes
