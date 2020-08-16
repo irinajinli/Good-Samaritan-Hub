@@ -186,23 +186,24 @@ Update password: `PATCH "/user/username/:username/:password"`
 Get all users: `GET "/users"`
 - Expected response:
     - A list of all User documents (without their password, email, and postsHiddenFromUser properties):
-[ {
-"_id":  Object,
-"bio": String,
-isReported": Boolean,
-"isBanned": Boolean,
-"banReason": String,
-"username": String,
-"firstName": String,
-"lastName": String,
-"location": String,
-"conversations": [{
-      			"_id": Object,
-"username": String,
-"lastMessageTime": Date,
-"Post": Object,
-}, … ]
-}, … ]
+	- ```
+		[ {
+			"_id":  Object,
+			"bio": String,
+			"isReported": Boolean,
+			"isBanned": Boolean,
+			"banReason": String,
+			"username": String,
+			"firstName": String,
+			"lastName": String,
+			"location": String,
+			"conversations": [{
+      				"_id": Object,
+				"username": String,
+				"lastMessageTime": Date,
+				"post": Object,
+			}, … ]
+		}, … ]
 
 ### Post Routes
 #### Only authorized for users:
@@ -211,14 +212,15 @@ Create a post: `POST "/post/:posterUsername"`
 - Additional notes on authorization:
     - This route is only authorized if req.session.username === req.params.posterUsername
 - Expected request body:
-    - { 
-	"title": String, 
-	"body": String, 
-	"type": "Request" or "Offer", 
-	"date":  Any valid date string (e.g. "July 17, 2020 03:24:00"), 
-	"status": "active" or "inactive", 
-	"location": String (Preferably a postal code, e.g. "M4V")
-}
+    - ```
+    	{ 
+			"title": String, 
+			"body": String, 
+			"type": "Request" or "Offer", 
+			"date":  Any valid date string (e.g. "July 17, 2020 03:24:00"), 
+			"status": "active" or "inactive", 
+			"location": String (Preferably a postal code, e.g. "M4V")
+		}
 - Expected response
     - Status 401 if req.session.username !== req.params.posterUsername
     - Otherwise, the newly created post
@@ -244,10 +246,11 @@ Update a post by post id: `PATCH "/post/:id"`
     - A list of changes to make to the post:
 [ { "op": "replace", "path": <path>, "value": <value> } ... ]
     - For convenience, here is a list of all possible values for <path> and types for <value>:
-[ 
-	{ "op": "replace", "path": "/isReported", "value": Boolean }, 
-	{ "op": "replace", "path": "/status", "value": "active" or "inactive" }
-]
+	- ```
+		[ 
+			{ "op": "replace", "path": "/isReported", "value": Boolean }, 
+			{ "op": "replace", "path": "/status", "value": "active" or "inactive" }
+		]
 - Additional notes on authorization:
     - Admins are allowed to change "/isReported"
     - Users are only allowed to change "/isReported" to false
