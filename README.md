@@ -149,19 +149,19 @@ Get all non-banned users who username or full name contains a search term: `GET 
 
 Update a user: `PATCH "/user/username/:username"`
 - Expected request body:
-    - A list of changes to make to the user:
-[ { "op": "replace", "path": <path>, "value": <value> } ... ]
-    - For convenience, here is a list of all possible values for <path> and types for <value>:
-[ 
-	{ "op": "replace", "path": "/isBanned", "value": Boolean },
-	{ "op": "replace", "path": "/isReported", "value": Boolean },
-	{ "op": "replace", "path": "/banReason", "value": String },
-	{ "op": "replace", "path": "/firstName", "value": String },
-	{ "op": "replace", "path": "/lastName", "value": String },
-	{ "op": "replace", "path": "/bio", "value": String },
-	{ "op": "replace", "path": "/location", "value": String },
-	{ "op": "replace", "path": "/postsHiddenFromUser", "value": List[ObjectId] }
-]
+    - A list of changes to make to the user: [ { "op": "replace", "path": <path>, "value": <value> } ... ]
+    - For convenience, here is a list of all possible values for <path> and types for <value>
+		- ```
+			[ 
+				{ "op": "replace", "path": "/isBanned", "value": Boolean },
+				{ "op": "replace", "path": "/isReported", "value": Boolean },
+				{ "op": "replace", "path": "/banReason", "value": String },
+				{ "op": "replace", "path": "/firstName", "value": String },
+				{ "op": "replace", "path": "/lastName", "value": String },
+				{ "op": "replace", "path": "/bio", "value": String },
+				{ "op": "replace", "path": "/location", "value": String },
+				{ "op": "replace", "path": "/postsHiddenFromUser", "value": List[ObjectId] }
+			]
 - Additional notes on authorization:
     - Admins are only allowed to change "/isBanned", "/isReported", and "/banReason".
     - Users are only allowed to change:
