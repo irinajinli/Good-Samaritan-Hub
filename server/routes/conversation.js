@@ -6,18 +6,9 @@ mongoose.set('bufferCommands', false);
 
 let User = require('../models/user');
 
-const { authenticateUserOrAdmin, authenticateAdmin } = require('./common');
+const { authenticateUserOrAdmin } = require('./common');
 const express = require('express');
 const router = express.Router();
-
-router.get('/conversations', authenticateAdmin, (req, res) => {
-    User.find()
-        .then(conversations => res.send(conversations))
-        .catch((err) => {
-            log(err);
-            res.status(500).send("Internal Server Error");
-        });
-});
 
 
 router.get('/conversations/:username', authenticateUserOrAdmin, (req, res) => {
