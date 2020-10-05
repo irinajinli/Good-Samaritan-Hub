@@ -1,5 +1,9 @@
 # Our React App: The Good Samaritan Hub
 
+## Link to App:
+https://hidden-fjord-63319.herokuapp.com/
+(it may take a while to load)
+
 ## Instructions to Run:
 Clone the github repository by running the following:  
 `git clone https://github.com/csc309-summer-2020/team16.git`
