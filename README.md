@@ -1,7 +1,7 @@
 # Our React App: The Good Samaritan Hub
 
 ## About The App:
-The Good Samaritan Hub matches volunteers to those in need. Posts are organized by location.
+The Good Samaritan Hub matches volunteers with those in need.
 
 ## Link to App:
 https://hidden-fjord-63319.herokuapp.com/
